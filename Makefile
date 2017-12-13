@@ -17,10 +17,8 @@ PROTOC = protoc-min-version -version=3.0.0
 gofmt:
 	gofmt -l -s -w .
 
-contributors:
-	git log --format='%aN <%aE>' | sort -fu > CONTRIBUTORS
-
-GOOGLEAPIS_URL=https://raw.githubusercontent.com/googleapis/googleapis/master
+SHA=c8c975543a134177cc41b64cbbf10b88fe66aa1d
+GOOGLEAPIS_URL=https://raw.githubusercontent.com/googleapis/googleapis/$(SHA)
 
 update:
 	@dep ensure
