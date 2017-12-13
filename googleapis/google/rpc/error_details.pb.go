@@ -447,10 +447,7 @@ func init() {
 }
 func (this *RetryInfo) Equal(that interface{}) bool {
 	if that == nil {
-		if this == nil {
-			return true
-		}
-		return false
+		return this == nil
 	}
 
 	that1, ok := that.(*RetryInfo)
@@ -463,10 +460,7 @@ func (this *RetryInfo) Equal(that interface{}) bool {
 		}
 	}
 	if that1 == nil {
-		if this == nil {
-			return true
-		}
-		return false
+		return this == nil
 	} else if this == nil {
 		return false
 	}
@@ -477,10 +471,7 @@ func (this *RetryInfo) Equal(that interface{}) bool {
 }
 func (this *DebugInfo) Equal(that interface{}) bool {
 	if that == nil {
-		if this == nil {
-			return true
-		}
-		return false
+		return this == nil
 	}
 
 	that1, ok := that.(*DebugInfo)
@@ -493,10 +484,7 @@ func (this *DebugInfo) Equal(that interface{}) bool {
 		}
 	}
 	if that1 == nil {
-		if this == nil {
-			return true
-		}
-		return false
+		return this == nil
 	} else if this == nil {
 		return false
 	}
@@ -515,10 +503,7 @@ func (this *DebugInfo) Equal(that interface{}) bool {
 }
 func (this *QuotaFailure) Equal(that interface{}) bool {
 	if that == nil {
-		if this == nil {
-			return true
-		}
-		return false
+		return this == nil
 	}
 
 	that1, ok := that.(*QuotaFailure)
@@ -531,10 +516,7 @@ func (this *QuotaFailure) Equal(that interface{}) bool {
 		}
 	}
 	if that1 == nil {
-		if this == nil {
-			return true
-		}
-		return false
+		return this == nil
 	} else if this == nil {
 		return false
 	}
@@ -550,10 +532,7 @@ func (this *QuotaFailure) Equal(that interface{}) bool {
 }
 func (this *QuotaFailure_Violation) Equal(that interface{}) bool {
 	if that == nil {
-		if this == nil {
-			return true
-		}
-		return false
+		return this == nil
 	}
 
 	that1, ok := that.(*QuotaFailure_Violation)
@@ -566,10 +545,7 @@ func (this *QuotaFailure_Violation) Equal(that interface{}) bool {
 		}
 	}
 	if that1 == nil {
-		if this == nil {
-			return true
-		}
-		return false
+		return this == nil
 	} else if this == nil {
 		return false
 	}
@@ -583,10 +559,7 @@ func (this *QuotaFailure_Violation) Equal(that interface{}) bool {
 }
 func (this *PreconditionFailure) Equal(that interface{}) bool {
 	if that == nil {
-		if this == nil {
-			return true
-		}
-		return false
+		return this == nil
 	}
 
 	that1, ok := that.(*PreconditionFailure)
@@ -599,10 +572,7 @@ func (this *PreconditionFailure) Equal(that interface{}) bool {
 		}
 	}
 	if that1 == nil {
-		if this == nil {
-			return true
-		}
-		return false
+		return this == nil
 	} else if this == nil {
 		return false
 	}
@@ -618,10 +588,7 @@ func (this *PreconditionFailure) Equal(that interface{}) bool {
 }
 func (this *PreconditionFailure_Violation) Equal(that interface{}) bool {
 	if that == nil {
-		if this == nil {
-			return true
-		}
-		return false
+		return this == nil
 	}
 
 	that1, ok := that.(*PreconditionFailure_Violation)
@@ -634,10 +601,7 @@ func (this *PreconditionFailure_Violation) Equal(that interface{}) bool {
 		}
 	}
 	if that1 == nil {
-		if this == nil {
-			return true
-		}
-		return false
+		return this == nil
 	} else if this == nil {
 		return false
 	}
@@ -654,10 +618,7 @@ func (this *PreconditionFailure_Violation) Equal(that interface{}) bool {
 }
 func (this *BadRequest) Equal(that interface{}) bool {
 	if that == nil {
-		if this == nil {
-			return true
-		}
-		return false
+		return this == nil
 	}
 
 	that1, ok := that.(*BadRequest)
@@ -670,10 +631,7 @@ func (this *BadRequest) Equal(that interface{}) bool {
 		}
 	}
 	if that1 == nil {
-		if this == nil {
-			return true
-		}
-		return false
+		return this == nil
 	} else if this == nil {
 		return false
 	}
@@ -689,10 +647,7 @@ func (this *BadRequest) Equal(that interface{}) bool {
 }
 func (this *BadRequest_FieldViolation) Equal(that interface{}) bool {
 	if that == nil {
-		if this == nil {
-			return true
-		}
-		return false
+		return this == nil
 	}
 
 	that1, ok := that.(*BadRequest_FieldViolation)
@@ -705,10 +660,7 @@ func (this *BadRequest_FieldViolation) Equal(that interface{}) bool {
 		}
 	}
 	if that1 == nil {
-		if this == nil {
-			return true
-		}
-		return false
+		return this == nil
 	} else if this == nil {
 		return false
 	}
@@ -722,10 +674,7 @@ func (this *BadRequest_FieldViolation) Equal(that interface{}) bool {
 }
 func (this *RequestInfo) Equal(that interface{}) bool {
 	if that == nil {
-		if this == nil {
-			return true
-		}
-		return false
+		return this == nil
 	}
 
 	that1, ok := that.(*RequestInfo)
@@ -738,10 +687,7 @@ func (this *RequestInfo) Equal(that interface{}) bool {
 		}
 	}
 	if that1 == nil {
-		if this == nil {
-			return true
-		}
-		return false
+		return this == nil
 	} else if this == nil {
 		return false
 	}
@@ -755,10 +701,7 @@ func (this *RequestInfo) Equal(that interface{}) bool {
 }
 func (this *ResourceInfo) Equal(that interface{}) bool {
 	if that == nil {
-		if this == nil {
-			return true
-		}
-		return false
+		return this == nil
 	}
 
 	that1, ok := that.(*ResourceInfo)
@@ -771,10 +714,7 @@ func (this *ResourceInfo) Equal(that interface{}) bool {
 		}
 	}
 	if that1 == nil {
-		if this == nil {
-			return true
-		}
-		return false
+		return this == nil
 	} else if this == nil {
 		return false
 	}
@@ -794,10 +734,7 @@ func (this *ResourceInfo) Equal(that interface{}) bool {
 }
 func (this *Help) Equal(that interface{}) bool {
 	if that == nil {
-		if this == nil {
-			return true
-		}
-		return false
+		return this == nil
 	}
 
 	that1, ok := that.(*Help)
@@ -810,10 +747,7 @@ func (this *Help) Equal(that interface{}) bool {
 		}
 	}
 	if that1 == nil {
-		if this == nil {
-			return true
-		}
-		return false
+		return this == nil
 	} else if this == nil {
 		return false
 	}
@@ -829,10 +763,7 @@ func (this *Help) Equal(that interface{}) bool {
 }
 func (this *Help_Link) Equal(that interface{}) bool {
 	if that == nil {
-		if this == nil {
-			return true
-		}
-		return false
+		return this == nil
 	}
 
 	that1, ok := that.(*Help_Link)
@@ -845,10 +776,7 @@ func (this *Help_Link) Equal(that interface{}) bool {
 		}
 	}
 	if that1 == nil {
-		if this == nil {
-			return true
-		}
-		return false
+		return this == nil
 	} else if this == nil {
 		return false
 	}
@@ -862,10 +790,7 @@ func (this *Help_Link) Equal(that interface{}) bool {
 }
 func (this *LocalizedMessage) Equal(that interface{}) bool {
 	if that == nil {
-		if this == nil {
-			return true
-		}
-		return false
+		return this == nil
 	}
 
 	that1, ok := that.(*LocalizedMessage)
@@ -878,10 +803,7 @@ func (this *LocalizedMessage) Equal(that interface{}) bool {
 		}
 	}
 	if that1 == nil {
-		if this == nil {
-			return true
-		}
-		return false
+		return this == nil
 	} else if this == nil {
 		return false
 	}
