@@ -2,20 +2,17 @@ GOOGLEAPIS := googleapis
 RPC_PATH := google/rpc
 
 # BUILD UP PROTOC ARGs
-PROTO_PATH := --proto_path=protoc-tmp
+PROTO_PATH := --proto_path=${GOOGLEAPIS}
 MAPPING := Mgoogle/protobuf/any.proto=github.com/gogo/protobuf/types,
 MAPPING := $(MAPPING)Mgoogle/protobuf/duration.proto=github.com/gogo/protobuf/types,
 MAPPING := $(MAPPING)Mgoogle/protobuf/timestamp.proto=github.com/gogo/protobuf/types,
 PLUGIN := --gogoslick_out=$(MAPPING):$(GOOGLEAPIS)
 
-STATUS_PROTO := protoc-tmp/$(RPC_PATH)/status.proto
-CODE_PROTO := protoc-tmp/$(RPC_PATH)/code.proto
-ERR_PROTO := protoc-tmp/$(RPC_PATH)/error_details.proto
+STATUS_PROTO := ${GOOGLEAPIS}/$(RPC_PATH)/status.proto
+CODE_PROTO := ${GOOGLEAPIS}/$(RPC_PATH)/code.proto
+ERR_PROTO := ${GOOGLEAPIS}/$(RPC_PATH)/error_details.proto
 
 PROTOC = protoc-min-version -version=3.0.0
-
-gofmt:
-	gofmt -l -s -w .
 
 SHA=c8c975543a134177cc41b64cbbf10b88fe66aa1d
 GOOGLEAPIS_URL=https://raw.githubusercontent.com/googleapis/googleapis/$(SHA)
@@ -31,10 +28,8 @@ update:
 	# Record protoc version
 	@echo `protoc --version` > protoc.version
 
-	@mkdir -p protoc-tmp
-
 	# GOOGLEAPIS Generation
-	@mkdir -p protoc-tmp/$(RPC_PATH)
+	@mkdir -p ${GOOGLEAPIS}/$(RPC_PATH)
 
 	## Generate google/rpc/status.pb.go
 	@curl -sS $(GOOGLEAPIS_URL)/google/rpc/status.proto -o $(STATUS_PROTO)
@@ -54,8 +49,7 @@ update:
 	# Format code
 	@gofmt -l -s -w .
 
-	# Cleanup
-	@rm -rf protoc-tmp
+gofmt:
+	gofmt -l -s -w .
 
-clean:
-	rm -rf protoc-tmp
+.PHONY: update gofmt
