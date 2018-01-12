@@ -1,55 +1,82 @@
-GOOGLEAPIS := googleapis
-RPC_PATH := google/rpc
+SHA = c8c975543a134177cc41b64cbbf10b88fe66aa1d
+GOOGLEAPIS_URL = https://raw.githubusercontent.com/googleapis/googleapis/$(SHA)
 
-# BUILD UP PROTOC ARGs
-PROTO_PATH := --proto_path=${GOOGLEAPIS}
-MAPPING := Mgoogle/protobuf/any.proto=github.com/gogo/protobuf/types,
-MAPPING := $(MAPPING)Mgoogle/protobuf/duration.proto=github.com/gogo/protobuf/types,
-MAPPING := $(MAPPING)Mgoogle/protobuf/timestamp.proto=github.com/gogo/protobuf/types,
-PLUGIN := --gogoslick_out=$(MAPPING):$(GOOGLEAPIS)
+GOGO_PROTO_PKG := github.com/gogo/protobuf/gogoproto
+GOGO_TYPES := github.com/gogo/protobuf/types
+GOGO_DESCRIPTOR := github.com/gogo/protobuf/protoc-gen-gogo/descriptor
+GOGO_GOOGLEAPIS := istio.io/gogo-genproto/googleapis
 
-STATUS_PROTO := ${GOOGLEAPIS}/$(RPC_PATH)/status.proto
-CODE_PROTO := ${GOOGLEAPIS}/$(RPC_PATH)/code.proto
-ERR_PROTO := ${GOOGLEAPIS}/$(RPC_PATH)/error_details.proto
+importmaps := \
+	gogoproto/gogo.proto=$(GOGO_PROTO_PKG) \
+	google/protobuf/any.proto=$(GOGO_TYPES) \
+	google/protobuf/descriptor.proto=$(GOGO_DESCRIPTOR) \
+	google/protobuf/duration.proto=$(GOGO_TYPES) \
+	google/protobuf/timestamp.proto=$(GOGO_TYPES) \
+	google/protobuf/wrappers.proto=$(GOGO_TYPES) \
 
-PROTOC = protoc-min-version -version=3.0.0
+comma := ,
+empty :=
+space := $(empty) $(empty)
+mapping_with_spaces := $(foreach map,$(importmaps),M$(map),)
+MAPPING := $(subst $(space),$(empty),$(mapping_with_spaces))
+PLUGIN := --plugin=protoc-gen-gogoslick=gogoslick --gogoslick_out=$(MAPPING):googleapis
+PROTOC = protoc
 
-SHA=c8c975543a134177cc41b64cbbf10b88fe66aa1d
-GOOGLEAPIS_URL=https://raw.githubusercontent.com/googleapis/googleapis/$(SHA)
+googleapis_protos = \
+	google/api/http.proto \
+	google/api/annotations.proto \
+	google/rpc/status.proto \
+	google/rpc/code.proto \
+	google/rpc/error_details.proto \
+	google/type/color.proto \
+	google/type/date.proto \
+	google/type/dayofweek.proto \
+	google/type/latlng.proto \
+	google/type/money.proto \
+	google/type/postal_address.proto \
+	google/type/timeofday.proto \
 
-update:
-	@dep ensure
+googleapis_packages = \
+	google/api \
+	google/rpc \
+	google/type \
 
-	# Install binaries
-	@go install github.com/gogo/protobuf/protoc-gen-gogoslick
-	@go install github.com/gogo/protobuf/gogoreplace
-	@go install github.com/gogo/protobuf/protoc-min-version
+all: build
 
+vendor:
+	dep ensure --vendor-only
+
+depend: vendor
+	$(foreach var,$(googleapis_packages),mkdir -p googleapis/$(var);)
+
+protoc.version:
 	# Record protoc version
 	@echo `protoc --version` > protoc.version
 
-	# GOOGLEAPIS Generation
-	@mkdir -p ${GOOGLEAPIS}/$(RPC_PATH)
+gogoslick: depend
+	@go build -o gogoslick vendor/github.com/gogo/protobuf/protoc-gen-gogoslick/main.go
 
-	## Generate google/rpc/status.pb.go
-	@curl -sS $(GOOGLEAPIS_URL)/google/rpc/status.proto -o $(STATUS_PROTO)
-	@gogoreplace 'option go_package = "google.golang.org/genproto/googleapis/rpc/status;status";' '' $(STATUS_PROTO)
-	@$(PROTOC) $(PROTO_PATH) $(PLUGIN) $(STATUS_PROTO)
+$(googleapis_protos): %:
+	# Download $@ at $(SHA)
+	@curl -sS $(GOOGLEAPIS_URL)/$@ -o googleapis/$@.tmp
+	@sed -e '/^option go_package/d' googleapis/$@.tmp > googleapis/$@
+	@rm googleapis/$@.tmp
 
-	## Generate google/rpc/code.pb.go
-	@curl -sS $(GOOGLEAPIS_URL)/google/rpc/code.proto -o $(CODE_PROTO)
-	@gogoreplace 'option go_package = "google.golang.org/genproto/googleapis/rpc/code;code";' '' $(CODE_PROTO)
-	@$(PROTOC) $(PROTO_PATH) $(PLUGIN) $(CODE_PROTO)
+$(googleapis_packages): %: gogoslick protoc.version $(googleapis_protos)
+	# Generate $@
+	@$(PROTOC) $(PLUGIN) -I googleapis  googleapis/$@/*.proto
 
-	## Generate google/rpc/error_details.pb.go
-	@curl -sS $(GOOGLEAPIS_URL)/google/rpc/error_details.proto -o $(ERR_PROTO)
-	@gogoreplace 'option go_package = "google.golang.org/genproto/googleapis/rpc/errdetails;errdetails";' '' $(ERR_PROTO)
-	@$(PROTOC) $(PROTO_PATH) $(PLUGIN) $(ERR_PROTO)
+generate: $(googleapis_packages)
 
+format: generate
 	# Format code
-	@gofmt -l -s -w .
+	@gofmt -l -s -w googleapis
 
-gofmt:
-	gofmt -l -s -w .
+build: format
+	# Build code
+	@go build ./...
 
-.PHONY: update gofmt
+clean:
+	@rm gogoslick
+
+.PHONY: all depend format build $(googleapis_protos) $(googleapis_packages) protoc.version clean

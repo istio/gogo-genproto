@@ -6,8 +6,20 @@ Package google_rpc is a generated protocol buffer package.
 
 It is generated from these files:
 	google/rpc/code.proto
+	google/rpc/error_details.proto
+	google/rpc/status.proto
 
 It has these top-level messages:
+	RetryInfo
+	DebugInfo
+	QuotaFailure
+	PreconditionFailure
+	BadRequest
+	RequestInfo
+	ResourceInfo
+	Help
+	LocalizedMessage
+	Status
 */
 package google_rpc
 
