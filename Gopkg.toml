@@ -2,10 +2,8 @@
 # for detailed Gopkg.toml documentation.
 
 # Require gogoslick and gogoreplace for proto manipulation
-required = [ 
+required = [
   "github.com/gogo/protobuf/protoc-gen-gogoslick",
-  "github.com/gogo/protobuf/gogoreplace",
-  "github.com/gogo/protobuf/protoc-min-version"
 ]
 
 [[constraint]]
