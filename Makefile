@@ -1,55 +1,45 @@
-GOOGLEAPIS := googleapis
-
 # BUILD UP PROTOC ARGs
-PROTO_PATH := --proto_path=${GOOGLEAPIS}
+PROTO_PATH := --proto_path=googleapis
 
 MAPPING := Mgoogle/protobuf/any.proto=github.com/gogo/protobuf/types,
 MAPPING := $(MAPPING)Mgoogle/protobuf/duration.proto=github.com/gogo/protobuf/types,
 MAPPING := $(MAPPING)Mgoogle/protobuf/timestamp.proto=github.com/gogo/protobuf/types,
-PLUGIN := --gogoslick_out=$(MAPPING):$(GOOGLEAPIS)
-
-STATUS_PROTO := google/rpc/status.proto
-CODE_PROTO := google/rpc/code.proto
-ERR_PROTO := google/rpc/error_details.proto
-
-PROTOC = protoc-min-version -version=3.5.0
+PLUGIN := --plugin=protoc-gen-gogoslick=gogoslick --gogoslick_out=$(MAPPING):googleapis
+PROTOC = protoc
 
 SHA = c8c975543a134177cc41b64cbbf10b88fe66aa1d
 GOOGLEAPIS_URL = https://raw.githubusercontent.com/googleapis/googleapis/$(SHA)
 
-update:
+googleapis_protos = \
+	google/rpc/status.proto \
+	google/rpc/code.proto \
+	google/rpc/error_details.proto
+
+all: depend $(googleapis_protos) format
+
+depend:
 	@dep ensure
 
-	# Install binaries
-	@go install github.com/gogo/protobuf/protoc-gen-gogoslick
-	@go install github.com/gogo/protobuf/gogoreplace
-	@go install github.com/gogo/protobuf/protoc-min-version
-
+protoc.version:
 	# Record protoc version
 	@echo `protoc --version` > protoc.version
 
-	# GOOGLEAPIS Generation
-	@mkdir -p googleapis/google/rpc
+gogoslick: depend
+	@go build -o gogoslick vendor/github.com/gogo/protobuf/protoc-gen-gogoslick/main.go
 
-	## Generate google/rpc/status.pb.go
-	@curl -sS $(GOOGLEAPIS_URL)/$(STATUS_PROTO) -o googleapis/$(STATUS_PROTO)
-	@gogoreplace 'option go_package = "google.golang.org/genproto/googleapis/rpc/status;status";' '' googleapis/$(STATUS_PROTO)
-	@$(PROTOC) $(PROTO_PATH) $(PLUGIN) $(STATUS_PROTO)
+$(googleapis_protos): %: gogoslick protoc.version
+	## Download $@
+	@curl -sS $(GOOGLEAPIS_URL)/$@ -o googleapis/$@.tmp
+	@sed -e '/^option go_package/d' googleapis/$@.tmp > googleapis/$@
+	@rm googleapis/$@.tmp
+	## Generate $@
+	@$(PROTOC) $(PROTO_PATH) $(PLUGIN) $@
 
-	## Generate google/rpc/code.pb.go
-	@curl -sS $(GOOGLEAPIS_URL)/$(CODE_PROTO) -o googleapis/$(CODE_PROTO)
-	@gogoreplace 'option go_package = "google.golang.org/genproto/googleapis/rpc/code;code";' '' googleapis/$(CODE_PROTO)
-	@$(PROTOC) $(PROTO_PATH) $(PLUGIN) $(CODE_PROTO)
-
-	## Generate google/rpc/error_details.pb.go
-	@curl -sS $(GOOGLEAPIS_URL)/$(ERR_PROTO) -o googleapis/$(ERR_PROTO)
-	@gogoreplace 'option go_package = "google.golang.org/genproto/googleapis/rpc/errdetails;errdetails";' '' googleapis/$(ERR_PROTO)
-	@$(PROTOC) $(PROTO_PATH) $(PLUGIN) $(ERR_PROTO)
-
+format: $(googleapis_protos)
 	# Format code
 	@gofmt -l -s -w .
 
-gofmt:
-	gofmt -l -s -w .
+clean:
+	@rm gogoslick
 
-.PHONY: update gofmt
+.PHONY: all depend format $(googleapis_protos) protoc.version clean
