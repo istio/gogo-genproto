@@ -1,10 +1,12 @@
-SHA = c8c975543a134177cc41b64cbbf10b88fe66aa1d
-GOOGLEAPIS_URL = https://raw.githubusercontent.com/googleapis/googleapis/$(SHA)
+GOOGLEAPIS_SHA = c8c975543a134177cc41b64cbbf10b88fe66aa1d
+GOOGLEAPIS_URL = https://raw.githubusercontent.com/googleapis/googleapis/$(GOOGLEAPIS_SHA)
+
+CENSUS_SHA = d0bcc7222d0c6a443325acd60eefdc7f8a8253f6
+CENSUS_URL = https://raw.githubusercontent.com/census-instrumentation/opencensus-proto/$(CENSUS_SHA)
 
 GOGO_PROTO_PKG := github.com/gogo/protobuf/gogoproto
 GOGO_TYPES := github.com/gogo/protobuf/types
 GOGO_DESCRIPTOR := github.com/gogo/protobuf/protoc-gen-gogo/descriptor
-GOGO_GOOGLEAPIS := istio.io/gogo-genproto/googleapis
 
 importmaps := \
 	gogoproto/gogo.proto=$(GOGO_PROTO_PKG) \
@@ -19,7 +21,8 @@ empty :=
 space := $(empty) $(empty)
 mapping_with_spaces := $(foreach map,$(importmaps),M$(map),)
 MAPPING := $(subst $(space),$(empty),$(mapping_with_spaces))
-PLUGIN := --plugin=protoc-gen-gogoslick=gogoslick --gogoslick_out=$(MAPPING):googleapis
+GOGOSLICK_PLUGIN := --plugin=protoc-gen-gogoslick=gogoslick --gogoslick_out=$(MAPPING)
+GOGOFASTER_PLUGIN := --plugin=protoc-gen-gogofaster=gogofaster --gogofaster_out=$(MAPPING)
 PROTOC = protoc
 
 googleapis_protos = \
@@ -41,6 +44,14 @@ googleapis_packages = \
 	google/rpc \
 	google/type \
 
+census_protos = \
+	opencensus/proto/stats/stats.proto \
+	opencensus/proto/trace/trace.proto \
+
+census_packages = \
+	opencensus/proto/stats \
+	opencensus/proto/trace \
+
 all: build
 
 vendor:
@@ -48,25 +59,37 @@ vendor:
 
 depend: vendor
 	$(foreach var,$(googleapis_packages),mkdir -p googleapis/$(var);)
+	$(foreach var,$(census_packages),mkdir -p $(var);)
 
 protoc.version:
 	# Record protoc version
-	@echo `protoc --version` > protoc.version
+	@echo `$(PROTOC) --version` > protoc.version
 
 gogoslick: depend
 	@go build -o gogoslick vendor/github.com/gogo/protobuf/protoc-gen-gogoslick/main.go
 
+gogofaster: depend
+	@go build -o gogofaster vendor/github.com/gogo/protobuf/protoc-gen-gogofaster/main.go
+
 $(googleapis_protos): %:
-	# Download $@ at $(SHA)
+	# Download $@ at $(GOOGLEAPIS_SHA)
 	@curl -sS $(GOOGLEAPIS_URL)/$@ -o googleapis/$@.tmp
 	@sed -e '/^option go_package/d' googleapis/$@.tmp > googleapis/$@
 	@rm googleapis/$@.tmp
 
 $(googleapis_packages): %: gogoslick protoc.version $(googleapis_protos)
 	# Generate $@
-	@$(PROTOC) $(PLUGIN) -I googleapis  googleapis/$@/*.proto
+	@$(PROTOC) $(GOGOSLICK_PLUGIN):googleapis -I googleapis googleapis/$@/*.proto
 
-generate: $(googleapis_packages)
+$(census_protos): %:
+	# Download $@ at $(CENSUS_SHA)
+	@curl -sS $(CENSUS_URL)/$@ -o $@
+
+$(census_packages): %: gogofaster protoc.version $(census_protos)
+	# Generate $@
+	@$(PROTOC) $(GOGOFASTER_PLUGIN):. -I . $@/*.proto
+
+generate: $(googleapis_packages) $(census_packages)
 
 format: generate
 	# Format code
