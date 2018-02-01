@@ -4,6 +4,9 @@ GOOGLEAPIS_URL = https://raw.githubusercontent.com/googleapis/googleapis/$(GOOGL
 CENSUS_SHA = d0bcc7222d0c6a443325acd60eefdc7f8a8253f6
 CENSUS_URL = https://raw.githubusercontent.com/census-instrumentation/opencensus-proto/$(CENSUS_SHA)
 
+PROMETHEUS_SHA = 6f3806018612930941127f2a7c6c453ba2c527d2
+PROMETHEUS_URL = https://raw.githubusercontent.com/prometheus/client_model/$(PROMETHEUS_SHA)
+
 GOGO_PROTO_PKG := github.com/gogo/protobuf/gogoproto
 GOGO_TYPES := github.com/gogo/protobuf/types
 GOGO_DESCRIPTOR := github.com/gogo/protobuf/protoc-gen-gogo/descriptor
@@ -89,7 +92,15 @@ $(census_packages): %: gogofaster protoc.version $(census_protos)
 	# Generate $@
 	@$(PROTOC) $(GOGOFASTER_PLUGIN):. -I . $@/*.proto
 
-generate: $(googleapis_packages) $(census_packages)
+prometheus/metrics.proto:
+	@mkdir -p prometheus
+	@curl -sS $(PROMETHEUS_URL)/metrics.proto -o prometheus/metrics.proto
+
+prometheus/metrics.pb.go: gogofaster protoc.version prometheus/metrics.proto
+	# Generate prometheus
+	@$(PROTOC) $(GOGOFASTER_PLUGIN):. prometheus/metrics.proto
+
+generate: $(googleapis_packages) $(census_packages) prometheus/metrics.pb.go
 
 format: generate
 	# Format code
