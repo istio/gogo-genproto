@@ -1,8 +1,8 @@
 GOOGLEAPIS_SHA = c8c975543a134177cc41b64cbbf10b88fe66aa1d
 GOOGLEAPIS_URL = https://raw.githubusercontent.com/googleapis/googleapis/$(GOOGLEAPIS_SHA)
 
-CENSUS_SHA = d0bcc7222d0c6a443325acd60eefdc7f8a8253f6
-CENSUS_URL = https://raw.githubusercontent.com/census-instrumentation/opencensus-proto/$(CENSUS_SHA)
+CENSUS_SHA = 7f2434bc10da710debe5c4315ed6d4df454b4024
+CENSUS_URL = https://raw.githubusercontent.com/census-instrumentation/opencensus-proto/$(CENSUS_SHA)/src
 
 PROMETHEUS_SHA = 6f3806018612930941127f2a7c6c453ba2c527d2
 PROMETHEUS_URL = https://raw.githubusercontent.com/prometheus/client_model/$(PROMETHEUS_SHA)
@@ -48,12 +48,12 @@ googleapis_packages = \
 	google/type \
 
 census_protos = \
-	opencensus/proto/stats/stats.proto \
-	opencensus/proto/trace/trace.proto \
+	opencensus/proto/stats/v1/stats.proto \
+	opencensus/proto/trace/v1/trace.proto \
 
 census_packages = \
-	opencensus/proto/stats \
-	opencensus/proto/trace \
+	opencensus/proto/stats/v1 \
+	opencensus/proto/trace/v1 \
 
 all: build
 
@@ -87,6 +87,8 @@ $(googleapis_packages): %: gogoslick protoc.version $(googleapis_protos)
 $(census_protos): %:
 	# Download $@ at $(CENSUS_SHA)
 	@curl -sS $(CENSUS_URL)/$@ -o $@
+	@sed -i.tmp '/^option go_package/d' $@
+	@rm $@.tmp
 
 $(census_packages): %: gogofaster protoc.version $(census_protos)
 	# Generate $@
