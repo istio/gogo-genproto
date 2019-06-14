@@ -6,6 +6,7 @@
 
 	It is generated from these files:
 		opencensus/proto/trace/v1/trace.proto
+		opencensus/proto/trace/v1/trace_config.proto
 
 	It has these top-level messages:
 		Span
@@ -14,6 +15,10 @@
 		StackTrace
 		Module
 		TruncatableString
+		TraceConfig
+		ProbabilitySampler
+		ConstantSampler
+		RateLimitingSampler
 */
 package opencensus_proto_trace_v1
 

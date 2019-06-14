@@ -1,7 +1,7 @@
 GOOGLEAPIS_SHA = c8c975543a134177cc41b64cbbf10b88fe66aa1d
 GOOGLEAPIS_URL = https://raw.githubusercontent.com/googleapis/googleapis/$(GOOGLEAPIS_SHA)
 
-CENSUS_SHA = 7f2434bc10da710debe5c4315ed6d4df454b4024
+CENSUS_SHA = e2601ef16f8a085a69d94ace5133f97438f8945f
 CENSUS_URL = https://raw.githubusercontent.com/census-instrumentation/opencensus-proto/$(CENSUS_SHA)/src
 
 PROMETHEUS_SHA = 6f3806018612930941127f2a7c6c453ba2c527d2
@@ -50,6 +50,7 @@ googleapis_packages = \
 census_protos = \
 	opencensus/proto/stats/v1/stats.proto \
 	opencensus/proto/trace/v1/trace.proto \
+	opencensus/proto/trace/v1/trace_config.proto \
 
 census_packages = \
 	opencensus/proto/stats/v1 \
