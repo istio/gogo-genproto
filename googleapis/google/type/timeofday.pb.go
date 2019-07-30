@@ -3,22 +3,29 @@
 
 package google_type
 
-import proto "github.com/gogo/protobuf/proto"
-import fmt "fmt"
-import math "math"
-
-import strings "strings"
-import reflect "reflect"
-
-import io "io"
+import (
+	fmt "fmt"
+	proto "github.com/gogo/protobuf/proto"
+	io "io"
+	math "math"
+	math_bits "math/bits"
+	reflect "reflect"
+	strings "strings"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
 
+// This is a compile-time assertion to ensure that this generated file
+// is compatible with the proto package it is being compiled against.
+// A compilation error at this line likely means your copy of the
+// proto package needs to be updated.
+const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
+
 // Represents a time of day. The date and time zone are either not significant
-// or are specified elsewhere. An API may chose to allow leap seconds. Related
+// or are specified elsewhere. An API may choose to allow leap seconds. Related
 // types are [google.type.Date][google.type.Date] and `google.protobuf.Timestamp`.
 type TimeOfDay struct {
 	// Hours of day in 24 hour format. Should be from 0 to 23. An API may choose
@@ -33,9 +40,37 @@ type TimeOfDay struct {
 	Nanos int32 `protobuf:"varint,4,opt,name=nanos,proto3" json:"nanos,omitempty"`
 }
 
-func (m *TimeOfDay) Reset()                    { *m = TimeOfDay{} }
-func (*TimeOfDay) ProtoMessage()               {}
-func (*TimeOfDay) Descriptor() ([]byte, []int) { return fileDescriptorTimeofday, []int{0} }
+func (m *TimeOfDay) Reset()      { *m = TimeOfDay{} }
+func (*TimeOfDay) ProtoMessage() {}
+func (*TimeOfDay) Descriptor() ([]byte, []int) {
+	return fileDescriptor_6c354ab94588cebb, []int{0}
+}
+func (m *TimeOfDay) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *TimeOfDay) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_TimeOfDay.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *TimeOfDay) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TimeOfDay.Merge(m, src)
+}
+func (m *TimeOfDay) XXX_Size() int {
+	return m.Size()
+}
+func (m *TimeOfDay) XXX_DiscardUnknown() {
+	xxx_messageInfo_TimeOfDay.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_TimeOfDay proto.InternalMessageInfo
 
 func (m *TimeOfDay) GetHours() int32 {
 	if m != nil {
@@ -68,12 +103,30 @@ func (m *TimeOfDay) GetNanos() int32 {
 func init() {
 	proto.RegisterType((*TimeOfDay)(nil), "google.type.TimeOfDay")
 }
+
+func init() { proto.RegisterFile("google/type/timeofday.proto", fileDescriptor_6c354ab94588cebb) }
+
+var fileDescriptor_6c354ab94588cebb = []byte{
+	// 224 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x92, 0x4e, 0xcf, 0xcf, 0x4f,
+	0xcf, 0x49, 0xd5, 0x2f, 0xa9, 0x2c, 0x48, 0xd5, 0x2f, 0xc9, 0xcc, 0x4d, 0xcd, 0x4f, 0x4b, 0x49,
+	0xac, 0xd4, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0xe2, 0x86, 0x48, 0xea, 0x81, 0x24, 0x95, 0xb2,
+	0xb9, 0x38, 0x43, 0x32, 0x73, 0x53, 0xfd, 0xd3, 0x5c, 0x12, 0x2b, 0x85, 0x44, 0xb8, 0x58, 0x33,
+	0xf2, 0x4b, 0x8b, 0x8a, 0x25, 0x18, 0x15, 0x18, 0x35, 0x58, 0x83, 0x20, 0x1c, 0x21, 0x09, 0x2e,
+	0xf6, 0xdc, 0xcc, 0xbc, 0xd2, 0x92, 0xd4, 0x62, 0x09, 0x26, 0xb0, 0x38, 0x8c, 0x0b, 0x92, 0x29,
+	0x4e, 0x4d, 0xce, 0xcf, 0x4b, 0x29, 0x96, 0x60, 0x86, 0xc8, 0x40, 0xb9, 0x20, 0x93, 0xf2, 0x12,
+	0xf3, 0xf2, 0x8b, 0x25, 0x58, 0x20, 0x26, 0x81, 0x39, 0x4e, 0x09, 0x17, 0x1e, 0xca, 0x31, 0xdc,
+	0x78, 0x28, 0xc7, 0xf0, 0xe1, 0xa1, 0x1c, 0x63, 0xc3, 0x23, 0x39, 0xc6, 0x15, 0x8f, 0xe4, 0x18,
+	0x4f, 0x3c, 0x92, 0x63, 0xbc, 0xf0, 0x48, 0x8e, 0xf1, 0xc1, 0x23, 0x39, 0xc6, 0x17, 0x8f, 0xe4,
+	0x18, 0x3e, 0x3c, 0x92, 0x63, 0x9c, 0xf0, 0x58, 0x8e, 0xe1, 0xc2, 0x63, 0x39, 0x86, 0x1b, 0x8f,
+	0xe5, 0x18, 0xb8, 0xf8, 0x93, 0xf3, 0x73, 0xf5, 0x90, 0xdc, 0xec, 0xc4, 0x07, 0x77, 0x71, 0x00,
+	0xc8, 0x43, 0x01, 0x8c, 0x3f, 0x18, 0x19, 0x17, 0x31, 0x31, 0xbb, 0x87, 0x04, 0x24, 0xb1, 0x81,
+	0xbd, 0x68, 0x0c, 0x08, 0x00, 0x00, 0xff, 0xff, 0x85, 0xe9, 0xb8, 0x71, 0x01, 0x01, 0x00, 0x00,
+}
+
 func (this *TimeOfDay) Equal(that interface{}) bool {
 	if that == nil {
-		if this == nil {
-			return true
-		}
-		return false
+		return this == nil
 	}
 
 	that1, ok := that.(*TimeOfDay)
@@ -86,10 +139,7 @@ func (this *TimeOfDay) Equal(that interface{}) bool {
 		}
 	}
 	if that1 == nil {
-		if this == nil {
-			return true
-		}
-		return false
+		return this == nil
 	} else if this == nil {
 		return false
 	}
@@ -131,7 +181,7 @@ func valueToGoStringTimeofday(v interface{}, typ string) string {
 func (m *TimeOfDay) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -139,43 +189,53 @@ func (m *TimeOfDay) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *TimeOfDay) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *TimeOfDay) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Hours != 0 {
-		dAtA[i] = 0x8
-		i++
-		i = encodeVarintTimeofday(dAtA, i, uint64(m.Hours))
-	}
-	if m.Minutes != 0 {
-		dAtA[i] = 0x10
-		i++
-		i = encodeVarintTimeofday(dAtA, i, uint64(m.Minutes))
+	if m.Nanos != 0 {
+		i = encodeVarintTimeofday(dAtA, i, uint64(m.Nanos))
+		i--
+		dAtA[i] = 0x20
 	}
 	if m.Seconds != 0 {
-		dAtA[i] = 0x18
-		i++
 		i = encodeVarintTimeofday(dAtA, i, uint64(m.Seconds))
+		i--
+		dAtA[i] = 0x18
 	}
-	if m.Nanos != 0 {
-		dAtA[i] = 0x20
-		i++
-		i = encodeVarintTimeofday(dAtA, i, uint64(m.Nanos))
+	if m.Minutes != 0 {
+		i = encodeVarintTimeofday(dAtA, i, uint64(m.Minutes))
+		i--
+		dAtA[i] = 0x10
 	}
-	return i, nil
+	if m.Hours != 0 {
+		i = encodeVarintTimeofday(dAtA, i, uint64(m.Hours))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
 }
 
 func encodeVarintTimeofday(dAtA []byte, offset int, v uint64) int {
+	offset -= sovTimeofday(v)
+	base := offset
 	for v >= 1<<7 {
 		dAtA[offset] = uint8(v&0x7f | 0x80)
 		v >>= 7
 		offset++
 	}
 	dAtA[offset] = uint8(v)
-	return offset + 1
+	return base
 }
 func (m *TimeOfDay) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Hours != 0 {
@@ -194,14 +254,7 @@ func (m *TimeOfDay) Size() (n int) {
 }
 
 func sovTimeofday(x uint64) (n int) {
-	for {
-		n++
-		x >>= 7
-		if x == 0 {
-			break
-		}
-	}
-	return n
+	return (math_bits.Len64(x|1) + 6) / 7
 }
 func sozTimeofday(x uint64) (n int) {
 	return sovTimeofday(uint64((x << 1) ^ uint64((int64(x) >> 63))))
@@ -242,7 +295,7 @@ func (m *TimeOfDay) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -270,7 +323,7 @@ func (m *TimeOfDay) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Hours |= (int32(b) & 0x7F) << shift
+				m.Hours |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -289,7 +342,7 @@ func (m *TimeOfDay) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Minutes |= (int32(b) & 0x7F) << shift
+				m.Minutes |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -308,7 +361,7 @@ func (m *TimeOfDay) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Seconds |= (int32(b) & 0x7F) << shift
+				m.Seconds |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -327,7 +380,7 @@ func (m *TimeOfDay) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Nanos |= (int32(b) & 0x7F) << shift
+				m.Nanos |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -339,6 +392,9 @@ func (m *TimeOfDay) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			if skippy < 0 {
+				return ErrInvalidLengthTimeofday
+			}
+			if (iNdEx + skippy) < 0 {
 				return ErrInvalidLengthTimeofday
 			}
 			if (iNdEx + skippy) > l {
@@ -407,8 +463,11 @@ func skipTimeofday(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			iNdEx += length
 			if length < 0 {
+				return 0, ErrInvalidLengthTimeofday
+			}
+			iNdEx += length
+			if iNdEx < 0 {
 				return 0, ErrInvalidLengthTimeofday
 			}
 			return iNdEx, nil
@@ -439,6 +498,9 @@ func skipTimeofday(dAtA []byte) (n int, err error) {
 					return 0, err
 				}
 				iNdEx = start + next
+				if iNdEx < 0 {
+					return 0, ErrInvalidLengthTimeofday
+				}
 			}
 			return iNdEx, nil
 		case 4:
@@ -457,23 +519,3 @@ var (
 	ErrInvalidLengthTimeofday = fmt.Errorf("proto: negative length found during unmarshaling")
 	ErrIntOverflowTimeofday   = fmt.Errorf("proto: integer overflow")
 )
-
-func init() { proto.RegisterFile("google/type/timeofday.proto", fileDescriptorTimeofday) }
-
-var fileDescriptorTimeofday = []byte{
-	// 213 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x92, 0x4e, 0xcf, 0xcf, 0x4f,
-	0xcf, 0x49, 0xd5, 0x2f, 0xa9, 0x2c, 0x48, 0xd5, 0x2f, 0xc9, 0xcc, 0x4d, 0xcd, 0x4f, 0x4b, 0x49,
-	0xac, 0xd4, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0xe2, 0x86, 0x48, 0xea, 0x81, 0x24, 0x95, 0xb2,
-	0xb9, 0x38, 0x43, 0x32, 0x73, 0x53, 0xfd, 0xd3, 0x5c, 0x12, 0x2b, 0x85, 0x44, 0xb8, 0x58, 0x33,
-	0xf2, 0x4b, 0x8b, 0x8a, 0x25, 0x18, 0x15, 0x18, 0x35, 0x58, 0x83, 0x20, 0x1c, 0x21, 0x09, 0x2e,
-	0xf6, 0xdc, 0xcc, 0xbc, 0xd2, 0x92, 0xd4, 0x62, 0x09, 0x26, 0xb0, 0x38, 0x8c, 0x0b, 0x92, 0x29,
-	0x4e, 0x4d, 0xce, 0xcf, 0x4b, 0x29, 0x96, 0x60, 0x86, 0xc8, 0x40, 0xb9, 0x20, 0x93, 0xf2, 0x12,
-	0xf3, 0xf2, 0x8b, 0x25, 0x58, 0x20, 0x26, 0x81, 0x39, 0x4e, 0xa1, 0x17, 0x1e, 0xca, 0x31, 0xdc,
-	0x78, 0x28, 0xc7, 0xf0, 0xe1, 0xa1, 0x1c, 0x63, 0xc3, 0x23, 0x39, 0xc6, 0x15, 0x8f, 0xe4, 0x18,
-	0x4f, 0x3c, 0x92, 0x63, 0xbc, 0xf0, 0x48, 0x8e, 0xf1, 0xc1, 0x23, 0x39, 0xc6, 0x17, 0x8f, 0xe4,
-	0x18, 0x3e, 0x3c, 0x92, 0x63, 0x9c, 0xf0, 0x58, 0x8e, 0x81, 0x8b, 0x3f, 0x39, 0x3f, 0x57, 0x0f,
-	0xc9, 0xad, 0x4e, 0x7c, 0x70, 0x97, 0x06, 0x80, 0x3c, 0x12, 0xc0, 0xb8, 0x88, 0x89, 0xd9, 0x3d,
-	0x24, 0x20, 0x89, 0x0d, 0xec, 0x2f, 0x63, 0x40, 0x00, 0x00, 0x00, 0xff, 0xff, 0x4b, 0xf4, 0x20,
-	0xf6, 0xf6, 0x00, 0x00, 0x00,
-}

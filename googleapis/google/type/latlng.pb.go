@@ -3,61 +3,33 @@
 
 package google_type
 
-import proto "github.com/gogo/protobuf/proto"
-import fmt "fmt"
-import math "math"
-
-import strings "strings"
-import reflect "reflect"
-
-import encoding_binary "encoding/binary"
-
-import io "io"
+import (
+	encoding_binary "encoding/binary"
+	fmt "fmt"
+	proto "github.com/gogo/protobuf/proto"
+	io "io"
+	math "math"
+	math_bits "math/bits"
+	reflect "reflect"
+	strings "strings"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
 
+// This is a compile-time assertion to ensure that this generated file
+// is compatible with the proto package it is being compiled against.
+// A compilation error at this line likely means your copy of the
+// proto package needs to be updated.
+const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
+
 // An object representing a latitude/longitude pair. This is expressed as a pair
 // of doubles representing degrees latitude and degrees longitude. Unless
 // specified otherwise, this must conform to the
 // <a href="http://www.unoosa.org/pdf/icg/2012/template/WGS_84.pdf">WGS84
 // standard</a>. Values must be within normalized ranges.
-//
-// Example of normalization code in Python:
-//
-//     def NormalizeLongitude(longitude):
-//       """Wraps decimal degrees longitude to [-180.0, 180.0]."""
-//       q, r = divmod(longitude, 360.0)
-//       if r > 180.0 or (r == 180.0 and q <= -1.0):
-//         return r - 360.0
-//       return r
-//
-//     def NormalizeLatLng(latitude, longitude):
-//       """Wraps decimal degrees latitude and longitude to
-//       [-90.0, 90.0] and [-180.0, 180.0], respectively."""
-//       r = latitude % 360.0
-//       if r <= 90.0:
-//         return r, NormalizeLongitude(longitude)
-//       elif r >= 270.0:
-//         return r - 360, NormalizeLongitude(longitude)
-//       else:
-//         return 180 - r, NormalizeLongitude(longitude + 180.0)
-//
-//     assert 180.0 == NormalizeLongitude(180.0)
-//     assert -180.0 == NormalizeLongitude(-180.0)
-//     assert -179.0 == NormalizeLongitude(181.0)
-//     assert (0.0, 0.0) == NormalizeLatLng(360.0, 0.0)
-//     assert (0.0, 0.0) == NormalizeLatLng(-360.0, 0.0)
-//     assert (85.0, 180.0) == NormalizeLatLng(95.0, 0.0)
-//     assert (-85.0, -170.0) == NormalizeLatLng(-95.0, 10.0)
-//     assert (90.0, 10.0) == NormalizeLatLng(90.0, 10.0)
-//     assert (-90.0, -10.0) == NormalizeLatLng(-90.0, -10.0)
-//     assert (0.0, -170.0) == NormalizeLatLng(-180.0, 10.0)
-//     assert (0.0, -170.0) == NormalizeLatLng(180.0, 10.0)
-//     assert (-90.0, 10.0) == NormalizeLatLng(270.0, 10.0)
-//     assert (90.0, 10.0) == NormalizeLatLng(-270.0, 10.0)
 type LatLng struct {
 	// The latitude in degrees. It must be in the range [-90.0, +90.0].
 	Latitude float64 `protobuf:"fixed64,1,opt,name=latitude,proto3" json:"latitude,omitempty"`
@@ -65,9 +37,37 @@ type LatLng struct {
 	Longitude float64 `protobuf:"fixed64,2,opt,name=longitude,proto3" json:"longitude,omitempty"`
 }
 
-func (m *LatLng) Reset()                    { *m = LatLng{} }
-func (*LatLng) ProtoMessage()               {}
-func (*LatLng) Descriptor() ([]byte, []int) { return fileDescriptorLatlng, []int{0} }
+func (m *LatLng) Reset()      { *m = LatLng{} }
+func (*LatLng) ProtoMessage() {}
+func (*LatLng) Descriptor() ([]byte, []int) {
+	return fileDescriptor_a087c9a103c281a9, []int{0}
+}
+func (m *LatLng) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *LatLng) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_LatLng.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *LatLng) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_LatLng.Merge(m, src)
+}
+func (m *LatLng) XXX_Size() int {
+	return m.Size()
+}
+func (m *LatLng) XXX_DiscardUnknown() {
+	xxx_messageInfo_LatLng.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_LatLng proto.InternalMessageInfo
 
 func (m *LatLng) GetLatitude() float64 {
 	if m != nil {
@@ -86,12 +86,28 @@ func (m *LatLng) GetLongitude() float64 {
 func init() {
 	proto.RegisterType((*LatLng)(nil), "google.type.LatLng")
 }
+
+func init() { proto.RegisterFile("google/type/latlng.proto", fileDescriptor_a087c9a103c281a9) }
+
+var fileDescriptor_a087c9a103c281a9 = []byte{
+	// 192 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x92, 0x48, 0xcf, 0xcf, 0x4f,
+	0xcf, 0x49, 0xd5, 0x2f, 0xa9, 0x2c, 0x48, 0xd5, 0xcf, 0x49, 0x2c, 0xc9, 0xc9, 0x4b, 0xd7, 0x2b,
+	0x28, 0xca, 0x2f, 0xc9, 0x17, 0xe2, 0x86, 0xc8, 0xe8, 0x81, 0x64, 0x94, 0x9c, 0xb8, 0xd8, 0x7c,
+	0x12, 0x4b, 0x7c, 0xf2, 0xd2, 0x85, 0xa4, 0xb8, 0x38, 0x72, 0x12, 0x4b, 0x32, 0x4b, 0x4a, 0x53,
+	0x52, 0x25, 0x18, 0x15, 0x18, 0x35, 0x18, 0x83, 0xe0, 0x7c, 0x21, 0x19, 0x2e, 0xce, 0x9c, 0xfc,
+	0xbc, 0x74, 0x88, 0x24, 0x13, 0x58, 0x12, 0x21, 0xe0, 0x14, 0x7b, 0xe1, 0xa1, 0x1c, 0xc3, 0x8d,
+	0x87, 0x72, 0x0c, 0x1f, 0x1e, 0xca, 0x31, 0x36, 0x3c, 0x92, 0x63, 0x5c, 0xf1, 0x48, 0x8e, 0xf1,
+	0xc4, 0x23, 0x39, 0xc6, 0x0b, 0x8f, 0xe4, 0x18, 0x1f, 0x3c, 0x92, 0x63, 0x7c, 0xf1, 0x48, 0x8e,
+	0xe1, 0xc3, 0x23, 0x39, 0xc6, 0x09, 0x8f, 0xe5, 0x18, 0x2e, 0x3c, 0x96, 0x63, 0xb8, 0xf1, 0x58,
+	0x8e, 0x81, 0x8b, 0x3f, 0x39, 0x3f, 0x57, 0x0f, 0xc9, 0x29, 0x4e, 0xdc, 0x10, 0x87, 0x04, 0x80,
+	0x1c, 0x19, 0xc0, 0xf8, 0x83, 0x91, 0x71, 0x11, 0x13, 0xb3, 0x7b, 0x48, 0x40, 0x12, 0x1b, 0xd8,
+	0xd9, 0xc6, 0x80, 0x00, 0x00, 0x00, 0xff, 0xff, 0xe7, 0x88, 0x65, 0xda, 0xd2, 0x00, 0x00, 0x00,
+}
+
 func (this *LatLng) Equal(that interface{}) bool {
 	if that == nil {
-		if this == nil {
-			return true
-		}
-		return false
+		return this == nil
 	}
 
 	that1, ok := that.(*LatLng)
@@ -104,10 +120,7 @@ func (this *LatLng) Equal(that interface{}) bool {
 		}
 	}
 	if that1 == nil {
-		if this == nil {
-			return true
-		}
-		return false
+		return this == nil
 	} else if this == nil {
 		return false
 	}
@@ -141,7 +154,7 @@ func valueToGoStringLatlng(v interface{}, typ string) string {
 func (m *LatLng) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -149,35 +162,45 @@ func (m *LatLng) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *LatLng) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *LatLng) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Latitude != 0 {
-		dAtA[i] = 0x9
-		i++
-		encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(m.Latitude))))
-		i += 8
-	}
 	if m.Longitude != 0 {
-		dAtA[i] = 0x11
-		i++
+		i -= 8
 		encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(m.Longitude))))
-		i += 8
+		i--
+		dAtA[i] = 0x11
 	}
-	return i, nil
+	if m.Latitude != 0 {
+		i -= 8
+		encoding_binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(m.Latitude))))
+		i--
+		dAtA[i] = 0x9
+	}
+	return len(dAtA) - i, nil
 }
 
 func encodeVarintLatlng(dAtA []byte, offset int, v uint64) int {
+	offset -= sovLatlng(v)
+	base := offset
 	for v >= 1<<7 {
 		dAtA[offset] = uint8(v&0x7f | 0x80)
 		v >>= 7
 		offset++
 	}
 	dAtA[offset] = uint8(v)
-	return offset + 1
+	return base
 }
 func (m *LatLng) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Latitude != 0 {
@@ -190,14 +213,7 @@ func (m *LatLng) Size() (n int) {
 }
 
 func sovLatlng(x uint64) (n int) {
-	for {
-		n++
-		x >>= 7
-		if x == 0 {
-			break
-		}
-	}
-	return n
+	return (math_bits.Len64(x|1) + 6) / 7
 }
 func sozLatlng(x uint64) (n int) {
 	return sovLatlng(uint64((x << 1) ^ uint64((int64(x) >> 63))))
@@ -236,7 +252,7 @@ func (m *LatLng) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -279,6 +295,9 @@ func (m *LatLng) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			if skippy < 0 {
+				return ErrInvalidLengthLatlng
+			}
+			if (iNdEx + skippy) < 0 {
 				return ErrInvalidLengthLatlng
 			}
 			if (iNdEx + skippy) > l {
@@ -347,8 +366,11 @@ func skipLatlng(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			iNdEx += length
 			if length < 0 {
+				return 0, ErrInvalidLengthLatlng
+			}
+			iNdEx += length
+			if iNdEx < 0 {
 				return 0, ErrInvalidLengthLatlng
 			}
 			return iNdEx, nil
@@ -379,6 +401,9 @@ func skipLatlng(dAtA []byte) (n int, err error) {
 					return 0, err
 				}
 				iNdEx = start + next
+				if iNdEx < 0 {
+					return 0, ErrInvalidLengthLatlng
+				}
 			}
 			return iNdEx, nil
 		case 4:
@@ -397,21 +422,3 @@ var (
 	ErrInvalidLengthLatlng = fmt.Errorf("proto: negative length found during unmarshaling")
 	ErrIntOverflowLatlng   = fmt.Errorf("proto: integer overflow")
 )
-
-func init() { proto.RegisterFile("google/type/latlng.proto", fileDescriptorLatlng) }
-
-var fileDescriptorLatlng = []byte{
-	// 180 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x92, 0x48, 0xcf, 0xcf, 0x4f,
-	0xcf, 0x49, 0xd5, 0x2f, 0xa9, 0x2c, 0x48, 0xd5, 0xcf, 0x49, 0x2c, 0xc9, 0xc9, 0x4b, 0xd7, 0x2b,
-	0x28, 0xca, 0x2f, 0xc9, 0x17, 0xe2, 0x86, 0xc8, 0xe8, 0x81, 0x64, 0x94, 0x9c, 0xb8, 0xd8, 0x7c,
-	0x12, 0x4b, 0x7c, 0xf2, 0xd2, 0x85, 0xa4, 0xb8, 0x38, 0x72, 0x12, 0x4b, 0x32, 0x4b, 0x4a, 0x53,
-	0x52, 0x25, 0x18, 0x15, 0x18, 0x35, 0x18, 0x83, 0xe0, 0x7c, 0x21, 0x19, 0x2e, 0xce, 0x9c, 0xfc,
-	0xbc, 0x74, 0x88, 0x24, 0x13, 0x58, 0x12, 0x21, 0xe0, 0x14, 0x74, 0xe1, 0xa1, 0x1c, 0xc3, 0x8d,
-	0x87, 0x72, 0x0c, 0x1f, 0x1e, 0xca, 0x31, 0x36, 0x3c, 0x92, 0x63, 0x5c, 0xf1, 0x48, 0x8e, 0xf1,
-	0xc4, 0x23, 0x39, 0xc6, 0x0b, 0x8f, 0xe4, 0x18, 0x1f, 0x3c, 0x92, 0x63, 0x7c, 0xf1, 0x48, 0x8e,
-	0xe1, 0xc3, 0x23, 0x39, 0xc6, 0x09, 0x8f, 0xe5, 0x18, 0xb8, 0xf8, 0x93, 0xf3, 0x73, 0xf5, 0x90,
-	0x9c, 0xe0, 0xc4, 0x0d, 0x71, 0x40, 0x00, 0xc8, 0x71, 0x01, 0x8c, 0x8b, 0x98, 0x98, 0xdd, 0x43,
-	0x02, 0x92, 0xd8, 0xc0, 0x6e, 0x35, 0x06, 0x04, 0x00, 0x00, 0xff, 0xff, 0x9c, 0xa0, 0x20, 0xad,
-	0xc7, 0x00, 0x00, 0x00,
-}
