@@ -1,4 +1,4 @@
-apitools_img := gcr.io/istio-testing/api-build-tools:2019-07-29
+apitools_img := gcr.io/istio-testing/api-build-tools:2019-07-30
 pwd := $(shell pwd)
 uid := $(shell id -u)
 PROTOC = docker run --user $(uid) -v /etc/passwd:/etc/passwd:ro --rm -v $(pwd):/work -w /work $(apitools_img) protoc
@@ -99,7 +99,7 @@ format: generate
 
 build: format
 	# Build code
-	@go build ./...
+	@GO111MODULE=on go build ./...
 
 clean:
 	@rm */*.pb.go */*/*/*.pb.go

@@ -8,7 +8,6 @@ import (
 	proto "github.com/gogo/protobuf/proto"
 	io "io"
 	math "math"
-	math_bits "math/bits"
 	reflect "reflect"
 	strings "strings"
 )
@@ -53,7 +52,7 @@ func (m *TimeOfDay) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return xxx_messageInfo_TimeOfDay.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
@@ -181,7 +180,7 @@ func valueToGoStringTimeofday(v interface{}, typ string) string {
 func (m *TimeOfDay) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -189,48 +188,41 @@ func (m *TimeOfDay) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *TimeOfDay) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *TimeOfDay) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.Nanos != 0 {
-		i = encodeVarintTimeofday(dAtA, i, uint64(m.Nanos))
-		i--
-		dAtA[i] = 0x20
-	}
-	if m.Seconds != 0 {
-		i = encodeVarintTimeofday(dAtA, i, uint64(m.Seconds))
-		i--
-		dAtA[i] = 0x18
+	if m.Hours != 0 {
+		dAtA[i] = 0x8
+		i++
+		i = encodeVarintTimeofday(dAtA, i, uint64(m.Hours))
 	}
 	if m.Minutes != 0 {
-		i = encodeVarintTimeofday(dAtA, i, uint64(m.Minutes))
-		i--
 		dAtA[i] = 0x10
+		i++
+		i = encodeVarintTimeofday(dAtA, i, uint64(m.Minutes))
 	}
-	if m.Hours != 0 {
-		i = encodeVarintTimeofday(dAtA, i, uint64(m.Hours))
-		i--
-		dAtA[i] = 0x8
+	if m.Seconds != 0 {
+		dAtA[i] = 0x18
+		i++
+		i = encodeVarintTimeofday(dAtA, i, uint64(m.Seconds))
 	}
-	return len(dAtA) - i, nil
+	if m.Nanos != 0 {
+		dAtA[i] = 0x20
+		i++
+		i = encodeVarintTimeofday(dAtA, i, uint64(m.Nanos))
+	}
+	return i, nil
 }
 
 func encodeVarintTimeofday(dAtA []byte, offset int, v uint64) int {
-	offset -= sovTimeofday(v)
-	base := offset
 	for v >= 1<<7 {
 		dAtA[offset] = uint8(v&0x7f | 0x80)
 		v >>= 7
 		offset++
 	}
 	dAtA[offset] = uint8(v)
-	return base
+	return offset + 1
 }
 func (m *TimeOfDay) Size() (n int) {
 	if m == nil {
@@ -254,7 +246,14 @@ func (m *TimeOfDay) Size() (n int) {
 }
 
 func sovTimeofday(x uint64) (n int) {
-	return (math_bits.Len64(x|1) + 6) / 7
+	for {
+		n++
+		x >>= 7
+		if x == 0 {
+			break
+		}
+	}
+	return n
 }
 func sozTimeofday(x uint64) (n int) {
 	return sovTimeofday(uint64((x << 1) ^ uint64((int64(x) >> 63))))
