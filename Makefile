@@ -1,4 +1,9 @@
-GOOGLEAPIS_SHA = c8c975543a134177cc41b64cbbf10b88fe66aa1d
+apitools_img := gcr.io/istio-testing/api-build-tools:2019-07-29
+pwd := $(shell pwd)
+uid := $(shell id -u)
+PROTOC = docker run --user $(uid) -v /etc/passwd:/etc/passwd:ro --rm -v $(pwd):/work -w /work $(apitools_img) protoc
+
+GOOGLEAPIS_SHA = 2912605a8d9a126bb24e418bc4b089ad0a2b62dc
 GOOGLEAPIS_URL = https://raw.githubusercontent.com/googleapis/googleapis/$(GOOGLEAPIS_SHA)
 
 CENSUS_SHA = e2601ef16f8a085a69d94ace5133f97438f8945f
@@ -18,15 +23,15 @@ importmaps := \
 	google/protobuf/duration.proto=$(GOGO_TYPES) \
 	google/protobuf/timestamp.proto=$(GOGO_TYPES) \
 	google/protobuf/wrappers.proto=$(GOGO_TYPES) \
+	google/protobuf/struct.proto=$(GOGO_TYPES) \
 
 comma := ,
 empty :=
 space := $(empty) $(empty)
 mapping_with_spaces := $(foreach map,$(importmaps),M$(map),)
 MAPPING := $(subst $(space),$(empty),$(mapping_with_spaces))
-GOGOSLICK_PLUGIN := --plugin=protoc-gen-gogoslick=gogoslick --gogoslick_out=$(MAPPING)
-GOGOFASTER_PLUGIN := --plugin=protoc-gen-gogofaster=gogofaster --gogofaster_out=$(MAPPING)
-PROTOC = protoc
+GOGOSLICK_PLUGIN := --gogoslick_out=plugins=grpc,$(MAPPING)
+GOGOFASTER_PLUGIN := --gogofaster_out=plugins=grpc,$(MAPPING)
 
 googleapis_protos = \
 	google/api/http.proto \
@@ -58,32 +63,15 @@ census_packages = \
 
 all: build
 
-vendor:
-	dep ensure --vendor-only
-
-depend: vendor
-	$(foreach var,$(googleapis_packages),mkdir -p googleapis/$(var);)
-	$(foreach var,$(census_packages),mkdir -p $(var);)
-
-protoc.version:
-	# Record protoc version
-	@echo `$(PROTOC) --version` > protoc.version
-
-gogoslick: depend
-	@go build -o gogoslick vendor/github.com/gogo/protobuf/protoc-gen-gogoslick/main.go
-
-gogofaster: depend
-	@go build -o gogofaster vendor/github.com/gogo/protobuf/protoc-gen-gogofaster/main.go
-
 $(googleapis_protos): %:
 	# Download $@ at $(GOOGLEAPIS_SHA)
 	@curl -sS $(GOOGLEAPIS_URL)/$@ -o googleapis/$@.tmp
 	@sed -e '/^option go_package/d' googleapis/$@.tmp > googleapis/$@
 	@rm googleapis/$@.tmp
 
-$(googleapis_packages): %: gogoslick protoc.version $(googleapis_protos)
+$(googleapis_packages): %: $(googleapis_protos)
 	# Generate $@
-	@$(PROTOC) $(GOGOSLICK_PLUGIN):googleapis -I googleapis googleapis/$@/*.proto
+	$(PROTOC) $(GOGOSLICK_PLUGIN):googleapis -I googleapis googleapis/$@/*.proto
 
 $(census_protos): %:
 	# Download $@ at $(CENSUS_SHA)
@@ -91,7 +79,7 @@ $(census_protos): %:
 	@sed -i.tmp '/^option go_package/d' $@
 	@rm $@.tmp
 
-$(census_packages): %: gogofaster protoc.version $(census_protos)
+$(census_packages): %: $(census_protos)
 	# Generate $@
 	@$(PROTOC) $(GOGOFASTER_PLUGIN):. -I . $@/*.proto
 
@@ -99,7 +87,7 @@ prometheus/metrics.proto:
 	@mkdir -p prometheus
 	@curl -sS $(PROMETHEUS_URL)/metrics.proto -o prometheus/metrics.proto
 
-prometheus/metrics.pb.go: gogofaster protoc.version prometheus/metrics.proto
+prometheus/metrics.pb.go: prometheus/metrics.proto
 	# Generate prometheus
 	@$(PROTOC) $(GOGOFASTER_PLUGIN):. prometheus/metrics.proto
 
@@ -114,6 +102,6 @@ build: format
 	@go build ./...
 
 clean:
-	@rm gogoslick
+	@rm */*.pb.go */*/*/*.pb.go
 
-.PHONY: all depend format build $(googleapis_protos) $(googleapis_packages) protoc.version clean
+.PHONY: all format build $(googleapis_protos) $(googleapis_packages) clean

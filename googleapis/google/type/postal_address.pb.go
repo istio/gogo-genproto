@@ -3,19 +3,26 @@
 
 package google_type
 
-import proto "github.com/gogo/protobuf/proto"
-import fmt "fmt"
-import math "math"
-
-import strings "strings"
-import reflect "reflect"
-
-import io "io"
+import (
+	fmt "fmt"
+	proto "github.com/gogo/protobuf/proto"
+	io "io"
+	math "math"
+	math_bits "math/bits"
+	reflect "reflect"
+	strings "strings"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
+
+// This is a compile-time assertion to ensure that this generated file
+// is compatible with the proto package it is being compiled against.
+// A compilation error at this line likely means your copy of the
+// proto package needs to be updated.
+const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
 
 // Represents a postal address, e.g. for postal delivery or payments addresses.
 // Given a postal address, a postal service can deliver items to a premise, P.O.
@@ -28,7 +35,7 @@ var _ = math.Inf
 //
 // Advice on address input / editing:
 //  - Use an i18n-ready address widget such as
-//    https://github.com/googlei18n/libaddressinput)
+//    https://github.com/google/libaddressinput)
 // - Users should not be presented with UI elements for input or editing of
 //   fields outside countries where that field is used.
 //
@@ -106,18 +113,46 @@ type PostalAddress struct {
 	// then geocoding is the recommended way to handle completely unstructured
 	// addresses (as opposed to guessing which parts of the address should be
 	// localities or administrative areas).
-	AddressLines []string `protobuf:"bytes,9,rep,name=address_lines,json=addressLines" json:"address_lines,omitempty"`
+	AddressLines []string `protobuf:"bytes,9,rep,name=address_lines,json=addressLines,proto3" json:"address_lines,omitempty"`
 	// Optional. The recipient at the address.
 	// This field may, under certain circumstances, contain multiline information.
 	// For example, it might contain "care of" information.
-	Recipients []string `protobuf:"bytes,10,rep,name=recipients" json:"recipients,omitempty"`
+	Recipients []string `protobuf:"bytes,10,rep,name=recipients,proto3" json:"recipients,omitempty"`
 	// Optional. The name of the organization at the address.
 	Organization string `protobuf:"bytes,11,opt,name=organization,proto3" json:"organization,omitempty"`
 }
 
-func (m *PostalAddress) Reset()                    { *m = PostalAddress{} }
-func (*PostalAddress) ProtoMessage()               {}
-func (*PostalAddress) Descriptor() ([]byte, []int) { return fileDescriptorPostalAddress, []int{0} }
+func (m *PostalAddress) Reset()      { *m = PostalAddress{} }
+func (*PostalAddress) ProtoMessage() {}
+func (*PostalAddress) Descriptor() ([]byte, []int) {
+	return fileDescriptor_17c0e9bca935790c, []int{0}
+}
+func (m *PostalAddress) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *PostalAddress) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_PostalAddress.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *PostalAddress) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PostalAddress.Merge(m, src)
+}
+func (m *PostalAddress) XXX_Size() int {
+	return m.Size()
+}
+func (m *PostalAddress) XXX_DiscardUnknown() {
+	xxx_messageInfo_PostalAddress.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PostalAddress proto.InternalMessageInfo
 
 func (m *PostalAddress) GetRevision() int32 {
 	if m != nil {
@@ -199,12 +234,39 @@ func (m *PostalAddress) GetOrganization() string {
 func init() {
 	proto.RegisterType((*PostalAddress)(nil), "google.type.PostalAddress")
 }
+
+func init() { proto.RegisterFile("google/type/postal_address.proto", fileDescriptor_17c0e9bca935790c) }
+
+var fileDescriptor_17c0e9bca935790c = []byte{
+	// 368 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x54, 0x92, 0xb1, 0x6e, 0xe2, 0x30,
+	0x18, 0xc7, 0x63, 0x72, 0x70, 0xf0, 0x05, 0x74, 0x92, 0x6f, 0x89, 0x6e, 0x30, 0x39, 0x6e, 0x61,
+	0x82, 0xe1, 0x9e, 0x00, 0x3a, 0x74, 0xe9, 0x10, 0xa1, 0xee, 0x91, 0x49, 0xac, 0xc8, 0x52, 0xb0,
+	0x23, 0xdb, 0x20, 0xd1, 0xa9, 0x2f, 0x50, 0xa9, 0xcf, 0xd0, 0xa9, 0x8f, 0xd2, 0x91, 0x91, 0xb1,
+	0x84, 0xa5, 0x23, 0x8f, 0x50, 0xc5, 0x4e, 0x29, 0x8c, 0xdf, 0xef, 0xfb, 0xc9, 0xf6, 0xf7, 0xfd,
+	0x0d, 0x51, 0x2e, 0x65, 0x5e, 0xb0, 0xa9, 0xd9, 0x96, 0x6c, 0x5a, 0x4a, 0x6d, 0x68, 0x91, 0xd0,
+	0x2c, 0x53, 0x4c, 0xeb, 0x49, 0xa9, 0xa4, 0x91, 0x38, 0x70, 0xc6, 0xa4, 0x36, 0x46, 0x4f, 0x3e,
+	0x0c, 0x62, 0x6b, 0xcd, 0x9c, 0x84, 0xff, 0x40, 0x57, 0xb1, 0x0d, 0xd7, 0x5c, 0x8a, 0x10, 0x45,
+	0x68, 0xdc, 0x5e, 0x9c, 0x6b, 0x3c, 0x84, 0x40, 0xb1, 0x9c, 0x4b, 0x91, 0xa4, 0x32, 0x63, 0x61,
+	0x2b, 0x42, 0xe3, 0xde, 0x02, 0x1c, 0xba, 0x91, 0x19, 0xc3, 0xff, 0x60, 0x50, 0x50, 0x91, 0xaf,
+	0x69, 0xce, 0x9c, 0xe2, 0x5b, 0xa5, 0xff, 0x05, 0xad, 0x34, 0x84, 0xa0, 0x79, 0x98, 0x55, 0x7e,
+	0xb8, 0x53, 0x1c, 0xb2, 0xc2, 0x5f, 0xe8, 0x6b, 0xa9, 0x0c, 0x17, 0xb9, 0x33, 0xda, 0xd6, 0x08,
+	0x1a, 0x66, 0x95, 0x29, 0xfc, 0xa6, 0xd9, 0x8a, 0x0b, 0xae, 0x8d, 0xa2, 0x86, 0x6f, 0x58, 0x42,
+	0x15, 0xa3, 0x61, 0xc7, 0x9a, 0xf8, 0xba, 0x35, 0x53, 0x8c, 0xd6, 0x63, 0x15, 0x32, 0xa5, 0x05,
+	0x37, 0xdb, 0xf0, 0xa7, 0xb5, 0xce, 0x35, 0x8e, 0x20, 0xd0, 0xeb, 0xe5, 0xb9, 0xdd, 0x6d, 0xae,
+	0xfb, 0x46, 0xf5, 0x5c, 0xcd, 0x12, 0x93, 0x82, 0x0b, 0xa6, 0xc3, 0x5e, 0xe4, 0xd7, 0x73, 0x35,
+	0xf0, 0xae, 0x66, 0x98, 0x00, 0x28, 0x96, 0xf2, 0x92, 0x33, 0x61, 0x74, 0x08, 0xd6, 0xb8, 0x20,
+	0x78, 0x04, 0x7d, 0xa9, 0x72, 0x2a, 0xf8, 0x03, 0x35, 0xf5, 0x76, 0x03, 0xb7, 0x9b, 0x4b, 0x36,
+	0xa7, 0xbb, 0x03, 0xf1, 0xf6, 0x07, 0xe2, 0x9d, 0x0e, 0x04, 0x3d, 0x56, 0x04, 0xbd, 0x56, 0x04,
+	0xbd, 0x55, 0x04, 0xed, 0x2a, 0x82, 0xde, 0x2b, 0x82, 0x3e, 0x2a, 0xe2, 0x9d, 0x2a, 0x82, 0x9e,
+	0x8f, 0xc4, 0xdb, 0x1d, 0x89, 0xb7, 0x3f, 0x12, 0x0f, 0x7e, 0xa5, 0x72, 0x35, 0xb9, 0x88, 0x75,
+	0x8e, 0xaf, 0x32, 0x8d, 0xeb, 0xdc, 0x63, 0xf4, 0xd2, 0xf2, 0x6f, 0xef, 0xe3, 0x65, 0xc7, 0x7e,
+	0x83, 0xff, 0x9f, 0x01, 0x00, 0x00, 0xff, 0xff, 0x08, 0x56, 0x56, 0x16, 0x2a, 0x02, 0x00, 0x00,
+}
+
 func (this *PostalAddress) Equal(that interface{}) bool {
 	if that == nil {
-		if this == nil {
-			return true
-		}
-		return false
+		return this == nil
 	}
 
 	that1, ok := that.(*PostalAddress)
@@ -217,10 +279,7 @@ func (this *PostalAddress) Equal(that interface{}) bool {
 		}
 	}
 	if that1 == nil {
-		if this == nil {
-			return true
-		}
-		return false
+		return this == nil
 	} else if this == nil {
 		return false
 	}
@@ -300,7 +359,7 @@ func valueToGoStringPostalAddress(v interface{}, typ string) string {
 func (m *PostalAddress) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -308,106 +367,112 @@ func (m *PostalAddress) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *PostalAddress) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *PostalAddress) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Revision != 0 {
-		dAtA[i] = 0x8
-		i++
-		i = encodeVarintPostalAddress(dAtA, i, uint64(m.Revision))
-	}
-	if len(m.RegionCode) > 0 {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintPostalAddress(dAtA, i, uint64(len(m.RegionCode)))
-		i += copy(dAtA[i:], m.RegionCode)
-	}
-	if len(m.LanguageCode) > 0 {
-		dAtA[i] = 0x1a
-		i++
-		i = encodeVarintPostalAddress(dAtA, i, uint64(len(m.LanguageCode)))
-		i += copy(dAtA[i:], m.LanguageCode)
-	}
-	if len(m.PostalCode) > 0 {
-		dAtA[i] = 0x22
-		i++
-		i = encodeVarintPostalAddress(dAtA, i, uint64(len(m.PostalCode)))
-		i += copy(dAtA[i:], m.PostalCode)
-	}
-	if len(m.SortingCode) > 0 {
-		dAtA[i] = 0x2a
-		i++
-		i = encodeVarintPostalAddress(dAtA, i, uint64(len(m.SortingCode)))
-		i += copy(dAtA[i:], m.SortingCode)
-	}
-	if len(m.AdministrativeArea) > 0 {
-		dAtA[i] = 0x32
-		i++
-		i = encodeVarintPostalAddress(dAtA, i, uint64(len(m.AdministrativeArea)))
-		i += copy(dAtA[i:], m.AdministrativeArea)
-	}
-	if len(m.Locality) > 0 {
-		dAtA[i] = 0x3a
-		i++
-		i = encodeVarintPostalAddress(dAtA, i, uint64(len(m.Locality)))
-		i += copy(dAtA[i:], m.Locality)
-	}
-	if len(m.Sublocality) > 0 {
-		dAtA[i] = 0x42
-		i++
-		i = encodeVarintPostalAddress(dAtA, i, uint64(len(m.Sublocality)))
-		i += copy(dAtA[i:], m.Sublocality)
-	}
-	if len(m.AddressLines) > 0 {
-		for _, s := range m.AddressLines {
-			dAtA[i] = 0x4a
-			i++
-			l = len(s)
-			for l >= 1<<7 {
-				dAtA[i] = uint8(uint64(l)&0x7f | 0x80)
-				l >>= 7
-				i++
-			}
-			dAtA[i] = uint8(l)
-			i++
-			i += copy(dAtA[i:], s)
-		}
+	if len(m.Organization) > 0 {
+		i -= len(m.Organization)
+		copy(dAtA[i:], m.Organization)
+		i = encodeVarintPostalAddress(dAtA, i, uint64(len(m.Organization)))
+		i--
+		dAtA[i] = 0x5a
 	}
 	if len(m.Recipients) > 0 {
-		for _, s := range m.Recipients {
+		for iNdEx := len(m.Recipients) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.Recipients[iNdEx])
+			copy(dAtA[i:], m.Recipients[iNdEx])
+			i = encodeVarintPostalAddress(dAtA, i, uint64(len(m.Recipients[iNdEx])))
+			i--
 			dAtA[i] = 0x52
-			i++
-			l = len(s)
-			for l >= 1<<7 {
-				dAtA[i] = uint8(uint64(l)&0x7f | 0x80)
-				l >>= 7
-				i++
-			}
-			dAtA[i] = uint8(l)
-			i++
-			i += copy(dAtA[i:], s)
 		}
 	}
-	if len(m.Organization) > 0 {
-		dAtA[i] = 0x5a
-		i++
-		i = encodeVarintPostalAddress(dAtA, i, uint64(len(m.Organization)))
-		i += copy(dAtA[i:], m.Organization)
+	if len(m.AddressLines) > 0 {
+		for iNdEx := len(m.AddressLines) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.AddressLines[iNdEx])
+			copy(dAtA[i:], m.AddressLines[iNdEx])
+			i = encodeVarintPostalAddress(dAtA, i, uint64(len(m.AddressLines[iNdEx])))
+			i--
+			dAtA[i] = 0x4a
+		}
 	}
-	return i, nil
+	if len(m.Sublocality) > 0 {
+		i -= len(m.Sublocality)
+		copy(dAtA[i:], m.Sublocality)
+		i = encodeVarintPostalAddress(dAtA, i, uint64(len(m.Sublocality)))
+		i--
+		dAtA[i] = 0x42
+	}
+	if len(m.Locality) > 0 {
+		i -= len(m.Locality)
+		copy(dAtA[i:], m.Locality)
+		i = encodeVarintPostalAddress(dAtA, i, uint64(len(m.Locality)))
+		i--
+		dAtA[i] = 0x3a
+	}
+	if len(m.AdministrativeArea) > 0 {
+		i -= len(m.AdministrativeArea)
+		copy(dAtA[i:], m.AdministrativeArea)
+		i = encodeVarintPostalAddress(dAtA, i, uint64(len(m.AdministrativeArea)))
+		i--
+		dAtA[i] = 0x32
+	}
+	if len(m.SortingCode) > 0 {
+		i -= len(m.SortingCode)
+		copy(dAtA[i:], m.SortingCode)
+		i = encodeVarintPostalAddress(dAtA, i, uint64(len(m.SortingCode)))
+		i--
+		dAtA[i] = 0x2a
+	}
+	if len(m.PostalCode) > 0 {
+		i -= len(m.PostalCode)
+		copy(dAtA[i:], m.PostalCode)
+		i = encodeVarintPostalAddress(dAtA, i, uint64(len(m.PostalCode)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.LanguageCode) > 0 {
+		i -= len(m.LanguageCode)
+		copy(dAtA[i:], m.LanguageCode)
+		i = encodeVarintPostalAddress(dAtA, i, uint64(len(m.LanguageCode)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.RegionCode) > 0 {
+		i -= len(m.RegionCode)
+		copy(dAtA[i:], m.RegionCode)
+		i = encodeVarintPostalAddress(dAtA, i, uint64(len(m.RegionCode)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Revision != 0 {
+		i = encodeVarintPostalAddress(dAtA, i, uint64(m.Revision))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
 }
 
 func encodeVarintPostalAddress(dAtA []byte, offset int, v uint64) int {
+	offset -= sovPostalAddress(v)
+	base := offset
 	for v >= 1<<7 {
 		dAtA[offset] = uint8(v&0x7f | 0x80)
 		v >>= 7
 		offset++
 	}
 	dAtA[offset] = uint8(v)
-	return offset + 1
+	return base
 }
 func (m *PostalAddress) Size() (n int) {
+	if m == nil {
+		return 0
+	}
 	var l int
 	_ = l
 	if m.Revision != 0 {
@@ -461,14 +526,7 @@ func (m *PostalAddress) Size() (n int) {
 }
 
 func sovPostalAddress(x uint64) (n int) {
-	for {
-		n++
-		x >>= 7
-		if x == 0 {
-			break
-		}
-	}
-	return n
+	return (math_bits.Len64(x|1) + 6) / 7
 }
 func sozPostalAddress(x uint64) (n int) {
 	return sovPostalAddress(uint64((x << 1) ^ uint64((int64(x) >> 63))))
@@ -516,7 +574,7 @@ func (m *PostalAddress) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -544,7 +602,7 @@ func (m *PostalAddress) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Revision |= (int32(b) & 0x7F) << shift
+				m.Revision |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -563,7 +621,7 @@ func (m *PostalAddress) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -573,6 +631,9 @@ func (m *PostalAddress) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthPostalAddress
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPostalAddress
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -592,7 +653,7 @@ func (m *PostalAddress) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -602,6 +663,9 @@ func (m *PostalAddress) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthPostalAddress
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPostalAddress
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -621,7 +685,7 @@ func (m *PostalAddress) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -631,6 +695,9 @@ func (m *PostalAddress) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthPostalAddress
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPostalAddress
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -650,7 +717,7 @@ func (m *PostalAddress) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -660,6 +727,9 @@ func (m *PostalAddress) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthPostalAddress
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPostalAddress
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -679,7 +749,7 @@ func (m *PostalAddress) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -689,6 +759,9 @@ func (m *PostalAddress) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthPostalAddress
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPostalAddress
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -708,7 +781,7 @@ func (m *PostalAddress) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -718,6 +791,9 @@ func (m *PostalAddress) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthPostalAddress
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPostalAddress
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -737,7 +813,7 @@ func (m *PostalAddress) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -747,6 +823,9 @@ func (m *PostalAddress) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthPostalAddress
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPostalAddress
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -766,7 +845,7 @@ func (m *PostalAddress) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -776,6 +855,9 @@ func (m *PostalAddress) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthPostalAddress
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPostalAddress
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -795,7 +877,7 @@ func (m *PostalAddress) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -805,6 +887,9 @@ func (m *PostalAddress) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthPostalAddress
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPostalAddress
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -824,7 +909,7 @@ func (m *PostalAddress) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -834,6 +919,9 @@ func (m *PostalAddress) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthPostalAddress
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPostalAddress
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -846,6 +934,9 @@ func (m *PostalAddress) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			if skippy < 0 {
+				return ErrInvalidLengthPostalAddress
+			}
+			if (iNdEx + skippy) < 0 {
 				return ErrInvalidLengthPostalAddress
 			}
 			if (iNdEx + skippy) > l {
@@ -914,8 +1005,11 @@ func skipPostalAddress(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			iNdEx += length
 			if length < 0 {
+				return 0, ErrInvalidLengthPostalAddress
+			}
+			iNdEx += length
+			if iNdEx < 0 {
 				return 0, ErrInvalidLengthPostalAddress
 			}
 			return iNdEx, nil
@@ -946,6 +1040,9 @@ func skipPostalAddress(dAtA []byte) (n int, err error) {
 					return 0, err
 				}
 				iNdEx = start + next
+				if iNdEx < 0 {
+					return 0, ErrInvalidLengthPostalAddress
+				}
 			}
 			return iNdEx, nil
 		case 4:
@@ -964,32 +1061,3 @@ var (
 	ErrInvalidLengthPostalAddress = fmt.Errorf("proto: negative length found during unmarshaling")
 	ErrIntOverflowPostalAddress   = fmt.Errorf("proto: integer overflow")
 )
-
-func init() { proto.RegisterFile("google/type/postal_address.proto", fileDescriptorPostalAddress) }
-
-var fileDescriptorPostalAddress = []byte{
-	// 362 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x54, 0x91, 0xb1, 0x6e, 0xea, 0x30,
-	0x14, 0x86, 0x63, 0x72, 0xe1, 0xc2, 0x09, 0xe8, 0x4a, 0xbe, 0x4b, 0x74, 0x07, 0x93, 0x4b, 0x17,
-	0x26, 0x18, 0xfa, 0x04, 0xd0, 0xa1, 0x4b, 0x87, 0x08, 0x75, 0xe9, 0x14, 0x99, 0xc4, 0x8a, 0x2c,
-	0x05, 0x3b, 0xb2, 0x0d, 0x12, 0x9d, 0xfa, 0x02, 0x95, 0xfa, 0x0c, 0x9d, 0xfa, 0x28, 0x1d, 0x19,
-	0x3b, 0x96, 0x74, 0xe9, 0xc8, 0x23, 0x54, 0xb1, 0x53, 0x0a, 0xe3, 0xf9, 0xce, 0xa7, 0xc4, 0xe7,
-	0xff, 0x21, 0xca, 0xa5, 0xcc, 0x0b, 0x36, 0x35, 0xdb, 0x92, 0x4d, 0x4b, 0xa9, 0x0d, 0x2d, 0x12,
-	0x9a, 0x65, 0x8a, 0x69, 0x3d, 0x29, 0x95, 0x34, 0x12, 0x07, 0xce, 0x98, 0xd4, 0xc6, 0xe8, 0xd1,
-	0x87, 0x41, 0x6c, 0xad, 0x99, 0x93, 0xf0, 0x3f, 0xe8, 0x2a, 0xb6, 0xe1, 0x9a, 0x4b, 0x11, 0xa2,
-	0x08, 0x8d, 0xdb, 0x8b, 0xe3, 0x8c, 0x87, 0x10, 0x28, 0x96, 0x73, 0x29, 0x92, 0x54, 0x66, 0x2c,
-	0x6c, 0x45, 0x68, 0xdc, 0x5b, 0x80, 0x43, 0x57, 0x32, 0x63, 0xf8, 0x02, 0x06, 0x05, 0x15, 0xf9,
-	0x9a, 0xe6, 0xcc, 0x29, 0xbe, 0x55, 0xfa, 0xdf, 0xd0, 0x4a, 0x43, 0x08, 0x9a, 0x87, 0x59, 0xe5,
-	0x97, 0xfb, 0x8a, 0x43, 0x56, 0xf8, 0x0f, 0x7d, 0x2d, 0x95, 0xe1, 0x22, 0x77, 0x46, 0xdb, 0x1a,
-	0x41, 0xc3, 0xac, 0x32, 0x85, 0xbf, 0x34, 0x5b, 0x71, 0xc1, 0xb5, 0x51, 0xd4, 0xf0, 0x0d, 0x4b,
-	0xa8, 0x62, 0x34, 0xec, 0x58, 0x13, 0x9f, 0xaf, 0x66, 0x8a, 0xd1, 0xfa, 0xac, 0x42, 0xa6, 0xb4,
-	0xe0, 0x66, 0x1b, 0xfe, 0xb6, 0xd6, 0x71, 0xc6, 0x11, 0x04, 0x7a, 0xbd, 0x3c, 0xae, 0xbb, 0xcd,
-	0xef, 0x7e, 0x50, 0x7d, 0x57, 0x13, 0x62, 0x52, 0x70, 0xc1, 0x74, 0xd8, 0x8b, 0xfc, 0xfa, 0xae,
-	0x06, 0xde, 0xd4, 0x0c, 0x13, 0x00, 0xc5, 0x52, 0x5e, 0x72, 0x26, 0x8c, 0x0e, 0xc1, 0x1a, 0x27,
-	0x04, 0x8f, 0xa0, 0x2f, 0x55, 0x4e, 0x05, 0xbf, 0xa7, 0xa6, 0x4e, 0x37, 0x70, 0xd9, 0x9c, 0xb2,
-	0xf9, 0xdd, 0x6e, 0x4f, 0xbc, 0xb7, 0x3d, 0xf1, 0x0e, 0x7b, 0x82, 0x1e, 0x2a, 0x82, 0x5e, 0x2a,
-	0x82, 0x5e, 0x2b, 0x82, 0x76, 0x15, 0x41, 0xef, 0x15, 0x41, 0x9f, 0x15, 0xf1, 0x0e, 0x15, 0x41,
-	0x4f, 0x1f, 0xc4, 0x83, 0x3f, 0xa9, 0x5c, 0x4d, 0x4e, 0xea, 0x9c, 0xe3, 0xb3, 0x2e, 0xe3, 0xba,
-	0xef, 0x18, 0x3d, 0xb7, 0xfc, 0xeb, 0xdb, 0x78, 0xd9, 0xb1, 0xf5, 0x5f, 0x7e, 0x05, 0x00, 0x00,
-	0xff, 0xff, 0xb1, 0x25, 0x36, 0x1f, 0x22, 0x02, 0x00, 0x00,
-}
