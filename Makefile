@@ -99,7 +99,7 @@ format: generate
 
 build: format
 	# Build code
-	@go build ./...
+	@GO111MODULE=on go build ./...
 
 clean:
 	@rm */*.pb.go */*/*/*.pb.go
