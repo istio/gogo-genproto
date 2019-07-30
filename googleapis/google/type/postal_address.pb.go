@@ -8,7 +8,6 @@ import (
 	proto "github.com/gogo/protobuf/proto"
 	io "io"
 	math "math"
-	math_bits "math/bits"
 	reflect "reflect"
 	strings "strings"
 )
@@ -135,7 +134,7 @@ func (m *PostalAddress) XXX_Marshal(b []byte, deterministic bool) ([]byte, error
 		return xxx_messageInfo_PostalAddress.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
@@ -359,7 +358,7 @@ func valueToGoStringPostalAddress(v interface{}, typ string) string {
 func (m *PostalAddress) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -367,107 +366,104 @@ func (m *PostalAddress) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *PostalAddress) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *PostalAddress) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if len(m.Organization) > 0 {
-		i -= len(m.Organization)
-		copy(dAtA[i:], m.Organization)
-		i = encodeVarintPostalAddress(dAtA, i, uint64(len(m.Organization)))
-		i--
-		dAtA[i] = 0x5a
-	}
-	if len(m.Recipients) > 0 {
-		for iNdEx := len(m.Recipients) - 1; iNdEx >= 0; iNdEx-- {
-			i -= len(m.Recipients[iNdEx])
-			copy(dAtA[i:], m.Recipients[iNdEx])
-			i = encodeVarintPostalAddress(dAtA, i, uint64(len(m.Recipients[iNdEx])))
-			i--
-			dAtA[i] = 0x52
-		}
-	}
-	if len(m.AddressLines) > 0 {
-		for iNdEx := len(m.AddressLines) - 1; iNdEx >= 0; iNdEx-- {
-			i -= len(m.AddressLines[iNdEx])
-			copy(dAtA[i:], m.AddressLines[iNdEx])
-			i = encodeVarintPostalAddress(dAtA, i, uint64(len(m.AddressLines[iNdEx])))
-			i--
-			dAtA[i] = 0x4a
-		}
-	}
-	if len(m.Sublocality) > 0 {
-		i -= len(m.Sublocality)
-		copy(dAtA[i:], m.Sublocality)
-		i = encodeVarintPostalAddress(dAtA, i, uint64(len(m.Sublocality)))
-		i--
-		dAtA[i] = 0x42
-	}
-	if len(m.Locality) > 0 {
-		i -= len(m.Locality)
-		copy(dAtA[i:], m.Locality)
-		i = encodeVarintPostalAddress(dAtA, i, uint64(len(m.Locality)))
-		i--
-		dAtA[i] = 0x3a
-	}
-	if len(m.AdministrativeArea) > 0 {
-		i -= len(m.AdministrativeArea)
-		copy(dAtA[i:], m.AdministrativeArea)
-		i = encodeVarintPostalAddress(dAtA, i, uint64(len(m.AdministrativeArea)))
-		i--
-		dAtA[i] = 0x32
-	}
-	if len(m.SortingCode) > 0 {
-		i -= len(m.SortingCode)
-		copy(dAtA[i:], m.SortingCode)
-		i = encodeVarintPostalAddress(dAtA, i, uint64(len(m.SortingCode)))
-		i--
-		dAtA[i] = 0x2a
-	}
-	if len(m.PostalCode) > 0 {
-		i -= len(m.PostalCode)
-		copy(dAtA[i:], m.PostalCode)
-		i = encodeVarintPostalAddress(dAtA, i, uint64(len(m.PostalCode)))
-		i--
-		dAtA[i] = 0x22
-	}
-	if len(m.LanguageCode) > 0 {
-		i -= len(m.LanguageCode)
-		copy(dAtA[i:], m.LanguageCode)
-		i = encodeVarintPostalAddress(dAtA, i, uint64(len(m.LanguageCode)))
-		i--
-		dAtA[i] = 0x1a
+	if m.Revision != 0 {
+		dAtA[i] = 0x8
+		i++
+		i = encodeVarintPostalAddress(dAtA, i, uint64(m.Revision))
 	}
 	if len(m.RegionCode) > 0 {
-		i -= len(m.RegionCode)
-		copy(dAtA[i:], m.RegionCode)
-		i = encodeVarintPostalAddress(dAtA, i, uint64(len(m.RegionCode)))
-		i--
 		dAtA[i] = 0x12
+		i++
+		i = encodeVarintPostalAddress(dAtA, i, uint64(len(m.RegionCode)))
+		i += copy(dAtA[i:], m.RegionCode)
 	}
-	if m.Revision != 0 {
-		i = encodeVarintPostalAddress(dAtA, i, uint64(m.Revision))
-		i--
-		dAtA[i] = 0x8
+	if len(m.LanguageCode) > 0 {
+		dAtA[i] = 0x1a
+		i++
+		i = encodeVarintPostalAddress(dAtA, i, uint64(len(m.LanguageCode)))
+		i += copy(dAtA[i:], m.LanguageCode)
 	}
-	return len(dAtA) - i, nil
+	if len(m.PostalCode) > 0 {
+		dAtA[i] = 0x22
+		i++
+		i = encodeVarintPostalAddress(dAtA, i, uint64(len(m.PostalCode)))
+		i += copy(dAtA[i:], m.PostalCode)
+	}
+	if len(m.SortingCode) > 0 {
+		dAtA[i] = 0x2a
+		i++
+		i = encodeVarintPostalAddress(dAtA, i, uint64(len(m.SortingCode)))
+		i += copy(dAtA[i:], m.SortingCode)
+	}
+	if len(m.AdministrativeArea) > 0 {
+		dAtA[i] = 0x32
+		i++
+		i = encodeVarintPostalAddress(dAtA, i, uint64(len(m.AdministrativeArea)))
+		i += copy(dAtA[i:], m.AdministrativeArea)
+	}
+	if len(m.Locality) > 0 {
+		dAtA[i] = 0x3a
+		i++
+		i = encodeVarintPostalAddress(dAtA, i, uint64(len(m.Locality)))
+		i += copy(dAtA[i:], m.Locality)
+	}
+	if len(m.Sublocality) > 0 {
+		dAtA[i] = 0x42
+		i++
+		i = encodeVarintPostalAddress(dAtA, i, uint64(len(m.Sublocality)))
+		i += copy(dAtA[i:], m.Sublocality)
+	}
+	if len(m.AddressLines) > 0 {
+		for _, s := range m.AddressLines {
+			dAtA[i] = 0x4a
+			i++
+			l = len(s)
+			for l >= 1<<7 {
+				dAtA[i] = uint8(uint64(l)&0x7f | 0x80)
+				l >>= 7
+				i++
+			}
+			dAtA[i] = uint8(l)
+			i++
+			i += copy(dAtA[i:], s)
+		}
+	}
+	if len(m.Recipients) > 0 {
+		for _, s := range m.Recipients {
+			dAtA[i] = 0x52
+			i++
+			l = len(s)
+			for l >= 1<<7 {
+				dAtA[i] = uint8(uint64(l)&0x7f | 0x80)
+				l >>= 7
+				i++
+			}
+			dAtA[i] = uint8(l)
+			i++
+			i += copy(dAtA[i:], s)
+		}
+	}
+	if len(m.Organization) > 0 {
+		dAtA[i] = 0x5a
+		i++
+		i = encodeVarintPostalAddress(dAtA, i, uint64(len(m.Organization)))
+		i += copy(dAtA[i:], m.Organization)
+	}
+	return i, nil
 }
 
 func encodeVarintPostalAddress(dAtA []byte, offset int, v uint64) int {
-	offset -= sovPostalAddress(v)
-	base := offset
 	for v >= 1<<7 {
 		dAtA[offset] = uint8(v&0x7f | 0x80)
 		v >>= 7
 		offset++
 	}
 	dAtA[offset] = uint8(v)
-	return base
+	return offset + 1
 }
 func (m *PostalAddress) Size() (n int) {
 	if m == nil {
@@ -526,7 +522,14 @@ func (m *PostalAddress) Size() (n int) {
 }
 
 func sovPostalAddress(x uint64) (n int) {
-	return (math_bits.Len64(x|1) + 6) / 7
+	for {
+		n++
+		x >>= 7
+		if x == 0 {
+			break
+		}
+	}
+	return n
 }
 func sozPostalAddress(x uint64) (n int) {
 	return sovPostalAddress(uint64((x << 1) ^ uint64((int64(x) >> 63))))

@@ -10,7 +10,6 @@ import (
 	types "github.com/gogo/protobuf/types"
 	io "io"
 	math "math"
-	math_bits "math/bits"
 	reflect "reflect"
 	strings "strings"
 )
@@ -179,7 +178,7 @@ func (m *Color) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return xxx_messageInfo_Color.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
@@ -311,7 +310,7 @@ func valueToGoStringColor(v interface{}, typ string) string {
 func (m *Color) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -319,58 +318,49 @@ func (m *Color) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *Color) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *Color) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.Alpha != nil {
-		{
-			size, err := m.Alpha.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintColor(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0x22
-	}
-	if m.Blue != 0 {
-		i -= 4
-		encoding_binary.LittleEndian.PutUint32(dAtA[i:], uint32(math.Float32bits(float32(m.Blue))))
-		i--
-		dAtA[i] = 0x1d
+	if m.Red != 0 {
+		dAtA[i] = 0xd
+		i++
+		encoding_binary.LittleEndian.PutUint32(dAtA[i:], uint32(math.Float32bits(float32(m.Red))))
+		i += 4
 	}
 	if m.Green != 0 {
-		i -= 4
-		encoding_binary.LittleEndian.PutUint32(dAtA[i:], uint32(math.Float32bits(float32(m.Green))))
-		i--
 		dAtA[i] = 0x15
+		i++
+		encoding_binary.LittleEndian.PutUint32(dAtA[i:], uint32(math.Float32bits(float32(m.Green))))
+		i += 4
 	}
-	if m.Red != 0 {
-		i -= 4
-		encoding_binary.LittleEndian.PutUint32(dAtA[i:], uint32(math.Float32bits(float32(m.Red))))
-		i--
-		dAtA[i] = 0xd
+	if m.Blue != 0 {
+		dAtA[i] = 0x1d
+		i++
+		encoding_binary.LittleEndian.PutUint32(dAtA[i:], uint32(math.Float32bits(float32(m.Blue))))
+		i += 4
 	}
-	return len(dAtA) - i, nil
+	if m.Alpha != nil {
+		dAtA[i] = 0x22
+		i++
+		i = encodeVarintColor(dAtA, i, uint64(m.Alpha.Size()))
+		n1, err := m.Alpha.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n1
+	}
+	return i, nil
 }
 
 func encodeVarintColor(dAtA []byte, offset int, v uint64) int {
-	offset -= sovColor(v)
-	base := offset
 	for v >= 1<<7 {
 		dAtA[offset] = uint8(v&0x7f | 0x80)
 		v >>= 7
 		offset++
 	}
 	dAtA[offset] = uint8(v)
-	return base
+	return offset + 1
 }
 func (m *Color) Size() (n int) {
 	if m == nil {
@@ -395,7 +385,14 @@ func (m *Color) Size() (n int) {
 }
 
 func sovColor(x uint64) (n int) {
-	return (math_bits.Len64(x|1) + 6) / 7
+	for {
+		n++
+		x >>= 7
+		if x == 0 {
+			break
+		}
+	}
+	return n
 }
 func sozColor(x uint64) (n int) {
 	return sovColor(uint64((x << 1) ^ uint64((int64(x) >> 63))))

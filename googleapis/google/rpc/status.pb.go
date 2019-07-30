@@ -9,7 +9,6 @@ import (
 	types "github.com/gogo/protobuf/types"
 	io "io"
 	math "math"
-	math_bits "math/bits"
 	reflect "reflect"
 	strings "strings"
 )
@@ -105,7 +104,7 @@ func (m *Status) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return xxx_messageInfo_Status.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
@@ -230,7 +229,7 @@ func valueToGoStringStatus(v interface{}, typ string) string {
 func (m *Status) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -238,54 +237,44 @@ func (m *Status) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *Status) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *Status) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if len(m.Details) > 0 {
-		for iNdEx := len(m.Details) - 1; iNdEx >= 0; iNdEx-- {
-			{
-				size, err := m.Details[iNdEx].MarshalToSizedBuffer(dAtA[:i])
-				if err != nil {
-					return 0, err
-				}
-				i -= size
-				i = encodeVarintStatus(dAtA, i, uint64(size))
-			}
-			i--
-			dAtA[i] = 0x1a
-		}
+	if m.Code != 0 {
+		dAtA[i] = 0x8
+		i++
+		i = encodeVarintStatus(dAtA, i, uint64(m.Code))
 	}
 	if len(m.Message) > 0 {
-		i -= len(m.Message)
-		copy(dAtA[i:], m.Message)
-		i = encodeVarintStatus(dAtA, i, uint64(len(m.Message)))
-		i--
 		dAtA[i] = 0x12
+		i++
+		i = encodeVarintStatus(dAtA, i, uint64(len(m.Message)))
+		i += copy(dAtA[i:], m.Message)
 	}
-	if m.Code != 0 {
-		i = encodeVarintStatus(dAtA, i, uint64(m.Code))
-		i--
-		dAtA[i] = 0x8
+	if len(m.Details) > 0 {
+		for _, msg := range m.Details {
+			dAtA[i] = 0x1a
+			i++
+			i = encodeVarintStatus(dAtA, i, uint64(msg.Size()))
+			n, err := msg.MarshalTo(dAtA[i:])
+			if err != nil {
+				return 0, err
+			}
+			i += n
+		}
 	}
-	return len(dAtA) - i, nil
+	return i, nil
 }
 
 func encodeVarintStatus(dAtA []byte, offset int, v uint64) int {
-	offset -= sovStatus(v)
-	base := offset
 	for v >= 1<<7 {
 		dAtA[offset] = uint8(v&0x7f | 0x80)
 		v >>= 7
 		offset++
 	}
 	dAtA[offset] = uint8(v)
-	return base
+	return offset + 1
 }
 func (m *Status) Size() (n int) {
 	if m == nil {
@@ -310,7 +299,14 @@ func (m *Status) Size() (n int) {
 }
 
 func sovStatus(x uint64) (n int) {
-	return (math_bits.Len64(x|1) + 6) / 7
+	for {
+		n++
+		x >>= 7
+		if x == 0 {
+			break
+		}
+	}
+	return n
 }
 func sozStatus(x uint64) (n int) {
 	return sovStatus(uint64((x << 1) ^ uint64((int64(x) >> 63))))
@@ -319,15 +315,10 @@ func (this *Status) String() string {
 	if this == nil {
 		return "nil"
 	}
-	repeatedStringForDetails := "[]*Any{"
-	for _, f := range this.Details {
-		repeatedStringForDetails += strings.Replace(fmt.Sprintf("%v", f), "Any", "types.Any", 1) + ","
-	}
-	repeatedStringForDetails += "}"
 	s := strings.Join([]string{`&Status{`,
 		`Code:` + fmt.Sprintf("%v", this.Code) + `,`,
 		`Message:` + fmt.Sprintf("%v", this.Message) + `,`,
-		`Details:` + repeatedStringForDetails + `,`,
+		`Details:` + strings.Replace(fmt.Sprintf("%v", this.Details), "Any", "types.Any", 1) + `,`,
 		`}`,
 	}, "")
 	return s

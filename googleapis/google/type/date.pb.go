@@ -8,7 +8,6 @@ import (
 	proto "github.com/gogo/protobuf/proto"
 	io "io"
 	math "math"
-	math_bits "math/bits"
 	reflect "reflect"
 	strings "strings"
 )
@@ -60,7 +59,7 @@ func (m *Date) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return xxx_messageInfo_Date.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
@@ -176,7 +175,7 @@ func valueToGoStringDate(v interface{}, typ string) string {
 func (m *Date) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -184,43 +183,36 @@ func (m *Date) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *Date) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *Date) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.Day != 0 {
-		i = encodeVarintDate(dAtA, i, uint64(m.Day))
-		i--
-		dAtA[i] = 0x18
+	if m.Year != 0 {
+		dAtA[i] = 0x8
+		i++
+		i = encodeVarintDate(dAtA, i, uint64(m.Year))
 	}
 	if m.Month != 0 {
-		i = encodeVarintDate(dAtA, i, uint64(m.Month))
-		i--
 		dAtA[i] = 0x10
+		i++
+		i = encodeVarintDate(dAtA, i, uint64(m.Month))
 	}
-	if m.Year != 0 {
-		i = encodeVarintDate(dAtA, i, uint64(m.Year))
-		i--
-		dAtA[i] = 0x8
+	if m.Day != 0 {
+		dAtA[i] = 0x18
+		i++
+		i = encodeVarintDate(dAtA, i, uint64(m.Day))
 	}
-	return len(dAtA) - i, nil
+	return i, nil
 }
 
 func encodeVarintDate(dAtA []byte, offset int, v uint64) int {
-	offset -= sovDate(v)
-	base := offset
 	for v >= 1<<7 {
 		dAtA[offset] = uint8(v&0x7f | 0x80)
 		v >>= 7
 		offset++
 	}
 	dAtA[offset] = uint8(v)
-	return base
+	return offset + 1
 }
 func (m *Date) Size() (n int) {
 	if m == nil {
@@ -241,7 +233,14 @@ func (m *Date) Size() (n int) {
 }
 
 func sovDate(x uint64) (n int) {
-	return (math_bits.Len64(x|1) + 6) / 7
+	for {
+		n++
+		x >>= 7
+		if x == 0 {
+			break
+		}
+	}
+	return n
 }
 func sozDate(x uint64) (n int) {
 	return sovDate(uint64((x << 1) ^ uint64((int64(x) >> 63))))
