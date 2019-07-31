@@ -1,4 +1,4 @@
-apitools_img := gcr.io/istio-testing/api-build-tools:2019-07-30
+apitools_img := gcr.io/istio-testing/api-build-tools:2019-07-31
 pwd := $(shell pwd)
 uid := $(shell id -u)
 PROTOC = docker run --user $(uid) -v /etc/passwd:/etc/passwd:ro --rm -v $(pwd):/work -w /work $(apitools_img) protoc
