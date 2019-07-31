@@ -8,6 +8,7 @@ import (
 	proto "github.com/gogo/protobuf/proto"
 	io "io"
 	math "math"
+	math_bits "math/bits"
 	reflect "reflect"
 	strings "strings"
 )
@@ -52,7 +53,7 @@ func (m *Money) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return xxx_messageInfo_Money.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -169,7 +170,7 @@ func valueToGoStringMoney(v interface{}, typ string) string {
 func (m *Money) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -177,37 +178,45 @@ func (m *Money) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *Money) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Money) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.CurrencyCode) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintMoney(dAtA, i, uint64(len(m.CurrencyCode)))
-		i += copy(dAtA[i:], m.CurrencyCode)
+	if m.Nanos != 0 {
+		i = encodeVarintMoney(dAtA, i, uint64(m.Nanos))
+		i--
+		dAtA[i] = 0x18
 	}
 	if m.Units != 0 {
-		dAtA[i] = 0x10
-		i++
 		i = encodeVarintMoney(dAtA, i, uint64(m.Units))
+		i--
+		dAtA[i] = 0x10
 	}
-	if m.Nanos != 0 {
-		dAtA[i] = 0x18
-		i++
-		i = encodeVarintMoney(dAtA, i, uint64(m.Nanos))
+	if len(m.CurrencyCode) > 0 {
+		i -= len(m.CurrencyCode)
+		copy(dAtA[i:], m.CurrencyCode)
+		i = encodeVarintMoney(dAtA, i, uint64(len(m.CurrencyCode)))
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func encodeVarintMoney(dAtA []byte, offset int, v uint64) int {
+	offset -= sovMoney(v)
+	base := offset
 	for v >= 1<<7 {
 		dAtA[offset] = uint8(v&0x7f | 0x80)
 		v >>= 7
 		offset++
 	}
 	dAtA[offset] = uint8(v)
-	return offset + 1
+	return base
 }
 func (m *Money) Size() (n int) {
 	if m == nil {
@@ -229,14 +238,7 @@ func (m *Money) Size() (n int) {
 }
 
 func sovMoney(x uint64) (n int) {
-	for {
-		n++
-		x >>= 7
-		if x == 0 {
-			break
-		}
-	}
-	return n
+	return (math_bits.Len64(x|1) + 6) / 7
 }
 func sozMoney(x uint64) (n int) {
 	return sovMoney(uint64((x << 1) ^ uint64((int64(x) >> 63))))
