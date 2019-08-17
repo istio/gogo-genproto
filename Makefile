@@ -1,107 +1,84 @@
-apitools_img := gcr.io/istio-testing/api-build-tools:2019-07-31
-pwd := $(shell pwd)
-uid := $(shell id -u)
-PROTOC = docker run --user $(uid) -v /etc/passwd:/etc/passwd:ro --rm -v $(pwd):/work -w /work $(apitools_img) protoc
+# WARNING: DO NOT EDIT, THIS FILE IS PROBABLY A COPY
+#
+# The original version of this file is located in the https://github.com/istio/common-files repo.
+# If you're looking at this file in a different repo and want to make a change, please go to the
+# common-files repo, make the change there and check it in. Then come back to this repo and run
+# "make updatecommon".
 
-GOOGLEAPIS_SHA = 2912605a8d9a126bb24e418bc4b089ad0a2b62dc
-GOOGLEAPIS_URL = https://raw.githubusercontent.com/googleapis/googleapis/$(GOOGLEAPIS_SHA)
+# Copyright 2019 Istio Authors
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
-CENSUS_SHA = e2601ef16f8a085a69d94ace5133f97438f8945f
-CENSUS_URL = https://raw.githubusercontent.com/census-instrumentation/opencensus-proto/$(CENSUS_SHA)/src
+# allow optional per-repo overrides
+-include Makefile.overrides.mk
 
-PROMETHEUS_SHA = 6f3806018612930941127f2a7c6c453ba2c527d2
-PROMETHEUS_URL = https://raw.githubusercontent.com/prometheus/client_model/$(PROMETHEUS_SHA)
+RUN =
 
-GOGO_PROTO_PKG := github.com/gogo/protobuf/gogoproto
-GOGO_TYPES := github.com/gogo/protobuf/types
-GOGO_DESCRIPTOR := github.com/gogo/protobuf/protoc-gen-gogo/descriptor
+# Set the environment variable BUILD_WITH_CONTAINER to use a container
+# to build the repo. The only dependencies in this mode are to have make and
+# docker. If you'd rather build with a local tool chain instead, you'll need to
+# figure out all the tools you need in your environment to make that work.
+export BUILD_WITH_CONTAINER ?= 0
+ifeq ($(BUILD_WITH_CONTAINER),1)
+IMG = gcr.io/istio-testing/build-tools:2019-08-18T16-45-52
+UID = $(shell id -u)
+PWD = $(shell pwd)
+GOBIN_SOURCE ?= $(GOPATH)/bin
+export GOBIN ?= /work/out/bin
 
-importmaps := \
-	gogoproto/gogo.proto=$(GOGO_PROTO_PKG) \
-	google/protobuf/any.proto=$(GOGO_TYPES) \
-	google/protobuf/descriptor.proto=$(GOGO_DESCRIPTOR) \
-	google/protobuf/duration.proto=$(GOGO_TYPES) \
-	google/protobuf/timestamp.proto=$(GOGO_TYPES) \
-	google/protobuf/wrappers.proto=$(GOGO_TYPES) \
-	google/protobuf/struct.proto=$(GOGO_TYPES) \
+LOCAL_ARCH := $(shell uname -m)
+ifeq ($(LOCAL_ARCH),x86_64)
+GOARCH_LOCAL := amd64
+else ifeq ($(shell echo $(LOCAL_ARCH) | head -c 5),armv8)
+GOARCH_LOCAL := arm64
+else ifeq ($(shell echo $(LOCAL_ARCH) | head -c 4),armv)
+GOARCH_LOCAL := arm
+else
+GOARCH_LOCAL := $(LOCAL_ARCH)
+endif
+export GOARCH ?= $(GOARCH_LOCAL)
 
-comma := ,
-empty :=
-space := $(empty) $(empty)
-mapping_with_spaces := $(foreach map,$(importmaps),M$(map),)
-MAPPING := $(subst $(space),$(empty),$(mapping_with_spaces))
-GOGOSLICK_PLUGIN := --gogoslick_out=plugins=grpc,$(MAPPING)
-GOGOFASTER_PLUGIN := --gogofaster_out=plugins=grpc,$(MAPPING)
+LOCAL_OS := $(shell uname)
+ifeq ($(LOCAL_OS),Linux)
+   export GOOS_LOCAL = linux
+else ifeq ($(LOCAL_OS),Darwin)
+   export GOOS_LOCAL = darwin
+else
+   $(error "This system's OS $(LOCAL_OS) isn't recognized/supported")
+endif
 
-googleapis_protos = \
-	google/api/http.proto \
-	google/api/annotations.proto \
-	google/rpc/status.proto \
-	google/rpc/code.proto \
-	google/rpc/error_details.proto \
-	google/type/color.proto \
-	google/type/date.proto \
-	google/type/dayofweek.proto \
-	google/type/latlng.proto \
-	google/type/money.proto \
-	google/type/postal_address.proto \
-	google/type/timeofday.proto \
+export GOOS ?= $(GOOS_LOCAL)
 
-googleapis_packages = \
-	google/api \
-	google/rpc \
-	google/type \
+RUN = docker run -t --sig-proxy=true -u $(UID) --rm \
+	-e GOOS="$(GOOS)" \
+	-e GOARCH="$(GOARCH)" \
+	-e GOBIN="$(GOBIN)" \
+	-v /etc/passwd:/etc/passwd:ro \
+	-v $(readlink /etc/localtime):/etc/localtime:ro \
+	$(CONTAINER_OPTIONS) \
+	--mount type=bind,source="$(PWD)",destination="/work" \
+	--mount type=volume,source=istio-go-mod,destination="/go/pkg/mod" \
+	--mount type=volume,source=istio-go-cache,destination="/gocache" \
+	--mount type=bind,source="$(GOBIN_SOURCE)",destination="/go/out/bin" \
+	-w /work $(IMG)
+else
+export GOBIN ?= ./out/bin
+endif
 
-census_protos = \
-	opencensus/proto/stats/v1/stats.proto \
-	opencensus/proto/trace/v1/trace.proto \
-	opencensus/proto/trace/v1/trace_config.proto \
+MAKE = $(RUN) make --no-print-directory -e -f Makefile.core.mk
 
-census_packages = \
-	opencensus/proto/stats/v1 \
-	opencensus/proto/trace/v1 \
+%:
+	@$(MAKE) $@
 
-all: build
-
-$(googleapis_protos): %:
-	# Download $@ at $(GOOGLEAPIS_SHA)
-	@curl -sS $(GOOGLEAPIS_URL)/$@ -o googleapis/$@.tmp
-	@sed -e '/^option go_package/d' googleapis/$@.tmp > googleapis/$@
-	@rm googleapis/$@.tmp
-
-$(googleapis_packages): %: $(googleapis_protos)
-	# Generate $@
-	$(PROTOC) $(GOGOSLICK_PLUGIN):googleapis -I googleapis googleapis/$@/*.proto
-
-$(census_protos): %:
-	# Download $@ at $(CENSUS_SHA)
-	@curl -sS $(CENSUS_URL)/$@ -o $@
-	@sed -i.tmp '/^option go_package/d' $@
-	@rm $@.tmp
-
-$(census_packages): %: $(census_protos)
-	# Generate $@
-	@$(PROTOC) $(GOGOFASTER_PLUGIN):. -I . $@/*.proto
-
-prometheus/metrics.proto:
-	@mkdir -p prometheus
-	@curl -sS $(PROMETHEUS_URL)/metrics.proto -o prometheus/metrics.proto
-
-prometheus/metrics.pb.go: prometheus/metrics.proto
-	# Generate prometheus
-	@$(PROTOC) $(GOGOFASTER_PLUGIN):. prometheus/metrics.proto
-
-generate: $(googleapis_packages) $(census_packages) prometheus/metrics.pb.go
-
-format: generate
-	# Format code
-	@gofmt -l -s -w googleapis
-
-build: format
-	# Build code
-	@GO111MODULE=on go build ./...
-
-clean:
-	@rm */*.pb.go */*/*/*.pb.go
-
-.PHONY: all format build $(googleapis_protos) $(googleapis_packages) clean
+default:
+	@$(MAKE)
