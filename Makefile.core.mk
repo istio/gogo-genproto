@@ -17,7 +17,7 @@ PROTOC = protoc
 GOOGLEPROTOBUF_SHA = 63e4a3ecc956cbab6714b25e8b868765ea7e6fe5
 GOOGLEPROTOBUF_URL = https://raw.githubusercontent.com/protocolbuffers/protobuf/$(GOOGLEPROTOBUF_SHA)/src
 
-GOOGLEAPIS_SHA = 2912605a8d9a126bb24e418bc4b089ad0a2b62dc
+GOOGLEAPIS_SHA = 7ebb7a62ed598d4e7e6cc41403cbf191f71c079d
 GOOGLEAPIS_URL = https://raw.githubusercontent.com/googleapis/googleapis/$(GOOGLEAPIS_SHA)
 
 CENSUS_SHA = e2601ef16f8a085a69d94ace5133f97438f8945f
@@ -41,9 +41,13 @@ importmaps := \
 	google/protobuf/any.proto=$(GOGO_TYPES) \
 	google/protobuf/descriptor.proto=$(GOGO_DESCRIPTOR) \
 	google/protobuf/duration.proto=$(GOGO_TYPES) \
+	google/protobuf/empty.proto=$(GOGO_TYPES) \
 	google/protobuf/timestamp.proto=$(GOGO_TYPES) \
 	google/protobuf/wrappers.proto=$(GOGO_TYPES) \
 	google/protobuf/struct.proto=$(GOGO_TYPES) \
+	google/rpc/code.proto=istio.io/gogo-genproto/googleapis/google/rpc \
+  google/rpc/error_details.proto=istio.io/gogo-genproto/googleapis/google/rpc \
+  google/rpc/status.proto=istio.io/gogo-genproto/googleapis/google/rpc \
 	opencensus/proto/resource/v1/resource.proto=istio.io/gogo-genproto/opencensus/proto/resource/v1 \
 	k8s.io/api/admission/v1/generated.proto=istio.io/gogo-genproto/k8s.io/api/admission/v1 \
 	k8s.io/api/admission/v1beta1/generated.proto=istio.io/gogo-genproto/k8s.io/api/admission/v1beta1 \
@@ -131,6 +135,18 @@ googleapis_packages = \
 	google/api \
 	google/rpc \
 	google/type
+
+googleexpr_protos = \
+	google/api/expr/v1alpha1/cel_service.proto \
+	google/api/expr/v1alpha1/checked.proto \
+	google/api/expr/v1alpha1/conformance_service.proto \
+	google/api/expr/v1alpha1/eval.proto \
+	google/api/expr/v1alpha1/explain.proto \
+	google/api/expr/v1alpha1/syntax.proto \
+	google/api/expr/v1alpha1/value.proto
+
+googleexpr_packages = \
+	google/api/expr/v1alpha1
 
 census_protos = \
 	opencensus/proto/stats/v1/stats.proto \
@@ -253,13 +269,16 @@ $(googleprotobuf_protos): %:
 
 $(googleprotobuf_packages): %: $(googleprotobuf_protos)
 
-$(googleapis_protos): %:
-	@mkdir -p googleapis/google/api googleapis/google/rpc googleapis/google/type
+$(googleapis_protos) $(googleexpr_protos): %:
+	@mkdir -p googleapis/google/rpc googleapis/google/type googleapis/google/api/expr/v1alpha1
 	@curl -sS $(GOOGLEAPIS_URL)/$@ -o googleapis/$@
 	@sed -i -e '/^option go_package/d' googleapis/$@
 
 $(googleapis_packages): %: $(googleapis_protos)
 	@$(PROTOC) $(GOGOSLICK_PLUGIN):googleapis -Igoogleprotobuf -Igoogleapis googleapis/$@/*.proto
+
+$(googleexpr_packages): %: $(googleexpr_protos)
+	@$(PROTOC) $(GOGOFASTER_PLUGIN):googleapis -Igoogleprotobuf -Igoogleapis googleapis/$@/*.proto
 
 $(census_protos): %:
 	@mkdir -p oc/opencensus/proto/stats/v1 oc/opencensus/proto/trace/v1 oc/opencensus/proto/resource/v1
@@ -298,7 +317,7 @@ $(k8sapimachinery_protos): %:
 $(k8sapimachinery_packages): %: k8sapimachinery_prep $(k8sapimachinery_protos)
 	@$(PROTOC) $(GOGOSLICK_PLUGIN):k8sapimachinery -Igoogleprotobuf -Ik8sapimachinery k8sapimachinery/k8s.io/apimachinery/$@/*.proto
 
-generate: clean $(googleprotobuf_packages) $(googleapis_packages) $(census_packages) prometheus/metrics.pb.go $(k8sapimachinery_packages) $(k8sapi_packages)
+generate: clean $(googleprotobuf_packages) $(googleapis_packages) $(googleexpr_packages) $(census_packages) prometheus/metrics.pb.go $(k8sapimachinery_packages) $(k8sapi_packages)
 	@mv oc/opencensus ./opencensus
 	@rm -fr oc
 	@mv k8sapi/k8s.io ./k8s.io
