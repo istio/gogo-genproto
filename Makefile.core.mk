@@ -333,4 +333,4 @@ clean:
 
 .PHONY: all build $(googleapis_protos) $(googleapis_packages) clean
 
-include Makefile.common.mk
+include common/Makefile.common.mk
