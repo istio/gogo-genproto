@@ -17,8 +17,8 @@ PROTOC = protoc
 GOOGLEPROTOBUF_SHA = 63e4a3ecc956cbab6714b25e8b868765ea7e6fe5
 GOOGLEPROTOBUF_URL = https://raw.githubusercontent.com/protocolbuffers/protobuf/$(GOOGLEPROTOBUF_SHA)/src
 
-GOOGLEAPIS_SHA = 7ebb7a62ed598d4e7e6cc41403cbf191f71c079d
-GOOGLEAPIS_URL = https://raw.githubusercontent.com/googleapis/googleapis/$(GOOGLEAPIS_SHA)
+#GOOGLEAPIS_SHA = 7ebb7a62ed598d4e7e6cc41403cbf191f71c079d
+#GOOGLEAPIS_URL = https://raw.githubusercontent.com/googleapis/googleapis/$(GOOGLEAPIS_SHA)
 
 CENSUS_SHA = e2601ef16f8a085a69d94ace5133f97438f8945f
 CENSUS_URL = https://raw.githubusercontent.com/census-instrumentation/opencensus-proto/$(CENSUS_SHA)/src
@@ -263,19 +263,20 @@ k8sapimachinery_packages = \
 
 all: build
 
-$(googleprotobuf_protos): %:
-	@mkdir -p googleprotobuf/google/protobuf
-	@curl -sS $(GOOGLEPROTOBUF_URL)/$@ -o googleprotobuf/$@
-
-$(googleprotobuf_packages): %: $(googleprotobuf_protos)
+#j$(googleprotobuf_protos): %:
+#j	@mkdir -p googleprotobuf/google/protobuf
+#j	@curl -sS $(GOOGLEPROTOBUF_URL)/$@ -o googleprotobuf/$@
+#j
+#j$(googleprotobuf_packages): %: $(googleprotobuf_protos)
 
 $(googleapis_protos) $(googleexpr_protos): %:
-	@mkdir -p googleapis/google/rpc googleapis/google/type googleapis/google/api/expr/v1alpha1
-	@curl -sS $(GOOGLEAPIS_URL)/$@ -o googleapis/$@
-	@sed -i -e '/^option go_package/d' googleapis/$@
+	find common-protos -type f -name \*proto -exec sed -i -e '/^option go_package/d' {} \;
 
 $(googleapis_packages): %: $(googleapis_protos)
-	@$(PROTOC) $(GOGOSLICK_PLUGIN):googleapis -Igoogleprotobuf -Igoogleapis googleapis/$@/*.proto
+	@$(PROTOC) $(GOGOSLICK_PLUGIN):common-protos -Icommon-protos common-protos/$@/*.proto
+#       @$(PROTOC) $(GOGOSLICK_PLUGIN):googleapis -Igoogleprotobuf -Igoogleapis googleapis/$@/*.proto
+
+# common-protos/$@/*proto #googleprotobuf -Igoogleapis googleapis/$@/*.proto
 
 $(googleexpr_packages): %: $(googleexpr_protos)
 	@$(PROTOC) $(GOGOFASTER_PLUGIN):googleapis -Igoogleprotobuf -Igoogleapis googleapis/$@/*.proto
@@ -317,6 +318,7 @@ $(k8sapimachinery_protos): %:
 $(k8sapimachinery_packages): %: k8sapimachinery_prep $(k8sapimachinery_protos)
 	@$(PROTOC) $(GOGOSLICK_PLUGIN):k8sapimachinery -Igoogleprotobuf -Ik8sapimachinery k8sapimachinery/k8s.io/apimachinery/$@/*.proto
 
+gen: clean $(googleapis_packages)
 generate: clean $(googleprotobuf_packages) $(googleapis_packages) $(googleexpr_packages) $(census_packages) prometheus/metrics.pb.go $(k8sapimachinery_packages) $(k8sapi_packages)
 	@mv oc/opencensus ./opencensus
 	@rm -fr oc
