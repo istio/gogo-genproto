@@ -14,24 +14,6 @@
 
 PROTOC = protoc
 
-GOOGLEPROTOBUF_SHA = 63e4a3ecc956cbab6714b25e8b868765ea7e6fe5
-GOOGLEPROTOBUF_URL = https://raw.githubusercontent.com/protocolbuffers/protobuf/$(GOOGLEPROTOBUF_SHA)/src
-
-GOOGLEAPIS_SHA = 7ebb7a62ed598d4e7e6cc41403cbf191f71c079d
-GOOGLEAPIS_URL = https://raw.githubusercontent.com/googleapis/googleapis/$(GOOGLEAPIS_SHA)
-
-CENSUS_SHA = e2601ef16f8a085a69d94ace5133f97438f8945f
-CENSUS_URL = https://raw.githubusercontent.com/census-instrumentation/opencensus-proto/$(CENSUS_SHA)/src
-
-PROMETHEUS_SHA = 6f3806018612930941127f2a7c6c453ba2c527d2
-PROMETHEUS_URL = https://raw.githubusercontent.com/prometheus/client_model/$(PROMETHEUS_SHA)
-
-K8SAPI_SHA = d651a1528133f00fab57f5bf42fb26500e8aa406
-K8SAPI_URL = https://raw.githubusercontent.com/kubernetes/api/$(K8SAPI_SHA)
-
-K8SAPIMACHINERY_SHA = ac02f8882ef690d3030ad4230a947f01d83fafe9
-K8SAPIMACHINERY_URL = https://raw.githubusercontent.com/kubernetes/apimachinery/$(K8SAPIMACHINERY_SHA)
-
 GOGO_PROTO_PKG := github.com/gogo/protobuf/gogoproto
 GOGO_TYPES := github.com/gogo/protobuf/types
 GOGO_DESCRIPTOR := github.com/gogo/protobuf/protoc-gen-gogo/descriptor
@@ -46,8 +28,8 @@ importmaps := \
 	google/protobuf/wrappers.proto=$(GOGO_TYPES) \
 	google/protobuf/struct.proto=$(GOGO_TYPES) \
 	google/rpc/code.proto=istio.io/gogo-genproto/googleapis/google/rpc \
-  google/rpc/error_details.proto=istio.io/gogo-genproto/googleapis/google/rpc \
-  google/rpc/status.proto=istio.io/gogo-genproto/googleapis/google/rpc \
+    google/rpc/error_details.proto=istio.io/gogo-genproto/googleapis/google/rpc \
+    google/rpc/status.proto=istio.io/gogo-genproto/googleapis/google/rpc \
 	opencensus/proto/resource/v1/resource.proto=istio.io/gogo-genproto/opencensus/proto/resource/v1 \
 	k8s.io/api/admission/v1/generated.proto=istio.io/gogo-genproto/k8s.io/api/admission/v1 \
 	k8s.io/api/admission/v1beta1/generated.proto=istio.io/gogo-genproto/k8s.io/api/admission/v1beta1 \
@@ -94,8 +76,7 @@ importmaps := \
 	k8s.io/apimachinery/pkg/runtime/schema/generated.proto=istio.io/gogo-genproto/k8s.io/apimachinery/pkg/runtime/schema \
 	k8s.io/apimachinery/pkg/util/intstr/generated.proto=istio.io/gogo-genproto/k8s.io/apimachinery/pkg/util/intstr \
 	k8s.io/apimachinery/pkg/apis/meta/v1/generated.proto=istio.io/gogo-genproto/k8s.io/apimachinery/pkg/apis/meta/v1 \
-	k8s.io/apimachinery/pkg/apis/meta/v1beta1/generated.proto=istio.io/gogo-genproto/k8s.io/apimachinery/pkg/apis/meta/v1beta1 \
-	k8s.io/apimachinery/pkg/apis/testapigroup/v1/generated.proto=istio.io/gogo-genproto/k8s.io/apimachinery/pkg/apis/testapigroup/v1/generated.proto
+	k8s.io/apimachinery/pkg/apis/meta/v1beta1/generated.proto=istio.io/gogo-genproto/k8s.io/apimachinery/pkg/apis/meta/v1beta1
 
 comma := ,
 empty :=
@@ -105,19 +86,14 @@ MAPPING := $(subst $(space),$(empty),$(mapping_with_spaces))
 GOGOSLICK_PLUGIN := --gogoslick_out=plugins=grpc,$(MAPPING)
 GOGOFASTER_PLUGIN := --gogofaster_out=plugins=grpc,$(MAPPING)
 
-googleprotobuf_protos = \
+google_protos = \
 	google/protobuf/any.proto \
 	google/protobuf/duration.proto \
 	google/protobuf/descriptor.proto \
 	google/protobuf/empty.proto \
 	google/protobuf/struct.proto \
 	google/protobuf/timestamp.proto \
-	google/protobuf/wrappers.proto
-
-googleprotobuf_packages = \
-	google/protobuf
-
-googleapis_protos = \
+	google/protobuf/wrappers.proto \
 	google/api/http.proto \
 	google/api/annotations.proto \
 	google/rpc/status.proto \
@@ -131,7 +107,7 @@ googleapis_protos = \
 	google/type/postal_address.proto \
 	google/type/timeofday.proto
 
-googleapis_packages = \
+google_packages = \
 	google/api \
 	google/rpc \
 	google/type
@@ -159,178 +135,167 @@ census_packages = \
 	opencensus/proto/trace/v1 \
 	opencensus/proto/resource/v1
 
-k8sapi_protos = \
-	admission/v1/generated.proto \
-	admission/v1beta1/generated.proto \
-	admissionregistration/v1/generated.proto \
-	admissionregistration/v1beta1/generated.proto \
-	apps/v1/generated.proto \
-	apps/v1beta1/generated.proto \
-	apps/v1beta2/generated.proto \
-	auditregistration/v1alpha1/generated.proto \
-	authentication/v1/generated.proto \
-	authentication/v1beta1/generated.proto \
-	authorization/v1/generated.proto \
-	authorization/v1beta1/generated.proto \
-	autoscaling/v1/generated.proto \
-	autoscaling/v2beta1/generated.proto \
-	autoscaling/v2beta2/generated.proto \
-	batch/v1/generated.proto \
-	batch/v1beta1/generated.proto \
-	batch/v2alpha1/generated.proto \
-	certificates/v1beta1/generated.proto \
-	coordination/v1/generated.proto \
-	coordination/v1beta1/generated.proto \
-	core/v1/generated.proto \
-	events/v1beta1/generated.proto \
-	extensions/v1beta1/generated.proto \
-	imagepolicy/v1alpha1/generated.proto \
-	networking/v1/generated.proto \
-	networking/v1beta1/generated.proto \
-	node/v1alpha1/generated.proto \
-	node/v1beta1/generated.proto \
-	policy/v1beta1/generated.proto \
-	rbac/v1/generated.proto \
-	rbac/v1alpha1/generated.proto \
-	rbac/v1beta1/generated.proto \
-	scheduling/v1/generated.proto \
-	scheduling/v1alpha1/generated.proto \
-	scheduling/v1beta1/generated.proto \
-	settings/v1alpha1/generated.proto \
-	storage/v1/generated.proto \
-	storage/v1alpha1/generated.proto \
-	storage/v1beta1/generated.proto
+k8s_protos = \
+	api/admission/v1/generated.proto \
+	api/admission/v1beta1/generated.proto \
+	api/admissionregistration/v1/generated.proto \
+	api/admissionregistration/v1beta1/generated.proto \
+	api/apps/v1/generated.proto \
+	api/apps/v1beta1/generated.proto \
+	api/apps/v1beta2/generated.proto \
+	api/auditregistration/v1alpha1/generated.proto \
+	api/authentication/v1/generated.proto \
+	api/authentication/v1beta1/generated.proto \
+	api/authorization/v1/generated.proto \
+	api/authorization/v1beta1/generated.proto \
+	api/autoscaling/v1/generated.proto \
+	api/autoscaling/v2beta1/generated.proto \
+	api/autoscaling/v2beta2/generated.proto \
+	api/batch/v1/generated.proto \
+	api/batch/v1beta1/generated.proto \
+	api/batch/v2alpha1/generated.proto \
+	api/certificates/v1beta1/generated.proto \
+	api/coordination/v1/generated.proto \
+	api/coordination/v1beta1/generated.proto \
+	api/core/v1/generated.proto \
+	api/events/v1beta1/generated.proto \
+	api/extensions/v1beta1/generated.proto \
+	api/imagepolicy/v1alpha1/generated.proto \
+	api/networking/v1/generated.proto \
+	api/networking/v1beta1/generated.proto \
+	api/node/v1alpha1/generated.proto \
+	api/node/v1beta1/generated.proto \
+	api/policy/v1beta1/generated.proto \
+	api/rbac/v1/generated.proto \
+	api/rbac/v1alpha1/generated.proto \
+	api/rbac/v1beta1/generated.proto \
+	api/scheduling/v1/generated.proto \
+	api/scheduling/v1alpha1/generated.proto \
+	api/scheduling/v1beta1/generated.proto \
+	api/settings/v1alpha1/generated.proto \
+	api/storage/v1/generated.proto \
+	api/storage/v1alpha1/generated.proto \
+	api/storage/v1beta1/generated.proto \
+	apimachinery/pkg/runtime/generated.proto \
+	apimachinery/pkg/api/resource/generated.proto \
+	apimachinery/pkg/runtime/schema/generated.proto \
+	apimachinery/pkg/util/intstr/generated.proto \
+	apimachinery/pkg/apis/meta/v1/generated.proto \
+	apimachinery/pkg/apis/meta/v1beta1/generated.proto
 
-k8sapi_packages = \
-	admission/v1 \
-	admission/v1beta1 \
-	admissionregistration/v1 \
-	admissionregistration/v1beta1 \
-	apps/v1 \
-	apps/v1beta1 \
-	apps/v1beta2 \
-	auditregistration/v1alpha1 \
-	authentication/v1 \
-	authentication/v1beta1 \
-	authorization/v1 \
-	authorization/v1beta1 \
-	autoscaling/v1 \
-	autoscaling/v2beta1 \
-	autoscaling/v2beta2 \
-	batch/v1 \
-	batch/v1beta1 \
-	batch/v2alpha1 \
-	certificates/v1beta1 \
-	coordination/v1 \
-	coordination/v1beta1 \
-	core/v1 \
-	events/v1beta1 \
-	extensions/v1beta1 \
-	imagepolicy/v1alpha1 \
-	networking/v1 \
-	networking/v1beta1 \
-	node/v1alpha1 \
-	node/v1beta1 \
-	policy/v1beta1 \
-	rbac/v1 \
-	rbac/v1alpha1 \
-	rbac/v1beta1 \
-	scheduling/v1 \
-	scheduling/v1alpha1 \
-	scheduling/v1beta1 \
-	settings/v1alpha1 \
-	storage/v1 \
-	storage/v1alpha1 \
-	storage/v1beta1
-
-k8sapimachinery_protos = \
-	pkg/runtime/generated.proto \
-	pkg/api/resource/generated.proto \
-	pkg/runtime/schema/generated.proto \
-	pkg/util/intstr/generated.proto \
-	pkg/apis/meta/v1/generated.proto \
-	pkg/apis/meta/v1beta1/generated.proto \
-	pkg/apis/testapigroup/v1/generated.proto
-
-k8sapimachinery_packages = \
-	pkg/runtime \
-	pkg/api/resource \
-	pkg/runtime/schema \
-	pkg/util/intstr \
-	pkg/apis/meta/v1 \
-	pkg/apis/meta/v1beta1 \
-	pkg/apis/testapigroup/v1
+k8s_packages = \
+	api/admission/v1 \
+	api/admission/v1beta1 \
+	api/admissionregistration/v1 \
+	api/admissionregistration/v1beta1 \
+	api/apps/v1 \
+	api/apps/v1beta1 \
+	api/apps/v1beta2 \
+	api/auditregistration/v1alpha1 \
+	api/authentication/v1 \
+	api/authentication/v1beta1 \
+	api/authorization/v1 \
+	api/authorization/v1beta1 \
+	api/autoscaling/v1 \
+	api/autoscaling/v2beta1 \
+	api/autoscaling/v2beta2 \
+	api/batch/v1 \
+	api/batch/v1beta1 \
+	api/batch/v2alpha1 \
+	api/certificates/v1beta1 \
+	api/coordination/v1 \
+	api/coordination/v1beta1 \
+	api/core/v1 \
+	api/events/v1beta1 \
+	api/extensions/v1beta1 \
+	api/imagepolicy/v1alpha1 \
+	api/networking/v1 \
+	api/networking/v1beta1 \
+	api/node/v1alpha1 \
+	api/node/v1beta1 \
+	api/policy/v1beta1 \
+	api/rbac/v1 \
+	api/rbac/v1alpha1 \
+	api/rbac/v1beta1 \
+	api/scheduling/v1 \
+	api/scheduling/v1alpha1 \
+	api/scheduling/v1beta1 \
+	api/settings/v1alpha1 \
+	api/storage/v1 \
+	api/storage/v1alpha1 \
+	api/storage/v1beta1 \
+	apimachinery/pkg/runtime \
+	apimachinery/pkg/api/resource \
+	apimachinery/pkg/runtime/schema \
+	apimachinery/pkg/util/intstr \
+	apimachinery/pkg/apis/meta/v1 \
+	apimachinery/pkg/apis/meta/v1beta1
 
 all: build
 
-$(googleprotobuf_protos): %:
-	@mkdir -p googleprotobuf/google/protobuf
-	@curl -sS $(GOOGLEPROTOBUF_URL)/$@ -o googleprotobuf/$@
+TMPDIR=${mkdir -d}
 
-$(googleprotobuf_packages): %: $(googleprotobuf_protos)
+google_prep:
+	@mkdir -p ${TMPDIR}/google/ googleapis
+	@cp -r common-protos/google/* ${TMPDIR}/google/
+	@rm -fr ${TMPDIR}/google/api/*.proto
+	@cp -r common-protos/google/api/http.proto ${TMPDIR}/google/api
+	@cp -r common-protos/google/api/annotations.proto ${TMPDIR}/google/api
+	@rm -fr ${TMPDIR}/google/type/calendar_period.proto
+	@rm -fr ${TMPDIR}/google/type/quaternion.proto
+	@rm -fr ${TMPDIR}/google/type/expr.proto
+	@rm -fr ${TMPDIR}/google/type/fraction.proto
 
-$(googleapis_protos) $(googleexpr_protos): %:
-	@mkdir -p googleapis/google/rpc googleapis/google/type googleapis/google/api/expr/v1alpha1
-	@curl -sS $(GOOGLEAPIS_URL)/$@ -o googleapis/$@
-	@sed -i -e '/^option go_package/d' googleapis/$@
+$(google_protos): %: google_prep
+	@sed -i -e '/^option go_package/d' ${TMPDIR}/$@
 
-$(googleapis_packages): %: $(googleapis_protos)
-	@$(PROTOC) $(GOGOSLICK_PLUGIN):googleapis -Igoogleprotobuf -Igoogleapis googleapis/$@/*.proto
+$(google_packages): %: $(google_protos)
+	@$(PROTOC) $(GOGOSLICK_PLUGIN):googleapis -I${TMPDIR} ${TMPDIR}/$@/*.proto
+
+$(googleexpr_protos): %: google_prep
+	@sed -i -e '/^option go_package/d' ${TMPDIR}/$@
 
 $(googleexpr_packages): %: $(googleexpr_protos)
-	@$(PROTOC) $(GOGOFASTER_PLUGIN):googleapis -Igoogleprotobuf -Igoogleapis googleapis/$@/*.proto
+	@$(PROTOC) $(GOGOFASTER_PLUGIN):googleapis -I${TMPDIR} ${TMPDIR}/$@/*.proto
 
-$(census_protos): %:
-	@mkdir -p oc/opencensus/proto/stats/v1 oc/opencensus/proto/trace/v1 oc/opencensus/proto/resource/v1
-	@curl -sS $(CENSUS_URL)/$@ -o oc/$@
-	@sed -i -e '/^option go_package/d' oc/$@
+census_prep:
+	@mkdir -p ${TMPDIR}/opencensus opencensus
+	@cp -r common-protos/github.com/census-instrumentation/opencensus-proto/src/opencensus/* ${TMPDIR}/opencensus
+
+$(census_protos): %: google_prep census_prep
+	@sed -i -e '/^option go_package/d' ${TMPDIR}/$@
 
 $(census_packages): %: $(census_protos)
-	@$(PROTOC) $(GOGOFASTER_PLUGIN):oc -Igoogleprotobuf -Ioc oc/$@/*.proto
+	@$(PROTOC) $(GOGOFASTER_PLUGIN):. -I${TMPDIR} ${TMPDIR}/$@/*.proto
 
-prometheus/metrics.proto:
-	@mkdir -p prometheus
-	@curl -sS $(PROMETHEUS_URL)/metrics.proto -o prometheus/metrics.proto
+prometheus_prep:
+	@mkdir -p ${TMPDIR}/prometheus prometheus
+	@cp common-protos/github.com/prometheus/client_model/metrics.proto ${TMPDIR}/prometheus/metrics.proto
+	@sed -i -e '/^option go_package/d' ${TMPDIR}/prometheus/metrics.proto
 
-prometheus/metrics.pb.go: prometheus/metrics.proto
-	@$(PROTOC) $(GOGOFASTER_PLUGIN):. prometheus/metrics.proto
+prometheus/metrics.pb.go: prometheus_prep
+	@$(PROTOC) $(GOGOFASTER_PLUGIN):prometheus -I${TMPDIR}/prometheus ${TMPDIR}/prometheus/metrics.proto
 
-k8sapi_prep:
-	@mkdir -p k8sapi/k8s.io/api
-	@cd k8sapi/k8s.io/api && mkdir -p $(k8sapi_packages)
+k8s_prep:
+	@mkdir -p ${TMPDIR}/k8s.io/
+	@cp -r common-protos/k8s.io/* ${TMPDIR}/k8s.io/
 
-$(k8sapi_protos): %:
-	@curl -sS $(K8SAPI_URL)/$@ -o k8sapi/k8s.io/api/$@
-	@sed -i -e '/^option go_package/d' k8sapi/k8s.io/api/$@
+$(k8s_protos): %:
+	@sed -i -e '/^option go_package/d' ${TMPDIR}/k8s.io/$@
 
-$(k8sapi_packages): %: k8sapi_prep $(k8sapi_protos)
-	@$(PROTOC) $(GOGOSLICK_PLUGIN):k8sapi -Igoogleprotobuf -Ik8sapimachinery -Ik8sapi k8sapi/k8s.io/api/$@/*.proto
+$(k8s_packages): %: k8s_prep $(k8s_protos)
+	@$(PROTOC) $(GOGOSLICK_PLUGIN):. -I${TMPDIR} ${TMPDIR}/k8s.io/$@/*.proto
 
-k8sapimachinery_prep:
-	@mkdir -p k8sapimachinery/k8s.io/apimachinery
-	@cd k8sapimachinery/k8s.io/apimachinery && mkdir -p $(k8sapimachinery_packages)
-
-$(k8sapimachinery_protos): %:
-	@curl -sS $(K8SAPIMACHINERY_URL)/$@ -o k8sapimachinery/k8s.io/apimachinery/$@
-	@sed -i -e '/^option go_package/d' k8sapimachinery/k8s.io/apimachinery/$@
-
-$(k8sapimachinery_packages): %: k8sapimachinery_prep $(k8sapimachinery_protos)
-	@$(PROTOC) $(GOGOSLICK_PLUGIN):k8sapimachinery -Igoogleprotobuf -Ik8sapimachinery k8sapimachinery/k8s.io/apimachinery/$@/*.proto
-
-generate: clean $(googleprotobuf_packages) $(googleapis_packages) $(googleexpr_packages) $(census_packages) prometheus/metrics.pb.go $(k8sapimachinery_packages) $(k8sapi_packages)
-	@mv oc/opencensus ./opencensus
-	@rm -fr oc
-	@mv k8sapi/k8s.io ./k8s.io
-	@rm -fr k8sapi
-	@mv k8sapimachinery/k8s.io/apimachinery ./k8s.io/apimachinery
-	@rm -fr k8sapimachinery
+generate: clean $(google_packages) $(googleexpr_packages) $(k8s_packages) $(census_packages) prometheus/metrics.pb.go
 
 build: generate
 	@go build ./...
 
 clean:
-	@rm -fr googleprotobuf googleapis opencensus prometheus k8sapimachinery k8sapi k8s.io tmp
+	@rm -fr googleapis opencensus prometheus k8s.io
 
-.PHONY: all build $(googleapis_protos) $(googleapis_packages) clean
+lint: lint-all
+
+.PHONY: all build clean
 
 include common/Makefile.common.mk
