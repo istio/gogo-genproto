@@ -84,7 +84,7 @@ func (m *Overhead) GetPodFixed() map[string]*resource.Quantity {
 // pod.  For more details, see
 // https://git.k8s.io/enhancements/keps/sig-node/runtime-class.md
 type RuntimeClass struct {
-	// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
+	// More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 	// +optional
 	Metadata *v1.ObjectMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// Handler specifies the underlying runtime and configuration that the CRI
@@ -175,7 +175,7 @@ func (m *RuntimeClass) GetScheduling() *Scheduling {
 // RuntimeClassList is a list of RuntimeClass objects.
 type RuntimeClassList struct {
 	// Standard list metadata.
-	// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
+	// More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 	// +optional
 	Metadata *v1.ListMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// Items is a list of schema objects.

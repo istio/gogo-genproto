@@ -33,7 +33,7 @@ const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
 // integer value. The value can be any valid integer.
 type PriorityClass struct {
 	// Standard object's metadata.
-	// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
+	// More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 	// +optional
 	Metadata *v1.ObjectMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// The value of this priority class. This is the actual priority that pods
@@ -128,7 +128,7 @@ func (m *PriorityClass) GetPreemptionPolicy() string {
 // PriorityClassList is a collection of priority classes.
 type PriorityClassList struct {
 	// Standard list metadata
-	// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
+	// More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 	// +optional
 	Metadata *v1.ListMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// items is the list of PriorityClasses

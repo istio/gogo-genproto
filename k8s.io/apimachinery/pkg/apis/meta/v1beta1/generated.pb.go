@@ -31,7 +31,7 @@ const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 type PartialObjectMetadataList struct {
 	// Standard list metadata.
-	// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds
+	// More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 	// +optional
 	Metadata *v1.ListMeta `protobuf:"bytes,2,opt,name=metadata" json:"metadata,omitempty"`
 	// items contains each of the included items.

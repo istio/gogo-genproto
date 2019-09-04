@@ -2819,7 +2819,6 @@ type PodSecurityPolicySpec struct {
 	AllowedFlexVolumes []*AllowedFlexVolume `protobuf:"bytes,18,rep,name=allowedFlexVolumes" json:"allowedFlexVolumes,omitempty"`
 	// AllowedCSIDrivers is a whitelist of inline CSI drivers that must be explicitly set to be embedded within a pod spec.
 	// An empty value indicates that any CSI driver can be used for inline ephemeral volumes.
-	// This is an alpha field, and is only honored if the API server enables the CSIInlineVolume feature gate.
 	// +optional
 	AllowedCSIDrivers []*AllowedCSIDriver `protobuf:"bytes,23,rep,name=allowedCSIDrivers" json:"allowedCSIDrivers,omitempty"`
 	// allowedUnsafeSysctls is a list of explicitly allowed unsafe sysctls, defaults to none.

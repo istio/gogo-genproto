@@ -220,7 +220,7 @@ func (m *Event) GetDeprecatedCount() int32 {
 // EventList is a list of Event objects.
 type EventList struct {
 	// Standard list metadata.
-	// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
+	// More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
 	// +optional
 	Metadata *v1.ListMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// Items is a list of schema objects.
