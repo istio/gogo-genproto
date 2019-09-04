@@ -233,7 +233,7 @@ k8s_packages = \
 
 all: build
 
-TMPDIR=${mkdir -d}
+TMPDIR := $(shell mktemp -d)
 
 google_prep:
 	@mkdir -p ${TMPDIR}/google/ googleapis
