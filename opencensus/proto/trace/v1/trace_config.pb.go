@@ -21,7 +21,7 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
+const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 // How spans should be sampled:
 // - Always off
@@ -184,97 +184,13 @@ func (m *TraceConfig) GetMaxNumberOfLinks() int64 {
 	return 0
 }
 
-// XXX_OneofFuncs is for the internal use of the proto package.
-func (*TraceConfig) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
-	return _TraceConfig_OneofMarshaler, _TraceConfig_OneofUnmarshaler, _TraceConfig_OneofSizer, []interface{}{
+// XXX_OneofWrappers is for the internal use of the proto package.
+func (*TraceConfig) XXX_OneofWrappers() []interface{} {
+	return []interface{}{
 		(*TraceConfig_ProbabilitySampler)(nil),
 		(*TraceConfig_ConstantSampler)(nil),
 		(*TraceConfig_RateLimitingSampler)(nil),
 	}
-}
-
-func _TraceConfig_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
-	m := msg.(*TraceConfig)
-	// sampler
-	switch x := m.Sampler.(type) {
-	case *TraceConfig_ProbabilitySampler:
-		_ = b.EncodeVarint(1<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.ProbabilitySampler); err != nil {
-			return err
-		}
-	case *TraceConfig_ConstantSampler:
-		_ = b.EncodeVarint(2<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.ConstantSampler); err != nil {
-			return err
-		}
-	case *TraceConfig_RateLimitingSampler:
-		_ = b.EncodeVarint(3<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.RateLimitingSampler); err != nil {
-			return err
-		}
-	case nil:
-	default:
-		return fmt.Errorf("TraceConfig.Sampler has unexpected type %T", x)
-	}
-	return nil
-}
-
-func _TraceConfig_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
-	m := msg.(*TraceConfig)
-	switch tag {
-	case 1: // sampler.probability_sampler
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(ProbabilitySampler)
-		err := b.DecodeMessage(msg)
-		m.Sampler = &TraceConfig_ProbabilitySampler{msg}
-		return true, err
-	case 2: // sampler.constant_sampler
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(ConstantSampler)
-		err := b.DecodeMessage(msg)
-		m.Sampler = &TraceConfig_ConstantSampler{msg}
-		return true, err
-	case 3: // sampler.rate_limiting_sampler
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(RateLimitingSampler)
-		err := b.DecodeMessage(msg)
-		m.Sampler = &TraceConfig_RateLimitingSampler{msg}
-		return true, err
-	default:
-		return false, nil
-	}
-}
-
-func _TraceConfig_OneofSizer(msg proto.Message) (n int) {
-	m := msg.(*TraceConfig)
-	// sampler
-	switch x := m.Sampler.(type) {
-	case *TraceConfig_ProbabilitySampler:
-		s := proto.Size(x.ProbabilitySampler)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *TraceConfig_ConstantSampler:
-		s := proto.Size(x.ConstantSampler)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *TraceConfig_RateLimitingSampler:
-		s := proto.Size(x.RateLimitingSampler)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case nil:
-	default:
-		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
-	}
-	return n
 }
 
 // Sampler that tries to uniformly sample traces with a given probability.

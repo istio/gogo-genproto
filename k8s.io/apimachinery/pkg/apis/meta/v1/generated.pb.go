@@ -26,7 +26,7 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
+const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 // APIGroup contains the name, the supported versions, and the preferred version
 // of a group.
@@ -1267,7 +1267,7 @@ func (m *LabelSelectorRequirement) GetValues() []string {
 // List holds a list of objects, which may not be known by the server.
 type List struct {
 	// Standard list metadata.
-	// More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+	// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds
 	// +optional
 	Metadata *ListMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// List of objects
@@ -1337,7 +1337,7 @@ type ListMeta struct {
 	// Value must be treated as opaque by clients and passed unmodified back to the server.
 	// Populated by the system.
 	// Read-only.
-	// More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency
+	// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#concurrency-control-and-consistency
 	// +optional
 	ResourceVersion string `protobuf:"bytes,2,opt,name=resourceVersion" json:"resourceVersion"`
 	// continue may be set if the user set a limit on the number of items returned, and indicates that
@@ -1768,7 +1768,7 @@ type ObjectMeta struct {
 	// should retry (optionally after the time indicated in the Retry-After header).
 	//
 	// Applied only if Name is not specified.
-	// More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#idempotency
+	// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#idempotency
 	// +optional
 	GenerateName string `protobuf:"bytes,2,opt,name=generateName" json:"generateName"`
 	// Namespace defines the space within each name must be unique. An empty namespace is
@@ -1808,7 +1808,7 @@ type ObjectMeta struct {
 	// Populated by the system.
 	// Read-only.
 	// Value must be treated as opaque by clients and .
-	// More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency
+	// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#concurrency-control-and-consistency
 	// +optional
 	ResourceVersion string `protobuf:"bytes,6,opt,name=resourceVersion" json:"resourceVersion"`
 	// A sequence number representing a specific generation of the desired state.
@@ -1822,7 +1822,7 @@ type ObjectMeta struct {
 	// Populated by the system.
 	// Read-only.
 	// Null for lists.
-	// More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+	// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
 	// +optional
 	CreationTimestamp *Time `protobuf:"bytes,8,opt,name=creationTimestamp" json:"creationTimestamp,omitempty"`
 	// DeletionTimestamp is RFC 3339 date and time at which this resource will be deleted. This
@@ -1842,7 +1842,7 @@ type ObjectMeta struct {
 	//
 	// Populated by the system when a graceful deletion is requested.
 	// Read-only.
-	// More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+	// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
 	// +optional
 	DeletionTimestamp *Time `protobuf:"bytes,9,opt,name=deletionTimestamp" json:"deletionTimestamp,omitempty"`
 	// Number of seconds allowed for this object to gracefully terminate before
@@ -2048,7 +2048,7 @@ type OwnerReference struct {
 	// API version of the referent.
 	ApiVersion string `protobuf:"bytes,5,opt,name=apiVersion" json:"apiVersion"`
 	// Kind of the referent.
-	// More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+	// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds
 	Kind string `protobuf:"bytes,1,opt,name=kind" json:"kind"`
 	// Name of the referent.
 	// More info: http://kubernetes.io/docs/user-guide/identifiers#names
@@ -2148,7 +2148,7 @@ func (m *OwnerReference) GetBlockOwnerDeletion() bool {
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 type PartialObjectMetadata struct {
 	// Standard object's metadata.
-	// More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+	// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
 	// +optional
 	Metadata *ObjectMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 }
@@ -2196,7 +2196,7 @@ func (m *PartialObjectMetadata) GetMetadata() *ObjectMeta {
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 type PartialObjectMetadataList struct {
 	// Standard list metadata.
-	// More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+	// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds
 	// +optional
 	Metadata *ListMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// items contains each of the included items.
@@ -2524,12 +2524,12 @@ func (m *ServerAddressByClientCIDR) GetServerAddress() string {
 // Status is a return value for calls that don't return other objects.
 type Status struct {
 	// Standard list metadata.
-	// More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+	// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds
 	// +optional
 	Metadata *ListMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// Status of the operation.
 	// One of: "Success" or "Failure".
-	// More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+	// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status
 	// +optional
 	Status string `protobuf:"bytes,2,opt,name=status" json:"status"`
 	// A human-readable description of the status of this operation.
@@ -2719,7 +2719,7 @@ type StatusDetails struct {
 	Group string `protobuf:"bytes,2,opt,name=group" json:"group"`
 	// The kind attribute of the resource associated with the status StatusReason.
 	// On some operations may differ from the requested resource Kind.
-	// More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+	// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds
 	// +optional
 	Kind string `protobuf:"bytes,3,opt,name=kind" json:"kind"`
 	// UID of the resource.
@@ -2997,13 +2997,13 @@ type TypeMeta struct {
 	// Servers may infer this from the endpoint the client submits requests to.
 	// Cannot be updated.
 	// In CamelCase.
-	// More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+	// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds
 	// +optional
 	Kind string `protobuf:"bytes,1,opt,name=kind" json:"kind"`
 	// APIVersion defines the versioned schema of this representation of an object.
 	// Servers should convert recognized schemas to the latest internal value, and
 	// may reject unrecognized values.
-	// More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+	// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources
 	// +optional
 	ApiVersion string `protobuf:"bytes,2,opt,name=apiVersion" json:"apiVersion"`
 }

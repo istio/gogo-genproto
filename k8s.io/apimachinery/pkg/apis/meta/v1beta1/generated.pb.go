@@ -25,13 +25,13 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
+const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 // PartialObjectMetadataList contains a list of objects containing only their metadata.
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 type PartialObjectMetadataList struct {
 	// Standard list metadata.
-	// More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+	// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds
 	// +optional
 	Metadata *v1.ListMeta `protobuf:"bytes,2,opt,name=metadata" json:"metadata,omitempty"`
 	// items contains each of the included items.

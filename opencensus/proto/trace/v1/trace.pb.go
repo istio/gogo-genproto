@@ -23,7 +23,7 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
+const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 // Type of span. Can be used to specify additional relationships between spans
 // in addition to a parent/child relationship.
@@ -632,78 +632,12 @@ func (m *Span_TimeEvent) GetMessageEvent() *Span_TimeEvent_MessageEvent {
 	return nil
 }
 
-// XXX_OneofFuncs is for the internal use of the proto package.
-func (*Span_TimeEvent) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
-	return _Span_TimeEvent_OneofMarshaler, _Span_TimeEvent_OneofUnmarshaler, _Span_TimeEvent_OneofSizer, []interface{}{
+// XXX_OneofWrappers is for the internal use of the proto package.
+func (*Span_TimeEvent) XXX_OneofWrappers() []interface{} {
+	return []interface{}{
 		(*Span_TimeEvent_Annotation_)(nil),
 		(*Span_TimeEvent_MessageEvent_)(nil),
 	}
-}
-
-func _Span_TimeEvent_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
-	m := msg.(*Span_TimeEvent)
-	// value
-	switch x := m.Value.(type) {
-	case *Span_TimeEvent_Annotation_:
-		_ = b.EncodeVarint(2<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.Annotation); err != nil {
-			return err
-		}
-	case *Span_TimeEvent_MessageEvent_:
-		_ = b.EncodeVarint(3<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.MessageEvent); err != nil {
-			return err
-		}
-	case nil:
-	default:
-		return fmt.Errorf("Span_TimeEvent.Value has unexpected type %T", x)
-	}
-	return nil
-}
-
-func _Span_TimeEvent_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
-	m := msg.(*Span_TimeEvent)
-	switch tag {
-	case 2: // value.annotation
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(Span_TimeEvent_Annotation)
-		err := b.DecodeMessage(msg)
-		m.Value = &Span_TimeEvent_Annotation_{msg}
-		return true, err
-	case 3: // value.message_event
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(Span_TimeEvent_MessageEvent)
-		err := b.DecodeMessage(msg)
-		m.Value = &Span_TimeEvent_MessageEvent_{msg}
-		return true, err
-	default:
-		return false, nil
-	}
-}
-
-func _Span_TimeEvent_OneofSizer(msg proto.Message) (n int) {
-	m := msg.(*Span_TimeEvent)
-	// value
-	switch x := m.Value.(type) {
-	case *Span_TimeEvent_Annotation_:
-		s := proto.Size(x.Annotation)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Span_TimeEvent_MessageEvent_:
-		s := proto.Size(x.MessageEvent)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case nil:
-	default:
-		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
-	}
-	return n
 }
 
 // A text annotation with a set of attributes.
@@ -1214,105 +1148,14 @@ func (m *AttributeValue) GetDoubleValue() float64 {
 	return 0
 }
 
-// XXX_OneofFuncs is for the internal use of the proto package.
-func (*AttributeValue) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
-	return _AttributeValue_OneofMarshaler, _AttributeValue_OneofUnmarshaler, _AttributeValue_OneofSizer, []interface{}{
+// XXX_OneofWrappers is for the internal use of the proto package.
+func (*AttributeValue) XXX_OneofWrappers() []interface{} {
+	return []interface{}{
 		(*AttributeValue_StringValue)(nil),
 		(*AttributeValue_IntValue)(nil),
 		(*AttributeValue_BoolValue)(nil),
 		(*AttributeValue_DoubleValue)(nil),
 	}
-}
-
-func _AttributeValue_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
-	m := msg.(*AttributeValue)
-	// value
-	switch x := m.Value.(type) {
-	case *AttributeValue_StringValue:
-		_ = b.EncodeVarint(1<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.StringValue); err != nil {
-			return err
-		}
-	case *AttributeValue_IntValue:
-		_ = b.EncodeVarint(2<<3 | proto.WireVarint)
-		_ = b.EncodeVarint(uint64(x.IntValue))
-	case *AttributeValue_BoolValue:
-		t := uint64(0)
-		if x.BoolValue {
-			t = 1
-		}
-		_ = b.EncodeVarint(3<<3 | proto.WireVarint)
-		_ = b.EncodeVarint(t)
-	case *AttributeValue_DoubleValue:
-		_ = b.EncodeVarint(4<<3 | proto.WireFixed64)
-		_ = b.EncodeFixed64(math.Float64bits(x.DoubleValue))
-	case nil:
-	default:
-		return fmt.Errorf("AttributeValue.Value has unexpected type %T", x)
-	}
-	return nil
-}
-
-func _AttributeValue_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
-	m := msg.(*AttributeValue)
-	switch tag {
-	case 1: // value.string_value
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(TruncatableString)
-		err := b.DecodeMessage(msg)
-		m.Value = &AttributeValue_StringValue{msg}
-		return true, err
-	case 2: // value.int_value
-		if wire != proto.WireVarint {
-			return true, proto.ErrInternalBadWireType
-		}
-		x, err := b.DecodeVarint()
-		m.Value = &AttributeValue_IntValue{int64(x)}
-		return true, err
-	case 3: // value.bool_value
-		if wire != proto.WireVarint {
-			return true, proto.ErrInternalBadWireType
-		}
-		x, err := b.DecodeVarint()
-		m.Value = &AttributeValue_BoolValue{x != 0}
-		return true, err
-	case 4: // value.double_value
-		if wire != proto.WireFixed64 {
-			return true, proto.ErrInternalBadWireType
-		}
-		x, err := b.DecodeFixed64()
-		m.Value = &AttributeValue_DoubleValue{math.Float64frombits(x)}
-		return true, err
-	default:
-		return false, nil
-	}
-}
-
-func _AttributeValue_OneofSizer(msg proto.Message) (n int) {
-	m := msg.(*AttributeValue)
-	// value
-	switch x := m.Value.(type) {
-	case *AttributeValue_StringValue:
-		s := proto.Size(x.StringValue)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *AttributeValue_IntValue:
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(x.IntValue))
-	case *AttributeValue_BoolValue:
-		n += 1 // tag and wire
-		n += 1
-	case *AttributeValue_DoubleValue:
-		n += 1 // tag and wire
-		n += 8
-	case nil:
-	default:
-		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
-	}
-	return n
 }
 
 // The call stack which originated this span.

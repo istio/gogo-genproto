@@ -28,7 +28,7 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
+const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 // Overhead structure represents the resource overhead associated with running a pod.
 type Overhead struct {
@@ -84,11 +84,11 @@ func (m *Overhead) GetPodFixed() map[string]*resource.Quantity {
 // pod.  For more details, see
 // https://git.k8s.io/enhancements/keps/sig-node/runtime-class.md
 type RuntimeClass struct {
-	// More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+	// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
 	// +optional
 	Metadata *v1.ObjectMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// Specification of the RuntimeClass
-	// More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
+	// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status
 	Spec *RuntimeClassSpec `protobuf:"bytes,2,opt,name=spec" json:"spec,omitempty"`
 }
 
@@ -141,7 +141,7 @@ func (m *RuntimeClass) GetSpec() *RuntimeClassSpec {
 // RuntimeClassList is a list of RuntimeClass objects.
 type RuntimeClassList struct {
 	// Standard list metadata.
-	// More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+	// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
 	// +optional
 	Metadata *v1.ListMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// Items is a list of schema objects.

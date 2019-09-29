@@ -26,7 +26,7 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
+const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 // MutatingWebhook describes an admission webhook and the resources and operations it applies to.
 type MutatingWebhook struct {
@@ -280,7 +280,7 @@ func (m *MutatingWebhook) GetReinvocationPolicy() string {
 // MutatingWebhookConfiguration describes the configuration of and admission webhook that accept or reject and may change the object.
 // Deprecated in v1.16, planned for removal in v1.19. Use admissionregistration.k8s.io/v1 MutatingWebhookConfiguration instead.
 type MutatingWebhookConfiguration struct {
-	// Standard object metadata; More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata.
+	// Standard object metadata; More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata.
 	// +optional
 	Metadata *v1.ObjectMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// Webhooks is a list of webhooks and the affected resources and operations.
@@ -339,7 +339,7 @@ func (m *MutatingWebhookConfiguration) GetWebhooks() []*MutatingWebhook {
 // MutatingWebhookConfigurationList is a list of MutatingWebhookConfiguration.
 type MutatingWebhookConfigurationList struct {
 	// Standard list metadata.
-	// More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+	// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds
 	// +optional
 	Metadata *v1.ListMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// List of MutatingWebhookConfiguration.
@@ -858,7 +858,7 @@ func (m *ValidatingWebhook) GetAdmissionReviewVersions() []string {
 // ValidatingWebhookConfiguration describes the configuration of and admission webhook that accept or reject and object without changing it.
 // Deprecated in v1.16, planned for removal in v1.19. Use admissionregistration.k8s.io/v1 ValidatingWebhookConfiguration instead.
 type ValidatingWebhookConfiguration struct {
-	// Standard object metadata; More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata.
+	// Standard object metadata; More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata.
 	// +optional
 	Metadata *v1.ObjectMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// Webhooks is a list of webhooks and the affected resources and operations.
@@ -917,7 +917,7 @@ func (m *ValidatingWebhookConfiguration) GetWebhooks() []*ValidatingWebhook {
 // ValidatingWebhookConfigurationList is a list of ValidatingWebhookConfiguration.
 type ValidatingWebhookConfigurationList struct {
 	// Standard list metadata.
-	// More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+	// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds
 	// +optional
 	Metadata *v1.ListMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// List of ValidatingWebhookConfiguration.

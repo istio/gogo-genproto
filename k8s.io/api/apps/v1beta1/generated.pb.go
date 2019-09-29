@@ -28,7 +28,7 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
+const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 // DEPRECATED - This group version of ControllerRevision is deprecated by apps/v1beta2/ControllerRevision. See the
 // release notes for more information.
@@ -43,7 +43,7 @@ const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
 // depend on its stability. It is primarily for internal use by controllers.
 type ControllerRevision struct {
 	// Standard object's metadata.
-	// More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+	// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
 	// +optional
 	Metadata *v1.ObjectMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// Data is the serialized representation of the state.
@@ -107,7 +107,7 @@ func (m *ControllerRevision) GetRevision() int64 {
 
 // ControllerRevisionList is a resource containing a list of ControllerRevision objects.
 type ControllerRevisionList struct {
-	// More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+	// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
 	// +optional
 	Metadata *v1.ListMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// Items is the list of ControllerRevisions
@@ -925,13 +925,13 @@ func (m *RollingUpdateStatefulSetStrategy) GetPartition() int32 {
 
 // Scale represents a scaling request for a resource.
 type Scale struct {
-	// Standard object metadata; More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata.
+	// Standard object metadata; More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata.
 	// +optional
 	Metadata *v1.ObjectMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
-	// defines the behavior of the scale. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status.
+	// defines the behavior of the scale. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status.
 	// +optional
 	Spec *ScaleSpec `protobuf:"bytes,2,opt,name=spec" json:"spec,omitempty"`
-	// current status of the scale. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status. Read-only.
+	// current status of the scale. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status. Read-only.
 	// +optional
 	Status *ScaleStatus `protobuf:"bytes,3,opt,name=status" json:"status,omitempty"`
 }

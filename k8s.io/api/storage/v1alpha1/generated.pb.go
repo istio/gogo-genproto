@@ -27,7 +27,7 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
+const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 // VolumeAttachment captures the intent to attach or detach the specified volume
 // to/from the specified node.
@@ -35,7 +35,7 @@ const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
 // VolumeAttachment objects are non-namespaced.
 type VolumeAttachment struct {
 	// Standard object metadata.
-	// More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+	// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
 	// +optional
 	Metadata *v1.ObjectMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// Specification of the desired attach/detach volume behavior.
@@ -104,7 +104,7 @@ func (m *VolumeAttachment) GetStatus() *VolumeAttachmentStatus {
 // VolumeAttachmentList is a collection of VolumeAttachment objects.
 type VolumeAttachmentList struct {
 	// Standard list metadata
-	// More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+	// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
 	// +optional
 	Metadata *v1.ListMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// Items is the list of VolumeAttachments

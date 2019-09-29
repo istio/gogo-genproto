@@ -27,11 +27,11 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
+const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 // CrossVersionObjectReference contains enough information to let you identify the referred resource.
 type CrossVersionObjectReference struct {
-	// Kind of the referent; More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds"
+	// Kind of the referent; More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds"
 	Kind string `protobuf:"bytes,1,opt,name=kind" json:"kind"`
 	// Name of the referent; More info: http://kubernetes.io/docs/user-guide/identifiers#names
 	Name string `protobuf:"bytes,2,opt,name=name" json:"name"`
@@ -252,10 +252,10 @@ func (m *ExternalMetricStatus) GetCurrentAverageValue() *resource.Quantity {
 
 // configuration of a horizontal pod autoscaler.
 type HorizontalPodAutoscaler struct {
-	// Standard object metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+	// Standard object metadata. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
 	// +optional
 	Metadata *v1.ObjectMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
-	// behaviour of autoscaler. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status.
+	// behaviour of autoscaler. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status.
 	// +optional
 	Spec *HorizontalPodAutoscalerSpec `protobuf:"bytes,2,opt,name=spec" json:"spec,omitempty"`
 	// current information about the autoscaler.
@@ -1283,13 +1283,13 @@ func (m *ResourceMetricStatus) GetCurrentAverageValue() *resource.Quantity {
 
 // Scale represents a scaling request for a resource.
 type Scale struct {
-	// Standard object metadata; More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata.
+	// Standard object metadata; More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata.
 	// +optional
 	Metadata *v1.ObjectMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
-	// defines the behavior of the scale. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status.
+	// defines the behavior of the scale. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status.
 	// +optional
 	Spec *ScaleSpec `protobuf:"bytes,2,opt,name=spec" json:"spec,omitempty"`
-	// current status of the scale. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status. Read-only.
+	// current status of the scale. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status. Read-only.
 	// +optional
 	Status *ScaleStatus `protobuf:"bytes,3,opt,name=status" json:"status,omitempty"`
 }
