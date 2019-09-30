@@ -27,7 +27,7 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
+const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 // CSIDriver captures information about a Container Storage Interface (CSI)
 // volume driver deployed on the cluster.
@@ -45,7 +45,7 @@ type CSIDriver struct {
 	// The driver name must be 63 characters or less, beginning and ending with
 	// an alphanumeric character ([a-z0-9A-Z]) with dashes (-), dots (.), and
 	// alphanumerics between.
-	// More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+	// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
 	Metadata *v1.ObjectMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// Specification of the CSI Driver.
 	Spec *CSIDriverSpec `protobuf:"bytes,2,opt,name=spec" json:"spec,omitempty"`
@@ -100,7 +100,7 @@ func (m *CSIDriver) GetSpec() *CSIDriverSpec {
 // CSIDriverList is a collection of CSIDriver objects.
 type CSIDriverList struct {
 	// Standard list metadata
-	// More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+	// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
 	// +optional
 	Metadata *v1.ListMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// items is the list of CSIDriver
@@ -420,7 +420,7 @@ func (m *CSINodeDriver) GetAllocatable() *VolumeNodeResources {
 // CSINodeList is a collection of CSINode objects.
 type CSINodeList struct {
 	// Standard list metadata
-	// More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+	// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
 	// +optional
 	Metadata *v1.ListMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// items is the list of CSINode
@@ -528,7 +528,7 @@ func (m *CSINodeSpec) GetDrivers() []*CSINodeDriver {
 // according to etcd is in ObjectMeta.Name.
 type StorageClass struct {
 	// Standard object's metadata.
-	// More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+	// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
 	// +optional
 	Metadata *v1.ObjectMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// Provisioner indicates the type of the provisioner.
@@ -653,7 +653,7 @@ func (m *StorageClass) GetAllowedTopologies() []*v11.TopologySelectorTerm {
 // StorageClassList is a collection of storage classes.
 type StorageClassList struct {
 	// Standard list metadata
-	// More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+	// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
 	// +optional
 	Metadata *v1.ListMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// Items is the list of StorageClasses
@@ -712,7 +712,7 @@ func (m *StorageClassList) GetItems() []*StorageClass {
 // VolumeAttachment objects are non-namespaced.
 type VolumeAttachment struct {
 	// Standard object metadata.
-	// More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+	// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
 	// +optional
 	Metadata *v1.ObjectMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// Specification of the desired attach/detach volume behavior.
@@ -781,7 +781,7 @@ func (m *VolumeAttachment) GetStatus() *VolumeAttachmentStatus {
 // VolumeAttachmentList is a collection of VolumeAttachment objects.
 type VolumeAttachmentList struct {
 	// Standard list metadata
-	// More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+	// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
 	// +optional
 	Metadata *v1.ListMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// Items is the list of VolumeAttachments

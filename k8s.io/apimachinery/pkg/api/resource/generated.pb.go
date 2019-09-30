@@ -22,11 +22,11 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
+const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 // Quantity is a fixed-point representation of a number.
 // It provides convenient marshaling/unmarshaling in JSON and YAML,
-// in addition to String() and AsInt64() accessors.
+// in addition to String() and Int64() accessors.
 //
 // The serialization format is:
 //
