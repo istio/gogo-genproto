@@ -286,9 +286,11 @@ $(k8s_protos): %:
 $(k8s_packages): %: k8s_prep $(k8s_protos)
 	@$(PROTOC) $(GOGOSLICK_PLUGIN):. -I${TMPDIR} ${TMPDIR}/k8s.io/$@/*.proto
 
-generate: clean $(google_packages) $(googleexpr_packages) $(k8s_packages) $(census_packages) prometheus/metrics.pb.go
+gen: clean $(google_packages) $(googleexpr_packages) $(k8s_packages) $(census_packages) prometheus/metrics.pb.go
 
-build: generate
+gen-check: gen check-clean-repo
+
+build:
 	@go build ./...
 
 clean:
