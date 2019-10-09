@@ -94,6 +94,7 @@ google_protos = \
 	google/protobuf/struct.proto \
 	google/protobuf/timestamp.proto \
 	google/protobuf/wrappers.proto \
+	google/api/field_behavior.proto \
 	google/api/http.proto \
 	google/api/annotations.proto \
 	google/rpc/status.proto \
@@ -241,6 +242,7 @@ google_prep:
 	@rm -fr ${TMPDIR}/google/api/*.proto
 	@cp -r common-protos/google/api/http.proto ${TMPDIR}/google/api
 	@cp -r common-protos/google/api/annotations.proto ${TMPDIR}/google/api
+	@cp -r common-protos/google/api/field_behavior.proto ${TMPDIR}/google/api
 	@rm -fr ${TMPDIR}/google/type/calendar_period.proto
 	@rm -fr ${TMPDIR}/google/type/quaternion.proto
 	@rm -fr ${TMPDIR}/google/type/expr.proto
