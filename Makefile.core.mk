@@ -232,6 +232,12 @@ k8s_packages = \
 	apimachinery/pkg/apis/meta/v1 \
 	apimachinery/pkg/apis/meta/v1beta1
 
+istio_protos = \
+	extensions/field_rules.proto
+
+istio_packages = \
+	extensions
+
 all: build
 
 TMPDIR := $(shell mktemp -d)
@@ -288,7 +294,17 @@ $(k8s_protos): %:
 $(k8s_packages): %: k8s_prep $(k8s_protos)
 	@$(PROTOC) $(GOGOSLICK_PLUGIN):. -I${TMPDIR} ${TMPDIR}/k8s.io/$@/*.proto
 
-gen: clean $(google_packages) $(googleexpr_packages) $(k8s_packages) $(census_packages) prometheus/metrics.pb.go tidy-go mirror-licenses
+istio_prep:
+	@mkdir -p ${TMPDIR}/istio.io/
+	@cp -r common-protos/istio.io/* ${TMPDIR}/istio.io/
+
+$(istio_protos): %:
+	@sed -i -e '/^option go_package/d' ${TMPDIR}/istio.io/$@
+
+$(istio_packages): %: istio_prep $(istio_protos)
+	@$(PROTOC) $(GOGOSLICK_PLUGIN):. -I${TMPDIR} ${TMPDIR}/istio.io/$@/*.proto
+
+gen: clean $(google_packages) $(googleexpr_packages) $(k8s_packages) $(census_packages) $(istio_packages) prometheus/metrics.pb.go tidy-go mirror-licenses
 
 gen-check: gen check-clean-repo
 
@@ -296,7 +312,7 @@ build:
 	@go build ./...
 
 clean:
-	@rm -fr googleapis opencensus prometheus k8s.io
+	@rm -fr googleapis opencensus prometheus k8s.io istio.io
 
 lint: lint-all
 
