@@ -799,7 +799,9 @@ func init() {
 	proto.RegisterType((*Subject)(nil), "k8s.io.api.rbac.v1.Subject")
 }
 
-func init() { proto.RegisterFile("k8s.io/api/rbac/v1/generated.proto", fileDescriptor_c8ba2e7dd472de66) }
+func init() {
+	proto.RegisterFile("k8s.io/api/rbac/v1/generated.proto", fileDescriptor_c8ba2e7dd472de66)
+}
 
 var fileDescriptor_c8ba2e7dd472de66 = []byte{
 	// 657 bytes of a gzipped FileDescriptorProto
