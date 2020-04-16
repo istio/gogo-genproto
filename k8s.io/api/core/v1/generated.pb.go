@@ -17071,7 +17071,9 @@ func init() {
 	proto.RegisterType((*WindowsSecurityContextOptions)(nil), "k8s.io.api.core.v1.WindowsSecurityContextOptions")
 }
 
-func init() { proto.RegisterFile("k8s.io/api/core/v1/generated.proto", fileDescriptor_6c07b07c062484ab) }
+func init() {
+	proto.RegisterFile("k8s.io/api/core/v1/generated.proto", fileDescriptor_6c07b07c062484ab)
+}
 
 var fileDescriptor_6c07b07c062484ab = []byte{
 	// 10267 bytes of a gzipped FileDescriptorProto

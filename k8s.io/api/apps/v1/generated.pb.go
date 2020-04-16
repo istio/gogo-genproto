@@ -2337,7 +2337,9 @@ func init() {
 	proto.RegisterType((*StatefulSetUpdateStrategy)(nil), "k8s.io.api.apps.v1.StatefulSetUpdateStrategy")
 }
 
-func init() { proto.RegisterFile("k8s.io/api/apps/v1/generated.proto", fileDescriptor_5b781835628d5338) }
+func init() {
+	proto.RegisterFile("k8s.io/api/apps/v1/generated.proto", fileDescriptor_5b781835628d5338)
+}
 
 var fileDescriptor_5b781835628d5338 = []byte{
 	// 1589 bytes of a gzipped FileDescriptorProto
