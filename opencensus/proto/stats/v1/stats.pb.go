@@ -246,16 +246,16 @@ type isView_Aggregation interface {
 }
 
 type View_CountAggregation struct {
-	CountAggregation *CountAggregation `protobuf:"bytes,5,opt,name=count_aggregation,json=countAggregation,proto3,oneof"`
+	CountAggregation *CountAggregation `protobuf:"bytes,5,opt,name=count_aggregation,json=countAggregation,proto3,oneof" json:"count_aggregation,omitempty"`
 }
 type View_SumAggregation struct {
-	SumAggregation *SumAggregation `protobuf:"bytes,6,opt,name=sum_aggregation,json=sumAggregation,proto3,oneof"`
+	SumAggregation *SumAggregation `protobuf:"bytes,6,opt,name=sum_aggregation,json=sumAggregation,proto3,oneof" json:"sum_aggregation,omitempty"`
 }
 type View_LastValueAggregation struct {
-	LastValueAggregation *LastValueAggregation `protobuf:"bytes,7,opt,name=last_value_aggregation,json=lastValueAggregation,proto3,oneof"`
+	LastValueAggregation *LastValueAggregation `protobuf:"bytes,7,opt,name=last_value_aggregation,json=lastValueAggregation,proto3,oneof" json:"last_value_aggregation,omitempty"`
 }
 type View_DistributionAggregation struct {
-	DistributionAggregation *DistributionAggregation `protobuf:"bytes,8,opt,name=distribution_aggregation,json=distributionAggregation,proto3,oneof"`
+	DistributionAggregation *DistributionAggregation `protobuf:"bytes,8,opt,name=distribution_aggregation,json=distributionAggregation,proto3,oneof" json:"distribution_aggregation,omitempty"`
 }
 
 func (*View_CountAggregation) isView_Aggregation()        {}
@@ -562,10 +562,10 @@ type isMeasurement_Value interface {
 }
 
 type Measurement_DoubleValue struct {
-	DoubleValue float64 `protobuf:"fixed64,3,opt,name=double_value,json=doubleValue,proto3,oneof"`
+	DoubleValue float64 `protobuf:"fixed64,3,opt,name=double_value,json=doubleValue,proto3,oneof" json:"double_value,omitempty"`
 }
 type Measurement_IntValue struct {
-	IntValue int64 `protobuf:"varint,4,opt,name=int_value,json=intValue,proto3,oneof"`
+	IntValue int64 `protobuf:"varint,4,opt,name=int_value,json=intValue,proto3,oneof" json:"int_value,omitempty"`
 }
 
 func (*Measurement_DoubleValue) isMeasurement_Value() {}
@@ -836,7 +836,8 @@ func (m *View) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *View_CountAggregation) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *View_CountAggregation) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -856,7 +857,8 @@ func (m *View_CountAggregation) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *View_SumAggregation) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *View_SumAggregation) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -876,7 +878,8 @@ func (m *View_SumAggregation) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *View_LastValueAggregation) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *View_LastValueAggregation) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -896,7 +899,8 @@ func (m *View_LastValueAggregation) MarshalToSizedBuffer(dAtA []byte) (int, erro
 	return len(dAtA) - i, nil
 }
 func (m *View_DistributionAggregation) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *View_DistributionAggregation) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1083,7 +1087,8 @@ func (m *Measurement) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *Measurement_DoubleValue) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Measurement_DoubleValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1095,7 +1100,8 @@ func (m *Measurement_DoubleValue) MarshalToSizedBuffer(dAtA []byte) (int, error)
 	return len(dAtA) - i, nil
 }
 func (m *Measurement_IntValue) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Measurement_IntValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1424,10 +1430,7 @@ func (m *Tag) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthStats
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthStats
 			}
 			if (iNdEx + skippy) > l {
@@ -1592,10 +1595,7 @@ func (m *Measure) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthStats
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthStats
 			}
 			if (iNdEx + skippy) > l {
@@ -1917,10 +1917,7 @@ func (m *View) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthStats
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthStats
 			}
 			if (iNdEx + skippy) > l {
@@ -1970,10 +1967,7 @@ func (m *CountAggregation) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthStats
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthStats
 			}
 			if (iNdEx + skippy) > l {
@@ -2023,10 +2017,7 @@ func (m *SumAggregation) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthStats
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthStats
 			}
 			if (iNdEx + skippy) > l {
@@ -2076,10 +2067,7 @@ func (m *LastValueAggregation) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthStats
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthStats
 			}
 			if (iNdEx + skippy) > l {
@@ -2183,10 +2171,7 @@ func (m *DistributionAggregation) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthStats
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthStats
 			}
 			if (iNdEx + skippy) > l {
@@ -2369,10 +2354,7 @@ func (m *Measurement) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthStats
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthStats
 			}
 			if (iNdEx + skippy) > l {
@@ -2390,6 +2372,7 @@ func (m *Measurement) Unmarshal(dAtA []byte) error {
 func skipStats(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
+	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -2421,10 +2404,8 @@ func skipStats(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			return iNdEx, nil
 		case 1:
 			iNdEx += 8
-			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -2445,55 +2426,30 @@ func skipStats(dAtA []byte) (n int, err error) {
 				return 0, ErrInvalidLengthStats
 			}
 			iNdEx += length
-			if iNdEx < 0 {
-				return 0, ErrInvalidLengthStats
-			}
-			return iNdEx, nil
 		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowStats
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipStats(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-				if iNdEx < 0 {
-					return 0, ErrInvalidLengthStats
-				}
-			}
-			return iNdEx, nil
+			depth++
 		case 4:
-			return iNdEx, nil
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupStats
+			}
+			depth--
 		case 5:
 			iNdEx += 4
-			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthStats
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
 	}
-	panic("unreachable")
+	return 0, io.ErrUnexpectedEOF
 }
 
 var (
-	ErrInvalidLengthStats = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowStats   = fmt.Errorf("proto: integer overflow")
+	ErrInvalidLengthStats        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowStats          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupStats = fmt.Errorf("proto: unexpected end of group")
 )
