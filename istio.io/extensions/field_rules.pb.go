@@ -79,22 +79,22 @@ type isFieldRules_Type interface {
 }
 
 type FieldRules_Float struct {
-	Float *FloatRules `protobuf:"bytes,1,opt,name=float,proto3,oneof"`
+	Float *FloatRules `protobuf:"bytes,1,opt,name=float,proto3,oneof" json:"float,omitempty"`
 }
 type FieldRules_Double struct {
-	Double *DoubleRules `protobuf:"bytes,2,opt,name=double,proto3,oneof"`
+	Double *DoubleRules `protobuf:"bytes,2,opt,name=double,proto3,oneof" json:"double,omitempty"`
 }
 type FieldRules_String_ struct {
-	String_ *StringRules `protobuf:"bytes,3,opt,name=string,proto3,oneof"`
+	String_ *StringRules `protobuf:"bytes,3,opt,name=string,proto3,oneof" json:"string,omitempty"`
 }
 type FieldRules_Bool struct {
-	Bool *BoolRules `protobuf:"bytes,4,opt,name=bool,proto3,oneof"`
+	Bool *BoolRules `protobuf:"bytes,4,opt,name=bool,proto3,oneof" json:"bool,omitempty"`
 }
 type FieldRules_Int32 struct {
-	Int32 *Int32Rules `protobuf:"bytes,5,opt,name=int32,proto3,oneof"`
+	Int32 *Int32Rules `protobuf:"bytes,5,opt,name=int32,proto3,oneof" json:"int32,omitempty"`
 }
 type FieldRules_Int64 struct {
-	Int64 *Int64Rules `protobuf:"bytes,6,opt,name=int64,proto3,oneof"`
+	Int64 *Int64Rules `protobuf:"bytes,6,opt,name=int64,proto3,oneof" json:"int64,omitempty"`
 }
 
 func (*FieldRules_Float) isFieldRules_Type()   {}
@@ -975,7 +975,8 @@ func (m *FieldRules) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *FieldRules_Float) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *FieldRules_Float) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -995,7 +996,8 @@ func (m *FieldRules_Float) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *FieldRules_Double) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *FieldRules_Double) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1015,7 +1017,8 @@ func (m *FieldRules_Double) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *FieldRules_String_) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *FieldRules_String_) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1035,7 +1038,8 @@ func (m *FieldRules_String_) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *FieldRules_Bool) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *FieldRules_Bool) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1055,7 +1059,8 @@ func (m *FieldRules_Bool) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *FieldRules_Int32) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *FieldRules_Int32) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1075,7 +1080,8 @@ func (m *FieldRules_Int32) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *FieldRules_Int64) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *FieldRules_Int64) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1840,10 +1846,7 @@ func (m *FieldRules) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthFieldRules
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthFieldRules
 			}
 			if (iNdEx + skippy) > l {
@@ -1904,10 +1907,7 @@ func (m *FloatRules) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthFieldRules
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthFieldRules
 			}
 			if (iNdEx + skippy) > l {
@@ -1968,10 +1968,7 @@ func (m *DoubleRules) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthFieldRules
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthFieldRules
 			}
 			if (iNdEx + skippy) > l {
@@ -2085,10 +2082,7 @@ func (m *StringRules) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthFieldRules
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthFieldRules
 			}
 			if (iNdEx + skippy) > l {
@@ -2158,10 +2152,7 @@ func (m *BoolRules) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthFieldRules
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthFieldRules
 			}
 			if (iNdEx + skippy) > l {
@@ -2230,10 +2221,7 @@ func (m *Int32Rules) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthFieldRules
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthFieldRules
 			}
 			if (iNdEx + skippy) > l {
@@ -2302,10 +2290,7 @@ func (m *Int64Rules) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthFieldRules
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthFieldRules
 			}
 			if (iNdEx + skippy) > l {
@@ -2323,6 +2308,7 @@ func (m *Int64Rules) Unmarshal(dAtA []byte) error {
 func skipFieldRules(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
+	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -2354,10 +2340,8 @@ func skipFieldRules(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			return iNdEx, nil
 		case 1:
 			iNdEx += 8
-			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -2378,55 +2362,30 @@ func skipFieldRules(dAtA []byte) (n int, err error) {
 				return 0, ErrInvalidLengthFieldRules
 			}
 			iNdEx += length
-			if iNdEx < 0 {
-				return 0, ErrInvalidLengthFieldRules
-			}
-			return iNdEx, nil
 		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowFieldRules
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipFieldRules(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-				if iNdEx < 0 {
-					return 0, ErrInvalidLengthFieldRules
-				}
-			}
-			return iNdEx, nil
+			depth++
 		case 4:
-			return iNdEx, nil
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupFieldRules
+			}
+			depth--
 		case 5:
 			iNdEx += 4
-			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthFieldRules
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
 	}
-	panic("unreachable")
+	return 0, io.ErrUnexpectedEOF
 }
 
 var (
-	ErrInvalidLengthFieldRules = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowFieldRules   = fmt.Errorf("proto: integer overflow")
+	ErrInvalidLengthFieldRules        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowFieldRules          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupFieldRules = fmt.Errorf("proto: unexpected end of group")
 )
