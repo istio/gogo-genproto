@@ -87,40 +87,40 @@ type isValue_Kind interface {
 }
 
 type Value_NullValue struct {
-	NullValue types.NullValue `protobuf:"varint,1,opt,name=null_value,json=nullValue,proto3,enum=google.protobuf.NullValue,oneof"`
+	NullValue types.NullValue `protobuf:"varint,1,opt,name=null_value,json=nullValue,proto3,enum=google.protobuf.NullValue,oneof" json:"null_value,omitempty"`
 }
 type Value_BoolValue struct {
-	BoolValue bool `protobuf:"varint,2,opt,name=bool_value,json=boolValue,proto3,oneof"`
+	BoolValue bool `protobuf:"varint,2,opt,name=bool_value,json=boolValue,proto3,oneof" json:"bool_value,omitempty"`
 }
 type Value_Int64Value struct {
-	Int64Value int64 `protobuf:"varint,3,opt,name=int64_value,json=int64Value,proto3,oneof"`
+	Int64Value int64 `protobuf:"varint,3,opt,name=int64_value,json=int64Value,proto3,oneof" json:"int64_value,omitempty"`
 }
 type Value_Uint64Value struct {
-	Uint64Value uint64 `protobuf:"varint,4,opt,name=uint64_value,json=uint64Value,proto3,oneof"`
+	Uint64Value uint64 `protobuf:"varint,4,opt,name=uint64_value,json=uint64Value,proto3,oneof" json:"uint64_value,omitempty"`
 }
 type Value_DoubleValue struct {
-	DoubleValue float64 `protobuf:"fixed64,5,opt,name=double_value,json=doubleValue,proto3,oneof"`
+	DoubleValue float64 `protobuf:"fixed64,5,opt,name=double_value,json=doubleValue,proto3,oneof" json:"double_value,omitempty"`
 }
 type Value_StringValue struct {
-	StringValue string `protobuf:"bytes,6,opt,name=string_value,json=stringValue,proto3,oneof"`
+	StringValue string `protobuf:"bytes,6,opt,name=string_value,json=stringValue,proto3,oneof" json:"string_value,omitempty"`
 }
 type Value_BytesValue struct {
-	BytesValue []byte `protobuf:"bytes,7,opt,name=bytes_value,json=bytesValue,proto3,oneof"`
+	BytesValue []byte `protobuf:"bytes,7,opt,name=bytes_value,json=bytesValue,proto3,oneof" json:"bytes_value,omitempty"`
 }
 type Value_EnumValue struct {
-	EnumValue *EnumValue `protobuf:"bytes,9,opt,name=enum_value,json=enumValue,proto3,oneof"`
+	EnumValue *EnumValue `protobuf:"bytes,9,opt,name=enum_value,json=enumValue,proto3,oneof" json:"enum_value,omitempty"`
 }
 type Value_ObjectValue struct {
-	ObjectValue *types.Any `protobuf:"bytes,10,opt,name=object_value,json=objectValue,proto3,oneof"`
+	ObjectValue *types.Any `protobuf:"bytes,10,opt,name=object_value,json=objectValue,proto3,oneof" json:"object_value,omitempty"`
 }
 type Value_MapValue struct {
-	MapValue *MapValue `protobuf:"bytes,11,opt,name=map_value,json=mapValue,proto3,oneof"`
+	MapValue *MapValue `protobuf:"bytes,11,opt,name=map_value,json=mapValue,proto3,oneof" json:"map_value,omitempty"`
 }
 type Value_ListValue struct {
-	ListValue *ListValue `protobuf:"bytes,12,opt,name=list_value,json=listValue,proto3,oneof"`
+	ListValue *ListValue `protobuf:"bytes,12,opt,name=list_value,json=listValue,proto3,oneof" json:"list_value,omitempty"`
 }
 type Value_TypeValue struct {
-	TypeValue string `protobuf:"bytes,15,opt,name=type_value,json=typeValue,proto3,oneof"`
+	TypeValue string `protobuf:"bytes,15,opt,name=type_value,json=typeValue,proto3,oneof" json:"type_value,omitempty"`
 }
 
 func (*Value_NullValue) isValue_Kind()   {}
@@ -541,7 +541,8 @@ func (m *Value) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *Value_NullValue) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Value_NullValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -552,7 +553,8 @@ func (m *Value_NullValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Value_BoolValue) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Value_BoolValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -568,7 +570,8 @@ func (m *Value_BoolValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Value_Int64Value) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Value_Int64Value) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -579,7 +582,8 @@ func (m *Value_Int64Value) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Value_Uint64Value) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Value_Uint64Value) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -590,7 +594,8 @@ func (m *Value_Uint64Value) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Value_DoubleValue) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Value_DoubleValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -602,7 +607,8 @@ func (m *Value_DoubleValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Value_StringValue) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Value_StringValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -615,7 +621,8 @@ func (m *Value_StringValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Value_BytesValue) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Value_BytesValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -630,7 +637,8 @@ func (m *Value_BytesValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Value_EnumValue) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Value_EnumValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -650,7 +658,8 @@ func (m *Value_EnumValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Value_ObjectValue) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Value_ObjectValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -670,7 +679,8 @@ func (m *Value_ObjectValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Value_MapValue) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Value_MapValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -690,7 +700,8 @@ func (m *Value_MapValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Value_ListValue) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Value_ListValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -710,7 +721,8 @@ func (m *Value_ListValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Value_TypeValue) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Value_TypeValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1459,10 +1471,7 @@ func (m *Value) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthValue
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthValue
 			}
 			if (iNdEx + skippy) > l {
@@ -1563,10 +1572,7 @@ func (m *EnumValue) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthValue
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthValue
 			}
 			if (iNdEx + skippy) > l {
@@ -1650,10 +1656,7 @@ func (m *ListValue) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthValue
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthValue
 			}
 			if (iNdEx + skippy) > l {
@@ -1737,10 +1740,7 @@ func (m *MapValue) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthValue
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthValue
 			}
 			if (iNdEx + skippy) > l {
@@ -1862,10 +1862,7 @@ func (m *MapValue_Entry) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthValue
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthValue
 			}
 			if (iNdEx + skippy) > l {
@@ -1883,6 +1880,7 @@ func (m *MapValue_Entry) Unmarshal(dAtA []byte) error {
 func skipValue(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
+	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -1914,10 +1912,8 @@ func skipValue(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			return iNdEx, nil
 		case 1:
 			iNdEx += 8
-			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -1938,55 +1934,30 @@ func skipValue(dAtA []byte) (n int, err error) {
 				return 0, ErrInvalidLengthValue
 			}
 			iNdEx += length
-			if iNdEx < 0 {
-				return 0, ErrInvalidLengthValue
-			}
-			return iNdEx, nil
 		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowValue
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipValue(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-				if iNdEx < 0 {
-					return 0, ErrInvalidLengthValue
-				}
-			}
-			return iNdEx, nil
+			depth++
 		case 4:
-			return iNdEx, nil
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupValue
+			}
+			depth--
 		case 5:
 			iNdEx += 4
-			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthValue
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
 	}
-	panic("unreachable")
+	return 0, io.ErrUnexpectedEOF
 }
 
 var (
-	ErrInvalidLengthValue = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowValue   = fmt.Errorf("proto: integer overflow")
+	ErrInvalidLengthValue        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowValue          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupValue = fmt.Errorf("proto: unexpected end of group")
 )
