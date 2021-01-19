@@ -189,13 +189,13 @@ type isExprValue_Kind interface {
 }
 
 type ExprValue_Value struct {
-	Value *Value `protobuf:"bytes,1,opt,name=value,proto3,oneof"`
+	Value *Value `protobuf:"bytes,1,opt,name=value,proto3,oneof" json:"value,omitempty"`
 }
 type ExprValue_Error struct {
-	Error *ErrorSet `protobuf:"bytes,2,opt,name=error,proto3,oneof"`
+	Error *ErrorSet `protobuf:"bytes,2,opt,name=error,proto3,oneof" json:"error,omitempty"`
 }
 type ExprValue_Unknown struct {
-	Unknown *UnknownSet `protobuf:"bytes,3,opt,name=unknown,proto3,oneof"`
+	Unknown *UnknownSet `protobuf:"bytes,3,opt,name=unknown,proto3,oneof" json:"unknown,omitempty"`
 }
 
 func (*ExprValue_Value) isExprValue_Kind()   {}
@@ -491,7 +491,8 @@ func (m *ExprValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *ExprValue_Value) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *ExprValue_Value) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -511,7 +512,8 @@ func (m *ExprValue_Value) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *ExprValue_Error) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *ExprValue_Error) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -531,7 +533,8 @@ func (m *ExprValue_Error) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *ExprValue_Unknown) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *ExprValue_Unknown) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -864,10 +867,7 @@ func (m *EvalState) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthEval
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthEval
 			}
 			if (iNdEx + skippy) > l {
@@ -955,10 +955,7 @@ func (m *EvalState_Result) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthEval
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthEval
 			}
 			if (iNdEx + skippy) > l {
@@ -1113,10 +1110,7 @@ func (m *ExprValue) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthEval
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthEval
 			}
 			if (iNdEx + skippy) > l {
@@ -1200,10 +1194,7 @@ func (m *ErrorSet) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthEval
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthEval
 			}
 			if (iNdEx + skippy) > l {
@@ -1329,10 +1320,7 @@ func (m *UnknownSet) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthEval
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthEval
 			}
 			if (iNdEx + skippy) > l {
@@ -1350,6 +1338,7 @@ func (m *UnknownSet) Unmarshal(dAtA []byte) error {
 func skipEval(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
+	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -1381,10 +1370,8 @@ func skipEval(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			return iNdEx, nil
 		case 1:
 			iNdEx += 8
-			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -1405,55 +1392,30 @@ func skipEval(dAtA []byte) (n int, err error) {
 				return 0, ErrInvalidLengthEval
 			}
 			iNdEx += length
-			if iNdEx < 0 {
-				return 0, ErrInvalidLengthEval
-			}
-			return iNdEx, nil
 		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowEval
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipEval(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-				if iNdEx < 0 {
-					return 0, ErrInvalidLengthEval
-				}
-			}
-			return iNdEx, nil
+			depth++
 		case 4:
-			return iNdEx, nil
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupEval
+			}
+			depth--
 		case 5:
 			iNdEx += 4
-			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthEval
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
 	}
-	panic("unreachable")
+	return 0, io.ErrUnexpectedEOF
 }
 
 var (
-	ErrInvalidLengthEval = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowEval   = fmt.Errorf("proto: integer overflow")
+	ErrInvalidLengthEval        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowEval          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupEval = fmt.Errorf("proto: unexpected end of group")
 )

@@ -154,25 +154,25 @@ type isExpr_ExprKind interface {
 }
 
 type Expr_ConstExpr struct {
-	ConstExpr *Constant `protobuf:"bytes,3,opt,name=const_expr,json=constExpr,proto3,oneof"`
+	ConstExpr *Constant `protobuf:"bytes,3,opt,name=const_expr,json=constExpr,proto3,oneof" json:"const_expr,omitempty"`
 }
 type Expr_IdentExpr struct {
-	IdentExpr *Expr_Ident `protobuf:"bytes,4,opt,name=ident_expr,json=identExpr,proto3,oneof"`
+	IdentExpr *Expr_Ident `protobuf:"bytes,4,opt,name=ident_expr,json=identExpr,proto3,oneof" json:"ident_expr,omitempty"`
 }
 type Expr_SelectExpr struct {
-	SelectExpr *Expr_Select `protobuf:"bytes,5,opt,name=select_expr,json=selectExpr,proto3,oneof"`
+	SelectExpr *Expr_Select `protobuf:"bytes,5,opt,name=select_expr,json=selectExpr,proto3,oneof" json:"select_expr,omitempty"`
 }
 type Expr_CallExpr struct {
-	CallExpr *Expr_Call `protobuf:"bytes,6,opt,name=call_expr,json=callExpr,proto3,oneof"`
+	CallExpr *Expr_Call `protobuf:"bytes,6,opt,name=call_expr,json=callExpr,proto3,oneof" json:"call_expr,omitempty"`
 }
 type Expr_ListExpr struct {
-	ListExpr *Expr_CreateList `protobuf:"bytes,7,opt,name=list_expr,json=listExpr,proto3,oneof"`
+	ListExpr *Expr_CreateList `protobuf:"bytes,7,opt,name=list_expr,json=listExpr,proto3,oneof" json:"list_expr,omitempty"`
 }
 type Expr_StructExpr struct {
-	StructExpr *Expr_CreateStruct `protobuf:"bytes,8,opt,name=struct_expr,json=structExpr,proto3,oneof"`
+	StructExpr *Expr_CreateStruct `protobuf:"bytes,8,opt,name=struct_expr,json=structExpr,proto3,oneof" json:"struct_expr,omitempty"`
 }
 type Expr_ComprehensionExpr struct {
-	ComprehensionExpr *Expr_Comprehension `protobuf:"bytes,9,opt,name=comprehension_expr,json=comprehensionExpr,proto3,oneof"`
+	ComprehensionExpr *Expr_Comprehension `protobuf:"bytes,9,opt,name=comprehension_expr,json=comprehensionExpr,proto3,oneof" json:"comprehension_expr,omitempty"`
 }
 
 func (*Expr_ConstExpr) isExpr_ExprKind()         {}
@@ -613,10 +613,10 @@ type isExpr_CreateStruct_Entry_KeyKind interface {
 }
 
 type Expr_CreateStruct_Entry_FieldKey struct {
-	FieldKey string `protobuf:"bytes,2,opt,name=field_key,json=fieldKey,proto3,oneof"`
+	FieldKey string `protobuf:"bytes,2,opt,name=field_key,json=fieldKey,proto3,oneof" json:"field_key,omitempty"`
 }
 type Expr_CreateStruct_Entry_MapKey struct {
-	MapKey *Expr `protobuf:"bytes,3,opt,name=map_key,json=mapKey,proto3,oneof"`
+	MapKey *Expr `protobuf:"bytes,3,opt,name=map_key,json=mapKey,proto3,oneof" json:"map_key,omitempty"`
 }
 
 func (*Expr_CreateStruct_Entry_FieldKey) isExpr_CreateStruct_Entry_KeyKind() {}
@@ -867,31 +867,31 @@ type isConstant_ConstantKind interface {
 }
 
 type Constant_NullValue struct {
-	NullValue types.NullValue `protobuf:"varint,1,opt,name=null_value,json=nullValue,proto3,enum=google.protobuf.NullValue,oneof"`
+	NullValue types.NullValue `protobuf:"varint,1,opt,name=null_value,json=nullValue,proto3,enum=google.protobuf.NullValue,oneof" json:"null_value,omitempty"`
 }
 type Constant_BoolValue struct {
-	BoolValue bool `protobuf:"varint,2,opt,name=bool_value,json=boolValue,proto3,oneof"`
+	BoolValue bool `protobuf:"varint,2,opt,name=bool_value,json=boolValue,proto3,oneof" json:"bool_value,omitempty"`
 }
 type Constant_Int64Value struct {
-	Int64Value int64 `protobuf:"varint,3,opt,name=int64_value,json=int64Value,proto3,oneof"`
+	Int64Value int64 `protobuf:"varint,3,opt,name=int64_value,json=int64Value,proto3,oneof" json:"int64_value,omitempty"`
 }
 type Constant_Uint64Value struct {
-	Uint64Value uint64 `protobuf:"varint,4,opt,name=uint64_value,json=uint64Value,proto3,oneof"`
+	Uint64Value uint64 `protobuf:"varint,4,opt,name=uint64_value,json=uint64Value,proto3,oneof" json:"uint64_value,omitempty"`
 }
 type Constant_DoubleValue struct {
-	DoubleValue float64 `protobuf:"fixed64,5,opt,name=double_value,json=doubleValue,proto3,oneof"`
+	DoubleValue float64 `protobuf:"fixed64,5,opt,name=double_value,json=doubleValue,proto3,oneof" json:"double_value,omitempty"`
 }
 type Constant_StringValue struct {
-	StringValue string `protobuf:"bytes,6,opt,name=string_value,json=stringValue,proto3,oneof"`
+	StringValue string `protobuf:"bytes,6,opt,name=string_value,json=stringValue,proto3,oneof" json:"string_value,omitempty"`
 }
 type Constant_BytesValue struct {
-	BytesValue []byte `protobuf:"bytes,7,opt,name=bytes_value,json=bytesValue,proto3,oneof"`
+	BytesValue []byte `protobuf:"bytes,7,opt,name=bytes_value,json=bytesValue,proto3,oneof" json:"bytes_value,omitempty"`
 }
 type Constant_DurationValue struct {
-	DurationValue *types.Duration `protobuf:"bytes,8,opt,name=duration_value,json=durationValue,proto3,oneof"`
+	DurationValue *types.Duration `protobuf:"bytes,8,opt,name=duration_value,json=durationValue,proto3,oneof" json:"duration_value,omitempty"`
 }
 type Constant_TimestampValue struct {
-	TimestampValue *types.Timestamp `protobuf:"bytes,9,opt,name=timestamp_value,json=timestampValue,proto3,oneof"`
+	TimestampValue *types.Timestamp `protobuf:"bytes,9,opt,name=timestamp_value,json=timestampValue,proto3,oneof" json:"timestamp_value,omitempty"`
 }
 
 func (*Constant_NullValue) isConstant_ConstantKind()      {}
@@ -1329,7 +1329,8 @@ func (m *Expr) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *Expr_ConstExpr) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Expr_ConstExpr) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1349,7 +1350,8 @@ func (m *Expr_ConstExpr) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Expr_IdentExpr) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Expr_IdentExpr) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1369,7 +1371,8 @@ func (m *Expr_IdentExpr) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Expr_SelectExpr) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Expr_SelectExpr) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1389,7 +1392,8 @@ func (m *Expr_SelectExpr) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Expr_CallExpr) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Expr_CallExpr) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1409,7 +1413,8 @@ func (m *Expr_CallExpr) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Expr_ListExpr) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Expr_ListExpr) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1429,7 +1434,8 @@ func (m *Expr_ListExpr) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Expr_StructExpr) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Expr_StructExpr) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1449,7 +1455,8 @@ func (m *Expr_StructExpr) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Expr_ComprehensionExpr) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Expr_ComprehensionExpr) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1737,7 +1744,8 @@ func (m *Expr_CreateStruct_Entry) MarshalToSizedBuffer(dAtA []byte) (int, error)
 }
 
 func (m *Expr_CreateStruct_Entry_FieldKey) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Expr_CreateStruct_Entry_FieldKey) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1750,7 +1758,8 @@ func (m *Expr_CreateStruct_Entry_FieldKey) MarshalToSizedBuffer(dAtA []byte) (in
 	return len(dAtA) - i, nil
 }
 func (m *Expr_CreateStruct_Entry_MapKey) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Expr_CreateStruct_Entry_MapKey) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1899,7 +1908,8 @@ func (m *Constant) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *Constant_NullValue) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Constant_NullValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1910,7 +1920,8 @@ func (m *Constant_NullValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Constant_BoolValue) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Constant_BoolValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1926,7 +1937,8 @@ func (m *Constant_BoolValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Constant_Int64Value) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Constant_Int64Value) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1937,7 +1949,8 @@ func (m *Constant_Int64Value) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Constant_Uint64Value) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Constant_Uint64Value) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1948,7 +1961,8 @@ func (m *Constant_Uint64Value) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Constant_DoubleValue) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Constant_DoubleValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1960,7 +1974,8 @@ func (m *Constant_DoubleValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Constant_StringValue) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Constant_StringValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1973,7 +1988,8 @@ func (m *Constant_StringValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Constant_BytesValue) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Constant_BytesValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1988,7 +2004,8 @@ func (m *Constant_BytesValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Constant_DurationValue) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Constant_DurationValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -2008,7 +2025,8 @@ func (m *Constant_DurationValue) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 	return len(dAtA) - i, nil
 }
 func (m *Constant_TimestampValue) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Constant_TimestampValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -2708,10 +2726,7 @@ func (m *ParsedExpr) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthSyntax
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthSyntax
 			}
 			if (iNdEx + skippy) > l {
@@ -3025,10 +3040,7 @@ func (m *Expr) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthSyntax
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthSyntax
 			}
 			if (iNdEx + skippy) > l {
@@ -3110,10 +3122,7 @@ func (m *Expr_Ident) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthSyntax
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthSyntax
 			}
 			if (iNdEx + skippy) > l {
@@ -3251,10 +3260,7 @@ func (m *Expr_Select) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthSyntax
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthSyntax
 			}
 			if (iNdEx + skippy) > l {
@@ -3406,10 +3412,7 @@ func (m *Expr_Call) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthSyntax
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthSyntax
 			}
 			if (iNdEx + skippy) > l {
@@ -3493,10 +3496,7 @@ func (m *Expr_CreateList) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthSyntax
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthSyntax
 			}
 			if (iNdEx + skippy) > l {
@@ -3612,10 +3612,7 @@ func (m *Expr_CreateStruct) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthSyntax
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthSyntax
 			}
 			if (iNdEx + skippy) > l {
@@ -3787,10 +3784,7 @@ func (m *Expr_CreateStruct_Entry) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthSyntax
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthSyntax
 			}
 			if (iNdEx + skippy) > l {
@@ -4084,10 +4078,7 @@ func (m *Expr_Comprehension) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthSyntax
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthSyntax
 			}
 			if (iNdEx + skippy) > l {
@@ -4364,10 +4355,7 @@ func (m *Constant) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthSyntax
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthSyntax
 			}
 			if (iNdEx + skippy) > l {
@@ -4639,7 +4627,7 @@ func (m *SourceInfo) Unmarshal(dAtA []byte) error {
 					if err != nil {
 						return err
 					}
-					if skippy < 0 {
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
 						return ErrInvalidLengthSyntax
 					}
 					if (iNdEx + skippy) > postIndex {
@@ -4656,10 +4644,7 @@ func (m *SourceInfo) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthSyntax
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthSyntax
 			}
 			if (iNdEx + skippy) > l {
@@ -4798,10 +4783,7 @@ func (m *SourcePosition) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
-				return ErrInvalidLengthSyntax
-			}
-			if (iNdEx + skippy) < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthSyntax
 			}
 			if (iNdEx + skippy) > l {
@@ -4819,6 +4801,7 @@ func (m *SourcePosition) Unmarshal(dAtA []byte) error {
 func skipSyntax(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
+	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -4850,10 +4833,8 @@ func skipSyntax(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			return iNdEx, nil
 		case 1:
 			iNdEx += 8
-			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -4874,55 +4855,30 @@ func skipSyntax(dAtA []byte) (n int, err error) {
 				return 0, ErrInvalidLengthSyntax
 			}
 			iNdEx += length
-			if iNdEx < 0 {
-				return 0, ErrInvalidLengthSyntax
-			}
-			return iNdEx, nil
 		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowSyntax
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipSyntax(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-				if iNdEx < 0 {
-					return 0, ErrInvalidLengthSyntax
-				}
-			}
-			return iNdEx, nil
+			depth++
 		case 4:
-			return iNdEx, nil
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupSyntax
+			}
+			depth--
 		case 5:
 			iNdEx += 4
-			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthSyntax
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
 	}
-	panic("unreachable")
+	return 0, io.ErrUnexpectedEOF
 }
 
 var (
-	ErrInvalidLengthSyntax = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowSyntax   = fmt.Errorf("proto: integer overflow")
+	ErrInvalidLengthSyntax        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowSyntax          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupSyntax = fmt.Errorf("proto: unexpected end of group")
 )
