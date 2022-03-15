@@ -83,8 +83,8 @@ empty :=
 space := $(empty) $(empty)
 mapping_with_spaces := $(foreach map,$(importmaps),M$(map),)
 MAPPING := $(subst $(space),$(empty),$(mapping_with_spaces))
-GOGOSLICK_PLUGIN := --gogoslick_out=plugins=grpc,$(MAPPING)
-GOGOFASTER_PLUGIN := --gogofaster_out=plugins=grpc,$(MAPPING)
+GOGOFAST_PLUGIN := --gogofast_out=plugins=grpc,$(MAPPING)
+GOGOFASTER_PLUGIN := --gogofast_out=plugins=grpc,$(MAPPING)
 
 google_protos = \
 	google/protobuf/any.proto \
@@ -258,7 +258,7 @@ $(google_protos): %: google_prep
 	@sed -i -e '/^option go_package/d' ${TMPDIR}/$@
 
 $(google_packages): %: $(google_protos)
-	@$(PROTOC) $(GOGOSLICK_PLUGIN):googleapis -I${TMPDIR} ${TMPDIR}/$@/*.proto
+	@$(PROTOC) $(GOGOFAST_PLUGIN):googleapis -I${TMPDIR} ${TMPDIR}/$@/*.proto
 
 $(googleexpr_protos): %: google_prep
 	@sed -i -e '/^option go_package/d' ${TMPDIR}/$@
@@ -292,7 +292,7 @@ $(k8s_protos): %:
 	@sed -i -e '/^option go_package/d' ${TMPDIR}/k8s.io/$@
 
 $(k8s_packages): %: k8s_prep $(k8s_protos)
-	@$(PROTOC) $(GOGOSLICK_PLUGIN):. -I${TMPDIR} ${TMPDIR}/k8s.io/$@/*.proto
+	@$(PROTOC) $(GOGOFAST_PLUGIN):. -I${TMPDIR} ${TMPDIR}/k8s.io/$@/*.proto
 
 istio_prep:
 	@mkdir -p ${TMPDIR}/istio.io/
@@ -302,7 +302,7 @@ $(istio_protos): %:
 	@sed -i -e '/^option go_package/d' ${TMPDIR}/istio.io/$@
 
 $(istio_packages): %: istio_prep $(istio_protos)
-	@$(PROTOC) $(GOGOSLICK_PLUGIN):. -I${TMPDIR} ${TMPDIR}/istio.io/$@/*.proto
+	@$(PROTOC) $(GOGOFAST_PLUGIN):. -I${TMPDIR} ${TMPDIR}/istio.io/$@/*.proto
 
 gen: clean $(google_packages) $(googleexpr_packages) $(k8s_packages) $(census_packages) $(istio_packages) prometheus/metrics.pb.go tidy-go mirror-licenses
 
