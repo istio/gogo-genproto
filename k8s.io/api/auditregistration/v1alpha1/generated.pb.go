@@ -4,7 +4,6 @@
 package k8s_io_api_auditregistration_v1alpha1
 
 import (
-	bytes "bytes"
 	fmt "fmt"
 	proto "github.com/gogo/protobuf/proto"
 	io "io"
@@ -13,8 +12,6 @@ import (
 	_ "istio.io/gogo-genproto/k8s.io/apimachinery/pkg/runtime/schema"
 	math "math"
 	math_bits "math/bits"
-	reflect "reflect"
-	strings "strings"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -33,11 +30,15 @@ type AuditSink struct {
 	// +optional
 	Metadata *v1.ObjectMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// Spec defines the audit configuration spec
-	Spec *AuditSinkSpec `protobuf:"bytes,2,opt,name=spec" json:"spec,omitempty"`
+	Spec                 *AuditSinkSpec `protobuf:"bytes,2,opt,name=spec" json:"spec,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
 }
 
-func (m *AuditSink) Reset()      { *m = AuditSink{} }
-func (*AuditSink) ProtoMessage() {}
+func (m *AuditSink) Reset()         { *m = AuditSink{} }
+func (m *AuditSink) String() string { return proto.CompactTextString(m) }
+func (*AuditSink) ProtoMessage()    {}
 func (*AuditSink) Descriptor() ([]byte, []int) {
 	return fileDescriptor_1af3dad3b6bc082e, []int{0}
 }
@@ -87,11 +88,15 @@ type AuditSinkList struct {
 	// +optional
 	Metadata *v1.ListMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// List of audit configurations.
-	Items []*AuditSink `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	Items                []*AuditSink `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}     `json:"-"`
+	XXX_unrecognized     []byte       `json:"-"`
+	XXX_sizecache        int32        `json:"-"`
 }
 
-func (m *AuditSinkList) Reset()      { *m = AuditSinkList{} }
-func (*AuditSinkList) ProtoMessage() {}
+func (m *AuditSinkList) Reset()         { *m = AuditSinkList{} }
+func (m *AuditSinkList) String() string { return proto.CompactTextString(m) }
+func (*AuditSinkList) ProtoMessage()    {}
 func (*AuditSinkList) Descriptor() ([]byte, []int) {
 	return fileDescriptor_1af3dad3b6bc082e, []int{1}
 }
@@ -143,11 +148,15 @@ type AuditSinkSpec struct {
 	Policy *Policy `protobuf:"bytes,1,opt,name=policy" json:"policy,omitempty"`
 	// Webhook to send events
 	// required
-	Webhook *Webhook `protobuf:"bytes,2,opt,name=webhook" json:"webhook,omitempty"`
+	Webhook              *Webhook `protobuf:"bytes,2,opt,name=webhook" json:"webhook,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *AuditSinkSpec) Reset()      { *m = AuditSinkSpec{} }
-func (*AuditSinkSpec) ProtoMessage() {}
+func (m *AuditSinkSpec) Reset()         { *m = AuditSinkSpec{} }
+func (m *AuditSinkSpec) String() string { return proto.CompactTextString(m) }
+func (*AuditSinkSpec) ProtoMessage()    {}
 func (*AuditSinkSpec) Descriptor() ([]byte, []int) {
 	return fileDescriptor_1af3dad3b6bc082e, []int{2}
 }
@@ -197,14 +206,18 @@ type Policy struct {
 	// The Level that all requests are recorded at.
 	// available options: None, Metadata, Request, RequestResponse
 	// required
-	Level string `protobuf:"bytes,1,opt,name=level" json:"level"`
+	Level *string `protobuf:"bytes,1,opt,name=level" json:"level,omitempty"`
 	// Stages is a list of stages for which events are created.
 	// +optional
-	Stages []string `protobuf:"bytes,2,rep,name=stages" json:"stages,omitempty"`
+	Stages               []string `protobuf:"bytes,2,rep,name=stages" json:"stages,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *Policy) Reset()      { *m = Policy{} }
-func (*Policy) ProtoMessage() {}
+func (m *Policy) Reset()         { *m = Policy{} }
+func (m *Policy) String() string { return proto.CompactTextString(m) }
+func (*Policy) ProtoMessage()    {}
 func (*Policy) Descriptor() ([]byte, []int) {
 	return fileDescriptor_1af3dad3b6bc082e, []int{3}
 }
@@ -236,8 +249,8 @@ func (m *Policy) XXX_DiscardUnknown() {
 var xxx_messageInfo_Policy proto.InternalMessageInfo
 
 func (m *Policy) GetLevel() string {
-	if m != nil {
-		return m.Level
+	if m != nil && m.Level != nil {
+		return *m.Level
 	}
 	return ""
 }
@@ -253,23 +266,27 @@ func (m *Policy) GetStages() []string {
 type ServiceReference struct {
 	// `namespace` is the namespace of the service.
 	// Required
-	Namespace string `protobuf:"bytes,1,opt,name=namespace" json:"namespace"`
+	Namespace *string `protobuf:"bytes,1,opt,name=namespace" json:"namespace,omitempty"`
 	// `name` is the name of the service.
 	// Required
-	Name string `protobuf:"bytes,2,opt,name=name" json:"name"`
+	Name *string `protobuf:"bytes,2,opt,name=name" json:"name,omitempty"`
 	// `path` is an optional URL path which will be sent in any request to
 	// this service.
 	// +optional
-	Path string `protobuf:"bytes,3,opt,name=path" json:"path"`
+	Path *string `protobuf:"bytes,3,opt,name=path" json:"path,omitempty"`
 	// If specified, the port on the service that hosting webhook.
 	// Default to 443 for backward compatibility.
 	// `port` should be a valid port number (1-65535, inclusive).
 	// +optional
-	Port int32 `protobuf:"varint,4,opt,name=port" json:"port"`
+	Port                 *int32   `protobuf:"varint,4,opt,name=port" json:"port,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *ServiceReference) Reset()      { *m = ServiceReference{} }
-func (*ServiceReference) ProtoMessage() {}
+func (m *ServiceReference) Reset()         { *m = ServiceReference{} }
+func (m *ServiceReference) String() string { return proto.CompactTextString(m) }
+func (*ServiceReference) ProtoMessage()    {}
 func (*ServiceReference) Descriptor() ([]byte, []int) {
 	return fileDescriptor_1af3dad3b6bc082e, []int{4}
 }
@@ -301,29 +318,29 @@ func (m *ServiceReference) XXX_DiscardUnknown() {
 var xxx_messageInfo_ServiceReference proto.InternalMessageInfo
 
 func (m *ServiceReference) GetNamespace() string {
-	if m != nil {
-		return m.Namespace
+	if m != nil && m.Namespace != nil {
+		return *m.Namespace
 	}
 	return ""
 }
 
 func (m *ServiceReference) GetName() string {
-	if m != nil {
-		return m.Name
+	if m != nil && m.Name != nil {
+		return *m.Name
 	}
 	return ""
 }
 
 func (m *ServiceReference) GetPath() string {
-	if m != nil {
-		return m.Path
+	if m != nil && m.Path != nil {
+		return *m.Path
 	}
 	return ""
 }
 
 func (m *ServiceReference) GetPort() int32 {
-	if m != nil {
-		return m.Port
+	if m != nil && m.Port != nil {
+		return *m.Port
 	}
 	return 0
 }
@@ -335,11 +352,15 @@ type Webhook struct {
 	Throttle *WebhookThrottleConfig `protobuf:"bytes,1,opt,name=throttle" json:"throttle,omitempty"`
 	// ClientConfig holds the connection parameters for the webhook
 	// required
-	ClientConfig *WebhookClientConfig `protobuf:"bytes,2,opt,name=clientConfig" json:"clientConfig,omitempty"`
+	ClientConfig         *WebhookClientConfig `protobuf:"bytes,2,opt,name=clientConfig" json:"clientConfig,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
+	XXX_unrecognized     []byte               `json:"-"`
+	XXX_sizecache        int32                `json:"-"`
 }
 
-func (m *Webhook) Reset()      { *m = Webhook{} }
-func (*Webhook) ProtoMessage() {}
+func (m *Webhook) Reset()         { *m = Webhook{} }
+func (m *Webhook) String() string { return proto.CompactTextString(m) }
+func (*Webhook) ProtoMessage()    {}
 func (*Webhook) Descriptor() ([]byte, []int) {
 	return fileDescriptor_1af3dad3b6bc082e, []int{5}
 }
@@ -413,7 +434,7 @@ type WebhookClientConfig struct {
 	// allowed, either.
 	//
 	// +optional
-	Url string `protobuf:"bytes,1,opt,name=url" json:"url"`
+	Url *string `protobuf:"bytes,1,opt,name=url" json:"url,omitempty"`
 	// `service` is a reference to the service for this webhook. Either
 	// `service` or `url` must be specified.
 	//
@@ -424,11 +445,15 @@ type WebhookClientConfig struct {
 	// `caBundle` is a PEM encoded CA bundle which will be used to validate the webhook's server certificate.
 	// If unspecified, system trust roots on the apiserver are used.
 	// +optional
-	CaBundle []byte `protobuf:"bytes,3,opt,name=caBundle" json:"caBundle"`
+	CaBundle             []byte   `protobuf:"bytes,3,opt,name=caBundle" json:"caBundle,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *WebhookClientConfig) Reset()      { *m = WebhookClientConfig{} }
-func (*WebhookClientConfig) ProtoMessage() {}
+func (m *WebhookClientConfig) Reset()         { *m = WebhookClientConfig{} }
+func (m *WebhookClientConfig) String() string { return proto.CompactTextString(m) }
+func (*WebhookClientConfig) ProtoMessage()    {}
 func (*WebhookClientConfig) Descriptor() ([]byte, []int) {
 	return fileDescriptor_1af3dad3b6bc082e, []int{6}
 }
@@ -460,8 +485,8 @@ func (m *WebhookClientConfig) XXX_DiscardUnknown() {
 var xxx_messageInfo_WebhookClientConfig proto.InternalMessageInfo
 
 func (m *WebhookClientConfig) GetUrl() string {
-	if m != nil {
-		return m.Url
+	if m != nil && m.Url != nil {
+		return *m.Url
 	}
 	return ""
 }
@@ -485,15 +510,19 @@ type WebhookThrottleConfig struct {
 	// ThrottleQPS maximum number of batches per second
 	// default 10 QPS
 	// +optional
-	Qps int64 `protobuf:"varint,1,opt,name=qps" json:"qps"`
+	Qps *int64 `protobuf:"varint,1,opt,name=qps" json:"qps,omitempty"`
 	// ThrottleBurst is the maximum number of events sent at the same moment
 	// default 15 QPS
 	// +optional
-	Burst int64 `protobuf:"varint,2,opt,name=burst" json:"burst"`
+	Burst                *int64   `protobuf:"varint,2,opt,name=burst" json:"burst,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *WebhookThrottleConfig) Reset()      { *m = WebhookThrottleConfig{} }
-func (*WebhookThrottleConfig) ProtoMessage() {}
+func (m *WebhookThrottleConfig) Reset()         { *m = WebhookThrottleConfig{} }
+func (m *WebhookThrottleConfig) String() string { return proto.CompactTextString(m) }
+func (*WebhookThrottleConfig) ProtoMessage()    {}
 func (*WebhookThrottleConfig) Descriptor() ([]byte, []int) {
 	return fileDescriptor_1af3dad3b6bc082e, []int{7}
 }
@@ -525,15 +554,15 @@ func (m *WebhookThrottleConfig) XXX_DiscardUnknown() {
 var xxx_messageInfo_WebhookThrottleConfig proto.InternalMessageInfo
 
 func (m *WebhookThrottleConfig) GetQps() int64 {
-	if m != nil {
-		return m.Qps
+	if m != nil && m.Qps != nil {
+		return *m.Qps
 	}
 	return 0
 }
 
 func (m *WebhookThrottleConfig) GetBurst() int64 {
-	if m != nil {
-		return m.Burst
+	if m != nil && m.Burst != nil {
+		return *m.Burst
 	}
 	return 0
 }
@@ -554,402 +583,44 @@ func init() {
 }
 
 var fileDescriptor_1af3dad3b6bc082e = []byte{
-	// 609 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x92, 0xcb, 0x6e, 0x13, 0x31,
-	0x14, 0x86, 0xc7, 0x4d, 0x7a, 0x89, 0x29, 0x12, 0x32, 0xa2, 0x8a, 0xba, 0x30, 0xd1, 0x48, 0x48,
-	0xdd, 0xe0, 0xa1, 0xa8, 0x5c, 0x84, 0xba, 0xa1, 0x15, 0xa8, 0x82, 0x22, 0x60, 0x8a, 0x04, 0x2b,
-	0x24, 0x77, 0x72, 0x9a, 0x98, 0xcc, 0xc5, 0xb5, 0x9d, 0xa0, 0xee, 0x58, 0xf0, 0x00, 0x3c, 0x02,
-	0x82, 0x0d, 0xef, 0xc1, 0xa6, 0xcb, 0x2e, 0xbb, 0x42, 0x74, 0xba, 0x61, 0xd9, 0x47, 0x40, 0x9e,
-	0x5b, 0xdb, 0xa4, 0x88, 0xe9, 0x72, 0xfe, 0xe3, 0xff, 0xcb, 0xe7, 0xe3, 0xe0, 0x7b, 0x83, 0x87,
-	0x9a, 0x89, 0xc4, 0xe3, 0x52, 0x78, 0x7c, 0xd8, 0x15, 0x46, 0x41, 0x4f, 0x68, 0xa3, 0xb8, 0x11,
-	0x49, 0xec, 0x8d, 0x96, 0x79, 0x28, 0xfb, 0x7c, 0xd9, 0xeb, 0x41, 0x0c, 0x8a, 0x1b, 0xe8, 0x32,
-	0xa9, 0x12, 0x93, 0x90, 0x5b, 0x79, 0x8d, 0x71, 0x29, 0xd8, 0x44, 0x8d, 0x95, 0xb5, 0xc5, 0x95,
-	0x53, 0x7a, 0xc4, 0x83, 0xbe, 0x88, 0x41, 0xed, 0x79, 0x72, 0xd0, 0xb3, 0x81, 0xf6, 0x22, 0x30,
-	0xdc, 0x1b, 0x4d, 0xc0, 0x17, 0xbd, 0x7f, 0xb5, 0xd4, 0x30, 0x36, 0x22, 0x82, 0x89, 0xc2, 0xfd,
-	0xff, 0x15, 0x74, 0xd0, 0x87, 0x88, 0x8f, 0xf7, 0xdc, 0xef, 0x08, 0xb7, 0x1e, 0x5b, 0xfb, 0x2d,
-	0x11, 0x0f, 0xc8, 0x26, 0x9e, 0xb3, 0x46, 0x5d, 0x6e, 0x78, 0x1b, 0x75, 0xd0, 0xd2, 0x95, 0xbb,
-	0x77, 0xd8, 0xe9, 0x35, 0x2b, 0x30, 0x93, 0x83, 0x9e, 0x0d, 0x34, 0xb3, 0xa7, 0xd9, 0x68, 0x99,
-	0xbd, 0xdc, 0xfe, 0x00, 0x81, 0x79, 0x01, 0x86, 0xfb, 0x15, 0x81, 0x6c, 0xe0, 0xa6, 0x96, 0x10,
-	0xb4, 0xa7, 0x32, 0xd2, 0x0a, 0xab, 0xb5, 0x30, 0x56, 0xd9, 0x6c, 0x49, 0x08, 0xfc, 0x8c, 0x60,
-	0x2d, 0xaf, 0x56, 0xf9, 0xa6, 0xd0, 0x86, 0x3c, 0x9b, 0x30, 0x65, 0xf5, 0x4c, 0x6d, 0x7b, 0xcc,
-	0xf3, 0x29, 0x9e, 0x16, 0x06, 0x22, 0xdd, 0x9e, 0xea, 0x34, 0xc6, 0xae, 0x5c, 0x4b, 0xd4, 0xcf,
-	0xeb, 0xee, 0xd7, 0xb3, 0x96, 0xd6, 0x9e, 0x3c, 0xc1, 0x33, 0x32, 0x09, 0x45, 0xb0, 0x57, 0x38,
-	0xde, 0xae, 0x89, 0x7e, 0x95, 0x95, 0xfc, 0xa2, 0x4c, 0x36, 0xf0, 0xec, 0x47, 0xd8, 0xee, 0x27,
-	0xc9, 0xa0, 0xd8, 0x25, 0xab, 0xc9, 0x79, 0x9b, 0xb7, 0xfc, 0xb2, 0xee, 0xae, 0xe2, 0x99, 0x9c,
-	0x4d, 0x16, 0xf1, 0x74, 0x08, 0x23, 0x08, 0x33, 0xb3, 0xd6, 0x5a, 0x73, 0xff, 0xd7, 0x4d, 0xc7,
-	0xcf, 0x23, 0xb2, 0x80, 0x67, 0xb4, 0xe1, 0x3d, 0xc8, 0x37, 0xd2, 0xf2, 0x8b, 0x2f, 0xf7, 0x33,
-	0xc2, 0xd7, 0xb6, 0x40, 0x8d, 0x44, 0x00, 0x3e, 0xec, 0x80, 0x82, 0x38, 0x00, 0xe2, 0xe2, 0x56,
-	0xcc, 0x23, 0xd0, 0x92, 0x07, 0x70, 0x0e, 0x76, 0x1a, 0x93, 0x36, 0x6e, 0xda, 0x8f, 0xcc, 0xbe,
-	0x1c, 0x67, 0x89, 0x9d, 0x48, 0x6e, 0xfa, 0xed, 0xc6, 0xd9, 0x89, 0x4d, 0xb2, 0x49, 0xa2, 0x4c,
-	0xbb, 0xd9, 0x41, 0x4b, 0xd3, 0xd5, 0x24, 0x51, 0xc6, 0xfd, 0x89, 0xf0, 0x6c, 0x71, 0x33, 0xf2,
-	0x0e, 0xcf, 0x99, 0xbe, 0x4a, 0x8c, 0x09, 0xa1, 0xd8, 0xf1, 0xea, 0xe5, 0x76, 0xf3, 0xa6, 0x68,
-	0xaf, 0x27, 0xf1, 0x8e, 0xe8, 0xf9, 0x15, 0x8d, 0xbc, 0xc7, 0xf3, 0x41, 0x28, 0x20, 0x36, 0xf9,
-	0xa4, 0xd8, 0xfc, 0xa3, 0xcb, 0xd1, 0xd7, 0xcf, 0x10, 0xfc, 0x73, 0x3c, 0xf7, 0x1b, 0xc2, 0xd7,
-	0x2f, 0x38, 0x45, 0x16, 0x70, 0x63, 0xa8, 0xce, 0x3f, 0x8b, 0x0d, 0xc8, 0x6b, 0x3c, 0xab, 0xf3,
-	0xdd, 0x17, 0x2a, 0x0f, 0x6a, 0xaa, 0x8c, 0xbf, 0x98, 0x5f, 0x72, 0x48, 0x07, 0xcf, 0x05, 0x7c,
-	0x6d, 0x18, 0x77, 0x43, 0xc8, 0x1e, 0x60, 0xbe, 0xf8, 0xbd, 0x2a, 0x75, 0x9f, 0xe3, 0x1b, 0x17,
-	0xee, 0xc9, 0x5a, 0xee, 0x4a, 0x9d, 0x59, 0x36, 0x4a, 0xcb, 0x5d, 0xa9, 0xed, 0xdf, 0x6a, 0x7b,
-	0xa8, 0xb4, 0xc9, 0x1c, 0xcb, 0x49, 0x1e, 0xad, 0xad, 0x1c, 0x1c, 0x51, 0xe7, 0xf0, 0x88, 0x3a,
-	0x27, 0x47, 0x14, 0x7d, 0x4a, 0x29, 0xfa, 0x91, 0x52, 0xb4, 0x9f, 0x52, 0x74, 0x90, 0x52, 0xf4,
-	0x3b, 0xa5, 0xe8, 0x4f, 0x4a, 0x9d, 0x93, 0x94, 0xa2, 0x2f, 0xc7, 0xd4, 0x39, 0x38, 0xa6, 0xce,
-	0xe1, 0x31, 0x75, 0xfe, 0x06, 0x00, 0x00, 0xff, 0xff, 0x4d, 0x6e, 0x5f, 0x31, 0x9f, 0x05, 0x00,
-	0x00,
+	// 548 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x92, 0xdd, 0x6a, 0x13, 0x41,
+	0x14, 0xc7, 0xd9, 0xe6, 0x7b, 0x8c, 0x50, 0xc6, 0x0f, 0x42, 0x90, 0x10, 0x16, 0x84, 0xde, 0x38,
+	0x6b, 0xa4, 0x56, 0x11, 0x41, 0x6c, 0x51, 0x8a, 0x54, 0xd4, 0x89, 0xa0, 0x57, 0xc2, 0x64, 0x72,
+	0xba, 0x3b, 0x66, 0x3f, 0xc6, 0x99, 0x49, 0xa4, 0x2f, 0xe2, 0xb5, 0xe0, 0xa3, 0x78, 0xe3, 0xa5,
+	0x8f, 0x20, 0x79, 0x12, 0x99, 0xd9, 0xcd, 0xa6, 0x26, 0x95, 0x6e, 0xef, 0xce, 0x39, 0xdd, 0xff,
+	0x8f, 0xdf, 0xfc, 0x1b, 0xf4, 0x70, 0xf6, 0x58, 0x13, 0x91, 0x05, 0x4c, 0x8a, 0x80, 0xcd, 0xa7,
+	0xc2, 0x28, 0x08, 0x85, 0x36, 0x8a, 0x19, 0x91, 0xa5, 0xc1, 0x62, 0xc4, 0x62, 0x19, 0xb1, 0x51,
+	0x10, 0x42, 0x0a, 0x8a, 0x19, 0x98, 0x12, 0xa9, 0x32, 0x93, 0xe1, 0xbb, 0x79, 0x8c, 0x30, 0x29,
+	0xc8, 0x56, 0x8c, 0xac, 0x62, 0xfd, 0xfd, 0x35, 0x3d, 0x61, 0x3c, 0x12, 0x29, 0xa8, 0xb3, 0x40,
+	0xce, 0x42, 0x7b, 0xd0, 0x41, 0x02, 0x86, 0x05, 0x8b, 0x2d, 0x78, 0x3f, 0xf8, 0x5f, 0x4a, 0xcd,
+	0x53, 0x23, 0x12, 0xd8, 0x0a, 0x1c, 0x5c, 0x16, 0xd0, 0x3c, 0x82, 0x84, 0x6d, 0xe6, 0xfc, 0x1f,
+	0x1e, 0xea, 0x3c, 0xb7, 0xf6, 0x63, 0x91, 0xce, 0xf0, 0x09, 0x6a, 0x5b, 0xa3, 0x29, 0x33, 0xac,
+	0xe7, 0x0d, 0xbd, 0xbd, 0x6b, 0x0f, 0xee, 0x93, 0xf5, 0x33, 0x4b, 0x30, 0x91, 0xb3, 0xd0, 0x1e,
+	0x34, 0xb1, 0x5f, 0x93, 0xc5, 0x88, 0xbc, 0x99, 0x7c, 0x06, 0x6e, 0x5e, 0x83, 0x61, 0xb4, 0x24,
+	0xe0, 0x63, 0x54, 0xd7, 0x12, 0x78, 0x6f, 0xc7, 0x91, 0xf6, 0x49, 0xa5, 0xc2, 0x48, 0x69, 0x33,
+	0x96, 0xc0, 0xa9, 0x23, 0x58, 0xcb, 0xeb, 0xe5, 0xfd, 0x44, 0x68, 0x83, 0x5f, 0x6d, 0x99, 0x92,
+	0x6a, 0xa6, 0x36, 0xbd, 0xe1, 0xf9, 0x12, 0x35, 0x84, 0x81, 0x44, 0xf7, 0x76, 0x86, 0xb5, 0x8d,
+	0x27, 0x57, 0x12, 0xa5, 0x79, 0xdc, 0xff, 0x7e, 0xde, 0xd2, 0xda, 0xe3, 0x17, 0xa8, 0x29, 0xb3,
+	0x58, 0xf0, 0xb3, 0xc2, 0xf1, 0x5e, 0x45, 0xf4, 0x5b, 0x17, 0xa2, 0x45, 0x18, 0x1f, 0xa3, 0xd6,
+	0x57, 0x98, 0x44, 0x59, 0x36, 0x2b, 0xba, 0x24, 0x15, 0x39, 0x1f, 0xf2, 0x14, 0x5d, 0xc5, 0xfd,
+	0x03, 0xd4, 0xcc, 0xd9, 0xf8, 0x26, 0x6a, 0xc4, 0xb0, 0x80, 0xd8, 0x99, 0x75, 0x68, 0xbe, 0xe0,
+	0xdb, 0xa8, 0xa9, 0x0d, 0x0b, 0x21, 0xef, 0xa2, 0x43, 0x8b, 0xcd, 0x8f, 0xd1, 0xee, 0x18, 0xd4,
+	0x42, 0x70, 0xa0, 0x70, 0x0a, 0x0a, 0x52, 0x0e, 0xf8, 0x0e, 0xea, 0xa4, 0x2c, 0x01, 0x2d, 0x19,
+	0x87, 0x82, 0xb2, 0x3e, 0x60, 0x8c, 0xea, 0x76, 0x71, 0xc2, 0x1d, 0xea, 0x66, 0x7b, 0x93, 0xcc,
+	0x44, 0xbd, 0x5a, 0x7e, 0xb3, 0xb3, 0xbb, 0x65, 0xca, 0xf4, 0xea, 0x43, 0x6f, 0xaf, 0x41, 0xdd,
+	0xec, 0xff, 0xf4, 0x50, 0xab, 0x50, 0xc7, 0x1f, 0x51, 0xdb, 0x44, 0x2a, 0x33, 0x26, 0x86, 0xa2,
+	0xc4, 0xa7, 0x57, 0x7b, 0xfc, 0xfb, 0x22, 0x7d, 0x94, 0xa5, 0xa7, 0x22, 0xa4, 0x25, 0x0d, 0x7f,
+	0x42, 0x5d, 0x1e, 0x0b, 0x48, 0x4d, 0xfe, 0x97, 0xa2, 0xda, 0x27, 0x57, 0xa3, 0x1f, 0x9d, 0x23,
+	0xd0, 0x7f, 0x78, 0xfe, 0x37, 0x0f, 0xdd, 0xb8, 0xe0, 0x2b, 0xbc, 0x8b, 0x6a, 0x73, 0xb5, 0xea,
+	0xdd, 0x8e, 0xf8, 0x1d, 0x6a, 0xe9, 0xbc, 0xdd, 0x42, 0xe2, 0x51, 0x45, 0x89, 0xcd, 0xff, 0x09,
+	0x5d, 0x71, 0x70, 0x1f, 0xb5, 0x39, 0x3b, 0x9c, 0xa7, 0xd3, 0x18, 0x5c, 0xdd, 0x5d, 0x5a, 0xee,
+	0xfe, 0x33, 0x74, 0xeb, 0xc2, 0x6e, 0xac, 0xd9, 0x17, 0xa9, 0x9d, 0x59, 0x8d, 0xda, 0xd1, 0xfe,
+	0x4a, 0x26, 0x73, 0xa5, 0x8d, 0xf3, 0xaa, 0xd1, 0x7c, 0x39, 0xec, 0xfe, 0x5a, 0x0e, 0xbc, 0xdf,
+	0xcb, 0x81, 0xf7, 0x67, 0x39, 0xf0, 0xfe, 0x06, 0x00, 0x00, 0xff, 0xff, 0x63, 0x00, 0xe8, 0xf6,
+	0x40, 0x05, 0x00, 0x00,
 }
 
-func (this *AuditSink) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*AuditSink)
-	if !ok {
-		that2, ok := that.(AuditSink)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if !this.Spec.Equal(that1.Spec) {
-		return false
-	}
-	return true
-}
-func (this *AuditSinkList) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*AuditSinkList)
-	if !ok {
-		that2, ok := that.(AuditSinkList)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if len(this.Items) != len(that1.Items) {
-		return false
-	}
-	for i := range this.Items {
-		if !this.Items[i].Equal(that1.Items[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *AuditSinkSpec) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*AuditSinkSpec)
-	if !ok {
-		that2, ok := that.(AuditSinkSpec)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Policy.Equal(that1.Policy) {
-		return false
-	}
-	if !this.Webhook.Equal(that1.Webhook) {
-		return false
-	}
-	return true
-}
-func (this *Policy) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*Policy)
-	if !ok {
-		that2, ok := that.(Policy)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Level != that1.Level {
-		return false
-	}
-	if len(this.Stages) != len(that1.Stages) {
-		return false
-	}
-	for i := range this.Stages {
-		if this.Stages[i] != that1.Stages[i] {
-			return false
-		}
-	}
-	return true
-}
-func (this *ServiceReference) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*ServiceReference)
-	if !ok {
-		that2, ok := that.(ServiceReference)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Namespace != that1.Namespace {
-		return false
-	}
-	if this.Name != that1.Name {
-		return false
-	}
-	if this.Path != that1.Path {
-		return false
-	}
-	if this.Port != that1.Port {
-		return false
-	}
-	return true
-}
-func (this *Webhook) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*Webhook)
-	if !ok {
-		that2, ok := that.(Webhook)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Throttle.Equal(that1.Throttle) {
-		return false
-	}
-	if !this.ClientConfig.Equal(that1.ClientConfig) {
-		return false
-	}
-	return true
-}
-func (this *WebhookClientConfig) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*WebhookClientConfig)
-	if !ok {
-		that2, ok := that.(WebhookClientConfig)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Url != that1.Url {
-		return false
-	}
-	if !this.Service.Equal(that1.Service) {
-		return false
-	}
-	if !bytes.Equal(this.CaBundle, that1.CaBundle) {
-		return false
-	}
-	return true
-}
-func (this *WebhookThrottleConfig) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*WebhookThrottleConfig)
-	if !ok {
-		that2, ok := that.(WebhookThrottleConfig)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Qps != that1.Qps {
-		return false
-	}
-	if this.Burst != that1.Burst {
-		return false
-	}
-	return true
-}
-func (this *AuditSink) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_auditregistration_v1alpha1.AuditSink{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Spec != nil {
-		s = append(s, "Spec: "+fmt.Sprintf("%#v", this.Spec)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *AuditSinkList) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_auditregistration_v1alpha1.AuditSinkList{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Items != nil {
-		s = append(s, "Items: "+fmt.Sprintf("%#v", this.Items)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *AuditSinkSpec) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_auditregistration_v1alpha1.AuditSinkSpec{")
-	if this.Policy != nil {
-		s = append(s, "Policy: "+fmt.Sprintf("%#v", this.Policy)+",\n")
-	}
-	if this.Webhook != nil {
-		s = append(s, "Webhook: "+fmt.Sprintf("%#v", this.Webhook)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *Policy) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_auditregistration_v1alpha1.Policy{")
-	s = append(s, "Level: "+fmt.Sprintf("%#v", this.Level)+",\n")
-	if this.Stages != nil {
-		s = append(s, "Stages: "+fmt.Sprintf("%#v", this.Stages)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *ServiceReference) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 8)
-	s = append(s, "&k8s_io_api_auditregistration_v1alpha1.ServiceReference{")
-	s = append(s, "Namespace: "+fmt.Sprintf("%#v", this.Namespace)+",\n")
-	s = append(s, "Name: "+fmt.Sprintf("%#v", this.Name)+",\n")
-	s = append(s, "Path: "+fmt.Sprintf("%#v", this.Path)+",\n")
-	s = append(s, "Port: "+fmt.Sprintf("%#v", this.Port)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *Webhook) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_auditregistration_v1alpha1.Webhook{")
-	if this.Throttle != nil {
-		s = append(s, "Throttle: "+fmt.Sprintf("%#v", this.Throttle)+",\n")
-	}
-	if this.ClientConfig != nil {
-		s = append(s, "ClientConfig: "+fmt.Sprintf("%#v", this.ClientConfig)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *WebhookClientConfig) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 7)
-	s = append(s, "&k8s_io_api_auditregistration_v1alpha1.WebhookClientConfig{")
-	s = append(s, "Url: "+fmt.Sprintf("%#v", this.Url)+",\n")
-	if this.Service != nil {
-		s = append(s, "Service: "+fmt.Sprintf("%#v", this.Service)+",\n")
-	}
-	s = append(s, "CaBundle: "+fmt.Sprintf("%#v", this.CaBundle)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *WebhookThrottleConfig) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_auditregistration_v1alpha1.WebhookThrottleConfig{")
-	s = append(s, "Qps: "+fmt.Sprintf("%#v", this.Qps)+",\n")
-	s = append(s, "Burst: "+fmt.Sprintf("%#v", this.Burst)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func valueToGoStringGenerated(v interface{}, typ string) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("func(v %v) *%v { return &v } ( %#v )", typ, typ, pv)
-}
 func (m *AuditSink) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -970,6 +641,10 @@ func (m *AuditSink) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Spec != nil {
 		{
 			size, err := m.Spec.MarshalToSizedBuffer(dAtA[:i])
@@ -1017,6 +692,10 @@ func (m *AuditSinkList) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Items) > 0 {
 		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -1066,6 +745,10 @@ func (m *AuditSinkSpec) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Webhook != nil {
 		{
 			size, err := m.Webhook.MarshalToSizedBuffer(dAtA[:i])
@@ -1113,6 +796,10 @@ func (m *Policy) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Stages) > 0 {
 		for iNdEx := len(m.Stages) - 1; iNdEx >= 0; iNdEx-- {
 			i -= len(m.Stages[iNdEx])
@@ -1122,11 +809,13 @@ func (m *Policy) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			dAtA[i] = 0x12
 		}
 	}
-	i -= len(m.Level)
-	copy(dAtA[i:], m.Level)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Level)))
-	i--
-	dAtA[i] = 0xa
+	if m.Level != nil {
+		i -= len(*m.Level)
+		copy(dAtA[i:], *m.Level)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Level)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -1150,24 +839,36 @@ func (m *ServiceReference) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	i = encodeVarintGenerated(dAtA, i, uint64(m.Port))
-	i--
-	dAtA[i] = 0x20
-	i -= len(m.Path)
-	copy(dAtA[i:], m.Path)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Path)))
-	i--
-	dAtA[i] = 0x1a
-	i -= len(m.Name)
-	copy(dAtA[i:], m.Name)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Name)))
-	i--
-	dAtA[i] = 0x12
-	i -= len(m.Namespace)
-	copy(dAtA[i:], m.Namespace)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Namespace)))
-	i--
-	dAtA[i] = 0xa
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Port != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.Port))
+		i--
+		dAtA[i] = 0x20
+	}
+	if m.Path != nil {
+		i -= len(*m.Path)
+		copy(dAtA[i:], *m.Path)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Path)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if m.Name != nil {
+		i -= len(*m.Name)
+		copy(dAtA[i:], *m.Name)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Name)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Namespace != nil {
+		i -= len(*m.Namespace)
+		copy(dAtA[i:], *m.Namespace)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Namespace)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -1191,6 +892,10 @@ func (m *Webhook) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.ClientConfig != nil {
 		{
 			size, err := m.ClientConfig.MarshalToSizedBuffer(dAtA[:i])
@@ -1238,6 +943,10 @@ func (m *WebhookClientConfig) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.CaBundle != nil {
 		i -= len(m.CaBundle)
 		copy(dAtA[i:], m.CaBundle)
@@ -1257,11 +966,13 @@ func (m *WebhookClientConfig) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x12
 	}
-	i -= len(m.Url)
-	copy(dAtA[i:], m.Url)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Url)))
-	i--
-	dAtA[i] = 0xa
+	if m.Url != nil {
+		i -= len(*m.Url)
+		copy(dAtA[i:], *m.Url)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Url)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -1285,12 +996,20 @@ func (m *WebhookThrottleConfig) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	i = encodeVarintGenerated(dAtA, i, uint64(m.Burst))
-	i--
-	dAtA[i] = 0x10
-	i = encodeVarintGenerated(dAtA, i, uint64(m.Qps))
-	i--
-	dAtA[i] = 0x8
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Burst != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.Burst))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.Qps != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.Qps))
+		i--
+		dAtA[i] = 0x8
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -1319,6 +1038,9 @@ func (m *AuditSink) Size() (n int) {
 		l = m.Spec.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -1338,6 +1060,9 @@ func (m *AuditSinkList) Size() (n int) {
 			n += 1 + l + sovGenerated(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -1355,6 +1080,9 @@ func (m *AuditSinkSpec) Size() (n int) {
 		l = m.Webhook.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -1364,13 +1092,18 @@ func (m *Policy) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Level)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.Level != nil {
+		l = len(*m.Level)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if len(m.Stages) > 0 {
 		for _, s := range m.Stages {
 			l = len(s)
 			n += 1 + l + sovGenerated(uint64(l))
 		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -1381,13 +1114,24 @@ func (m *ServiceReference) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Namespace)
-	n += 1 + l + sovGenerated(uint64(l))
-	l = len(m.Name)
-	n += 1 + l + sovGenerated(uint64(l))
-	l = len(m.Path)
-	n += 1 + l + sovGenerated(uint64(l))
-	n += 1 + sovGenerated(uint64(m.Port))
+	if m.Namespace != nil {
+		l = len(*m.Namespace)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.Name != nil {
+		l = len(*m.Name)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.Path != nil {
+		l = len(*m.Path)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.Port != nil {
+		n += 1 + sovGenerated(uint64(*m.Port))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -1405,6 +1149,9 @@ func (m *Webhook) Size() (n int) {
 		l = m.ClientConfig.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -1414,8 +1161,10 @@ func (m *WebhookClientConfig) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Url)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.Url != nil {
+		l = len(*m.Url)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if m.Service != nil {
 		l = m.Service.Size()
 		n += 1 + l + sovGenerated(uint64(l))
@@ -1423,6 +1172,9 @@ func (m *WebhookClientConfig) Size() (n int) {
 	if m.CaBundle != nil {
 		l = len(m.CaBundle)
 		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -1433,8 +1185,15 @@ func (m *WebhookThrottleConfig) Size() (n int) {
 	}
 	var l int
 	_ = l
-	n += 1 + sovGenerated(uint64(m.Qps))
-	n += 1 + sovGenerated(uint64(m.Burst))
+	if m.Qps != nil {
+		n += 1 + sovGenerated(uint64(*m.Qps))
+	}
+	if m.Burst != nil {
+		n += 1 + sovGenerated(uint64(*m.Burst))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -1443,110 +1202,6 @@ func sovGenerated(x uint64) (n int) {
 }
 func sozGenerated(x uint64) (n int) {
 	return sovGenerated(uint64((x << 1) ^ uint64((int64(x) >> 63))))
-}
-func (this *AuditSink) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&AuditSink{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ObjectMeta", "v1.ObjectMeta", 1) + `,`,
-		`Spec:` + strings.Replace(this.Spec.String(), "AuditSinkSpec", "AuditSinkSpec", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *AuditSinkList) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForItems := "[]*AuditSink{"
-	for _, f := range this.Items {
-		repeatedStringForItems += strings.Replace(f.String(), "AuditSink", "AuditSink", 1) + ","
-	}
-	repeatedStringForItems += "}"
-	s := strings.Join([]string{`&AuditSinkList{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ListMeta", "v1.ListMeta", 1) + `,`,
-		`Items:` + repeatedStringForItems + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *AuditSinkSpec) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&AuditSinkSpec{`,
-		`Policy:` + strings.Replace(this.Policy.String(), "Policy", "Policy", 1) + `,`,
-		`Webhook:` + strings.Replace(this.Webhook.String(), "Webhook", "Webhook", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *Policy) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&Policy{`,
-		`Level:` + fmt.Sprintf("%v", this.Level) + `,`,
-		`Stages:` + fmt.Sprintf("%v", this.Stages) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *ServiceReference) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&ServiceReference{`,
-		`Namespace:` + fmt.Sprintf("%v", this.Namespace) + `,`,
-		`Name:` + fmt.Sprintf("%v", this.Name) + `,`,
-		`Path:` + fmt.Sprintf("%v", this.Path) + `,`,
-		`Port:` + fmt.Sprintf("%v", this.Port) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *Webhook) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&Webhook{`,
-		`Throttle:` + strings.Replace(this.Throttle.String(), "WebhookThrottleConfig", "WebhookThrottleConfig", 1) + `,`,
-		`ClientConfig:` + strings.Replace(this.ClientConfig.String(), "WebhookClientConfig", "WebhookClientConfig", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *WebhookClientConfig) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&WebhookClientConfig{`,
-		`Url:` + fmt.Sprintf("%v", this.Url) + `,`,
-		`Service:` + strings.Replace(this.Service.String(), "ServiceReference", "ServiceReference", 1) + `,`,
-		`CaBundle:` + fmt.Sprintf("%v", this.CaBundle) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *WebhookThrottleConfig) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&WebhookThrottleConfig{`,
-		`Qps:` + fmt.Sprintf("%v", this.Qps) + `,`,
-		`Burst:` + fmt.Sprintf("%v", this.Burst) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func valueToStringGenerated(v interface{}) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("*%v", pv)
 }
 func (m *AuditSink) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
@@ -1661,6 +1316,7 @@ func (m *AuditSink) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -1781,6 +1437,7 @@ func (m *AuditSinkList) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -1903,6 +1560,7 @@ func (m *AuditSinkSpec) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -1971,7 +1629,8 @@ func (m *Policy) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Level = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Level = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -2017,6 +1676,7 @@ func (m *Policy) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -2085,7 +1745,8 @@ func (m *ServiceReference) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Namespace = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Namespace = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -2117,7 +1778,8 @@ func (m *ServiceReference) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Name = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Name = &s
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
@@ -2149,13 +1811,14 @@ func (m *ServiceReference) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Path = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Path = &s
 			iNdEx = postIndex
 		case 4:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Port", wireType)
 			}
-			m.Port = 0
+			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -2165,11 +1828,12 @@ func (m *ServiceReference) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Port |= int32(b&0x7F) << shift
+				v |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.Port = &v
 		default:
 			iNdEx = preIndex
 			skippy, err := skipGenerated(dAtA[iNdEx:])
@@ -2182,6 +1846,7 @@ func (m *ServiceReference) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -2304,6 +1969,7 @@ func (m *Webhook) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -2372,7 +2038,8 @@ func (m *WebhookClientConfig) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Url = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Url = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -2456,6 +2123,7 @@ func (m *WebhookClientConfig) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -2498,7 +2166,7 @@ func (m *WebhookThrottleConfig) Unmarshal(dAtA []byte) error {
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Qps", wireType)
 			}
-			m.Qps = 0
+			var v int64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -2508,16 +2176,17 @@ func (m *WebhookThrottleConfig) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Qps |= int64(b&0x7F) << shift
+				v |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.Qps = &v
 		case 2:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Burst", wireType)
 			}
-			m.Burst = 0
+			var v int64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -2527,11 +2196,12 @@ func (m *WebhookThrottleConfig) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Burst |= int64(b&0x7F) << shift
+				v |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.Burst = &v
 		default:
 			iNdEx = preIndex
 			skippy, err := skipGenerated(dAtA[iNdEx:])
@@ -2544,6 +2214,7 @@ func (m *WebhookThrottleConfig) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}

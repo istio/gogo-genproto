@@ -6,15 +6,12 @@ package k8s_io_api_imagepolicy_v1alpha1
 import (
 	fmt "fmt"
 	proto "github.com/gogo/protobuf/proto"
-	github_com_gogo_protobuf_sortkeys "github.com/gogo/protobuf/sortkeys"
 	io "io"
 	v1 "istio.io/gogo-genproto/k8s.io/apimachinery/pkg/apis/meta/v1"
 	_ "istio.io/gogo-genproto/k8s.io/apimachinery/pkg/runtime"
 	_ "istio.io/gogo-genproto/k8s.io/apimachinery/pkg/runtime/schema"
 	math "math"
 	math_bits "math/bits"
-	reflect "reflect"
-	strings "strings"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -36,11 +33,15 @@ type ImageReview struct {
 	Spec *ImageReviewSpec `protobuf:"bytes,2,opt,name=spec" json:"spec,omitempty"`
 	// Status is filled in by the backend and indicates whether the pod should be allowed.
 	// +optional
-	Status *ImageReviewStatus `protobuf:"bytes,3,opt,name=status" json:"status,omitempty"`
+	Status               *ImageReviewStatus `protobuf:"bytes,3,opt,name=status" json:"status,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}           `json:"-"`
+	XXX_unrecognized     []byte             `json:"-"`
+	XXX_sizecache        int32              `json:"-"`
 }
 
-func (m *ImageReview) Reset()      { *m = ImageReview{} }
-func (*ImageReview) ProtoMessage() {}
+func (m *ImageReview) Reset()         { *m = ImageReview{} }
+func (m *ImageReview) String() string { return proto.CompactTextString(m) }
+func (*ImageReview) ProtoMessage()    {}
 func (*ImageReview) Descriptor() ([]byte, []int) {
 	return fileDescriptor_7620d1538838ac6f, []int{0}
 }
@@ -96,11 +97,15 @@ func (m *ImageReview) GetStatus() *ImageReviewStatus {
 type ImageReviewContainerSpec struct {
 	// This can be in the form image:tag or image@SHA:012345679abcdef.
 	// +optional
-	Image string `protobuf:"bytes,1,opt,name=image" json:"image"`
+	Image                *string  `protobuf:"bytes,1,opt,name=image" json:"image,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *ImageReviewContainerSpec) Reset()      { *m = ImageReviewContainerSpec{} }
-func (*ImageReviewContainerSpec) ProtoMessage() {}
+func (m *ImageReviewContainerSpec) Reset()         { *m = ImageReviewContainerSpec{} }
+func (m *ImageReviewContainerSpec) String() string { return proto.CompactTextString(m) }
+func (*ImageReviewContainerSpec) ProtoMessage()    {}
 func (*ImageReviewContainerSpec) Descriptor() ([]byte, []int) {
 	return fileDescriptor_7620d1538838ac6f, []int{1}
 }
@@ -132,8 +137,8 @@ func (m *ImageReviewContainerSpec) XXX_DiscardUnknown() {
 var xxx_messageInfo_ImageReviewContainerSpec proto.InternalMessageInfo
 
 func (m *ImageReviewContainerSpec) GetImage() string {
-	if m != nil {
-		return m.Image
+	if m != nil && m.Image != nil {
+		return *m.Image
 	}
 	return ""
 }
@@ -150,11 +155,15 @@ type ImageReviewSpec struct {
 	Annotations map[string]string `protobuf:"bytes,2,rep,name=annotations" json:"annotations,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	// Namespace is the namespace the pod is being created in.
 	// +optional
-	Namespace string `protobuf:"bytes,3,opt,name=namespace" json:"namespace"`
+	Namespace            *string  `protobuf:"bytes,3,opt,name=namespace" json:"namespace,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *ImageReviewSpec) Reset()      { *m = ImageReviewSpec{} }
-func (*ImageReviewSpec) ProtoMessage() {}
+func (m *ImageReviewSpec) Reset()         { *m = ImageReviewSpec{} }
+func (m *ImageReviewSpec) String() string { return proto.CompactTextString(m) }
+func (*ImageReviewSpec) ProtoMessage()    {}
 func (*ImageReviewSpec) Descriptor() ([]byte, []int) {
 	return fileDescriptor_7620d1538838ac6f, []int{2}
 }
@@ -200,8 +209,8 @@ func (m *ImageReviewSpec) GetAnnotations() map[string]string {
 }
 
 func (m *ImageReviewSpec) GetNamespace() string {
-	if m != nil {
-		return m.Namespace
+	if m != nil && m.Namespace != nil {
+		return *m.Namespace
 	}
 	return ""
 }
@@ -209,22 +218,26 @@ func (m *ImageReviewSpec) GetNamespace() string {
 // ImageReviewStatus is the result of the review for the pod creation request.
 type ImageReviewStatus struct {
 	// Allowed indicates that all images were allowed to be run.
-	Allowed bool `protobuf:"varint,1,opt,name=allowed" json:"allowed"`
+	Allowed *bool `protobuf:"varint,1,opt,name=allowed" json:"allowed,omitempty"`
 	// Reason should be empty unless Allowed is false in which case it
 	// may contain a short description of what is wrong.  Kubernetes
 	// may truncate excessively long errors when displaying to the user.
 	// +optional
-	Reason string `protobuf:"bytes,2,opt,name=reason" json:"reason"`
+	Reason *string `protobuf:"bytes,2,opt,name=reason" json:"reason,omitempty"`
 	// AuditAnnotations will be added to the attributes object of the
 	// admission controller request using 'AddAnnotation'.  The keys should
 	// be prefix-less (i.e., the admission controller will add an
 	// appropriate prefix).
 	// +optional
-	AuditAnnotations map[string]string `protobuf:"bytes,3,rep,name=auditAnnotations" json:"auditAnnotations,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	AuditAnnotations     map[string]string `protobuf:"bytes,3,rep,name=auditAnnotations" json:"auditAnnotations,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
+	XXX_unrecognized     []byte            `json:"-"`
+	XXX_sizecache        int32             `json:"-"`
 }
 
-func (m *ImageReviewStatus) Reset()      { *m = ImageReviewStatus{} }
-func (*ImageReviewStatus) ProtoMessage() {}
+func (m *ImageReviewStatus) Reset()         { *m = ImageReviewStatus{} }
+func (m *ImageReviewStatus) String() string { return proto.CompactTextString(m) }
+func (*ImageReviewStatus) ProtoMessage()    {}
 func (*ImageReviewStatus) Descriptor() ([]byte, []int) {
 	return fileDescriptor_7620d1538838ac6f, []int{3}
 }
@@ -256,15 +269,15 @@ func (m *ImageReviewStatus) XXX_DiscardUnknown() {
 var xxx_messageInfo_ImageReviewStatus proto.InternalMessageInfo
 
 func (m *ImageReviewStatus) GetAllowed() bool {
-	if m != nil {
-		return m.Allowed
+	if m != nil && m.Allowed != nil {
+		return *m.Allowed
 	}
 	return false
 }
 
 func (m *ImageReviewStatus) GetReason() string {
-	if m != nil {
-		return m.Reason
+	if m != nil && m.Reason != nil {
+		return *m.Reason
 	}
 	return ""
 }
@@ -290,256 +303,38 @@ func init() {
 }
 
 var fileDescriptor_7620d1538838ac6f = []byte{
-	// 510 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x92, 0xbd, 0x6e, 0x13, 0x41,
-	0x14, 0x85, 0x77, 0xec, 0x10, 0x92, 0x71, 0x41, 0x18, 0x09, 0xb4, 0xb2, 0xd0, 0x24, 0x72, 0x95,
-	0x6a, 0x16, 0x5b, 0x51, 0x14, 0xe8, 0x1c, 0x40, 0x82, 0x08, 0x14, 0x69, 0xa9, 0x28, 0x2f, 0xeb,
-	0x2b, 0x7b, 0xb0, 0x77, 0x76, 0xb4, 0x33, 0x76, 0xe4, 0x8e, 0x47, 0xa0, 0xe4, 0x11, 0x78, 0x0d,
-	0xba, 0x94, 0x2e, 0x53, 0x21, 0xbc, 0x6e, 0x68, 0x90, 0xf2, 0x08, 0x68, 0xc7, 0x7f, 0x6b, 0x3b,
-	0x08, 0x99, 0xf6, 0xec, 0x9c, 0xef, 0x9e, 0x7b, 0xee, 0xd2, 0xa0, 0x7b, 0x66, 0x84, 0x4c, 0x02,
-	0xd0, 0x32, 0x90, 0x31, 0xb4, 0x51, 0x27, 0x3d, 0x19, 0x0d, 0x83, 0x41, 0x1d, 0x7a, 0xba, 0x03,
-	0xf5, 0xa0, 0x8d, 0x0a, 0x53, 0xb0, 0xd8, 0x12, 0x3a, 0x4d, 0x6c, 0xc2, 0x0e, 0xa7, 0x06, 0x01,
-	0x5a, 0x8a, 0x82, 0x41, 0xcc, 0x0d, 0xd5, 0x93, 0x25, 0x31, 0x86, 0xa8, 0x23, 0x15, 0xa6, 0xc3,
-	0x40, 0x77, 0xdb, 0xb9, 0x60, 0x82, 0x18, 0x2d, 0x04, 0x83, 0x0d, 0x6c, 0x35, 0xf8, 0x9b, 0x2b,
-	0xed, 0x2b, 0x2b, 0x63, 0xdc, 0x30, 0x9c, 0xfe, 0xcb, 0x60, 0xa2, 0x0e, 0xc6, 0xb0, 0xee, 0xab,
-	0xfd, 0x26, 0xb4, 0xf2, 0x26, 0xcf, 0x1d, 0xe2, 0x40, 0xe2, 0x15, 0x7b, 0x4b, 0xf7, 0xf2, 0x4c,
-	0x2d, 0xb0, 0xe0, 0x93, 0x23, 0x72, 0x5c, 0x69, 0x3c, 0x15, 0xcb, 0x15, 0x17, 0x68, 0xa1, 0xbb,
-	0xed, 0x5c, 0x30, 0x22, 0x7f, 0x2d, 0x06, 0x75, 0x71, 0xf9, 0xf1, 0x13, 0x46, 0xf6, 0x1d, 0x5a,
-	0x08, 0x17, 0x04, 0xf6, 0x92, 0xee, 0x18, 0x8d, 0x91, 0x5f, 0xda, 0x20, 0xdd, 0x59, 0x96, 0x28,
-	0x24, 0x79, 0xaf, 0x31, 0x0a, 0x9d, 0x9b, 0x5d, 0xd0, 0x5d, 0x63, 0xc1, 0xf6, 0x8d, 0x5f, 0x76,
-	0x9c, 0xc6, 0x56, 0x1c, 0xe7, 0x0c, 0x67, 0x84, 0xda, 0x29, 0xf5, 0x0b, 0x1f, 0x5f, 0x24, 0xca,
-	0x42, 0xbe, 0x50, 0x3e, 0x8d, 0x55, 0xe9, 0x3d, 0x47, 0x73, 0x8b, 0xef, 0x9f, 0xef, 0x5c, 0xff,
-	0x38, 0xf4, 0xc2, 0xa9, 0x54, 0xfb, 0x5e, 0xa2, 0x0f, 0xd6, 0xd2, 0xb1, 0x0f, 0x94, 0x46, 0x73,
-	0x80, 0xf1, 0xc9, 0x51, 0xf9, 0xb8, 0xd2, 0x78, 0xb6, 0x4d, 0xb6, 0x95, 0xf1, 0x61, 0x01, 0xc6,
-	0x22, 0x5a, 0x01, 0xa5, 0x12, 0x0b, 0x56, 0x26, 0xca, 0xf8, 0x25, 0xc7, 0x6e, 0x6e, 0xdb, 0x9f,
-	0x68, 0x2e, 0x19, 0xaf, 0x94, 0x4d, 0x87, 0x61, 0x91, 0xca, 0x6a, 0x74, 0x5f, 0x41, 0x8c, 0x46,
-	0x43, 0x84, 0xae, 0xda, 0xf9, 0xce, 0x4b, 0xb9, 0x7a, 0x41, 0x0f, 0xd6, 0x21, 0xec, 0x31, 0x2d,
-	0x77, 0x71, 0xb8, 0xd2, 0x52, 0x2e, 0xe4, 0xfd, 0x0d, 0xa0, 0xd7, 0x47, 0x77, 0xee, 0x45, 0x7f,
-	0x4e, 0x7a, 0x5e, 0x3a, 0x23, 0xb5, 0xaf, 0x25, 0xfa, 0x70, 0xe3, 0x32, 0x8c, 0xd3, 0xfb, 0xd0,
-	0xeb, 0x25, 0x57, 0xd8, 0x72, 0xc4, 0xbd, 0x99, 0x6f, 0x2e, 0xb2, 0x27, 0x74, 0x37, 0x45, 0x30,
-	0x89, 0x5a, 0xc1, 0xce, 0x34, 0x66, 0xe9, 0x01, 0xf4, 0x5b, 0xd2, 0x16, 0x42, 0xfa, 0x65, 0xd7,
-	0xd6, 0xeb, 0xed, 0xff, 0x12, 0xd1, 0x5c, 0x43, 0x4d, 0x4b, 0xdb, 0x98, 0x50, 0xbd, 0xa4, 0x8f,
-	0xee, 0x7c, 0xfa, 0xbf, 0xd5, 0x9c, 0x9f, 0x8c, 0xc6, 0xdc, 0xbb, 0x19, 0x73, 0xef, 0x76, 0xcc,
-	0xc9, 0xe7, 0x8c, 0x93, 0x6f, 0x19, 0x27, 0xd7, 0x19, 0x27, 0xa3, 0x8c, 0x93, 0x9f, 0x19, 0x27,
-	0xbf, 0x32, 0xee, 0xdd, 0x66, 0x9c, 0x7c, 0x99, 0x70, 0x6f, 0x34, 0xe1, 0xde, 0xcd, 0x84, 0x7b,
-	0x7f, 0x02, 0x00, 0x00, 0xff, 0xff, 0x68, 0x5b, 0xe3, 0xea, 0xae, 0x04, 0x00, 0x00,
+	// 459 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x92, 0xc1, 0x8a, 0x13, 0x41,
+	0x10, 0x86, 0x99, 0x44, 0xd7, 0x4d, 0x45, 0x30, 0x36, 0x2a, 0x43, 0x90, 0xb8, 0xe4, 0xb4, 0xa7,
+	0x9e, 0x4d, 0x10, 0x59, 0x3d, 0x08, 0x71, 0x15, 0x54, 0x14, 0xa1, 0x3d, 0x79, 0x2c, 0x27, 0x45,
+	0xd2, 0x66, 0xa6, 0xbb, 0x99, 0xee, 0xcc, 0x92, 0x9b, 0x6f, 0xe4, 0x6b, 0x78, 0xf4, 0x11, 0x24,
+	0x77, 0xdf, 0x41, 0xba, 0x93, 0x6c, 0xc6, 0xcc, 0xca, 0x32, 0xb7, 0xa9, 0x9a, 0xfe, 0xbf, 0xfa,
+	0xeb, 0xef, 0x86, 0x64, 0x71, 0x6e, 0xb9, 0xd4, 0x09, 0x1a, 0x99, 0xc8, 0x1c, 0x67, 0x64, 0x74,
+	0x26, 0xd3, 0x55, 0x52, 0x8e, 0x30, 0x33, 0x73, 0x1c, 0x25, 0x33, 0x52, 0x54, 0xa0, 0xa3, 0x29,
+	0x37, 0x85, 0x76, 0x9a, 0x3d, 0xd9, 0x08, 0x38, 0x1a, 0xc9, 0x2b, 0x02, 0xbe, 0x13, 0xf4, 0x9f,
+	0xee, 0x89, 0x39, 0xa6, 0x73, 0xa9, 0xa8, 0x58, 0x25, 0x66, 0x31, 0xf3, 0x0d, 0x9b, 0xe4, 0xe4,
+	0x30, 0x29, 0x6b, 0xd8, 0x7e, 0xf2, 0x3f, 0x55, 0xb1, 0x54, 0x4e, 0xe6, 0x54, 0x13, 0x3c, 0xbb,
+	0x49, 0x60, 0xd3, 0x39, 0xe5, 0x78, 0xa8, 0x1b, 0xfe, 0x89, 0xa0, 0xfb, 0xce, 0xfb, 0x16, 0x54,
+	0x4a, 0xba, 0x64, 0x1f, 0xe0, 0xd8, 0x7b, 0x9a, 0xa2, 0xc3, 0x38, 0x3a, 0x89, 0x4e, 0xbb, 0xe3,
+	0x33, 0xbe, 0x5f, 0xf1, 0x0a, 0xcd, 0xcd, 0x62, 0xe6, 0x1b, 0x96, 0xfb, 0xd3, 0xbc, 0x1c, 0xf1,
+	0x4f, 0x5f, 0xbf, 0x51, 0xea, 0x3e, 0x92, 0x43, 0x71, 0x45, 0x60, 0xaf, 0xe1, 0x96, 0x35, 0x94,
+	0xc6, 0xad, 0x1a, 0xe9, 0xda, 0xb0, 0x78, 0xc5, 0xc9, 0x67, 0x43, 0xa9, 0x08, 0x6a, 0xf6, 0x1e,
+	0x8e, 0xac, 0x43, 0xb7, 0xb4, 0x71, 0x3b, 0x70, 0xc6, 0x8d, 0x38, 0x41, 0x29, 0xb6, 0x84, 0xe1,
+	0x19, 0xc4, 0x95, 0x9f, 0x17, 0x5a, 0x39, 0xf4, 0x0b, 0xf9, 0x69, 0xec, 0x01, 0xdc, 0x0e, 0xb4,
+	0xb0, 0x78, 0x47, 0x6c, 0x8a, 0xe1, 0x8f, 0x16, 0xdc, 0x3b, 0xf0, 0xc5, 0xbe, 0x00, 0xa4, 0x3b,
+	0xa9, 0x8d, 0xa3, 0x93, 0xf6, 0x69, 0x77, 0xfc, 0xbc, 0x89, 0xab, 0x7f, 0x06, 0x8b, 0x0a, 0x8c,
+	0xa5, 0xd0, 0x45, 0xa5, 0xb4, 0x43, 0x27, 0xb5, 0xb2, 0x71, 0x2b, 0xb0, 0x27, 0x4d, 0x93, 0xe3,
+	0x93, 0x3d, 0xe3, 0x8d, 0x72, 0xc5, 0x4a, 0x54, 0xa9, 0xec, 0x31, 0x74, 0x14, 0xe6, 0x64, 0x0d,
+	0xa6, 0x14, 0x42, 0xed, 0x88, 0x7d, 0xa3, 0xff, 0x12, 0x7a, 0x87, 0x72, 0xd6, 0x83, 0xf6, 0x82,
+	0x56, 0xdb, 0x64, 0xfc, 0xa7, 0x4f, 0xab, 0xc4, 0x6c, 0x49, 0xe1, 0x72, 0x3b, 0x62, 0x53, 0xbc,
+	0x68, 0x9d, 0x47, 0xc3, 0xef, 0x2d, 0xb8, 0x5f, 0xbb, 0x01, 0x16, 0xc3, 0x1d, 0xcc, 0x32, 0x7d,
+	0x49, 0xd3, 0x40, 0x39, 0x16, 0xbb, 0x92, 0x3d, 0x82, 0xa3, 0x82, 0xd0, 0x6a, 0xb5, 0x45, 0x6d,
+	0x2b, 0xe6, 0xa0, 0x87, 0xcb, 0xa9, 0x74, 0x15, 0x33, 0x71, 0x3b, 0xe4, 0xf1, 0xb6, 0xf9, 0x0b,
+	0xe0, 0x93, 0x03, 0xd4, 0x26, 0x96, 0xda, 0x84, 0xfe, 0x05, 0x3c, 0xbc, 0xf6, 0x68, 0x93, 0x08,
+	0x5e, 0xdd, 0xfd, 0xb9, 0x1e, 0x44, 0xbf, 0xd6, 0x83, 0xe8, 0xf7, 0x7a, 0x10, 0xfd, 0x0d, 0x00,
+	0x00, 0xff, 0xff, 0x59, 0x51, 0x0c, 0x0b, 0x56, 0x04, 0x00, 0x00,
 }
 
-func (this *ImageReview) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*ImageReview)
-	if !ok {
-		that2, ok := that.(ImageReview)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if !this.Spec.Equal(that1.Spec) {
-		return false
-	}
-	if !this.Status.Equal(that1.Status) {
-		return false
-	}
-	return true
-}
-func (this *ImageReviewContainerSpec) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*ImageReviewContainerSpec)
-	if !ok {
-		that2, ok := that.(ImageReviewContainerSpec)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Image != that1.Image {
-		return false
-	}
-	return true
-}
-func (this *ImageReviewSpec) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*ImageReviewSpec)
-	if !ok {
-		that2, ok := that.(ImageReviewSpec)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if len(this.Containers) != len(that1.Containers) {
-		return false
-	}
-	for i := range this.Containers {
-		if !this.Containers[i].Equal(that1.Containers[i]) {
-			return false
-		}
-	}
-	if len(this.Annotations) != len(that1.Annotations) {
-		return false
-	}
-	for i := range this.Annotations {
-		if this.Annotations[i] != that1.Annotations[i] {
-			return false
-		}
-	}
-	if this.Namespace != that1.Namespace {
-		return false
-	}
-	return true
-}
-func (this *ImageReviewStatus) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*ImageReviewStatus)
-	if !ok {
-		that2, ok := that.(ImageReviewStatus)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Allowed != that1.Allowed {
-		return false
-	}
-	if this.Reason != that1.Reason {
-		return false
-	}
-	if len(this.AuditAnnotations) != len(that1.AuditAnnotations) {
-		return false
-	}
-	for i := range this.AuditAnnotations {
-		if this.AuditAnnotations[i] != that1.AuditAnnotations[i] {
-			return false
-		}
-	}
-	return true
-}
-func (this *ImageReview) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 7)
-	s = append(s, "&k8s_io_api_imagepolicy_v1alpha1.ImageReview{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Spec != nil {
-		s = append(s, "Spec: "+fmt.Sprintf("%#v", this.Spec)+",\n")
-	}
-	if this.Status != nil {
-		s = append(s, "Status: "+fmt.Sprintf("%#v", this.Status)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *ImageReviewContainerSpec) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 5)
-	s = append(s, "&k8s_io_api_imagepolicy_v1alpha1.ImageReviewContainerSpec{")
-	s = append(s, "Image: "+fmt.Sprintf("%#v", this.Image)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *ImageReviewSpec) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 7)
-	s = append(s, "&k8s_io_api_imagepolicy_v1alpha1.ImageReviewSpec{")
-	if this.Containers != nil {
-		s = append(s, "Containers: "+fmt.Sprintf("%#v", this.Containers)+",\n")
-	}
-	keysForAnnotations := make([]string, 0, len(this.Annotations))
-	for k, _ := range this.Annotations {
-		keysForAnnotations = append(keysForAnnotations, k)
-	}
-	github_com_gogo_protobuf_sortkeys.Strings(keysForAnnotations)
-	mapStringForAnnotations := "map[string]string{"
-	for _, k := range keysForAnnotations {
-		mapStringForAnnotations += fmt.Sprintf("%#v: %#v,", k, this.Annotations[k])
-	}
-	mapStringForAnnotations += "}"
-	if this.Annotations != nil {
-		s = append(s, "Annotations: "+mapStringForAnnotations+",\n")
-	}
-	s = append(s, "Namespace: "+fmt.Sprintf("%#v", this.Namespace)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *ImageReviewStatus) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 7)
-	s = append(s, "&k8s_io_api_imagepolicy_v1alpha1.ImageReviewStatus{")
-	s = append(s, "Allowed: "+fmt.Sprintf("%#v", this.Allowed)+",\n")
-	s = append(s, "Reason: "+fmt.Sprintf("%#v", this.Reason)+",\n")
-	keysForAuditAnnotations := make([]string, 0, len(this.AuditAnnotations))
-	for k, _ := range this.AuditAnnotations {
-		keysForAuditAnnotations = append(keysForAuditAnnotations, k)
-	}
-	github_com_gogo_protobuf_sortkeys.Strings(keysForAuditAnnotations)
-	mapStringForAuditAnnotations := "map[string]string{"
-	for _, k := range keysForAuditAnnotations {
-		mapStringForAuditAnnotations += fmt.Sprintf("%#v: %#v,", k, this.AuditAnnotations[k])
-	}
-	mapStringForAuditAnnotations += "}"
-	if this.AuditAnnotations != nil {
-		s = append(s, "AuditAnnotations: "+mapStringForAuditAnnotations+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func valueToGoStringGenerated(v interface{}, typ string) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("func(v %v) *%v { return &v } ( %#v )", typ, typ, pv)
-}
 func (m *ImageReview) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -560,6 +355,10 @@ func (m *ImageReview) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Status != nil {
 		{
 			size, err := m.Status.MarshalToSizedBuffer(dAtA[:i])
@@ -619,11 +418,17 @@ func (m *ImageReviewContainerSpec) MarshalToSizedBuffer(dAtA []byte) (int, error
 	_ = i
 	var l int
 	_ = l
-	i -= len(m.Image)
-	copy(dAtA[i:], m.Image)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Image)))
-	i--
-	dAtA[i] = 0xa
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Image != nil {
+		i -= len(*m.Image)
+		copy(dAtA[i:], *m.Image)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Image)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -647,11 +452,17 @@ func (m *ImageReviewSpec) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	i -= len(m.Namespace)
-	copy(dAtA[i:], m.Namespace)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Namespace)))
-	i--
-	dAtA[i] = 0x1a
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Namespace != nil {
+		i -= len(*m.Namespace)
+		copy(dAtA[i:], *m.Namespace)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Namespace)))
+		i--
+		dAtA[i] = 0x1a
+	}
 	if len(m.Annotations) > 0 {
 		for k := range m.Annotations {
 			v := m.Annotations[k]
@@ -708,6 +519,10 @@ func (m *ImageReviewStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.AuditAnnotations) > 0 {
 		for k := range m.AuditAnnotations {
 			v := m.AuditAnnotations[k]
@@ -727,19 +542,23 @@ func (m *ImageReviewStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			dAtA[i] = 0x1a
 		}
 	}
-	i -= len(m.Reason)
-	copy(dAtA[i:], m.Reason)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Reason)))
-	i--
-	dAtA[i] = 0x12
-	i--
-	if m.Allowed {
-		dAtA[i] = 1
-	} else {
-		dAtA[i] = 0
+	if m.Reason != nil {
+		i -= len(*m.Reason)
+		copy(dAtA[i:], *m.Reason)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Reason)))
+		i--
+		dAtA[i] = 0x12
 	}
-	i--
-	dAtA[i] = 0x8
+	if m.Allowed != nil {
+		i--
+		if *m.Allowed {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x8
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -772,6 +591,9 @@ func (m *ImageReview) Size() (n int) {
 		l = m.Status.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -781,8 +603,13 @@ func (m *ImageReviewContainerSpec) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Image)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.Image != nil {
+		l = len(*m.Image)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -806,8 +633,13 @@ func (m *ImageReviewSpec) Size() (n int) {
 			n += mapEntrySize + 1 + sovGenerated(uint64(mapEntrySize))
 		}
 	}
-	l = len(m.Namespace)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.Namespace != nil {
+		l = len(*m.Namespace)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -817,9 +649,13 @@ func (m *ImageReviewStatus) Size() (n int) {
 	}
 	var l int
 	_ = l
-	n += 2
-	l = len(m.Reason)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.Allowed != nil {
+		n += 2
+	}
+	if m.Reason != nil {
+		l = len(*m.Reason)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if len(m.AuditAnnotations) > 0 {
 		for k, v := range m.AuditAnnotations {
 			_ = k
@@ -827,6 +663,9 @@ func (m *ImageReviewStatus) Size() (n int) {
 			mapEntrySize := 1 + len(k) + sovGenerated(uint64(len(k))) + 1 + len(v) + sovGenerated(uint64(len(v)))
 			n += mapEntrySize + 1 + sovGenerated(uint64(mapEntrySize))
 		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -836,85 +675,6 @@ func sovGenerated(x uint64) (n int) {
 }
 func sozGenerated(x uint64) (n int) {
 	return sovGenerated(uint64((x << 1) ^ uint64((int64(x) >> 63))))
-}
-func (this *ImageReview) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&ImageReview{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ObjectMeta", "v1.ObjectMeta", 1) + `,`,
-		`Spec:` + strings.Replace(this.Spec.String(), "ImageReviewSpec", "ImageReviewSpec", 1) + `,`,
-		`Status:` + strings.Replace(this.Status.String(), "ImageReviewStatus", "ImageReviewStatus", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *ImageReviewContainerSpec) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&ImageReviewContainerSpec{`,
-		`Image:` + fmt.Sprintf("%v", this.Image) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *ImageReviewSpec) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForContainers := "[]*ImageReviewContainerSpec{"
-	for _, f := range this.Containers {
-		repeatedStringForContainers += strings.Replace(f.String(), "ImageReviewContainerSpec", "ImageReviewContainerSpec", 1) + ","
-	}
-	repeatedStringForContainers += "}"
-	keysForAnnotations := make([]string, 0, len(this.Annotations))
-	for k, _ := range this.Annotations {
-		keysForAnnotations = append(keysForAnnotations, k)
-	}
-	github_com_gogo_protobuf_sortkeys.Strings(keysForAnnotations)
-	mapStringForAnnotations := "map[string]string{"
-	for _, k := range keysForAnnotations {
-		mapStringForAnnotations += fmt.Sprintf("%v: %v,", k, this.Annotations[k])
-	}
-	mapStringForAnnotations += "}"
-	s := strings.Join([]string{`&ImageReviewSpec{`,
-		`Containers:` + repeatedStringForContainers + `,`,
-		`Annotations:` + mapStringForAnnotations + `,`,
-		`Namespace:` + fmt.Sprintf("%v", this.Namespace) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *ImageReviewStatus) String() string {
-	if this == nil {
-		return "nil"
-	}
-	keysForAuditAnnotations := make([]string, 0, len(this.AuditAnnotations))
-	for k, _ := range this.AuditAnnotations {
-		keysForAuditAnnotations = append(keysForAuditAnnotations, k)
-	}
-	github_com_gogo_protobuf_sortkeys.Strings(keysForAuditAnnotations)
-	mapStringForAuditAnnotations := "map[string]string{"
-	for _, k := range keysForAuditAnnotations {
-		mapStringForAuditAnnotations += fmt.Sprintf("%v: %v,", k, this.AuditAnnotations[k])
-	}
-	mapStringForAuditAnnotations += "}"
-	s := strings.Join([]string{`&ImageReviewStatus{`,
-		`Allowed:` + fmt.Sprintf("%v", this.Allowed) + `,`,
-		`Reason:` + fmt.Sprintf("%v", this.Reason) + `,`,
-		`AuditAnnotations:` + mapStringForAuditAnnotations + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func valueToStringGenerated(v interface{}) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("*%v", pv)
 }
 func (m *ImageReview) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
@@ -1065,6 +825,7 @@ func (m *ImageReview) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -1133,7 +894,8 @@ func (m *ImageReviewContainerSpec) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Image = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Image = &s
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -1147,6 +909,7 @@ func (m *ImageReviewContainerSpec) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -1376,7 +1139,8 @@ func (m *ImageReviewSpec) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Namespace = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Namespace = &s
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -1390,6 +1154,7 @@ func (m *ImageReviewSpec) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -1447,7 +1212,8 @@ func (m *ImageReviewStatus) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
-			m.Allowed = bool(v != 0)
+			b := bool(v != 0)
+			m.Allowed = &b
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Reason", wireType)
@@ -1478,7 +1244,8 @@ func (m *ImageReviewStatus) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Reason = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Reason = &s
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
@@ -1619,6 +1386,7 @@ func (m *ImageReviewStatus) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}

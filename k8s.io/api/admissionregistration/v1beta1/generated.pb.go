@@ -4,7 +4,6 @@
 package k8s_io_api_admissionregistration_v1beta1
 
 import (
-	bytes "bytes"
 	fmt "fmt"
 	proto "github.com/gogo/protobuf/proto"
 	io "io"
@@ -13,8 +12,6 @@ import (
 	_ "istio.io/gogo-genproto/k8s.io/apimachinery/pkg/runtime/schema"
 	math "math"
 	math_bits "math/bits"
-	reflect "reflect"
-	strings "strings"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -35,7 +32,7 @@ type MutatingWebhook struct {
 	// "imagepolicy" is the name of the webhook, and kubernetes.io is the name
 	// of the organization.
 	// Required.
-	Name string `protobuf:"bytes,1,opt,name=name" json:"name"`
+	Name *string `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
 	// ClientConfig defines how to communicate with the hook.
 	// Required
 	ClientConfig *WebhookClientConfig `protobuf:"bytes,2,opt,name=clientConfig" json:"clientConfig,omitempty"`
@@ -49,7 +46,7 @@ type MutatingWebhook struct {
 	// FailurePolicy defines how unrecognized errors from the admission endpoint are handled -
 	// allowed values are Ignore or Fail. Defaults to Ignore.
 	// +optional
-	FailurePolicy string `protobuf:"bytes,4,opt,name=failurePolicy" json:"failurePolicy"`
+	FailurePolicy *string `protobuf:"bytes,4,opt,name=failurePolicy" json:"failurePolicy,omitempty"`
 	// matchPolicy defines how the "rules" list is used to match incoming requests.
 	// Allowed values are "Exact" or "Equivalent".
 	//
@@ -65,7 +62,7 @@ type MutatingWebhook struct {
 	//
 	// Defaults to "Exact"
 	// +optional
-	MatchPolicy string `protobuf:"bytes,9,opt,name=matchPolicy" json:"matchPolicy"`
+	MatchPolicy *string `protobuf:"bytes,9,opt,name=matchPolicy" json:"matchPolicy,omitempty"`
 	// NamespaceSelector decides whether to run the webhook on an object based
 	// on whether the namespace for that object matches the selector. If the
 	// object itself is a namespace, the matching is performed on
@@ -131,14 +128,14 @@ type MutatingWebhook struct {
 	// Requests with the dryRun attribute will be auto-rejected if they match a webhook with
 	// sideEffects == Unknown or Some. Defaults to Unknown.
 	// +optional
-	SideEffects string `protobuf:"bytes,6,opt,name=sideEffects" json:"sideEffects"`
+	SideEffects *string `protobuf:"bytes,6,opt,name=sideEffects" json:"sideEffects,omitempty"`
 	// TimeoutSeconds specifies the timeout for this webhook. After the timeout passes,
 	// the webhook call will be ignored or the API call will fail based on the
 	// failure policy.
 	// The timeout value must be between 1 and 30 seconds.
 	// Default to 30 seconds.
 	// +optional
-	TimeoutSeconds int32 `protobuf:"varint,7,opt,name=timeoutSeconds" json:"timeoutSeconds"`
+	TimeoutSeconds *int32 `protobuf:"varint,7,opt,name=timeoutSeconds" json:"timeoutSeconds,omitempty"`
 	// AdmissionReviewVersions is an ordered list of preferred `AdmissionReview`
 	// versions the Webhook expects. API server will try to use first version in
 	// the list which it supports. If none of the versions specified in this list
@@ -165,11 +162,15 @@ type MutatingWebhook struct {
 	//
 	// Defaults to "Never".
 	// +optional
-	ReinvocationPolicy string `protobuf:"bytes,10,opt,name=reinvocationPolicy" json:"reinvocationPolicy"`
+	ReinvocationPolicy   *string  `protobuf:"bytes,10,opt,name=reinvocationPolicy" json:"reinvocationPolicy,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *MutatingWebhook) Reset()      { *m = MutatingWebhook{} }
-func (*MutatingWebhook) ProtoMessage() {}
+func (m *MutatingWebhook) Reset()         { *m = MutatingWebhook{} }
+func (m *MutatingWebhook) String() string { return proto.CompactTextString(m) }
+func (*MutatingWebhook) ProtoMessage()    {}
 func (*MutatingWebhook) Descriptor() ([]byte, []int) {
 	return fileDescriptor_7f7c65a4f012fb19, []int{0}
 }
@@ -201,8 +202,8 @@ func (m *MutatingWebhook) XXX_DiscardUnknown() {
 var xxx_messageInfo_MutatingWebhook proto.InternalMessageInfo
 
 func (m *MutatingWebhook) GetName() string {
-	if m != nil {
-		return m.Name
+	if m != nil && m.Name != nil {
+		return *m.Name
 	}
 	return ""
 }
@@ -222,15 +223,15 @@ func (m *MutatingWebhook) GetRules() []*RuleWithOperations {
 }
 
 func (m *MutatingWebhook) GetFailurePolicy() string {
-	if m != nil {
-		return m.FailurePolicy
+	if m != nil && m.FailurePolicy != nil {
+		return *m.FailurePolicy
 	}
 	return ""
 }
 
 func (m *MutatingWebhook) GetMatchPolicy() string {
-	if m != nil {
-		return m.MatchPolicy
+	if m != nil && m.MatchPolicy != nil {
+		return *m.MatchPolicy
 	}
 	return ""
 }
@@ -250,15 +251,15 @@ func (m *MutatingWebhook) GetObjectSelector() *v1.LabelSelector {
 }
 
 func (m *MutatingWebhook) GetSideEffects() string {
-	if m != nil {
-		return m.SideEffects
+	if m != nil && m.SideEffects != nil {
+		return *m.SideEffects
 	}
 	return ""
 }
 
 func (m *MutatingWebhook) GetTimeoutSeconds() int32 {
-	if m != nil {
-		return m.TimeoutSeconds
+	if m != nil && m.TimeoutSeconds != nil {
+		return *m.TimeoutSeconds
 	}
 	return 0
 }
@@ -271,8 +272,8 @@ func (m *MutatingWebhook) GetAdmissionReviewVersions() []string {
 }
 
 func (m *MutatingWebhook) GetReinvocationPolicy() string {
-	if m != nil {
-		return m.ReinvocationPolicy
+	if m != nil && m.ReinvocationPolicy != nil {
+		return *m.ReinvocationPolicy
 	}
 	return ""
 }
@@ -287,11 +288,15 @@ type MutatingWebhookConfiguration struct {
 	// +optional
 	// +patchMergeKey=name
 	// +patchStrategy=merge
-	Webhooks []*MutatingWebhook `protobuf:"bytes,2,rep,name=Webhooks" json:"Webhooks,omitempty"`
+	Webhooks             []*MutatingWebhook `protobuf:"bytes,2,rep,name=Webhooks" json:"Webhooks,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}           `json:"-"`
+	XXX_unrecognized     []byte             `json:"-"`
+	XXX_sizecache        int32              `json:"-"`
 }
 
-func (m *MutatingWebhookConfiguration) Reset()      { *m = MutatingWebhookConfiguration{} }
-func (*MutatingWebhookConfiguration) ProtoMessage() {}
+func (m *MutatingWebhookConfiguration) Reset()         { *m = MutatingWebhookConfiguration{} }
+func (m *MutatingWebhookConfiguration) String() string { return proto.CompactTextString(m) }
+func (*MutatingWebhookConfiguration) ProtoMessage()    {}
 func (*MutatingWebhookConfiguration) Descriptor() ([]byte, []int) {
 	return fileDescriptor_7f7c65a4f012fb19, []int{1}
 }
@@ -343,11 +348,15 @@ type MutatingWebhookConfigurationList struct {
 	// +optional
 	Metadata *v1.ListMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// List of MutatingWebhookConfiguration.
-	Items []*MutatingWebhookConfiguration `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	Items                []*MutatingWebhookConfiguration `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                        `json:"-"`
+	XXX_unrecognized     []byte                          `json:"-"`
+	XXX_sizecache        int32                           `json:"-"`
 }
 
-func (m *MutatingWebhookConfigurationList) Reset()      { *m = MutatingWebhookConfigurationList{} }
-func (*MutatingWebhookConfigurationList) ProtoMessage() {}
+func (m *MutatingWebhookConfigurationList) Reset()         { *m = MutatingWebhookConfigurationList{} }
+func (m *MutatingWebhookConfigurationList) String() string { return proto.CompactTextString(m) }
+func (*MutatingWebhookConfigurationList) ProtoMessage()    {}
 func (*MutatingWebhookConfigurationList) Descriptor() ([]byte, []int) {
 	return fileDescriptor_7f7c65a4f012fb19, []int{2}
 }
@@ -429,11 +438,15 @@ type Rule struct {
 	// Default is "*".
 	//
 	// +optional
-	Scope string `protobuf:"bytes,4,opt,name=scope" json:"scope"`
+	Scope                *string  `protobuf:"bytes,4,opt,name=scope" json:"scope,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *Rule) Reset()      { *m = Rule{} }
-func (*Rule) ProtoMessage() {}
+func (m *Rule) Reset()         { *m = Rule{} }
+func (m *Rule) String() string { return proto.CompactTextString(m) }
+func (*Rule) ProtoMessage()    {}
 func (*Rule) Descriptor() ([]byte, []int) {
 	return fileDescriptor_7f7c65a4f012fb19, []int{3}
 }
@@ -486,8 +499,8 @@ func (m *Rule) GetResources() []string {
 }
 
 func (m *Rule) GetScope() string {
-	if m != nil {
-		return m.Scope
+	if m != nil && m.Scope != nil {
+		return *m.Scope
 	}
 	return ""
 }
@@ -502,11 +515,15 @@ type RuleWithOperations struct {
 	Operations []string `protobuf:"bytes,1,rep,name=operations" json:"operations,omitempty"`
 	// Rule is embedded, it describes other criteria of the rule, like
 	// APIGroups, APIVersions, Resources, etc.
-	Rule *Rule `protobuf:"bytes,2,opt,name=rule" json:"rule,omitempty"`
+	Rule                 *Rule    `protobuf:"bytes,2,opt,name=rule" json:"rule,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *RuleWithOperations) Reset()      { *m = RuleWithOperations{} }
-func (*RuleWithOperations) ProtoMessage() {}
+func (m *RuleWithOperations) Reset()         { *m = RuleWithOperations{} }
+func (m *RuleWithOperations) String() string { return proto.CompactTextString(m) }
+func (*RuleWithOperations) ProtoMessage()    {}
 func (*RuleWithOperations) Descriptor() ([]byte, []int) {
 	return fileDescriptor_7f7c65a4f012fb19, []int{4}
 }
@@ -555,23 +572,27 @@ func (m *RuleWithOperations) GetRule() *Rule {
 type ServiceReference struct {
 	// `namespace` is the namespace of the service.
 	// Required
-	Namespace string `protobuf:"bytes,1,opt,name=namespace" json:"namespace"`
+	Namespace *string `protobuf:"bytes,1,opt,name=namespace" json:"namespace,omitempty"`
 	// `name` is the name of the service.
 	// Required
-	Name string `protobuf:"bytes,2,opt,name=name" json:"name"`
+	Name *string `protobuf:"bytes,2,opt,name=name" json:"name,omitempty"`
 	// `path` is an optional URL path which will be sent in any request to
 	// this service.
 	// +optional
-	Path string `protobuf:"bytes,3,opt,name=path" json:"path"`
+	Path *string `protobuf:"bytes,3,opt,name=path" json:"path,omitempty"`
 	// If specified, the port on the service that hosting webhook.
 	// Default to 443 for backward compatibility.
 	// `port` should be a valid port number (1-65535, inclusive).
 	// +optional
-	Port int32 `protobuf:"varint,4,opt,name=port" json:"port"`
+	Port                 *int32   `protobuf:"varint,4,opt,name=port" json:"port,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *ServiceReference) Reset()      { *m = ServiceReference{} }
-func (*ServiceReference) ProtoMessage() {}
+func (m *ServiceReference) Reset()         { *m = ServiceReference{} }
+func (m *ServiceReference) String() string { return proto.CompactTextString(m) }
+func (*ServiceReference) ProtoMessage()    {}
 func (*ServiceReference) Descriptor() ([]byte, []int) {
 	return fileDescriptor_7f7c65a4f012fb19, []int{5}
 }
@@ -603,29 +624,29 @@ func (m *ServiceReference) XXX_DiscardUnknown() {
 var xxx_messageInfo_ServiceReference proto.InternalMessageInfo
 
 func (m *ServiceReference) GetNamespace() string {
-	if m != nil {
-		return m.Namespace
+	if m != nil && m.Namespace != nil {
+		return *m.Namespace
 	}
 	return ""
 }
 
 func (m *ServiceReference) GetName() string {
-	if m != nil {
-		return m.Name
+	if m != nil && m.Name != nil {
+		return *m.Name
 	}
 	return ""
 }
 
 func (m *ServiceReference) GetPath() string {
-	if m != nil {
-		return m.Path
+	if m != nil && m.Path != nil {
+		return *m.Path
 	}
 	return ""
 }
 
 func (m *ServiceReference) GetPort() int32 {
-	if m != nil {
-		return m.Port
+	if m != nil && m.Port != nil {
+		return *m.Port
 	}
 	return 0
 }
@@ -637,7 +658,7 @@ type ValidatingWebhook struct {
 	// "imagepolicy" is the name of the webhook, and kubernetes.io is the name
 	// of the organization.
 	// Required.
-	Name string `protobuf:"bytes,1,opt,name=name" json:"name"`
+	Name *string `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
 	// ClientConfig defines how to communicate with the hook.
 	// Required
 	ClientConfig *WebhookClientConfig `protobuf:"bytes,2,opt,name=clientConfig" json:"clientConfig,omitempty"`
@@ -651,7 +672,7 @@ type ValidatingWebhook struct {
 	// FailurePolicy defines how unrecognized errors from the admission endpoint are handled -
 	// allowed values are Ignore or Fail. Defaults to Ignore.
 	// +optional
-	FailurePolicy string `protobuf:"bytes,4,opt,name=failurePolicy" json:"failurePolicy"`
+	FailurePolicy *string `protobuf:"bytes,4,opt,name=failurePolicy" json:"failurePolicy,omitempty"`
 	// matchPolicy defines how the "rules" list is used to match incoming requests.
 	// Allowed values are "Exact" or "Equivalent".
 	//
@@ -667,7 +688,7 @@ type ValidatingWebhook struct {
 	//
 	// Defaults to "Exact"
 	// +optional
-	MatchPolicy string `protobuf:"bytes,9,opt,name=matchPolicy" json:"matchPolicy"`
+	MatchPolicy *string `protobuf:"bytes,9,opt,name=matchPolicy" json:"matchPolicy,omitempty"`
 	// NamespaceSelector decides whether to run the webhook on an object based
 	// on whether the namespace for that object matches the selector. If the
 	// object itself is a namespace, the matching is performed on
@@ -733,14 +754,14 @@ type ValidatingWebhook struct {
 	// Requests with the dryRun attribute will be auto-rejected if they match a webhook with
 	// sideEffects == Unknown or Some. Defaults to Unknown.
 	// +optional
-	SideEffects string `protobuf:"bytes,6,opt,name=sideEffects" json:"sideEffects"`
+	SideEffects *string `protobuf:"bytes,6,opt,name=sideEffects" json:"sideEffects,omitempty"`
 	// TimeoutSeconds specifies the timeout for this webhook. After the timeout passes,
 	// the webhook call will be ignored or the API call will fail based on the
 	// failure policy.
 	// The timeout value must be between 1 and 30 seconds.
 	// Default to 30 seconds.
 	// +optional
-	TimeoutSeconds int32 `protobuf:"varint,7,opt,name=timeoutSeconds" json:"timeoutSeconds"`
+	TimeoutSeconds *int32 `protobuf:"varint,7,opt,name=timeoutSeconds" json:"timeoutSeconds,omitempty"`
 	// AdmissionReviewVersions is an ordered list of preferred `AdmissionReview`
 	// versions the Webhook expects. API server will try to use first version in
 	// the list which it supports. If none of the versions specified in this list
@@ -751,10 +772,14 @@ type ValidatingWebhook struct {
 	// Default to `['v1beta1']`.
 	// +optional
 	AdmissionReviewVersions []string `protobuf:"bytes,8,rep,name=admissionReviewVersions" json:"admissionReviewVersions,omitempty"`
+	XXX_NoUnkeyedLiteral    struct{} `json:"-"`
+	XXX_unrecognized        []byte   `json:"-"`
+	XXX_sizecache           int32    `json:"-"`
 }
 
-func (m *ValidatingWebhook) Reset()      { *m = ValidatingWebhook{} }
-func (*ValidatingWebhook) ProtoMessage() {}
+func (m *ValidatingWebhook) Reset()         { *m = ValidatingWebhook{} }
+func (m *ValidatingWebhook) String() string { return proto.CompactTextString(m) }
+func (*ValidatingWebhook) ProtoMessage()    {}
 func (*ValidatingWebhook) Descriptor() ([]byte, []int) {
 	return fileDescriptor_7f7c65a4f012fb19, []int{6}
 }
@@ -786,8 +811,8 @@ func (m *ValidatingWebhook) XXX_DiscardUnknown() {
 var xxx_messageInfo_ValidatingWebhook proto.InternalMessageInfo
 
 func (m *ValidatingWebhook) GetName() string {
-	if m != nil {
-		return m.Name
+	if m != nil && m.Name != nil {
+		return *m.Name
 	}
 	return ""
 }
@@ -807,15 +832,15 @@ func (m *ValidatingWebhook) GetRules() []*RuleWithOperations {
 }
 
 func (m *ValidatingWebhook) GetFailurePolicy() string {
-	if m != nil {
-		return m.FailurePolicy
+	if m != nil && m.FailurePolicy != nil {
+		return *m.FailurePolicy
 	}
 	return ""
 }
 
 func (m *ValidatingWebhook) GetMatchPolicy() string {
-	if m != nil {
-		return m.MatchPolicy
+	if m != nil && m.MatchPolicy != nil {
+		return *m.MatchPolicy
 	}
 	return ""
 }
@@ -835,15 +860,15 @@ func (m *ValidatingWebhook) GetObjectSelector() *v1.LabelSelector {
 }
 
 func (m *ValidatingWebhook) GetSideEffects() string {
-	if m != nil {
-		return m.SideEffects
+	if m != nil && m.SideEffects != nil {
+		return *m.SideEffects
 	}
 	return ""
 }
 
 func (m *ValidatingWebhook) GetTimeoutSeconds() int32 {
-	if m != nil {
-		return m.TimeoutSeconds
+	if m != nil && m.TimeoutSeconds != nil {
+		return *m.TimeoutSeconds
 	}
 	return 0
 }
@@ -865,11 +890,15 @@ type ValidatingWebhookConfiguration struct {
 	// +optional
 	// +patchMergeKey=name
 	// +patchStrategy=merge
-	Webhooks []*ValidatingWebhook `protobuf:"bytes,2,rep,name=Webhooks" json:"Webhooks,omitempty"`
+	Webhooks             []*ValidatingWebhook `protobuf:"bytes,2,rep,name=Webhooks" json:"Webhooks,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
+	XXX_unrecognized     []byte               `json:"-"`
+	XXX_sizecache        int32                `json:"-"`
 }
 
-func (m *ValidatingWebhookConfiguration) Reset()      { *m = ValidatingWebhookConfiguration{} }
-func (*ValidatingWebhookConfiguration) ProtoMessage() {}
+func (m *ValidatingWebhookConfiguration) Reset()         { *m = ValidatingWebhookConfiguration{} }
+func (m *ValidatingWebhookConfiguration) String() string { return proto.CompactTextString(m) }
+func (*ValidatingWebhookConfiguration) ProtoMessage()    {}
 func (*ValidatingWebhookConfiguration) Descriptor() ([]byte, []int) {
 	return fileDescriptor_7f7c65a4f012fb19, []int{7}
 }
@@ -921,11 +950,15 @@ type ValidatingWebhookConfigurationList struct {
 	// +optional
 	Metadata *v1.ListMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// List of ValidatingWebhookConfiguration.
-	Items []*ValidatingWebhookConfiguration `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	Items                []*ValidatingWebhookConfiguration `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                          `json:"-"`
+	XXX_unrecognized     []byte                            `json:"-"`
+	XXX_sizecache        int32                             `json:"-"`
 }
 
-func (m *ValidatingWebhookConfigurationList) Reset()      { *m = ValidatingWebhookConfigurationList{} }
-func (*ValidatingWebhookConfigurationList) ProtoMessage() {}
+func (m *ValidatingWebhookConfigurationList) Reset()         { *m = ValidatingWebhookConfigurationList{} }
+func (m *ValidatingWebhookConfigurationList) String() string { return proto.CompactTextString(m) }
+func (*ValidatingWebhookConfigurationList) ProtoMessage()    {}
 func (*ValidatingWebhookConfigurationList) Descriptor() ([]byte, []int) {
 	return fileDescriptor_7f7c65a4f012fb19, []int{8}
 }
@@ -1000,7 +1033,7 @@ type WebhookClientConfig struct {
 	// allowed, either.
 	//
 	// +optional
-	Url string `protobuf:"bytes,3,opt,name=url" json:"url"`
+	Url *string `protobuf:"bytes,3,opt,name=url" json:"url,omitempty"`
 	// `service` is a reference to the service for this webhook. Either
 	// `service` or `url` must be specified.
 	//
@@ -1011,11 +1044,15 @@ type WebhookClientConfig struct {
 	// `caBundle` is a PEM encoded CA bundle which will be used to validate the webhook's server certificate.
 	// If unspecified, system trust roots on the apiserver are used.
 	// +optional
-	CaBundle []byte `protobuf:"bytes,2,opt,name=caBundle" json:"caBundle"`
+	CaBundle             []byte   `protobuf:"bytes,2,opt,name=caBundle" json:"caBundle,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *WebhookClientConfig) Reset()      { *m = WebhookClientConfig{} }
-func (*WebhookClientConfig) ProtoMessage() {}
+func (m *WebhookClientConfig) Reset()         { *m = WebhookClientConfig{} }
+func (m *WebhookClientConfig) String() string { return proto.CompactTextString(m) }
+func (*WebhookClientConfig) ProtoMessage()    {}
 func (*WebhookClientConfig) Descriptor() ([]byte, []int) {
 	return fileDescriptor_7f7c65a4f012fb19, []int{9}
 }
@@ -1047,8 +1084,8 @@ func (m *WebhookClientConfig) XXX_DiscardUnknown() {
 var xxx_messageInfo_WebhookClientConfig proto.InternalMessageInfo
 
 func (m *WebhookClientConfig) GetUrl() string {
-	if m != nil {
-		return m.Url
+	if m != nil && m.Url != nil {
+		return *m.Url
 	}
 	return ""
 }
@@ -1085,647 +1122,58 @@ func init() {
 }
 
 var fileDescriptor_7f7c65a4f012fb19 = []byte{
-	// 850 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xec, 0x54, 0xbf, 0x6f, 0xe4, 0x44,
-	0x14, 0xde, 0xc9, 0xae, 0xb9, 0xec, 0xdb, 0xe3, 0xe0, 0x06, 0x09, 0xac, 0xe8, 0x64, 0x2c, 0x17,
-	0x68, 0x85, 0x90, 0x4d, 0x42, 0x84, 0xc2, 0xaf, 0x26, 0x27, 0x7e, 0x08, 0xe5, 0x74, 0xc8, 0x81,
-	0x4b, 0x01, 0x42, 0x9a, 0xcc, 0xbe, 0xdd, 0x1d, 0x62, 0x7b, 0xac, 0x99, 0xf1, 0xc2, 0x75, 0x57,
-	0x50, 0x50, 0xf2, 0x4f, 0x20, 0xf1, 0x47, 0xd0, 0x51, 0x70, 0x05, 0x45, 0xca, 0xab, 0x10, 0xd9,
-	0x34, 0x94, 0xf7, 0x27, 0x20, 0xff, 0x88, 0xe3, 0x5d, 0xef, 0x1d, 0xcb, 0x01, 0x05, 0x88, 0xd2,
-	0xdf, 0xf3, 0xfb, 0xe6, 0x7d, 0x6f, 0xbe, 0xf9, 0x60, 0xef, 0x64, 0x4f, 0xfb, 0x42, 0x06, 0x2c,
-	0x15, 0x01, 0x1b, 0xc5, 0x42, 0x6b, 0x21, 0x13, 0x85, 0x13, 0xa1, 0x8d, 0x62, 0x46, 0xc8, 0x24,
-	0x98, 0x6d, 0x1f, 0xa3, 0x61, 0xdb, 0xc1, 0x04, 0x13, 0x54, 0xcc, 0xe0, 0xc8, 0x4f, 0x95, 0x34,
-	0x92, 0x0e, 0xcb, 0x4e, 0x9f, 0xa5, 0xc2, 0x5f, 0xd9, 0xe9, 0x57, 0x9d, 0x5b, 0xbb, 0x97, 0x67,
-	0xc4, 0x8c, 0x4f, 0x45, 0x82, 0xea, 0x6e, 0x90, 0x9e, 0x4c, 0x72, 0x40, 0x07, 0x31, 0x1a, 0x16,
-	0xcc, 0x5a, 0xfc, 0x5b, 0xc1, 0xa3, 0xba, 0x54, 0x96, 0x18, 0x11, 0x63, 0xab, 0xe1, 0xf5, 0x3f,
-	0x6a, 0xd0, 0x7c, 0x8a, 0x31, 0x5b, 0xee, 0xf3, 0x7e, 0xb0, 0xe0, 0x99, 0x5b, 0x99, 0x61, 0x46,
-	0x24, 0x93, 0x23, 0x3c, 0x9e, 0x4a, 0x79, 0x42, 0x6d, 0xe8, 0x25, 0x2c, 0x46, 0x9b, 0xb8, 0x64,
-	0xd8, 0xdf, 0xef, 0xdd, 0xff, 0xe5, 0xc5, 0x4e, 0x58, 0x20, 0x94, 0xc1, 0x55, 0x1e, 0x09, 0x4c,
-	0xcc, 0x4d, 0x99, 0x8c, 0xc5, 0xc4, 0xde, 0x70, 0xc9, 0x70, 0xb0, 0xf3, 0x8e, 0xbf, 0xee, 0x36,
-	0xfc, 0xea, 0x88, 0x9b, 0x0d, 0x92, 0x70, 0x81, 0x92, 0x86, 0x60, 0xa9, 0x2c, 0x42, 0x6d, 0x77,
-	0xdd, 0xee, 0x70, 0xb0, 0xf3, 0xf6, 0xfa, 0xdc, 0x61, 0x16, 0xe1, 0x91, 0x30, 0xd3, 0xdb, 0x29,
-	0x96, 0x15, 0x1d, 0x96, 0x54, 0xf4, 0x65, 0x78, 0x7a, 0xcc, 0x44, 0x94, 0x29, 0xfc, 0x48, 0x46,
-	0x82, 0xdf, 0xb5, 0x7b, 0x0d, 0x65, 0x8b, 0x25, 0xfa, 0x12, 0x0c, 0x62, 0x66, 0xf8, 0xb4, 0xfa,
-	0xb3, 0xdf, 0xf8, 0xb3, 0x59, 0xa0, 0x0c, 0xae, 0xe7, 0x2b, 0xd1, 0x29, 0xe3, 0x78, 0x88, 0x11,
-	0x72, 0x23, 0x95, 0x6d, 0x15, 0xfb, 0x78, 0xad, 0x31, 0x73, 0x7d, 0x19, 0x7e, 0x7a, 0x32, 0xc9,
-	0x01, 0xed, 0xe7, 0x77, 0xee, 0xcf, 0xb6, 0xfd, 0x03, 0x76, 0x8c, 0xd1, 0x45, 0x6b, 0xd8, 0x66,
-	0xa3, 0x9f, 0xc2, 0x35, 0x79, 0xfc, 0x05, 0x72, 0x53, 0xf3, 0x0f, 0x9e, 0x9c, 0x7f, 0x89, 0x2a,
-	0xd7, 0xa9, 0xc5, 0x08, 0xdf, 0x1d, 0x8f, 0x91, 0x1b, 0x6d, 0x3f, 0xd5, 0xd4, 0xd9, 0x28, 0xd0,
-	0x57, 0xe0, 0x5a, 0xee, 0x1f, 0x99, 0x99, 0x43, 0xe4, 0x32, 0x19, 0x69, 0xfb, 0x8a, 0x4b, 0x86,
-	0x56, 0xf5, 0xeb, 0x52, 0x8d, 0xee, 0xc1, 0x0b, 0xf5, 0x25, 0x85, 0x38, 0x13, 0xf8, 0xe5, 0x1d,
-	0x54, 0xf9, 0x87, 0xb6, 0x37, 0xdd, 0xee, 0xb0, 0x1f, 0x3e, 0xaa, 0x4c, 0x77, 0x81, 0x2a, 0x14,
-	0xc9, 0x4c, 0xf2, 0xe2, 0xee, 0xaa, 0xf5, 0x43, 0x63, 0xac, 0x15, 0x75, 0xef, 0x47, 0x02, 0x37,
-	0x96, 0xec, 0x5b, 0xfa, 0x28, 0x2b, 0x2d, 0x40, 0x0f, 0x60, 0x33, 0xdf, 0xc7, 0x88, 0x19, 0x56,
-	0xf8, 0x79, 0xb0, 0xf3, 0xea, 0x7a, 0xdb, 0xbb, 0x5d, 0xac, 0xeb, 0x16, 0x1a, 0x16, 0xd6, 0x0c,
-	0xf4, 0x13, 0xd8, 0xac, 0x4e, 0xd1, 0xf6, 0x46, 0xe1, 0xcf, 0x37, 0xd6, 0xf7, 0xe7, 0xd2, 0x9c,
-	0x61, 0x4d, 0xe5, 0xfd, 0x4c, 0xc0, 0x7d, 0x9c, 0x8a, 0x03, 0xa1, 0x0d, 0xfd, 0xb0, 0xa5, 0xc4,
-	0x5f, 0xd3, 0x07, 0x42, 0x2f, 0xeb, 0xf8, 0x0c, 0x2c, 0x61, 0x30, 0xbe, 0x10, 0xf1, 0xde, 0x13,
-	0x8b, 0x58, 0x18, 0x33, 0x2c, 0x49, 0xbd, 0x7b, 0x04, 0x7a, 0xf9, 0x63, 0xa4, 0x37, 0xa0, 0xcf,
-	0x52, 0xf1, 0xbe, 0x92, 0x59, 0xaa, 0x6d, 0x52, 0xdc, 0xff, 0x25, 0x40, 0x5d, 0x18, 0xb0, 0x54,
-	0xd4, 0xfe, 0xd8, 0x28, 0xea, 0x4d, 0x28, 0xef, 0x57, 0xa8, 0x65, 0xa6, 0x78, 0x95, 0x07, 0xfd,
-	0xf0, 0x12, 0xa0, 0x5b, 0x60, 0x69, 0x2e, 0x53, 0x5c, 0x78, 0xcd, 0x25, 0xe4, 0x7d, 0x05, 0xb4,
-	0x1d, 0x07, 0xd4, 0x01, 0x90, 0xf5, 0x57, 0x35, 0x50, 0x03, 0xa1, 0xfb, 0xd0, 0xcb, 0x03, 0xa3,
-	0x8a, 0x35, 0xff, 0xcf, 0x45, 0x4f, 0x58, 0xf4, 0x7a, 0x5f, 0x13, 0x78, 0xf6, 0x10, 0xd5, 0x4c,
-	0x70, 0x0c, 0x71, 0x8c, 0x0a, 0x13, 0x8e, 0xd4, 0x83, 0x7e, 0xfd, 0xbc, 0x17, 0x62, 0xf5, 0x12,
-	0xae, 0x53, 0x77, 0xa3, 0x95, 0xba, 0x36, 0xf4, 0x52, 0x66, 0xa6, 0x76, 0xb7, 0x59, 0xc9, 0x91,
-	0xa2, 0x22, 0x95, 0x29, 0x36, 0x60, 0xd5, 0x15, 0xa9, 0x8c, 0xf7, 0x8d, 0x05, 0xd7, 0xef, 0xb0,
-	0x48, 0x8c, 0xfe, 0x4f, 0xf6, 0x7f, 0x45, 0xb2, 0xc3, 0x7f, 0x36, 0xd9, 0xbd, 0x9f, 0x08, 0x38,
-	0x2d, 0x2b, 0xfe, 0x93, 0x29, 0x7d, 0xd4, 0x4a, 0xe9, 0xb7, 0xd6, 0xf7, 0x5a, 0x6b, 0xd2, 0x46,
-	0x4e, 0x9f, 0x12, 0xf0, 0x1e, 0xaf, 0xe4, 0x6f, 0x4f, 0xea, 0xcf, 0x17, 0x93, 0xfa, 0x83, 0xbf,
-	0x20, 0x64, 0x65, 0x56, 0x7f, 0x47, 0xe0, 0xb9, 0x15, 0x4f, 0x97, 0x3e, 0x0f, 0xdd, 0x4c, 0x45,
-	0x0b, 0x91, 0x93, 0x03, 0xf4, 0x63, 0xb8, 0xa2, 0xcb, 0x74, 0xab, 0xa4, 0xbd, 0xb9, 0xfe, 0x44,
-	0xcb, 0xb1, 0x18, 0x5e, 0x50, 0x51, 0x17, 0x36, 0x39, 0xdb, 0xcf, 0x92, 0x51, 0x15, 0xbe, 0x57,
-	0xab, 0x23, 0x6b, 0x74, 0x7f, 0xf7, 0xf4, 0xcc, 0xe9, 0x3c, 0x38, 0x73, 0x3a, 0x0f, 0xcf, 0x1c,
-	0x72, 0x6f, 0xee, 0x90, 0xef, 0xe7, 0x0e, 0xb9, 0x3f, 0x77, 0xc8, 0xe9, 0xdc, 0x21, 0xbf, 0xce,
-	0x1d, 0xf2, 0xdb, 0xdc, 0xe9, 0x3c, 0x9c, 0x3b, 0xe4, 0xdb, 0x73, 0xa7, 0x73, 0x7a, 0xee, 0x74,
-	0x1e, 0x9c, 0x3b, 0x9d, 0xdf, 0x03, 0x00, 0x00, 0xff, 0xff, 0xe9, 0x10, 0xf3, 0x7e, 0xe1, 0x0b,
-	0x00, 0x00,
+	// 782 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xec, 0x54, 0xcb, 0x6e, 0xf3, 0x44,
+	0x14, 0x96, 0x73, 0xe1, 0x4f, 0x4e, 0xca, 0xcf, 0xdf, 0x01, 0x09, 0xab, 0xaa, 0xa2, 0xc8, 0x42,
+	0x28, 0x2b, 0x9b, 0x16, 0x84, 0xca, 0x6d, 0xd3, 0x8a, 0x8b, 0x50, 0xab, 0xa2, 0x29, 0xb4, 0x0b,
+	0x10, 0xd2, 0x64, 0x72, 0x92, 0x0c, 0xb1, 0x3d, 0xd6, 0xcc, 0x38, 0x50, 0x9e, 0x04, 0x9e, 0x87,
+	0x05, 0x2c, 0x58, 0xf4, 0x11, 0x50, 0x97, 0x3c, 0x05, 0xf2, 0xd8, 0x75, 0x9c, 0x38, 0x2d, 0xa1,
+	0x80, 0x84, 0xd0, 0xbf, 0x9b, 0xf9, 0xc6, 0xe7, 0xf3, 0xf9, 0xce, 0xe5, 0x83, 0xa3, 0xf9, 0x91,
+	0xf6, 0x85, 0x0c, 0x58, 0x22, 0x02, 0x36, 0x8e, 0x84, 0xd6, 0x42, 0xc6, 0x0a, 0xa7, 0x42, 0x1b,
+	0xc5, 0x8c, 0x90, 0x71, 0xb0, 0x38, 0x18, 0xa1, 0x61, 0x07, 0xc1, 0x14, 0x63, 0x54, 0xcc, 0xe0,
+	0xd8, 0x4f, 0x94, 0x34, 0x92, 0x0c, 0xf3, 0x48, 0x9f, 0x25, 0xc2, 0xdf, 0x18, 0xe9, 0x17, 0x91,
+	0x7b, 0x6f, 0x2d, 0xff, 0x11, 0x31, 0x3e, 0x13, 0x31, 0xaa, 0xeb, 0x20, 0x99, 0x4f, 0x33, 0x40,
+	0x07, 0x11, 0x1a, 0x16, 0x2c, 0x6a, 0xfc, 0x7b, 0xc1, 0x7d, 0x51, 0x2a, 0x8d, 0x8d, 0x88, 0xb0,
+	0x16, 0xf0, 0xf6, 0x9f, 0x05, 0x68, 0x3e, 0xc3, 0x88, 0xad, 0xc7, 0x79, 0x3f, 0xb4, 0xe1, 0xa5,
+	0xb3, 0xd4, 0x30, 0x23, 0xe2, 0xe9, 0x15, 0x8e, 0x66, 0x52, 0xce, 0x09, 0x81, 0x56, 0xcc, 0x22,
+	0x74, 0x9d, 0x81, 0x33, 0xec, 0x52, 0x7b, 0x26, 0x0c, 0x76, 0x78, 0x28, 0x30, 0x36, 0x27, 0x32,
+	0x9e, 0x88, 0xa9, 0xdb, 0x18, 0x38, 0xc3, 0xde, 0xe1, 0x07, 0xfe, 0xb6, 0x75, 0xf0, 0x0b, 0xf2,
+	0x93, 0x0a, 0x09, 0x5d, 0xa1, 0x24, 0x14, 0xda, 0x2a, 0x0d, 0x51, 0xbb, 0xcd, 0x41, 0x73, 0xd8,
+	0x3b, 0x7c, 0x7f, 0x7b, 0x6e, 0x9a, 0x86, 0x78, 0x25, 0xcc, 0xec, 0x3c, 0xc1, 0xfc, 0x45, 0xd3,
+	0x9c, 0x8a, 0xbc, 0x06, 0x2f, 0x4e, 0x98, 0x08, 0x53, 0x85, 0x9f, 0xc9, 0x50, 0xf0, 0x6b, 0xb7,
+	0x65, 0x35, 0xad, 0x82, 0x64, 0x00, 0xbd, 0x88, 0x19, 0x3e, 0x2b, 0xbe, 0xe9, 0xda, 0x6f, 0xaa,
+	0x10, 0x61, 0xb0, 0x9b, 0x95, 0x41, 0x27, 0x8c, 0xe3, 0x05, 0x86, 0xc8, 0x8d, 0x54, 0x6e, 0xdb,
+	0xd6, 0xe0, 0xcd, 0x4a, 0x9e, 0x65, 0xe9, 0xfd, 0x64, 0x3e, 0xcd, 0x00, 0xed, 0x67, 0x1d, 0xf6,
+	0x17, 0x07, 0xfe, 0x29, 0x1b, 0x61, 0x78, 0x17, 0x4a, 0xeb, 0x6c, 0xe4, 0x4b, 0x78, 0x2a, 0x47,
+	0xdf, 0x20, 0x37, 0x25, 0x7f, 0xef, 0xf1, 0xfc, 0x6b, 0x54, 0x99, 0x42, 0x2d, 0xc6, 0xf8, 0xe1,
+	0x64, 0x82, 0xdc, 0x68, 0xf7, 0x85, 0x5c, 0x61, 0x05, 0x22, 0xaf, 0xc3, 0xd3, 0x6c, 0x4e, 0x64,
+	0x6a, 0x2e, 0x90, 0xcb, 0x78, 0xac, 0xdd, 0x27, 0x03, 0x67, 0xd8, 0xa6, 0x6b, 0x28, 0x39, 0x82,
+	0x57, 0xcb, 0x66, 0x50, 0x5c, 0x08, 0xfc, 0xf6, 0x12, 0x55, 0x76, 0xd1, 0x6e, 0x67, 0xd0, 0x1c,
+	0x76, 0xe9, 0x7d, 0xcf, 0xc4, 0x07, 0xa2, 0x50, 0xc4, 0x0b, 0xc9, 0x6d, 0x8f, 0x8a, 0x62, 0x83,
+	0x4d, 0x65, 0xc3, 0x8b, 0xf7, 0x93, 0x03, 0xfb, 0x6b, 0xa3, 0x99, 0x4f, 0x4a, 0x9a, 0x37, 0x99,
+	0x9c, 0x42, 0x27, 0x53, 0x3f, 0x66, 0x86, 0xd9, 0x59, 0xed, 0x1d, 0xbe, 0xb1, 0x5d, 0xad, 0xce,
+	0x6d, 0x71, 0xce, 0xd0, 0x30, 0x5a, 0x32, 0x90, 0x2f, 0xa0, 0x53, 0xfc, 0x45, 0xbb, 0x0d, 0x3b,
+	0x81, 0xef, 0x6c, 0x3f, 0x81, 0x6b, 0x79, 0xd2, 0x92, 0xca, 0xfb, 0xd5, 0x81, 0xc1, 0x43, 0x2a,
+	0x4e, 0x85, 0x36, 0xe4, 0xd3, 0x9a, 0x12, 0x7f, 0xcb, 0xae, 0x0b, 0xbd, 0xae, 0xe3, 0x2b, 0x68,
+	0x0b, 0x83, 0xd1, 0x9d, 0x88, 0x8f, 0x1e, 0x2d, 0x62, 0x25, 0x4d, 0x9a, 0x93, 0x7a, 0xdf, 0x43,
+	0x2b, 0xdb, 0x36, 0xb2, 0x0f, 0x5d, 0x96, 0x88, 0x8f, 0x95, 0x4c, 0x13, 0xed, 0x3a, 0xb6, 0xf1,
+	0x4b, 0x20, 0x1b, 0x37, 0x96, 0x88, 0x72, 0x30, 0x1a, 0xf6, 0xbd, 0x0a, 0x65, 0xf1, 0x0a, 0xb5,
+	0x4c, 0x15, 0x2f, 0x16, 0xbe, 0x4b, 0x97, 0x00, 0x79, 0x05, 0xda, 0x9a, 0xcb, 0x04, 0x8b, 0x75,
+	0xcd, 0x2f, 0xde, 0x77, 0x40, 0xea, 0x9b, 0x4e, 0xfa, 0x00, 0xb2, 0xbc, 0x15, 0xa9, 0x54, 0x10,
+	0x72, 0x0c, 0xad, 0xcc, 0x0b, 0x0a, 0xc7, 0xf2, 0xff, 0x9a, 0xab, 0x50, 0x1b, 0xeb, 0x85, 0xf0,
+	0xec, 0x02, 0xd5, 0x42, 0x70, 0xa4, 0x38, 0x41, 0x85, 0x31, 0xb7, 0x15, 0x28, 0x97, 0xb8, 0xb0,
+	0xca, 0x25, 0x50, 0x7a, 0x68, 0xa3, 0xe2, 0xa1, 0x04, 0x5a, 0x09, 0x33, 0x33, 0xb7, 0x99, 0x63,
+	0xd9, 0xd9, 0x62, 0x52, 0x19, 0x2b, 0xb4, 0x4d, 0xed, 0xd9, 0xfb, 0xbd, 0x05, 0xbb, 0x97, 0x2c,
+	0x14, 0xe3, 0xe7, 0xae, 0xfc, 0x1f, 0x74, 0x65, 0xf8, 0x5f, 0xb9, 0xb2, 0xf7, 0xb3, 0x03, 0xfd,
+	0xda, 0xb0, 0xfd, 0x9b, 0x3e, 0x7b, 0x55, 0xf3, 0xd9, 0xf7, 0xb6, 0x9f, 0xa9, 0x5a, 0xa6, 0x15,
+	0xa7, 0xbd, 0x71, 0xc0, 0x7b, 0x58, 0xc9, 0x3f, 0xee, 0xb5, 0x5f, 0xaf, 0x7a, 0xed, 0x27, 0x7f,
+	0x43, 0xc8, 0x46, 0xb7, 0xfd, 0xd1, 0x81, 0x97, 0x37, 0xac, 0x28, 0x79, 0x06, 0xcd, 0x54, 0x85,
+	0x85, 0x91, 0x64, 0x47, 0xf2, 0x39, 0x3c, 0xd1, 0xb9, 0x43, 0x15, 0xa2, 0xde, 0xdd, 0x3e, 0x97,
+	0x75, 0x6b, 0xa3, 0x77, 0x54, 0x64, 0x0f, 0x3a, 0x9c, 0x1d, 0xa7, 0xf1, 0xb8, 0xf0, 0xcf, 0x1d,
+	0x5a, 0xde, 0x8f, 0x77, 0x7e, 0xb9, 0xed, 0x3b, 0x37, 0xb7, 0x7d, 0xe7, 0xb7, 0xdb, 0xbe, 0xf3,
+	0x47, 0x00, 0x00, 0x00, 0xff, 0xff, 0x9b, 0x19, 0x37, 0x3e, 0x4b, 0x0b, 0x00, 0x00,
 }
 
-func (this *MutatingWebhook) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*MutatingWebhook)
-	if !ok {
-		that2, ok := that.(MutatingWebhook)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Name != that1.Name {
-		return false
-	}
-	if !this.ClientConfig.Equal(that1.ClientConfig) {
-		return false
-	}
-	if len(this.Rules) != len(that1.Rules) {
-		return false
-	}
-	for i := range this.Rules {
-		if !this.Rules[i].Equal(that1.Rules[i]) {
-			return false
-		}
-	}
-	if this.FailurePolicy != that1.FailurePolicy {
-		return false
-	}
-	if this.MatchPolicy != that1.MatchPolicy {
-		return false
-	}
-	if !this.NamespaceSelector.Equal(that1.NamespaceSelector) {
-		return false
-	}
-	if !this.ObjectSelector.Equal(that1.ObjectSelector) {
-		return false
-	}
-	if this.SideEffects != that1.SideEffects {
-		return false
-	}
-	if this.TimeoutSeconds != that1.TimeoutSeconds {
-		return false
-	}
-	if len(this.AdmissionReviewVersions) != len(that1.AdmissionReviewVersions) {
-		return false
-	}
-	for i := range this.AdmissionReviewVersions {
-		if this.AdmissionReviewVersions[i] != that1.AdmissionReviewVersions[i] {
-			return false
-		}
-	}
-	if this.ReinvocationPolicy != that1.ReinvocationPolicy {
-		return false
-	}
-	return true
-}
-func (this *MutatingWebhookConfiguration) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*MutatingWebhookConfiguration)
-	if !ok {
-		that2, ok := that.(MutatingWebhookConfiguration)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if len(this.Webhooks) != len(that1.Webhooks) {
-		return false
-	}
-	for i := range this.Webhooks {
-		if !this.Webhooks[i].Equal(that1.Webhooks[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *MutatingWebhookConfigurationList) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*MutatingWebhookConfigurationList)
-	if !ok {
-		that2, ok := that.(MutatingWebhookConfigurationList)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if len(this.Items) != len(that1.Items) {
-		return false
-	}
-	for i := range this.Items {
-		if !this.Items[i].Equal(that1.Items[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *Rule) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*Rule)
-	if !ok {
-		that2, ok := that.(Rule)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if len(this.ApiGroups) != len(that1.ApiGroups) {
-		return false
-	}
-	for i := range this.ApiGroups {
-		if this.ApiGroups[i] != that1.ApiGroups[i] {
-			return false
-		}
-	}
-	if len(this.ApiVersions) != len(that1.ApiVersions) {
-		return false
-	}
-	for i := range this.ApiVersions {
-		if this.ApiVersions[i] != that1.ApiVersions[i] {
-			return false
-		}
-	}
-	if len(this.Resources) != len(that1.Resources) {
-		return false
-	}
-	for i := range this.Resources {
-		if this.Resources[i] != that1.Resources[i] {
-			return false
-		}
-	}
-	if this.Scope != that1.Scope {
-		return false
-	}
-	return true
-}
-func (this *RuleWithOperations) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*RuleWithOperations)
-	if !ok {
-		that2, ok := that.(RuleWithOperations)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if len(this.Operations) != len(that1.Operations) {
-		return false
-	}
-	for i := range this.Operations {
-		if this.Operations[i] != that1.Operations[i] {
-			return false
-		}
-	}
-	if !this.Rule.Equal(that1.Rule) {
-		return false
-	}
-	return true
-}
-func (this *ServiceReference) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*ServiceReference)
-	if !ok {
-		that2, ok := that.(ServiceReference)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Namespace != that1.Namespace {
-		return false
-	}
-	if this.Name != that1.Name {
-		return false
-	}
-	if this.Path != that1.Path {
-		return false
-	}
-	if this.Port != that1.Port {
-		return false
-	}
-	return true
-}
-func (this *ValidatingWebhook) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*ValidatingWebhook)
-	if !ok {
-		that2, ok := that.(ValidatingWebhook)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Name != that1.Name {
-		return false
-	}
-	if !this.ClientConfig.Equal(that1.ClientConfig) {
-		return false
-	}
-	if len(this.Rules) != len(that1.Rules) {
-		return false
-	}
-	for i := range this.Rules {
-		if !this.Rules[i].Equal(that1.Rules[i]) {
-			return false
-		}
-	}
-	if this.FailurePolicy != that1.FailurePolicy {
-		return false
-	}
-	if this.MatchPolicy != that1.MatchPolicy {
-		return false
-	}
-	if !this.NamespaceSelector.Equal(that1.NamespaceSelector) {
-		return false
-	}
-	if !this.ObjectSelector.Equal(that1.ObjectSelector) {
-		return false
-	}
-	if this.SideEffects != that1.SideEffects {
-		return false
-	}
-	if this.TimeoutSeconds != that1.TimeoutSeconds {
-		return false
-	}
-	if len(this.AdmissionReviewVersions) != len(that1.AdmissionReviewVersions) {
-		return false
-	}
-	for i := range this.AdmissionReviewVersions {
-		if this.AdmissionReviewVersions[i] != that1.AdmissionReviewVersions[i] {
-			return false
-		}
-	}
-	return true
-}
-func (this *ValidatingWebhookConfiguration) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*ValidatingWebhookConfiguration)
-	if !ok {
-		that2, ok := that.(ValidatingWebhookConfiguration)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if len(this.Webhooks) != len(that1.Webhooks) {
-		return false
-	}
-	for i := range this.Webhooks {
-		if !this.Webhooks[i].Equal(that1.Webhooks[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *ValidatingWebhookConfigurationList) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*ValidatingWebhookConfigurationList)
-	if !ok {
-		that2, ok := that.(ValidatingWebhookConfigurationList)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if len(this.Items) != len(that1.Items) {
-		return false
-	}
-	for i := range this.Items {
-		if !this.Items[i].Equal(that1.Items[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *WebhookClientConfig) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*WebhookClientConfig)
-	if !ok {
-		that2, ok := that.(WebhookClientConfig)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Url != that1.Url {
-		return false
-	}
-	if !this.Service.Equal(that1.Service) {
-		return false
-	}
-	if !bytes.Equal(this.CaBundle, that1.CaBundle) {
-		return false
-	}
-	return true
-}
-func (this *MutatingWebhook) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 15)
-	s = append(s, "&k8s_io_api_admissionregistration_v1beta1.MutatingWebhook{")
-	s = append(s, "Name: "+fmt.Sprintf("%#v", this.Name)+",\n")
-	if this.ClientConfig != nil {
-		s = append(s, "ClientConfig: "+fmt.Sprintf("%#v", this.ClientConfig)+",\n")
-	}
-	if this.Rules != nil {
-		s = append(s, "Rules: "+fmt.Sprintf("%#v", this.Rules)+",\n")
-	}
-	s = append(s, "FailurePolicy: "+fmt.Sprintf("%#v", this.FailurePolicy)+",\n")
-	s = append(s, "MatchPolicy: "+fmt.Sprintf("%#v", this.MatchPolicy)+",\n")
-	if this.NamespaceSelector != nil {
-		s = append(s, "NamespaceSelector: "+fmt.Sprintf("%#v", this.NamespaceSelector)+",\n")
-	}
-	if this.ObjectSelector != nil {
-		s = append(s, "ObjectSelector: "+fmt.Sprintf("%#v", this.ObjectSelector)+",\n")
-	}
-	s = append(s, "SideEffects: "+fmt.Sprintf("%#v", this.SideEffects)+",\n")
-	s = append(s, "TimeoutSeconds: "+fmt.Sprintf("%#v", this.TimeoutSeconds)+",\n")
-	if this.AdmissionReviewVersions != nil {
-		s = append(s, "AdmissionReviewVersions: "+fmt.Sprintf("%#v", this.AdmissionReviewVersions)+",\n")
-	}
-	s = append(s, "ReinvocationPolicy: "+fmt.Sprintf("%#v", this.ReinvocationPolicy)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *MutatingWebhookConfiguration) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_admissionregistration_v1beta1.MutatingWebhookConfiguration{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Webhooks != nil {
-		s = append(s, "Webhooks: "+fmt.Sprintf("%#v", this.Webhooks)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *MutatingWebhookConfigurationList) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_admissionregistration_v1beta1.MutatingWebhookConfigurationList{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Items != nil {
-		s = append(s, "Items: "+fmt.Sprintf("%#v", this.Items)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *Rule) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 8)
-	s = append(s, "&k8s_io_api_admissionregistration_v1beta1.Rule{")
-	if this.ApiGroups != nil {
-		s = append(s, "ApiGroups: "+fmt.Sprintf("%#v", this.ApiGroups)+",\n")
-	}
-	if this.ApiVersions != nil {
-		s = append(s, "ApiVersions: "+fmt.Sprintf("%#v", this.ApiVersions)+",\n")
-	}
-	if this.Resources != nil {
-		s = append(s, "Resources: "+fmt.Sprintf("%#v", this.Resources)+",\n")
-	}
-	s = append(s, "Scope: "+fmt.Sprintf("%#v", this.Scope)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *RuleWithOperations) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_admissionregistration_v1beta1.RuleWithOperations{")
-	if this.Operations != nil {
-		s = append(s, "Operations: "+fmt.Sprintf("%#v", this.Operations)+",\n")
-	}
-	if this.Rule != nil {
-		s = append(s, "Rule: "+fmt.Sprintf("%#v", this.Rule)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *ServiceReference) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 8)
-	s = append(s, "&k8s_io_api_admissionregistration_v1beta1.ServiceReference{")
-	s = append(s, "Namespace: "+fmt.Sprintf("%#v", this.Namespace)+",\n")
-	s = append(s, "Name: "+fmt.Sprintf("%#v", this.Name)+",\n")
-	s = append(s, "Path: "+fmt.Sprintf("%#v", this.Path)+",\n")
-	s = append(s, "Port: "+fmt.Sprintf("%#v", this.Port)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *ValidatingWebhook) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 14)
-	s = append(s, "&k8s_io_api_admissionregistration_v1beta1.ValidatingWebhook{")
-	s = append(s, "Name: "+fmt.Sprintf("%#v", this.Name)+",\n")
-	if this.ClientConfig != nil {
-		s = append(s, "ClientConfig: "+fmt.Sprintf("%#v", this.ClientConfig)+",\n")
-	}
-	if this.Rules != nil {
-		s = append(s, "Rules: "+fmt.Sprintf("%#v", this.Rules)+",\n")
-	}
-	s = append(s, "FailurePolicy: "+fmt.Sprintf("%#v", this.FailurePolicy)+",\n")
-	s = append(s, "MatchPolicy: "+fmt.Sprintf("%#v", this.MatchPolicy)+",\n")
-	if this.NamespaceSelector != nil {
-		s = append(s, "NamespaceSelector: "+fmt.Sprintf("%#v", this.NamespaceSelector)+",\n")
-	}
-	if this.ObjectSelector != nil {
-		s = append(s, "ObjectSelector: "+fmt.Sprintf("%#v", this.ObjectSelector)+",\n")
-	}
-	s = append(s, "SideEffects: "+fmt.Sprintf("%#v", this.SideEffects)+",\n")
-	s = append(s, "TimeoutSeconds: "+fmt.Sprintf("%#v", this.TimeoutSeconds)+",\n")
-	if this.AdmissionReviewVersions != nil {
-		s = append(s, "AdmissionReviewVersions: "+fmt.Sprintf("%#v", this.AdmissionReviewVersions)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *ValidatingWebhookConfiguration) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_admissionregistration_v1beta1.ValidatingWebhookConfiguration{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Webhooks != nil {
-		s = append(s, "Webhooks: "+fmt.Sprintf("%#v", this.Webhooks)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *ValidatingWebhookConfigurationList) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_admissionregistration_v1beta1.ValidatingWebhookConfigurationList{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Items != nil {
-		s = append(s, "Items: "+fmt.Sprintf("%#v", this.Items)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *WebhookClientConfig) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 7)
-	s = append(s, "&k8s_io_api_admissionregistration_v1beta1.WebhookClientConfig{")
-	s = append(s, "Url: "+fmt.Sprintf("%#v", this.Url)+",\n")
-	if this.Service != nil {
-		s = append(s, "Service: "+fmt.Sprintf("%#v", this.Service)+",\n")
-	}
-	s = append(s, "CaBundle: "+fmt.Sprintf("%#v", this.CaBundle)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func valueToGoStringGenerated(v interface{}, typ string) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("func(v %v) *%v { return &v } ( %#v )", typ, typ, pv)
-}
 func (m *MutatingWebhook) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -1746,6 +1194,10 @@ func (m *MutatingWebhook) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.ObjectSelector != nil {
 		{
 			size, err := m.ObjectSelector.MarshalToSizedBuffer(dAtA[:i])
@@ -1758,16 +1210,20 @@ func (m *MutatingWebhook) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x5a
 	}
-	i -= len(m.ReinvocationPolicy)
-	copy(dAtA[i:], m.ReinvocationPolicy)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.ReinvocationPolicy)))
-	i--
-	dAtA[i] = 0x52
-	i -= len(m.MatchPolicy)
-	copy(dAtA[i:], m.MatchPolicy)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.MatchPolicy)))
-	i--
-	dAtA[i] = 0x4a
+	if m.ReinvocationPolicy != nil {
+		i -= len(*m.ReinvocationPolicy)
+		copy(dAtA[i:], *m.ReinvocationPolicy)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.ReinvocationPolicy)))
+		i--
+		dAtA[i] = 0x52
+	}
+	if m.MatchPolicy != nil {
+		i -= len(*m.MatchPolicy)
+		copy(dAtA[i:], *m.MatchPolicy)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.MatchPolicy)))
+		i--
+		dAtA[i] = 0x4a
+	}
 	if len(m.AdmissionReviewVersions) > 0 {
 		for iNdEx := len(m.AdmissionReviewVersions) - 1; iNdEx >= 0; iNdEx-- {
 			i -= len(m.AdmissionReviewVersions[iNdEx])
@@ -1777,14 +1233,18 @@ func (m *MutatingWebhook) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			dAtA[i] = 0x42
 		}
 	}
-	i = encodeVarintGenerated(dAtA, i, uint64(m.TimeoutSeconds))
-	i--
-	dAtA[i] = 0x38
-	i -= len(m.SideEffects)
-	copy(dAtA[i:], m.SideEffects)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.SideEffects)))
-	i--
-	dAtA[i] = 0x32
+	if m.TimeoutSeconds != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.TimeoutSeconds))
+		i--
+		dAtA[i] = 0x38
+	}
+	if m.SideEffects != nil {
+		i -= len(*m.SideEffects)
+		copy(dAtA[i:], *m.SideEffects)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.SideEffects)))
+		i--
+		dAtA[i] = 0x32
+	}
 	if m.NamespaceSelector != nil {
 		{
 			size, err := m.NamespaceSelector.MarshalToSizedBuffer(dAtA[:i])
@@ -1797,11 +1257,13 @@ func (m *MutatingWebhook) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x2a
 	}
-	i -= len(m.FailurePolicy)
-	copy(dAtA[i:], m.FailurePolicy)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.FailurePolicy)))
-	i--
-	dAtA[i] = 0x22
+	if m.FailurePolicy != nil {
+		i -= len(*m.FailurePolicy)
+		copy(dAtA[i:], *m.FailurePolicy)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.FailurePolicy)))
+		i--
+		dAtA[i] = 0x22
+	}
 	if len(m.Rules) > 0 {
 		for iNdEx := len(m.Rules) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -1828,11 +1290,13 @@ func (m *MutatingWebhook) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x12
 	}
-	i -= len(m.Name)
-	copy(dAtA[i:], m.Name)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Name)))
-	i--
-	dAtA[i] = 0xa
+	if m.Name != nil {
+		i -= len(*m.Name)
+		copy(dAtA[i:], *m.Name)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Name)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -1856,6 +1320,10 @@ func (m *MutatingWebhookConfiguration) MarshalToSizedBuffer(dAtA []byte) (int, e
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Webhooks) > 0 {
 		for iNdEx := len(m.Webhooks) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -1905,6 +1373,10 @@ func (m *MutatingWebhookConfigurationList) MarshalToSizedBuffer(dAtA []byte) (in
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Items) > 0 {
 		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -1954,11 +1426,17 @@ func (m *Rule) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	i -= len(m.Scope)
-	copy(dAtA[i:], m.Scope)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Scope)))
-	i--
-	dAtA[i] = 0x22
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Scope != nil {
+		i -= len(*m.Scope)
+		copy(dAtA[i:], *m.Scope)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Scope)))
+		i--
+		dAtA[i] = 0x22
+	}
 	if len(m.Resources) > 0 {
 		for iNdEx := len(m.Resources) - 1; iNdEx >= 0; iNdEx-- {
 			i -= len(m.Resources[iNdEx])
@@ -2009,6 +1487,10 @@ func (m *RuleWithOperations) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Rule != nil {
 		{
 			size, err := m.Rule.MarshalToSizedBuffer(dAtA[:i])
@@ -2053,24 +1535,36 @@ func (m *ServiceReference) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	i = encodeVarintGenerated(dAtA, i, uint64(m.Port))
-	i--
-	dAtA[i] = 0x20
-	i -= len(m.Path)
-	copy(dAtA[i:], m.Path)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Path)))
-	i--
-	dAtA[i] = 0x1a
-	i -= len(m.Name)
-	copy(dAtA[i:], m.Name)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Name)))
-	i--
-	dAtA[i] = 0x12
-	i -= len(m.Namespace)
-	copy(dAtA[i:], m.Namespace)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Namespace)))
-	i--
-	dAtA[i] = 0xa
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Port != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.Port))
+		i--
+		dAtA[i] = 0x20
+	}
+	if m.Path != nil {
+		i -= len(*m.Path)
+		copy(dAtA[i:], *m.Path)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Path)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if m.Name != nil {
+		i -= len(*m.Name)
+		copy(dAtA[i:], *m.Name)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Name)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Namespace != nil {
+		i -= len(*m.Namespace)
+		copy(dAtA[i:], *m.Namespace)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Namespace)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -2094,6 +1588,10 @@ func (m *ValidatingWebhook) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.ObjectSelector != nil {
 		{
 			size, err := m.ObjectSelector.MarshalToSizedBuffer(dAtA[:i])
@@ -2106,11 +1604,13 @@ func (m *ValidatingWebhook) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x52
 	}
-	i -= len(m.MatchPolicy)
-	copy(dAtA[i:], m.MatchPolicy)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.MatchPolicy)))
-	i--
-	dAtA[i] = 0x4a
+	if m.MatchPolicy != nil {
+		i -= len(*m.MatchPolicy)
+		copy(dAtA[i:], *m.MatchPolicy)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.MatchPolicy)))
+		i--
+		dAtA[i] = 0x4a
+	}
 	if len(m.AdmissionReviewVersions) > 0 {
 		for iNdEx := len(m.AdmissionReviewVersions) - 1; iNdEx >= 0; iNdEx-- {
 			i -= len(m.AdmissionReviewVersions[iNdEx])
@@ -2120,14 +1620,18 @@ func (m *ValidatingWebhook) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			dAtA[i] = 0x42
 		}
 	}
-	i = encodeVarintGenerated(dAtA, i, uint64(m.TimeoutSeconds))
-	i--
-	dAtA[i] = 0x38
-	i -= len(m.SideEffects)
-	copy(dAtA[i:], m.SideEffects)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.SideEffects)))
-	i--
-	dAtA[i] = 0x32
+	if m.TimeoutSeconds != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.TimeoutSeconds))
+		i--
+		dAtA[i] = 0x38
+	}
+	if m.SideEffects != nil {
+		i -= len(*m.SideEffects)
+		copy(dAtA[i:], *m.SideEffects)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.SideEffects)))
+		i--
+		dAtA[i] = 0x32
+	}
 	if m.NamespaceSelector != nil {
 		{
 			size, err := m.NamespaceSelector.MarshalToSizedBuffer(dAtA[:i])
@@ -2140,11 +1644,13 @@ func (m *ValidatingWebhook) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x2a
 	}
-	i -= len(m.FailurePolicy)
-	copy(dAtA[i:], m.FailurePolicy)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.FailurePolicy)))
-	i--
-	dAtA[i] = 0x22
+	if m.FailurePolicy != nil {
+		i -= len(*m.FailurePolicy)
+		copy(dAtA[i:], *m.FailurePolicy)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.FailurePolicy)))
+		i--
+		dAtA[i] = 0x22
+	}
 	if len(m.Rules) > 0 {
 		for iNdEx := len(m.Rules) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -2171,11 +1677,13 @@ func (m *ValidatingWebhook) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x12
 	}
-	i -= len(m.Name)
-	copy(dAtA[i:], m.Name)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Name)))
-	i--
-	dAtA[i] = 0xa
+	if m.Name != nil {
+		i -= len(*m.Name)
+		copy(dAtA[i:], *m.Name)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Name)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -2199,6 +1707,10 @@ func (m *ValidatingWebhookConfiguration) MarshalToSizedBuffer(dAtA []byte) (int,
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Webhooks) > 0 {
 		for iNdEx := len(m.Webhooks) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -2248,6 +1760,10 @@ func (m *ValidatingWebhookConfigurationList) MarshalToSizedBuffer(dAtA []byte) (
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Items) > 0 {
 		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -2297,11 +1813,17 @@ func (m *WebhookClientConfig) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	i -= len(m.Url)
-	copy(dAtA[i:], m.Url)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Url)))
-	i--
-	dAtA[i] = 0x1a
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Url != nil {
+		i -= len(*m.Url)
+		copy(dAtA[i:], *m.Url)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Url)))
+		i--
+		dAtA[i] = 0x1a
+	}
 	if m.CaBundle != nil {
 		i -= len(m.CaBundle)
 		copy(dAtA[i:], m.CaBundle)
@@ -2341,8 +1863,10 @@ func (m *MutatingWebhook) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Name)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.Name != nil {
+		l = len(*m.Name)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if m.ClientConfig != nil {
 		l = m.ClientConfig.Size()
 		n += 1 + l + sovGenerated(uint64(l))
@@ -2353,28 +1877,41 @@ func (m *MutatingWebhook) Size() (n int) {
 			n += 1 + l + sovGenerated(uint64(l))
 		}
 	}
-	l = len(m.FailurePolicy)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.FailurePolicy != nil {
+		l = len(*m.FailurePolicy)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if m.NamespaceSelector != nil {
 		l = m.NamespaceSelector.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
-	l = len(m.SideEffects)
-	n += 1 + l + sovGenerated(uint64(l))
-	n += 1 + sovGenerated(uint64(m.TimeoutSeconds))
+	if m.SideEffects != nil {
+		l = len(*m.SideEffects)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.TimeoutSeconds != nil {
+		n += 1 + sovGenerated(uint64(*m.TimeoutSeconds))
+	}
 	if len(m.AdmissionReviewVersions) > 0 {
 		for _, s := range m.AdmissionReviewVersions {
 			l = len(s)
 			n += 1 + l + sovGenerated(uint64(l))
 		}
 	}
-	l = len(m.MatchPolicy)
-	n += 1 + l + sovGenerated(uint64(l))
-	l = len(m.ReinvocationPolicy)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.MatchPolicy != nil {
+		l = len(*m.MatchPolicy)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.ReinvocationPolicy != nil {
+		l = len(*m.ReinvocationPolicy)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if m.ObjectSelector != nil {
 		l = m.ObjectSelector.Size()
 		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -2395,6 +1932,9 @@ func (m *MutatingWebhookConfiguration) Size() (n int) {
 			n += 1 + l + sovGenerated(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -2413,6 +1953,9 @@ func (m *MutatingWebhookConfigurationList) Size() (n int) {
 			l = e.Size()
 			n += 1 + l + sovGenerated(uint64(l))
 		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -2441,8 +1984,13 @@ func (m *Rule) Size() (n int) {
 			n += 1 + l + sovGenerated(uint64(l))
 		}
 	}
-	l = len(m.Scope)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.Scope != nil {
+		l = len(*m.Scope)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -2462,6 +2010,9 @@ func (m *RuleWithOperations) Size() (n int) {
 		l = m.Rule.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -2471,13 +2022,24 @@ func (m *ServiceReference) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Namespace)
-	n += 1 + l + sovGenerated(uint64(l))
-	l = len(m.Name)
-	n += 1 + l + sovGenerated(uint64(l))
-	l = len(m.Path)
-	n += 1 + l + sovGenerated(uint64(l))
-	n += 1 + sovGenerated(uint64(m.Port))
+	if m.Namespace != nil {
+		l = len(*m.Namespace)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.Name != nil {
+		l = len(*m.Name)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.Path != nil {
+		l = len(*m.Path)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.Port != nil {
+		n += 1 + sovGenerated(uint64(*m.Port))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -2487,8 +2049,10 @@ func (m *ValidatingWebhook) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Name)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.Name != nil {
+		l = len(*m.Name)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if m.ClientConfig != nil {
 		l = m.ClientConfig.Size()
 		n += 1 + l + sovGenerated(uint64(l))
@@ -2499,26 +2063,37 @@ func (m *ValidatingWebhook) Size() (n int) {
 			n += 1 + l + sovGenerated(uint64(l))
 		}
 	}
-	l = len(m.FailurePolicy)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.FailurePolicy != nil {
+		l = len(*m.FailurePolicy)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if m.NamespaceSelector != nil {
 		l = m.NamespaceSelector.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
-	l = len(m.SideEffects)
-	n += 1 + l + sovGenerated(uint64(l))
-	n += 1 + sovGenerated(uint64(m.TimeoutSeconds))
+	if m.SideEffects != nil {
+		l = len(*m.SideEffects)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.TimeoutSeconds != nil {
+		n += 1 + sovGenerated(uint64(*m.TimeoutSeconds))
+	}
 	if len(m.AdmissionReviewVersions) > 0 {
 		for _, s := range m.AdmissionReviewVersions {
 			l = len(s)
 			n += 1 + l + sovGenerated(uint64(l))
 		}
 	}
-	l = len(m.MatchPolicy)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.MatchPolicy != nil {
+		l = len(*m.MatchPolicy)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if m.ObjectSelector != nil {
 		l = m.ObjectSelector.Size()
 		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -2539,6 +2114,9 @@ func (m *ValidatingWebhookConfiguration) Size() (n int) {
 			n += 1 + l + sovGenerated(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -2558,6 +2136,9 @@ func (m *ValidatingWebhookConfigurationList) Size() (n int) {
 			n += 1 + l + sovGenerated(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -2575,8 +2156,13 @@ func (m *WebhookClientConfig) Size() (n int) {
 		l = len(m.CaBundle)
 		n += 1 + l + sovGenerated(uint64(l))
 	}
-	l = len(m.Url)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.Url != nil {
+		l = len(*m.Url)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -2585,176 +2171,6 @@ func sovGenerated(x uint64) (n int) {
 }
 func sozGenerated(x uint64) (n int) {
 	return sovGenerated(uint64((x << 1) ^ uint64((int64(x) >> 63))))
-}
-func (this *MutatingWebhook) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForRules := "[]*RuleWithOperations{"
-	for _, f := range this.Rules {
-		repeatedStringForRules += strings.Replace(f.String(), "RuleWithOperations", "RuleWithOperations", 1) + ","
-	}
-	repeatedStringForRules += "}"
-	s := strings.Join([]string{`&MutatingWebhook{`,
-		`Name:` + fmt.Sprintf("%v", this.Name) + `,`,
-		`ClientConfig:` + strings.Replace(this.ClientConfig.String(), "WebhookClientConfig", "WebhookClientConfig", 1) + `,`,
-		`Rules:` + repeatedStringForRules + `,`,
-		`FailurePolicy:` + fmt.Sprintf("%v", this.FailurePolicy) + `,`,
-		`NamespaceSelector:` + strings.Replace(fmt.Sprintf("%v", this.NamespaceSelector), "LabelSelector", "v1.LabelSelector", 1) + `,`,
-		`SideEffects:` + fmt.Sprintf("%v", this.SideEffects) + `,`,
-		`TimeoutSeconds:` + fmt.Sprintf("%v", this.TimeoutSeconds) + `,`,
-		`AdmissionReviewVersions:` + fmt.Sprintf("%v", this.AdmissionReviewVersions) + `,`,
-		`MatchPolicy:` + fmt.Sprintf("%v", this.MatchPolicy) + `,`,
-		`ReinvocationPolicy:` + fmt.Sprintf("%v", this.ReinvocationPolicy) + `,`,
-		`ObjectSelector:` + strings.Replace(fmt.Sprintf("%v", this.ObjectSelector), "LabelSelector", "v1.LabelSelector", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *MutatingWebhookConfiguration) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForWebhooks := "[]*MutatingWebhook{"
-	for _, f := range this.Webhooks {
-		repeatedStringForWebhooks += strings.Replace(f.String(), "MutatingWebhook", "MutatingWebhook", 1) + ","
-	}
-	repeatedStringForWebhooks += "}"
-	s := strings.Join([]string{`&MutatingWebhookConfiguration{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ObjectMeta", "v1.ObjectMeta", 1) + `,`,
-		`Webhooks:` + repeatedStringForWebhooks + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *MutatingWebhookConfigurationList) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForItems := "[]*MutatingWebhookConfiguration{"
-	for _, f := range this.Items {
-		repeatedStringForItems += strings.Replace(f.String(), "MutatingWebhookConfiguration", "MutatingWebhookConfiguration", 1) + ","
-	}
-	repeatedStringForItems += "}"
-	s := strings.Join([]string{`&MutatingWebhookConfigurationList{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ListMeta", "v1.ListMeta", 1) + `,`,
-		`Items:` + repeatedStringForItems + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *Rule) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&Rule{`,
-		`ApiGroups:` + fmt.Sprintf("%v", this.ApiGroups) + `,`,
-		`ApiVersions:` + fmt.Sprintf("%v", this.ApiVersions) + `,`,
-		`Resources:` + fmt.Sprintf("%v", this.Resources) + `,`,
-		`Scope:` + fmt.Sprintf("%v", this.Scope) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *RuleWithOperations) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&RuleWithOperations{`,
-		`Operations:` + fmt.Sprintf("%v", this.Operations) + `,`,
-		`Rule:` + strings.Replace(this.Rule.String(), "Rule", "Rule", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *ServiceReference) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&ServiceReference{`,
-		`Namespace:` + fmt.Sprintf("%v", this.Namespace) + `,`,
-		`Name:` + fmt.Sprintf("%v", this.Name) + `,`,
-		`Path:` + fmt.Sprintf("%v", this.Path) + `,`,
-		`Port:` + fmt.Sprintf("%v", this.Port) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *ValidatingWebhook) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForRules := "[]*RuleWithOperations{"
-	for _, f := range this.Rules {
-		repeatedStringForRules += strings.Replace(f.String(), "RuleWithOperations", "RuleWithOperations", 1) + ","
-	}
-	repeatedStringForRules += "}"
-	s := strings.Join([]string{`&ValidatingWebhook{`,
-		`Name:` + fmt.Sprintf("%v", this.Name) + `,`,
-		`ClientConfig:` + strings.Replace(this.ClientConfig.String(), "WebhookClientConfig", "WebhookClientConfig", 1) + `,`,
-		`Rules:` + repeatedStringForRules + `,`,
-		`FailurePolicy:` + fmt.Sprintf("%v", this.FailurePolicy) + `,`,
-		`NamespaceSelector:` + strings.Replace(fmt.Sprintf("%v", this.NamespaceSelector), "LabelSelector", "v1.LabelSelector", 1) + `,`,
-		`SideEffects:` + fmt.Sprintf("%v", this.SideEffects) + `,`,
-		`TimeoutSeconds:` + fmt.Sprintf("%v", this.TimeoutSeconds) + `,`,
-		`AdmissionReviewVersions:` + fmt.Sprintf("%v", this.AdmissionReviewVersions) + `,`,
-		`MatchPolicy:` + fmt.Sprintf("%v", this.MatchPolicy) + `,`,
-		`ObjectSelector:` + strings.Replace(fmt.Sprintf("%v", this.ObjectSelector), "LabelSelector", "v1.LabelSelector", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *ValidatingWebhookConfiguration) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForWebhooks := "[]*ValidatingWebhook{"
-	for _, f := range this.Webhooks {
-		repeatedStringForWebhooks += strings.Replace(f.String(), "ValidatingWebhook", "ValidatingWebhook", 1) + ","
-	}
-	repeatedStringForWebhooks += "}"
-	s := strings.Join([]string{`&ValidatingWebhookConfiguration{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ObjectMeta", "v1.ObjectMeta", 1) + `,`,
-		`Webhooks:` + repeatedStringForWebhooks + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *ValidatingWebhookConfigurationList) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForItems := "[]*ValidatingWebhookConfiguration{"
-	for _, f := range this.Items {
-		repeatedStringForItems += strings.Replace(f.String(), "ValidatingWebhookConfiguration", "ValidatingWebhookConfiguration", 1) + ","
-	}
-	repeatedStringForItems += "}"
-	s := strings.Join([]string{`&ValidatingWebhookConfigurationList{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ListMeta", "v1.ListMeta", 1) + `,`,
-		`Items:` + repeatedStringForItems + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *WebhookClientConfig) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&WebhookClientConfig{`,
-		`Service:` + strings.Replace(this.Service.String(), "ServiceReference", "ServiceReference", 1) + `,`,
-		`CaBundle:` + fmt.Sprintf("%v", this.CaBundle) + `,`,
-		`Url:` + fmt.Sprintf("%v", this.Url) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func valueToStringGenerated(v interface{}) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("*%v", pv)
 }
 func (m *MutatingWebhook) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
@@ -2815,7 +2231,8 @@ func (m *MutatingWebhook) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Name = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Name = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -2917,7 +2334,8 @@ func (m *MutatingWebhook) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.FailurePolicy = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.FailurePolicy = &s
 			iNdEx = postIndex
 		case 5:
 			if wireType != 2 {
@@ -2985,13 +2403,14 @@ func (m *MutatingWebhook) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.SideEffects = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.SideEffects = &s
 			iNdEx = postIndex
 		case 7:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field TimeoutSeconds", wireType)
 			}
-			m.TimeoutSeconds = 0
+			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -3001,11 +2420,12 @@ func (m *MutatingWebhook) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.TimeoutSeconds |= int32(b&0x7F) << shift
+				v |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.TimeoutSeconds = &v
 		case 8:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field AdmissionReviewVersions", wireType)
@@ -3068,7 +2488,8 @@ func (m *MutatingWebhook) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.MatchPolicy = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.MatchPolicy = &s
 			iNdEx = postIndex
 		case 10:
 			if wireType != 2 {
@@ -3100,7 +2521,8 @@ func (m *MutatingWebhook) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.ReinvocationPolicy = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.ReinvocationPolicy = &s
 			iNdEx = postIndex
 		case 11:
 			if wireType != 2 {
@@ -3150,6 +2572,7 @@ func (m *MutatingWebhook) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3270,6 +2693,7 @@ func (m *MutatingWebhookConfiguration) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3390,6 +2814,7 @@ func (m *MutatingWebhookConfigurationList) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3554,7 +2979,8 @@ func (m *Rule) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Scope = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Scope = &s
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -3568,6 +2994,7 @@ func (m *Rule) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3686,6 +3113,7 @@ func (m *RuleWithOperations) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3754,7 +3182,8 @@ func (m *ServiceReference) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Namespace = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Namespace = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -3786,7 +3215,8 @@ func (m *ServiceReference) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Name = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Name = &s
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
@@ -3818,13 +3248,14 @@ func (m *ServiceReference) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Path = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Path = &s
 			iNdEx = postIndex
 		case 4:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Port", wireType)
 			}
-			m.Port = 0
+			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -3834,11 +3265,12 @@ func (m *ServiceReference) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Port |= int32(b&0x7F) << shift
+				v |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.Port = &v
 		default:
 			iNdEx = preIndex
 			skippy, err := skipGenerated(dAtA[iNdEx:])
@@ -3851,6 +3283,7 @@ func (m *ServiceReference) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3919,7 +3352,8 @@ func (m *ValidatingWebhook) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Name = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Name = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -4021,7 +3455,8 @@ func (m *ValidatingWebhook) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.FailurePolicy = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.FailurePolicy = &s
 			iNdEx = postIndex
 		case 5:
 			if wireType != 2 {
@@ -4089,13 +3524,14 @@ func (m *ValidatingWebhook) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.SideEffects = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.SideEffects = &s
 			iNdEx = postIndex
 		case 7:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field TimeoutSeconds", wireType)
 			}
-			m.TimeoutSeconds = 0
+			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -4105,11 +3541,12 @@ func (m *ValidatingWebhook) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.TimeoutSeconds |= int32(b&0x7F) << shift
+				v |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.TimeoutSeconds = &v
 		case 8:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field AdmissionReviewVersions", wireType)
@@ -4172,7 +3609,8 @@ func (m *ValidatingWebhook) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.MatchPolicy = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.MatchPolicy = &s
 			iNdEx = postIndex
 		case 10:
 			if wireType != 2 {
@@ -4222,6 +3660,7 @@ func (m *ValidatingWebhook) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4342,6 +3781,7 @@ func (m *ValidatingWebhookConfiguration) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4462,6 +3902,7 @@ func (m *ValidatingWebhookConfigurationList) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4600,7 +4041,8 @@ func (m *WebhookClientConfig) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Url = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Url = &s
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -4614,6 +4056,7 @@ func (m *WebhookClientConfig) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}

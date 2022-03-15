@@ -9,8 +9,6 @@ import (
 	io "io"
 	math "math"
 	math_bits "math/bits"
-	reflect "reflect"
-	strings "strings"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -83,11 +81,15 @@ const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 // +k8s:deepcopy-gen=true
 // +k8s:openapi-gen=true
 type Quantity struct {
-	String_ string `protobuf:"bytes,1,opt,name=string" json:"string"`
+	String_              *string  `protobuf:"bytes,1,opt,name=string" json:"string,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *Quantity) Reset()      { *m = Quantity{} }
-func (*Quantity) ProtoMessage() {}
+func (m *Quantity) Reset()         { *m = Quantity{} }
+func (m *Quantity) String() string { return proto.CompactTextString(m) }
+func (*Quantity) ProtoMessage()    {}
 func (*Quantity) Descriptor() ([]byte, []int) {
 	return fileDescriptor_7288c78ff45111e9, []int{0}
 }
@@ -119,8 +121,8 @@ func (m *Quantity) XXX_DiscardUnknown() {
 var xxx_messageInfo_Quantity proto.InternalMessageInfo
 
 func (m *Quantity) GetString_() string {
-	if m != nil {
-		return m.String_
+	if m != nil && m.String_ != nil {
+		return *m.String_
 	}
 	return ""
 }
@@ -134,63 +136,18 @@ func init() {
 }
 
 var fileDescriptor_7288c78ff45111e9 = []byte{
-	// 186 bytes of a gzipped FileDescriptorProto
+	// 137 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x32, 0xc9, 0xb6, 0x28, 0xd6,
 	0xcb, 0xcc, 0xd7, 0x4f, 0x2c, 0xc8, 0xcc, 0x4d, 0x4c, 0xce, 0xc8, 0xcc, 0x4b, 0x2d, 0xaa, 0xd4,
 	0x2f, 0xc8, 0x4e, 0x07, 0x09, 0xe8, 0x17, 0xa5, 0x16, 0xe7, 0x97, 0x16, 0x25, 0xa7, 0xea, 0xa7,
 	0xa7, 0xe6, 0xa5, 0x16, 0x25, 0x96, 0xa4, 0xa6, 0xe8, 0x15, 0x14, 0xe5, 0x97, 0xe4, 0x0b, 0xa9,
-	0x40, 0x74, 0xe9, 0x21, 0xeb, 0xd2, 0x2b, 0xc8, 0x4e, 0x07, 0x09, 0xe8, 0xc1, 0x74, 0x29, 0x69,
-	0x70, 0x71, 0x04, 0x96, 0x26, 0xe6, 0x95, 0x64, 0x96, 0x54, 0x0a, 0xc9, 0x70, 0xb1, 0x15, 0x97,
-	0x14, 0x65, 0xe6, 0xa5, 0x4b, 0x30, 0x2a, 0x30, 0x6a, 0x70, 0x3a, 0xb1, 0x9c, 0xb8, 0x27, 0xcf,
-	0x10, 0x04, 0x15, 0x73, 0x32, 0xb9, 0xf0, 0x50, 0x8e, 0xe1, 0xc6, 0x43, 0x39, 0x86, 0x0f, 0x0f,
-	0xe5, 0x18, 0x1b, 0x1e, 0xc9, 0x31, 0xae, 0x78, 0x24, 0xc7, 0x78, 0xe2, 0x91, 0x1c, 0xe3, 0x85,
-	0x47, 0x72, 0x8c, 0x0f, 0x1e, 0xc9, 0x31, 0xbe, 0x78, 0x24, 0xc7, 0xf0, 0xe1, 0x91, 0x1c, 0xe3,
-	0x84, 0xc7, 0x72, 0x0c, 0x17, 0x1e, 0xcb, 0x31, 0xdc, 0x78, 0x2c, 0xc7, 0x00, 0x08, 0x00, 0x00,
-	0xff, 0xff, 0x1e, 0x44, 0x6d, 0x58, 0xbc, 0x00, 0x00, 0x00,
+	0x40, 0x74, 0xe9, 0x21, 0xeb, 0xd2, 0x2b, 0xc8, 0x4e, 0x07, 0x09, 0xe8, 0xc1, 0x74, 0x29, 0x29,
+	0x71, 0x71, 0x04, 0x96, 0x26, 0xe6, 0x95, 0x64, 0x96, 0x54, 0x0a, 0x89, 0x71, 0xb1, 0x15, 0x97,
+	0x14, 0x65, 0xe6, 0xa5, 0x4b, 0x30, 0x2a, 0x30, 0x6a, 0x70, 0x06, 0x41, 0x79, 0x4e, 0x3c, 0x27,
+	0x1e, 0xc9, 0x31, 0x5e, 0x78, 0x24, 0xc7, 0xf8, 0xe0, 0x91, 0x1c, 0x23, 0x20, 0x00, 0x00, 0xff,
+	0xff, 0xfb, 0x73, 0x28, 0x2c, 0x8e, 0x00, 0x00, 0x00,
 }
 
-func (this *Quantity) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*Quantity)
-	if !ok {
-		that2, ok := that.(Quantity)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.String_ != that1.String_ {
-		return false
-	}
-	return true
-}
-func (this *Quantity) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 5)
-	s = append(s, "&k8s_io_apimachinery_pkg_api_resource.Quantity{")
-	s = append(s, "String_: "+fmt.Sprintf("%#v", this.String_)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func valueToGoStringGenerated(v interface{}, typ string) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("func(v %v) *%v { return &v } ( %#v )", typ, typ, pv)
-}
 func (m *Quantity) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -211,11 +168,17 @@ func (m *Quantity) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	i -= len(m.String_)
-	copy(dAtA[i:], m.String_)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.String_)))
-	i--
-	dAtA[i] = 0xa
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.String_ != nil {
+		i -= len(*m.String_)
+		copy(dAtA[i:], *m.String_)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.String_)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -236,8 +199,13 @@ func (m *Quantity) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.String_)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.String_ != nil {
+		l = len(*m.String_)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -246,24 +214,6 @@ func sovGenerated(x uint64) (n int) {
 }
 func sozGenerated(x uint64) (n int) {
 	return sovGenerated(uint64((x << 1) ^ uint64((int64(x) >> 63))))
-}
-func (this *Quantity) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&Quantity{`,
-		`String_:` + fmt.Sprintf("%v", this.String_) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func valueToStringGenerated(v interface{}) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("*%v", pv)
 }
 func (m *Quantity) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
@@ -324,7 +274,8 @@ func (m *Quantity) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.String_ = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.String_ = &s
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -338,6 +289,7 @@ func (m *Quantity) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}

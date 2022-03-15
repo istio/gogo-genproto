@@ -14,8 +14,6 @@ import (
 	intstr "istio.io/gogo-genproto/k8s.io/apimachinery/pkg/util/intstr"
 	math "math"
 	math_bits "math/bits"
-	reflect "reflect"
-	strings "strings"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -40,14 +38,18 @@ type HTTPIngressPath struct {
 	// a '/'. If unspecified, the path defaults to a catch all sending
 	// traffic to the backend.
 	// +optional
-	Path string `protobuf:"bytes,1,opt,name=path" json:"path"`
+	Path *string `protobuf:"bytes,1,opt,name=path" json:"path,omitempty"`
 	// Backend defines the referenced service endpoint to which the traffic
 	// will be forwarded to.
-	Backend *IngressBackend `protobuf:"bytes,2,opt,name=backend" json:"backend,omitempty"`
+	Backend              *IngressBackend `protobuf:"bytes,2,opt,name=backend" json:"backend,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
 }
 
-func (m *HTTPIngressPath) Reset()      { *m = HTTPIngressPath{} }
-func (*HTTPIngressPath) ProtoMessage() {}
+func (m *HTTPIngressPath) Reset()         { *m = HTTPIngressPath{} }
+func (m *HTTPIngressPath) String() string { return proto.CompactTextString(m) }
+func (*HTTPIngressPath) ProtoMessage()    {}
 func (*HTTPIngressPath) Descriptor() ([]byte, []int) {
 	return fileDescriptor_9497719c79c89d2d, []int{0}
 }
@@ -79,8 +81,8 @@ func (m *HTTPIngressPath) XXX_DiscardUnknown() {
 var xxx_messageInfo_HTTPIngressPath proto.InternalMessageInfo
 
 func (m *HTTPIngressPath) GetPath() string {
-	if m != nil {
-		return m.Path
+	if m != nil && m.Path != nil {
+		return *m.Path
 	}
 	return ""
 }
@@ -99,11 +101,15 @@ func (m *HTTPIngressPath) GetBackend() *IngressBackend {
 // or '#'.
 type HTTPIngressRuleValue struct {
 	// A collection of paths that map requests to backends.
-	Paths []*HTTPIngressPath `protobuf:"bytes,1,rep,name=paths" json:"paths,omitempty"`
+	Paths                []*HTTPIngressPath `protobuf:"bytes,1,rep,name=paths" json:"paths,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}           `json:"-"`
+	XXX_unrecognized     []byte             `json:"-"`
+	XXX_sizecache        int32              `json:"-"`
 }
 
-func (m *HTTPIngressRuleValue) Reset()      { *m = HTTPIngressRuleValue{} }
-func (*HTTPIngressRuleValue) ProtoMessage() {}
+func (m *HTTPIngressRuleValue) Reset()         { *m = HTTPIngressRuleValue{} }
+func (m *HTTPIngressRuleValue) String() string { return proto.CompactTextString(m) }
+func (*HTTPIngressRuleValue) ProtoMessage()    {}
 func (*HTTPIngressRuleValue) Descriptor() ([]byte, []int) {
 	return fileDescriptor_9497719c79c89d2d, []int{1}
 }
@@ -157,11 +163,15 @@ type Ingress struct {
 	// Status is the current state of the Ingress.
 	// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status
 	// +optional
-	Status *IngressStatus `protobuf:"bytes,3,opt,name=status" json:"status,omitempty"`
+	Status               *IngressStatus `protobuf:"bytes,3,opt,name=status" json:"status,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
 }
 
-func (m *Ingress) Reset()      { *m = Ingress{} }
-func (*Ingress) ProtoMessage() {}
+func (m *Ingress) Reset()         { *m = Ingress{} }
+func (m *Ingress) String() string { return proto.CompactTextString(m) }
+func (*Ingress) ProtoMessage()    {}
 func (*Ingress) Descriptor() ([]byte, []int) {
 	return fileDescriptor_9497719c79c89d2d, []int{2}
 }
@@ -216,13 +226,17 @@ func (m *Ingress) GetStatus() *IngressStatus {
 // IngressBackend describes all endpoints for a given service and port.
 type IngressBackend struct {
 	// Specifies the name of the referenced service.
-	ServiceName string `protobuf:"bytes,1,opt,name=serviceName" json:"serviceName"`
+	ServiceName *string `protobuf:"bytes,1,opt,name=serviceName" json:"serviceName,omitempty"`
 	// Specifies the port of the referenced service.
-	ServicePort *intstr.IntOrString `protobuf:"bytes,2,opt,name=servicePort" json:"servicePort,omitempty"`
+	ServicePort          *intstr.IntOrString `protobuf:"bytes,2,opt,name=servicePort" json:"servicePort,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}            `json:"-"`
+	XXX_unrecognized     []byte              `json:"-"`
+	XXX_sizecache        int32               `json:"-"`
 }
 
-func (m *IngressBackend) Reset()      { *m = IngressBackend{} }
-func (*IngressBackend) ProtoMessage() {}
+func (m *IngressBackend) Reset()         { *m = IngressBackend{} }
+func (m *IngressBackend) String() string { return proto.CompactTextString(m) }
+func (*IngressBackend) ProtoMessage()    {}
 func (*IngressBackend) Descriptor() ([]byte, []int) {
 	return fileDescriptor_9497719c79c89d2d, []int{3}
 }
@@ -254,8 +268,8 @@ func (m *IngressBackend) XXX_DiscardUnknown() {
 var xxx_messageInfo_IngressBackend proto.InternalMessageInfo
 
 func (m *IngressBackend) GetServiceName() string {
-	if m != nil {
-		return m.ServiceName
+	if m != nil && m.ServiceName != nil {
+		return *m.ServiceName
 	}
 	return ""
 }
@@ -274,11 +288,15 @@ type IngressList struct {
 	// +optional
 	Metadata *v1.ListMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// Items is the list of Ingress.
-	Items []*Ingress `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	Items                []*Ingress `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}   `json:"-"`
+	XXX_unrecognized     []byte     `json:"-"`
+	XXX_sizecache        int32      `json:"-"`
 }
 
-func (m *IngressList) Reset()      { *m = IngressList{} }
-func (*IngressList) ProtoMessage() {}
+func (m *IngressList) Reset()         { *m = IngressList{} }
+func (m *IngressList) String() string { return proto.CompactTextString(m) }
+func (*IngressList) ProtoMessage()    {}
 func (*IngressList) Descriptor() ([]byte, []int) {
 	return fileDescriptor_9497719c79c89d2d, []int{4}
 }
@@ -340,18 +358,22 @@ type IngressRule struct {
 	// If the host is unspecified, the Ingress routes all traffic based on the
 	// specified IngressRuleValue.
 	// +optional
-	Host string `protobuf:"bytes,1,opt,name=host" json:"host"`
+	Host *string `protobuf:"bytes,1,opt,name=host" json:"host,omitempty"`
 	// IngressRuleValue represents a rule to route requests for this IngressRule.
 	// If unspecified, the rule defaults to a http catch-all. Whether that sends
 	// just traffic matching the host to the default backend or all traffic to the
 	// default backend, is left to the controller fulfilling the Ingress. Http is
 	// currently the only supported IngressRuleValue.
 	// +optional
-	IngressRuleValue *IngressRuleValue `protobuf:"bytes,2,opt,name=ingressRuleValue" json:"ingressRuleValue,omitempty"`
+	IngressRuleValue     *IngressRuleValue `protobuf:"bytes,2,opt,name=ingressRuleValue" json:"ingressRuleValue,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
+	XXX_unrecognized     []byte            `json:"-"`
+	XXX_sizecache        int32             `json:"-"`
 }
 
-func (m *IngressRule) Reset()      { *m = IngressRule{} }
-func (*IngressRule) ProtoMessage() {}
+func (m *IngressRule) Reset()         { *m = IngressRule{} }
+func (m *IngressRule) String() string { return proto.CompactTextString(m) }
+func (*IngressRule) ProtoMessage()    {}
 func (*IngressRule) Descriptor() ([]byte, []int) {
 	return fileDescriptor_9497719c79c89d2d, []int{5}
 }
@@ -383,8 +405,8 @@ func (m *IngressRule) XXX_DiscardUnknown() {
 var xxx_messageInfo_IngressRule proto.InternalMessageInfo
 
 func (m *IngressRule) GetHost() string {
-	if m != nil {
-		return m.Host
+	if m != nil && m.Host != nil {
+		return *m.Host
 	}
 	return ""
 }
@@ -402,11 +424,15 @@ func (m *IngressRule) GetIngressRuleValue() *IngressRuleValue {
 // one of the following must be set.
 type IngressRuleValue struct {
 	// +optional
-	Http *HTTPIngressRuleValue `protobuf:"bytes,1,opt,name=http" json:"http,omitempty"`
+	Http                 *HTTPIngressRuleValue `protobuf:"bytes,1,opt,name=http" json:"http,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}              `json:"-"`
+	XXX_unrecognized     []byte                `json:"-"`
+	XXX_sizecache        int32                 `json:"-"`
 }
 
-func (m *IngressRuleValue) Reset()      { *m = IngressRuleValue{} }
-func (*IngressRuleValue) ProtoMessage() {}
+func (m *IngressRuleValue) Reset()         { *m = IngressRuleValue{} }
+func (m *IngressRuleValue) String() string { return proto.CompactTextString(m) }
+func (*IngressRuleValue) ProtoMessage()    {}
 func (*IngressRuleValue) Descriptor() ([]byte, []int) {
 	return fileDescriptor_9497719c79c89d2d, []int{6}
 }
@@ -462,11 +488,15 @@ type IngressSpec struct {
 	// A list of host rules used to configure the Ingress. If unspecified, or
 	// no rule matches, all traffic is sent to the default backend.
 	// +optional
-	Rules []*IngressRule `protobuf:"bytes,3,rep,name=rules" json:"rules,omitempty"`
+	Rules                []*IngressRule `protobuf:"bytes,3,rep,name=rules" json:"rules,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
 }
 
-func (m *IngressSpec) Reset()      { *m = IngressSpec{} }
-func (*IngressSpec) ProtoMessage() {}
+func (m *IngressSpec) Reset()         { *m = IngressSpec{} }
+func (m *IngressSpec) String() string { return proto.CompactTextString(m) }
+func (*IngressSpec) ProtoMessage()    {}
 func (*IngressSpec) Descriptor() ([]byte, []int) {
 	return fileDescriptor_9497719c79c89d2d, []int{7}
 }
@@ -522,11 +552,15 @@ func (m *IngressSpec) GetRules() []*IngressRule {
 type IngressStatus struct {
 	// LoadBalancer contains the current status of the load-balancer.
 	// +optional
-	LoadBalancer *v11.LoadBalancerStatus `protobuf:"bytes,1,opt,name=loadBalancer" json:"loadBalancer,omitempty"`
+	LoadBalancer         *v11.LoadBalancerStatus `protobuf:"bytes,1,opt,name=loadBalancer" json:"loadBalancer,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                `json:"-"`
+	XXX_unrecognized     []byte                  `json:"-"`
+	XXX_sizecache        int32                   `json:"-"`
 }
 
-func (m *IngressStatus) Reset()      { *m = IngressStatus{} }
-func (*IngressStatus) ProtoMessage() {}
+func (m *IngressStatus) Reset()         { *m = IngressStatus{} }
+func (m *IngressStatus) String() string { return proto.CompactTextString(m) }
+func (*IngressStatus) ProtoMessage()    {}
 func (*IngressStatus) Descriptor() ([]byte, []int) {
 	return fileDescriptor_9497719c79c89d2d, []int{8}
 }
@@ -578,11 +612,15 @@ type IngressTLS struct {
 	// by an IngressRule, the SNI host is used for termination and value of the
 	// Host header is used for routing.
 	// +optional
-	SecretName string `protobuf:"bytes,2,opt,name=secretName" json:"secretName"`
+	SecretName           *string  `protobuf:"bytes,2,opt,name=secretName" json:"secretName,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *IngressTLS) Reset()      { *m = IngressTLS{} }
-func (*IngressTLS) ProtoMessage() {}
+func (m *IngressTLS) Reset()         { *m = IngressTLS{} }
+func (m *IngressTLS) String() string { return proto.CompactTextString(m) }
+func (*IngressTLS) ProtoMessage()    {}
 func (*IngressTLS) Descriptor() ([]byte, []int) {
 	return fileDescriptor_9497719c79c89d2d, []int{9}
 }
@@ -621,8 +659,8 @@ func (m *IngressTLS) GetHosts() []string {
 }
 
 func (m *IngressTLS) GetSecretName() string {
-	if m != nil {
-		return m.SecretName
+	if m != nil && m.SecretName != nil {
+		return *m.SecretName
 	}
 	return ""
 }
@@ -645,491 +683,48 @@ func init() {
 }
 
 var fileDescriptor_9497719c79c89d2d = []byte{
-	// 675 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x94, 0x4d, 0x6f, 0xd3, 0x4e,
-	0x10, 0xc6, 0xb3, 0x4d, 0xf2, 0xef, 0xbf, 0x1b, 0x5e, 0xaa, 0x55, 0x0f, 0x51, 0x25, 0x4c, 0x65,
-	0xa1, 0xaa, 0x20, 0xba, 0xa6, 0x2f, 0x42, 0x48, 0x20, 0x84, 0xa2, 0x4a, 0x7d, 0x51, 0xa1, 0xd5,
-	0xb6, 0xe2, 0x52, 0x2e, 0x5b, 0x67, 0x94, 0x98, 0x38, 0xb6, 0xb5, 0x3b, 0x09, 0xe2, 0xc6, 0x81,
-	0x23, 0x07, 0x6e, 0x7c, 0x05, 0x3e, 0x4a, 0x8f, 0xbd, 0x20, 0xf5, 0x02, 0xa2, 0xee, 0x85, 0x63,
-	0x3f, 0x02, 0x5a, 0xdb, 0x6d, 0x9c, 0x84, 0x52, 0x4b, 0x1c, 0x33, 0x99, 0xdf, 0xb3, 0x3b, 0x8f,
-	0x9f, 0x59, 0xba, 0xd8, 0x79, 0xa2, 0xb9, 0x17, 0x3a, 0x32, 0xf2, 0x9c, 0x00, 0xf0, 0x5d, 0xa8,
-	0x3a, 0x5e, 0xd0, 0x72, 0xfa, 0x4b, 0x87, 0x80, 0x72, 0xc9, 0x69, 0x41, 0x00, 0x4a, 0x22, 0x34,
-	0x79, 0xa4, 0x42, 0x0c, 0xd9, 0x9d, 0xb4, 0x9d, 0xcb, 0xc8, 0xe3, 0x83, 0x76, 0x9e, 0xb5, 0xcf,
-	0xda, 0x39, 0x35, 0x37, 0x54, 0xe0, 0xf4, 0xc7, 0x24, 0x66, 0x57, 0x07, 0x3d, 0x5d, 0xe9, 0xb6,
-	0xbd, 0x00, 0xd4, 0x7b, 0x27, 0xea, 0xb4, 0x4c, 0x41, 0x3b, 0x5d, 0x40, 0xf9, 0x27, 0xca, 0xb9,
-	0x8a, 0x52, 0xbd, 0x00, 0xbd, 0x2e, 0x8c, 0x01, 0x8f, 0xaf, 0x03, 0xb4, 0xdb, 0x86, 0xae, 0x1c,
-	0xe3, 0x56, 0xae, 0xe2, 0x7a, 0xe8, 0xf9, 0x8e, 0x17, 0xa0, 0x46, 0x35, 0x0a, 0xd9, 0x48, 0x6f,
-	0x6f, 0xec, 0xef, 0xef, 0x6e, 0x06, 0x2d, 0x05, 0x5a, 0xef, 0x4a, 0x6c, 0xb3, 0x3a, 0xad, 0x44,
-	0x12, 0xdb, 0x75, 0x32, 0x47, 0x16, 0xa6, 0x1a, 0x95, 0xa3, 0x1f, 0x77, 0x4b, 0x22, 0xa9, 0xb0,
-	0x75, 0x3a, 0x79, 0x28, 0xdd, 0x0e, 0x04, 0xcd, 0xfa, 0xc4, 0x1c, 0x59, 0xa8, 0x2d, 0x2f, 0xf2,
-	0xbf, 0xba, 0xca, 0x33, 0xd9, 0x46, 0x0a, 0x89, 0x0b, 0xda, 0x7e, 0x43, 0x67, 0x72, 0xa7, 0x8a,
-	0x9e, 0x0f, 0xaf, 0xa5, 0xdf, 0x03, 0xb6, 0x46, 0xab, 0xe6, 0x20, 0x5d, 0x27, 0x73, 0xe5, 0x85,
-	0xda, 0x32, 0xbf, 0x46, 0x7e, 0xe4, 0xe6, 0x22, 0x85, 0xed, 0xef, 0x84, 0x4e, 0x66, 0x65, 0xb6,
-	0x4d, 0xff, 0x37, 0x1f, 0xa6, 0x29, 0x51, 0x26, 0x03, 0xd5, 0x96, 0x1f, 0xe5, 0x44, 0x2f, 0x7d,
-	0xe2, 0x51, 0xa7, 0x65, 0x0a, 0x9a, 0x9b, 0x6e, 0xde, 0x5f, 0xe2, 0x3b, 0x87, 0x6f, 0xc1, 0xc5,
-	0x97, 0x80, 0x52, 0x5c, 0x2a, 0xb0, 0xe7, 0xb4, 0xa2, 0x23, 0x70, 0xb3, 0xe9, 0x1f, 0x14, 0x9b,
-	0x7e, 0x2f, 0x02, 0x57, 0x24, 0x1c, 0x5b, 0xa3, 0xff, 0x69, 0x94, 0xd8, 0xd3, 0xf5, 0x72, 0xa2,
-	0xf0, 0xb0, 0xa0, 0x42, 0xc2, 0x88, 0x8c, 0xb5, 0x3f, 0x11, 0x7a, 0x6b, 0xd8, 0x59, 0x36, 0x4f,
-	0x6b, 0x1a, 0x54, 0xdf, 0x73, 0xe1, 0x95, 0xec, 0xc2, 0xd0, 0xa7, 0xcb, 0xff, 0xc1, 0xc4, 0x65,
-	0xdf, 0x6e, 0xa8, 0x30, 0x9b, 0xe3, 0x6a, 0x47, 0x4c, 0x72, 0x78, 0x9a, 0x1c, 0xbe, 0x19, 0xe0,
-	0x8e, 0xda, 0x43, 0xe5, 0x05, 0x2d, 0x91, 0x17, 0xb1, 0xbf, 0x10, 0x5a, 0xcb, 0xae, 0xb3, 0xed,
-	0x69, 0x64, 0x5b, 0x63, 0x96, 0xf3, 0x62, 0x96, 0x1b, 0x7a, 0xc4, 0xf0, 0x67, 0xb4, 0xea, 0x21,
-	0x74, 0x75, 0x7d, 0x22, 0x09, 0xc4, 0x7c, 0x31, 0xbf, 0x44, 0x0a, 0xd9, 0x1f, 0x07, 0x37, 0x33,
-	0x19, 0x33, 0xc9, 0x6e, 0x87, 0x1a, 0x87, 0x93, 0x6d, 0x2a, 0xec, 0x80, 0x4e, 0x7b, 0x23, 0x61,
-	0xcc, 0xcc, 0x71, 0x0a, 0x1e, 0x79, 0x81, 0x89, 0x31, 0x21, 0xfb, 0x80, 0x4e, 0x8f, 0x25, 0x7d,
-	0x9d, 0x56, 0xda, 0x88, 0x51, 0x66, 0xd0, 0x4a, 0xf1, 0xa0, 0x0f, 0x0e, 0x4a, 0x04, 0xec, 0x6f,
-	0x83, 0x19, 0x4d, 0xd0, 0xf2, 0x3b, 0x4a, 0xfe, 0x65, 0x47, 0xd9, 0x53, 0x5a, 0x46, 0xff, 0xc2,
-	0xf8, 0xfb, 0xc5, 0x44, 0xf6, 0xb7, 0xf7, 0x84, 0xa1, 0xd8, 0x0b, 0x5a, 0x55, 0x3d, 0x1f, 0x4c,
-	0xce, 0xcb, 0xc5, 0x37, 0xc5, 0xcc, 0x26, 0x52, 0xd0, 0x3e, 0xa0, 0x37, 0x87, 0xd2, 0xcf, 0xb6,
-	0xe8, 0x0d, 0x3f, 0x94, 0xcd, 0x86, 0xf4, 0x65, 0xe0, 0x82, 0xca, 0xa6, 0x1b, 0x4a, 0x84, 0x79,
-	0xb8, 0x93, 0x20, 0xe5, 0xfa, 0xb2, 0xdd, 0x19, 0x62, 0xed, 0x0d, 0x4a, 0x07, 0x37, 0x66, 0x33,
-	0xb4, 0x6a, 0x42, 0x90, 0xbe, 0x3a, 0x53, 0x22, 0xfd, 0xc1, 0xee, 0x51, 0xaa, 0xc1, 0x55, 0x80,
-	0xc9, 0x46, 0x4d, 0xe4, 0x22, 0x93, 0xab, 0x37, 0x56, 0x8f, 0x4f, 0xad, 0xd2, 0xc9, 0xa9, 0x55,
-	0x3a, 0x3f, 0xb5, 0xc8, 0x87, 0xd8, 0x22, 0x5f, 0x63, 0x8b, 0x1c, 0xc5, 0x16, 0x39, 0x8e, 0x2d,
-	0xf2, 0x33, 0xb6, 0xc8, 0xaf, 0xd8, 0x2a, 0x9d, 0xc7, 0x16, 0xf9, 0x7c, 0x66, 0x95, 0x8e, 0xcf,
-	0xac, 0xd2, 0xc9, 0x99, 0x55, 0xfa, 0x1d, 0x00, 0x00, 0xff, 0xff, 0xa4, 0xb7, 0xd3, 0x1c, 0xbc,
-	0x06, 0x00, 0x00,
+	// 619 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x94, 0x41, 0x6b, 0x13, 0x41,
+	0x14, 0xc7, 0xd9, 0xa6, 0xb1, 0xf6, 0xa5, 0x6a, 0x19, 0x7a, 0x08, 0x05, 0x43, 0xd8, 0x83, 0x54,
+	0xb1, 0xb3, 0xb6, 0x15, 0x11, 0x14, 0x91, 0x50, 0xa8, 0x2d, 0xd5, 0x96, 0x69, 0xf1, 0x52, 0x2f,
+	0xd3, 0xcd, 0x23, 0x19, 0xb3, 0xd9, 0x5d, 0x66, 0x5e, 0x22, 0x5e, 0x3c, 0xfa, 0x15, 0xfc, 0x4a,
+	0x1e, 0xbd, 0x78, 0x14, 0xa4, 0x9f, 0x44, 0x66, 0x77, 0x92, 0x6c, 0xb2, 0xd6, 0x2e, 0x78, 0xdb,
+	0x7d, 0xbc, 0xdf, 0x7f, 0xe6, 0xfd, 0xf7, 0xff, 0x16, 0xb6, 0x07, 0xcf, 0x0d, 0x57, 0x49, 0x20,
+	0x53, 0x15, 0xc4, 0x48, 0x9f, 0x12, 0x3d, 0x50, 0x71, 0x2f, 0x18, 0xef, 0x5c, 0x22, 0xc9, 0x9d,
+	0xa0, 0x87, 0x31, 0x6a, 0x49, 0xd8, 0xe5, 0xa9, 0x4e, 0x28, 0x61, 0xf7, 0xf3, 0x76, 0x2e, 0x53,
+	0xc5, 0x67, 0xed, 0xdc, 0xb5, 0x6f, 0xfa, 0x05, 0xb5, 0x30, 0xd1, 0x18, 0x8c, 0x4b, 0x12, 0x9b,
+	0x4f, 0x67, 0x3d, 0x43, 0x19, 0xf6, 0x55, 0x8c, 0xfa, 0x73, 0x90, 0x0e, 0x7a, 0xb6, 0x60, 0x82,
+	0x21, 0x92, 0xfc, 0x1b, 0x15, 0x5c, 0x47, 0xe9, 0x51, 0x4c, 0x6a, 0x88, 0x25, 0xe0, 0xd9, 0x4d,
+	0x80, 0x09, 0xfb, 0x38, 0x94, 0x25, 0x6e, 0xef, 0x3a, 0x6e, 0x44, 0x2a, 0x0a, 0x54, 0x4c, 0x86,
+	0xf4, 0x22, 0xe4, 0xc7, 0x70, 0xef, 0xcd, 0xf9, 0xf9, 0xe9, 0x61, 0xdc, 0xd3, 0x68, 0xcc, 0xa9,
+	0xa4, 0x3e, 0x63, 0xb0, 0x9c, 0x4a, 0xea, 0x37, 0xbd, 0xb6, 0xb7, 0xb5, 0x2a, 0xb2, 0x67, 0x76,
+	0x00, 0x2b, 0x97, 0x32, 0x1c, 0x60, 0xdc, 0x6d, 0x2e, 0xb5, 0xbd, 0xad, 0xc6, 0xee, 0x36, 0xff,
+	0xa7, 0x9f, 0xdc, 0x09, 0x76, 0x72, 0x48, 0x4c, 0x68, 0xff, 0x03, 0x6c, 0x14, 0xce, 0x13, 0xa3,
+	0x08, 0xdf, 0xcb, 0x68, 0x84, 0x6c, 0x1f, 0xea, 0xf6, 0x20, 0xd3, 0xf4, 0xda, 0xb5, 0xad, 0xc6,
+	0x2e, 0xbf, 0x41, 0x7e, 0xe1, 0xce, 0x22, 0x87, 0xfd, 0x5f, 0x1e, 0xac, 0xb8, 0x32, 0x3b, 0x86,
+	0xdb, 0xf6, 0x93, 0x74, 0x25, 0xc9, 0x6c, 0x94, 0xc6, 0xee, 0x93, 0x82, 0xe8, 0xd4, 0x21, 0x9e,
+	0x0e, 0x7a, 0xb6, 0x60, 0xb8, 0xed, 0xe6, 0xe3, 0x1d, 0x7e, 0x72, 0xf9, 0x11, 0x43, 0x7a, 0x8b,
+	0x24, 0xc5, 0x54, 0x81, 0xbd, 0x82, 0x65, 0x93, 0x62, 0xe8, 0xa6, 0x7f, 0x54, 0x6d, 0xfa, 0xb3,
+	0x14, 0x43, 0x91, 0x71, 0x6c, 0x1f, 0x6e, 0x19, 0x92, 0x34, 0x32, 0xcd, 0x5a, 0xa6, 0xf0, 0xb8,
+	0xa2, 0x42, 0xc6, 0x08, 0xc7, 0xfa, 0x5f, 0x3d, 0xb8, 0x3b, 0xef, 0x2c, 0x6b, 0x43, 0xc3, 0xa0,
+	0x1e, 0xab, 0x10, 0xdf, 0xc9, 0x21, 0xba, 0x8f, 0x56, 0x2c, 0x31, 0x31, 0xed, 0x38, 0x4d, 0x34,
+	0xb9, 0x09, 0xae, 0xf7, 0xc2, 0xa6, 0x85, 0xe7, 0x69, 0xe1, 0x87, 0x31, 0x9d, 0xe8, 0x33, 0xd2,
+	0x2a, 0xee, 0x89, 0xa2, 0x88, 0xff, 0xcd, 0x83, 0x86, 0xbb, 0xc8, 0xb1, 0x32, 0xc4, 0x8e, 0x4a,
+	0x66, 0xf3, 0x6a, 0x66, 0x5b, 0x7a, 0xc1, 0xea, 0x97, 0x50, 0x57, 0x84, 0x43, 0xd3, 0x5c, 0xca,
+	0xa2, 0xf0, 0xa0, 0x9a, 0x53, 0x22, 0x87, 0xfc, 0x2f, 0xd3, 0x8b, 0xd9, 0x70, 0xd9, 0x30, 0xf7,
+	0x13, 0x43, 0x93, 0x30, 0xdb, 0x67, 0x76, 0x01, 0xeb, 0x6a, 0x21, 0x7f, 0xce, 0x95, 0xa0, 0xe2,
+	0x59, 0x13, 0x4c, 0x94, 0x84, 0xfc, 0x0b, 0x58, 0x2f, 0x85, 0xfb, 0x00, 0x96, 0xfb, 0x44, 0xa9,
+	0x73, 0x66, 0xaf, 0x7a, 0xb6, 0x67, 0x07, 0x65, 0x02, 0xfe, 0xcf, 0x99, 0xed, 0x36, 0x5b, 0xc5,
+	0xb5, 0xf4, 0xfe, 0x67, 0x2d, 0xd9, 0x0b, 0xa8, 0x51, 0x34, 0x71, 0xfc, 0x61, 0x35, 0x91, 0xf3,
+	0xe3, 0x33, 0x61, 0x29, 0xf6, 0x1a, 0xea, 0x7a, 0x14, 0xa1, 0x8d, 0x76, 0xad, 0xfa, 0x72, 0xd8,
+	0xd9, 0x44, 0x0e, 0xfa, 0x17, 0x70, 0x67, 0x2e, 0xf0, 0xec, 0x08, 0xd6, 0xa2, 0x44, 0x76, 0x3b,
+	0x32, 0x92, 0x71, 0x88, 0xda, 0x4d, 0x37, 0x17, 0x05, 0xfb, 0x97, 0xce, 0x12, 0x54, 0xe8, 0x73,
+	0xeb, 0x32, 0xc7, 0xfa, 0x1d, 0x80, 0xd9, 0x8d, 0xd9, 0x06, 0xd4, 0x6d, 0x08, 0xf2, 0x1f, 0xcd,
+	0xaa, 0xc8, 0x5f, 0x58, 0x0b, 0xc0, 0x60, 0xa8, 0x91, 0xb2, 0x25, 0x5a, 0xca, 0xc2, 0x52, 0xa8,
+	0x74, 0xd6, 0xbe, 0x5f, 0xb5, 0xbc, 0x1f, 0x57, 0x2d, 0xef, 0xf7, 0x55, 0xcb, 0xfb, 0x13, 0x00,
+	0x00, 0xff, 0xff, 0x52, 0xea, 0xe2, 0x89, 0x7b, 0x06, 0x00, 0x00,
 }
 
-func (this *HTTPIngressPath) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*HTTPIngressPath)
-	if !ok {
-		that2, ok := that.(HTTPIngressPath)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Path != that1.Path {
-		return false
-	}
-	if !this.Backend.Equal(that1.Backend) {
-		return false
-	}
-	return true
-}
-func (this *HTTPIngressRuleValue) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*HTTPIngressRuleValue)
-	if !ok {
-		that2, ok := that.(HTTPIngressRuleValue)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if len(this.Paths) != len(that1.Paths) {
-		return false
-	}
-	for i := range this.Paths {
-		if !this.Paths[i].Equal(that1.Paths[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *Ingress) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*Ingress)
-	if !ok {
-		that2, ok := that.(Ingress)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if !this.Spec.Equal(that1.Spec) {
-		return false
-	}
-	if !this.Status.Equal(that1.Status) {
-		return false
-	}
-	return true
-}
-func (this *IngressBackend) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*IngressBackend)
-	if !ok {
-		that2, ok := that.(IngressBackend)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.ServiceName != that1.ServiceName {
-		return false
-	}
-	if !this.ServicePort.Equal(that1.ServicePort) {
-		return false
-	}
-	return true
-}
-func (this *IngressList) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*IngressList)
-	if !ok {
-		that2, ok := that.(IngressList)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if len(this.Items) != len(that1.Items) {
-		return false
-	}
-	for i := range this.Items {
-		if !this.Items[i].Equal(that1.Items[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *IngressRule) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*IngressRule)
-	if !ok {
-		that2, ok := that.(IngressRule)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Host != that1.Host {
-		return false
-	}
-	if !this.IngressRuleValue.Equal(that1.IngressRuleValue) {
-		return false
-	}
-	return true
-}
-func (this *IngressRuleValue) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*IngressRuleValue)
-	if !ok {
-		that2, ok := that.(IngressRuleValue)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Http.Equal(that1.Http) {
-		return false
-	}
-	return true
-}
-func (this *IngressSpec) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*IngressSpec)
-	if !ok {
-		that2, ok := that.(IngressSpec)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Backend.Equal(that1.Backend) {
-		return false
-	}
-	if len(this.Tls) != len(that1.Tls) {
-		return false
-	}
-	for i := range this.Tls {
-		if !this.Tls[i].Equal(that1.Tls[i]) {
-			return false
-		}
-	}
-	if len(this.Rules) != len(that1.Rules) {
-		return false
-	}
-	for i := range this.Rules {
-		if !this.Rules[i].Equal(that1.Rules[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *IngressStatus) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*IngressStatus)
-	if !ok {
-		that2, ok := that.(IngressStatus)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.LoadBalancer.Equal(that1.LoadBalancer) {
-		return false
-	}
-	return true
-}
-func (this *IngressTLS) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*IngressTLS)
-	if !ok {
-		that2, ok := that.(IngressTLS)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if len(this.Hosts) != len(that1.Hosts) {
-		return false
-	}
-	for i := range this.Hosts {
-		if this.Hosts[i] != that1.Hosts[i] {
-			return false
-		}
-	}
-	if this.SecretName != that1.SecretName {
-		return false
-	}
-	return true
-}
-func (this *HTTPIngressPath) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_networking_v1beta1.HTTPIngressPath{")
-	s = append(s, "Path: "+fmt.Sprintf("%#v", this.Path)+",\n")
-	if this.Backend != nil {
-		s = append(s, "Backend: "+fmt.Sprintf("%#v", this.Backend)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *HTTPIngressRuleValue) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 5)
-	s = append(s, "&k8s_io_api_networking_v1beta1.HTTPIngressRuleValue{")
-	if this.Paths != nil {
-		s = append(s, "Paths: "+fmt.Sprintf("%#v", this.Paths)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *Ingress) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 7)
-	s = append(s, "&k8s_io_api_networking_v1beta1.Ingress{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Spec != nil {
-		s = append(s, "Spec: "+fmt.Sprintf("%#v", this.Spec)+",\n")
-	}
-	if this.Status != nil {
-		s = append(s, "Status: "+fmt.Sprintf("%#v", this.Status)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *IngressBackend) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_networking_v1beta1.IngressBackend{")
-	s = append(s, "ServiceName: "+fmt.Sprintf("%#v", this.ServiceName)+",\n")
-	if this.ServicePort != nil {
-		s = append(s, "ServicePort: "+fmt.Sprintf("%#v", this.ServicePort)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *IngressList) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_networking_v1beta1.IngressList{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Items != nil {
-		s = append(s, "Items: "+fmt.Sprintf("%#v", this.Items)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *IngressRule) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_networking_v1beta1.IngressRule{")
-	s = append(s, "Host: "+fmt.Sprintf("%#v", this.Host)+",\n")
-	if this.IngressRuleValue != nil {
-		s = append(s, "IngressRuleValue: "+fmt.Sprintf("%#v", this.IngressRuleValue)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *IngressRuleValue) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 5)
-	s = append(s, "&k8s_io_api_networking_v1beta1.IngressRuleValue{")
-	if this.Http != nil {
-		s = append(s, "Http: "+fmt.Sprintf("%#v", this.Http)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *IngressSpec) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 7)
-	s = append(s, "&k8s_io_api_networking_v1beta1.IngressSpec{")
-	if this.Backend != nil {
-		s = append(s, "Backend: "+fmt.Sprintf("%#v", this.Backend)+",\n")
-	}
-	if this.Tls != nil {
-		s = append(s, "Tls: "+fmt.Sprintf("%#v", this.Tls)+",\n")
-	}
-	if this.Rules != nil {
-		s = append(s, "Rules: "+fmt.Sprintf("%#v", this.Rules)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *IngressStatus) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 5)
-	s = append(s, "&k8s_io_api_networking_v1beta1.IngressStatus{")
-	if this.LoadBalancer != nil {
-		s = append(s, "LoadBalancer: "+fmt.Sprintf("%#v", this.LoadBalancer)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *IngressTLS) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_networking_v1beta1.IngressTLS{")
-	if this.Hosts != nil {
-		s = append(s, "Hosts: "+fmt.Sprintf("%#v", this.Hosts)+",\n")
-	}
-	s = append(s, "SecretName: "+fmt.Sprintf("%#v", this.SecretName)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func valueToGoStringGenerated(v interface{}, typ string) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("func(v %v) *%v { return &v } ( %#v )", typ, typ, pv)
-}
 func (m *HTTPIngressPath) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -1150,6 +745,10 @@ func (m *HTTPIngressPath) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Backend != nil {
 		{
 			size, err := m.Backend.MarshalToSizedBuffer(dAtA[:i])
@@ -1162,11 +761,13 @@ func (m *HTTPIngressPath) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x12
 	}
-	i -= len(m.Path)
-	copy(dAtA[i:], m.Path)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Path)))
-	i--
-	dAtA[i] = 0xa
+	if m.Path != nil {
+		i -= len(*m.Path)
+		copy(dAtA[i:], *m.Path)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Path)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -1190,6 +791,10 @@ func (m *HTTPIngressRuleValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Paths) > 0 {
 		for iNdEx := len(m.Paths) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -1227,6 +832,10 @@ func (m *Ingress) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Status != nil {
 		{
 			size, err := m.Status.MarshalToSizedBuffer(dAtA[:i])
@@ -1286,6 +895,10 @@ func (m *IngressBackend) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.ServicePort != nil {
 		{
 			size, err := m.ServicePort.MarshalToSizedBuffer(dAtA[:i])
@@ -1298,11 +911,13 @@ func (m *IngressBackend) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x12
 	}
-	i -= len(m.ServiceName)
-	copy(dAtA[i:], m.ServiceName)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.ServiceName)))
-	i--
-	dAtA[i] = 0xa
+	if m.ServiceName != nil {
+		i -= len(*m.ServiceName)
+		copy(dAtA[i:], *m.ServiceName)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.ServiceName)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -1326,6 +941,10 @@ func (m *IngressList) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Items) > 0 {
 		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -1375,6 +994,10 @@ func (m *IngressRule) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.IngressRuleValue != nil {
 		{
 			size, err := m.IngressRuleValue.MarshalToSizedBuffer(dAtA[:i])
@@ -1387,11 +1010,13 @@ func (m *IngressRule) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x12
 	}
-	i -= len(m.Host)
-	copy(dAtA[i:], m.Host)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Host)))
-	i--
-	dAtA[i] = 0xa
+	if m.Host != nil {
+		i -= len(*m.Host)
+		copy(dAtA[i:], *m.Host)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Host)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -1415,6 +1040,10 @@ func (m *IngressRuleValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Http != nil {
 		{
 			size, err := m.Http.MarshalToSizedBuffer(dAtA[:i])
@@ -1450,6 +1079,10 @@ func (m *IngressSpec) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Rules) > 0 {
 		for iNdEx := len(m.Rules) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -1513,6 +1146,10 @@ func (m *IngressStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.LoadBalancer != nil {
 		{
 			size, err := m.LoadBalancer.MarshalToSizedBuffer(dAtA[:i])
@@ -1548,11 +1185,17 @@ func (m *IngressTLS) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	i -= len(m.SecretName)
-	copy(dAtA[i:], m.SecretName)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.SecretName)))
-	i--
-	dAtA[i] = 0x12
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.SecretName != nil {
+		i -= len(*m.SecretName)
+		copy(dAtA[i:], *m.SecretName)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.SecretName)))
+		i--
+		dAtA[i] = 0x12
+	}
 	if len(m.Hosts) > 0 {
 		for iNdEx := len(m.Hosts) - 1; iNdEx >= 0; iNdEx-- {
 			i -= len(m.Hosts[iNdEx])
@@ -1582,11 +1225,16 @@ func (m *HTTPIngressPath) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Path)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.Path != nil {
+		l = len(*m.Path)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if m.Backend != nil {
 		l = m.Backend.Size()
 		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -1602,6 +1250,9 @@ func (m *HTTPIngressRuleValue) Size() (n int) {
 			l = e.Size()
 			n += 1 + l + sovGenerated(uint64(l))
 		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -1624,6 +1275,9 @@ func (m *Ingress) Size() (n int) {
 		l = m.Status.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -1633,11 +1287,16 @@ func (m *IngressBackend) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.ServiceName)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.ServiceName != nil {
+		l = len(*m.ServiceName)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if m.ServicePort != nil {
 		l = m.ServicePort.Size()
 		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -1658,6 +1317,9 @@ func (m *IngressList) Size() (n int) {
 			n += 1 + l + sovGenerated(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -1667,11 +1329,16 @@ func (m *IngressRule) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Host)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.Host != nil {
+		l = len(*m.Host)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if m.IngressRuleValue != nil {
 		l = m.IngressRuleValue.Size()
 		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -1685,6 +1352,9 @@ func (m *IngressRuleValue) Size() (n int) {
 	if m.Http != nil {
 		l = m.Http.Size()
 		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -1711,6 +1381,9 @@ func (m *IngressSpec) Size() (n int) {
 			n += 1 + l + sovGenerated(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -1723,6 +1396,9 @@ func (m *IngressStatus) Size() (n int) {
 	if m.LoadBalancer != nil {
 		l = m.LoadBalancer.Size()
 		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -1739,8 +1415,13 @@ func (m *IngressTLS) Size() (n int) {
 			n += 1 + l + sovGenerated(uint64(l))
 		}
 	}
-	l = len(m.SecretName)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.SecretName != nil {
+		l = len(*m.SecretName)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -1749,143 +1430,6 @@ func sovGenerated(x uint64) (n int) {
 }
 func sozGenerated(x uint64) (n int) {
 	return sovGenerated(uint64((x << 1) ^ uint64((int64(x) >> 63))))
-}
-func (this *HTTPIngressPath) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&HTTPIngressPath{`,
-		`Path:` + fmt.Sprintf("%v", this.Path) + `,`,
-		`Backend:` + strings.Replace(this.Backend.String(), "IngressBackend", "IngressBackend", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *HTTPIngressRuleValue) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForPaths := "[]*HTTPIngressPath{"
-	for _, f := range this.Paths {
-		repeatedStringForPaths += strings.Replace(f.String(), "HTTPIngressPath", "HTTPIngressPath", 1) + ","
-	}
-	repeatedStringForPaths += "}"
-	s := strings.Join([]string{`&HTTPIngressRuleValue{`,
-		`Paths:` + repeatedStringForPaths + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *Ingress) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&Ingress{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ObjectMeta", "v1.ObjectMeta", 1) + `,`,
-		`Spec:` + strings.Replace(this.Spec.String(), "IngressSpec", "IngressSpec", 1) + `,`,
-		`Status:` + strings.Replace(this.Status.String(), "IngressStatus", "IngressStatus", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *IngressBackend) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&IngressBackend{`,
-		`ServiceName:` + fmt.Sprintf("%v", this.ServiceName) + `,`,
-		`ServicePort:` + strings.Replace(fmt.Sprintf("%v", this.ServicePort), "IntOrString", "intstr.IntOrString", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *IngressList) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForItems := "[]*Ingress{"
-	for _, f := range this.Items {
-		repeatedStringForItems += strings.Replace(f.String(), "Ingress", "Ingress", 1) + ","
-	}
-	repeatedStringForItems += "}"
-	s := strings.Join([]string{`&IngressList{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ListMeta", "v1.ListMeta", 1) + `,`,
-		`Items:` + repeatedStringForItems + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *IngressRule) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&IngressRule{`,
-		`Host:` + fmt.Sprintf("%v", this.Host) + `,`,
-		`IngressRuleValue:` + strings.Replace(this.IngressRuleValue.String(), "IngressRuleValue", "IngressRuleValue", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *IngressRuleValue) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&IngressRuleValue{`,
-		`Http:` + strings.Replace(this.Http.String(), "HTTPIngressRuleValue", "HTTPIngressRuleValue", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *IngressSpec) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForTls := "[]*IngressTLS{"
-	for _, f := range this.Tls {
-		repeatedStringForTls += strings.Replace(f.String(), "IngressTLS", "IngressTLS", 1) + ","
-	}
-	repeatedStringForTls += "}"
-	repeatedStringForRules := "[]*IngressRule{"
-	for _, f := range this.Rules {
-		repeatedStringForRules += strings.Replace(f.String(), "IngressRule", "IngressRule", 1) + ","
-	}
-	repeatedStringForRules += "}"
-	s := strings.Join([]string{`&IngressSpec{`,
-		`Backend:` + strings.Replace(this.Backend.String(), "IngressBackend", "IngressBackend", 1) + `,`,
-		`Tls:` + repeatedStringForTls + `,`,
-		`Rules:` + repeatedStringForRules + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *IngressStatus) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&IngressStatus{`,
-		`LoadBalancer:` + strings.Replace(fmt.Sprintf("%v", this.LoadBalancer), "LoadBalancerStatus", "v11.LoadBalancerStatus", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *IngressTLS) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&IngressTLS{`,
-		`Hosts:` + fmt.Sprintf("%v", this.Hosts) + `,`,
-		`SecretName:` + fmt.Sprintf("%v", this.SecretName) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func valueToStringGenerated(v interface{}) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("*%v", pv)
 }
 func (m *HTTPIngressPath) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
@@ -1946,7 +1490,8 @@ func (m *HTTPIngressPath) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Path = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Path = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -1996,6 +1541,7 @@ func (m *HTTPIngressPath) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -2080,6 +1626,7 @@ func (m *HTTPIngressRuleValue) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -2238,6 +1785,7 @@ func (m *Ingress) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -2306,7 +1854,8 @@ func (m *IngressBackend) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.ServiceName = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.ServiceName = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -2356,6 +1905,7 @@ func (m *IngressBackend) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -2476,6 +2026,7 @@ func (m *IngressList) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -2544,7 +2095,8 @@ func (m *IngressRule) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Host = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Host = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -2594,6 +2146,7 @@ func (m *IngressRule) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -2680,6 +2233,7 @@ func (m *IngressRuleValue) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -2834,6 +2388,7 @@ func (m *IngressSpec) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -2920,6 +2475,7 @@ func (m *IngressStatus) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3020,7 +2576,8 @@ func (m *IngressTLS) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.SecretName = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.SecretName = &s
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -3034,6 +2591,7 @@ func (m *IngressTLS) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}

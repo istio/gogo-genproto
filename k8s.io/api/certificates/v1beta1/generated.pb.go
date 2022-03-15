@@ -4,18 +4,14 @@
 package k8s_io_api_certificates_v1beta1
 
 import (
-	bytes "bytes"
 	fmt "fmt"
 	proto "github.com/gogo/protobuf/proto"
-	github_com_gogo_protobuf_sortkeys "github.com/gogo/protobuf/sortkeys"
 	io "io"
 	v1 "istio.io/gogo-genproto/k8s.io/apimachinery/pkg/apis/meta/v1"
 	_ "istio.io/gogo-genproto/k8s.io/apimachinery/pkg/runtime"
 	_ "istio.io/gogo-genproto/k8s.io/apimachinery/pkg/runtime/schema"
 	math "math"
 	math_bits "math/bits"
-	reflect "reflect"
-	strings "strings"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -38,11 +34,15 @@ type CertificateSigningRequest struct {
 	Spec *CertificateSigningRequestSpec `protobuf:"bytes,2,opt,name=spec" json:"spec,omitempty"`
 	// Derived information about the request.
 	// +optional
-	Status *CertificateSigningRequestStatus `protobuf:"bytes,3,opt,name=status" json:"status,omitempty"`
+	Status               *CertificateSigningRequestStatus `protobuf:"bytes,3,opt,name=status" json:"status,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                         `json:"-"`
+	XXX_unrecognized     []byte                           `json:"-"`
+	XXX_sizecache        int32                            `json:"-"`
 }
 
-func (m *CertificateSigningRequest) Reset()      { *m = CertificateSigningRequest{} }
-func (*CertificateSigningRequest) ProtoMessage() {}
+func (m *CertificateSigningRequest) Reset()         { *m = CertificateSigningRequest{} }
+func (m *CertificateSigningRequest) String() string { return proto.CompactTextString(m) }
+func (*CertificateSigningRequest) ProtoMessage()    {}
 func (*CertificateSigningRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_6529c11a462c48a5, []int{0}
 }
@@ -96,20 +96,24 @@ func (m *CertificateSigningRequest) GetStatus() *CertificateSigningRequestStatus
 
 type CertificateSigningRequestCondition struct {
 	// request approval state, currently Approved or Denied.
-	Type string `protobuf:"bytes,1,opt,name=type" json:"type"`
+	Type *string `protobuf:"bytes,1,opt,name=type" json:"type,omitempty"`
 	// brief reason for the request state
 	// +optional
-	Reason string `protobuf:"bytes,2,opt,name=reason" json:"reason"`
+	Reason *string `protobuf:"bytes,2,opt,name=reason" json:"reason,omitempty"`
 	// human readable message with details about the request state
 	// +optional
-	Message string `protobuf:"bytes,3,opt,name=message" json:"message"`
+	Message *string `protobuf:"bytes,3,opt,name=message" json:"message,omitempty"`
 	// timestamp for the last update to this condition
 	// +optional
-	LastUpdateTime *v1.Time `protobuf:"bytes,4,opt,name=lastUpdateTime" json:"lastUpdateTime,omitempty"`
+	LastUpdateTime       *v1.Time `protobuf:"bytes,4,opt,name=lastUpdateTime" json:"lastUpdateTime,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *CertificateSigningRequestCondition) Reset()      { *m = CertificateSigningRequestCondition{} }
-func (*CertificateSigningRequestCondition) ProtoMessage() {}
+func (m *CertificateSigningRequestCondition) Reset()         { *m = CertificateSigningRequestCondition{} }
+func (m *CertificateSigningRequestCondition) String() string { return proto.CompactTextString(m) }
+func (*CertificateSigningRequestCondition) ProtoMessage()    {}
 func (*CertificateSigningRequestCondition) Descriptor() ([]byte, []int) {
 	return fileDescriptor_6529c11a462c48a5, []int{1}
 }
@@ -141,22 +145,22 @@ func (m *CertificateSigningRequestCondition) XXX_DiscardUnknown() {
 var xxx_messageInfo_CertificateSigningRequestCondition proto.InternalMessageInfo
 
 func (m *CertificateSigningRequestCondition) GetType() string {
-	if m != nil {
-		return m.Type
+	if m != nil && m.Type != nil {
+		return *m.Type
 	}
 	return ""
 }
 
 func (m *CertificateSigningRequestCondition) GetReason() string {
-	if m != nil {
-		return m.Reason
+	if m != nil && m.Reason != nil {
+		return *m.Reason
 	}
 	return ""
 }
 
 func (m *CertificateSigningRequestCondition) GetMessage() string {
-	if m != nil {
-		return m.Message
+	if m != nil && m.Message != nil {
+		return *m.Message
 	}
 	return ""
 }
@@ -170,12 +174,16 @@ func (m *CertificateSigningRequestCondition) GetLastUpdateTime() *v1.Time {
 
 type CertificateSigningRequestList struct {
 	// +optional
-	Metadata *v1.ListMeta                 `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
-	Items    []*CertificateSigningRequest `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	Metadata             *v1.ListMeta                 `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
+	Items                []*CertificateSigningRequest `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                     `json:"-"`
+	XXX_unrecognized     []byte                       `json:"-"`
+	XXX_sizecache        int32                        `json:"-"`
 }
 
-func (m *CertificateSigningRequestList) Reset()      { *m = CertificateSigningRequestList{} }
-func (*CertificateSigningRequestList) ProtoMessage() {}
+func (m *CertificateSigningRequestList) Reset()         { *m = CertificateSigningRequestList{} }
+func (m *CertificateSigningRequestList) String() string { return proto.CompactTextString(m) }
+func (*CertificateSigningRequestList) ProtoMessage()    {}
 func (*CertificateSigningRequestList) Descriptor() ([]byte, []int) {
 	return fileDescriptor_6529c11a462c48a5, []int{2}
 }
@@ -225,7 +233,7 @@ func (m *CertificateSigningRequestList) GetItems() []*CertificateSigningRequest 
 // Kubernetes and cannot be modified by users.
 type CertificateSigningRequestSpec struct {
 	// Base64-encoded PKCS#10 CSR data
-	Request []byte `protobuf:"bytes,1,opt,name=request" json:"request"`
+	Request []byte `protobuf:"bytes,1,opt,name=request" json:"request,omitempty"`
 	// allowedUsages specifies a set of usage contexts the key will be
 	// valid for.
 	// See: https://tools.ietf.org/html/rfc5280#section-4.2.1.3
@@ -234,11 +242,11 @@ type CertificateSigningRequestSpec struct {
 	// Information about the requesting user.
 	// See user.Info interface for details.
 	// +optional
-	Username string `protobuf:"bytes,2,opt,name=username" json:"username"`
+	Username *string `protobuf:"bytes,2,opt,name=username" json:"username,omitempty"`
 	// UID information about the requesting user.
 	// See user.Info interface for details.
 	// +optional
-	Uid string `protobuf:"bytes,3,opt,name=uid" json:"uid"`
+	Uid *string `protobuf:"bytes,3,opt,name=uid" json:"uid,omitempty"`
 	// Group information about the requesting user.
 	// See user.Info interface for details.
 	// +optional
@@ -246,11 +254,15 @@ type CertificateSigningRequestSpec struct {
 	// Extra information about the requesting user.
 	// See user.Info interface for details.
 	// +optional
-	Extra map[string]*ExtraValue `protobuf:"bytes,6,rep,name=extra" json:"extra,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Extra                map[string]*ExtraValue `protobuf:"bytes,6,rep,name=extra" json:"extra,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	XXX_NoUnkeyedLiteral struct{}               `json:"-"`
+	XXX_unrecognized     []byte                 `json:"-"`
+	XXX_sizecache        int32                  `json:"-"`
 }
 
-func (m *CertificateSigningRequestSpec) Reset()      { *m = CertificateSigningRequestSpec{} }
-func (*CertificateSigningRequestSpec) ProtoMessage() {}
+func (m *CertificateSigningRequestSpec) Reset()         { *m = CertificateSigningRequestSpec{} }
+func (m *CertificateSigningRequestSpec) String() string { return proto.CompactTextString(m) }
+func (*CertificateSigningRequestSpec) ProtoMessage()    {}
 func (*CertificateSigningRequestSpec) Descriptor() ([]byte, []int) {
 	return fileDescriptor_6529c11a462c48a5, []int{3}
 }
@@ -296,15 +308,15 @@ func (m *CertificateSigningRequestSpec) GetUsages() []string {
 }
 
 func (m *CertificateSigningRequestSpec) GetUsername() string {
-	if m != nil {
-		return m.Username
+	if m != nil && m.Username != nil {
+		return *m.Username
 	}
 	return ""
 }
 
 func (m *CertificateSigningRequestSpec) GetUid() string {
-	if m != nil {
-		return m.Uid
+	if m != nil && m.Uid != nil {
+		return *m.Uid
 	}
 	return ""
 }
@@ -329,11 +341,15 @@ type CertificateSigningRequestStatus struct {
 	Conditions []*CertificateSigningRequestCondition `protobuf:"bytes,1,rep,name=conditions" json:"conditions,omitempty"`
 	// If request was approved, the controller will place the issued certificate here.
 	// +optional
-	Certificate []byte `protobuf:"bytes,2,opt,name=certificate" json:"certificate"`
+	Certificate          []byte   `protobuf:"bytes,2,opt,name=certificate" json:"certificate,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *CertificateSigningRequestStatus) Reset()      { *m = CertificateSigningRequestStatus{} }
-func (*CertificateSigningRequestStatus) ProtoMessage() {}
+func (m *CertificateSigningRequestStatus) Reset()         { *m = CertificateSigningRequestStatus{} }
+func (m *CertificateSigningRequestStatus) String() string { return proto.CompactTextString(m) }
+func (*CertificateSigningRequestStatus) ProtoMessage()    {}
 func (*CertificateSigningRequestStatus) Descriptor() ([]byte, []int) {
 	return fileDescriptor_6529c11a462c48a5, []int{4}
 }
@@ -382,11 +398,15 @@ func (m *CertificateSigningRequestStatus) GetCertificate() []byte {
 // +protobuf.nullable=true
 // +protobuf.options.(gogoproto.goproto_stringer)=false
 type ExtraValue struct {
-	Items []string `protobuf:"bytes,1,rep,name=items" json:"items,omitempty"`
+	Items                []string `protobuf:"bytes,1,rep,name=items" json:"items,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *ExtraValue) Reset()      { *m = ExtraValue{} }
-func (*ExtraValue) ProtoMessage() {}
+func (m *ExtraValue) Reset()         { *m = ExtraValue{} }
+func (m *ExtraValue) String() string { return proto.CompactTextString(m) }
+func (*ExtraValue) ProtoMessage()    {}
 func (*ExtraValue) Descriptor() ([]byte, []int) {
 	return fileDescriptor_6529c11a462c48a5, []int{5}
 }
@@ -439,371 +459,45 @@ func init() {
 }
 
 var fileDescriptor_6529c11a462c48a5 = []byte{
-	// 630 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x93, 0xbd, 0x6e, 0xd4, 0x4e,
-	0x14, 0xc5, 0x3d, 0xfb, 0xf5, 0x4f, 0x26, 0x7f, 0x51, 0x8c, 0x50, 0x64, 0x22, 0x98, 0xac, 0x5c,
-	0xa0, 0x08, 0xa4, 0x31, 0x89, 0x22, 0x14, 0xa5, 0x40, 0x90, 0x28, 0x05, 0x28, 0x08, 0xe4, 0x00,
-	0xa2, 0x43, 0x13, 0xef, 0xc5, 0x19, 0x36, 0xfe, 0xc0, 0x33, 0x5e, 0xb1, 0x1d, 0x8f, 0x40, 0xc7,
-	0x2b, 0x50, 0xf1, 0x06, 0xf4, 0x29, 0xb7, 0x4c, 0x85, 0x88, 0xd3, 0x50, 0xa6, 0xa3, 0x45, 0x33,
-	0xb6, 0x77, 0x37, 0x59, 0x2d, 0x1b, 0x25, 0xe5, 0x9c, 0xf1, 0xf9, 0xf9, 0x9e, 0x7b, 0xe7, 0x62,
-	0xb7, 0xbb, 0x21, 0x99, 0x88, 0x5d, 0x9e, 0x08, 0xd7, 0x87, 0x54, 0x89, 0xf7, 0xc2, 0xe7, 0x0a,
-	0xa4, 0xdb, 0x5b, 0xdd, 0x07, 0xc5, 0x57, 0xdd, 0x00, 0x22, 0x48, 0xb9, 0x82, 0x0e, 0x4b, 0xd2,
-	0x58, 0xc5, 0x64, 0xb9, 0x30, 0x30, 0x9e, 0x08, 0x36, 0x6e, 0x60, 0xa5, 0x61, 0x69, 0x7d, 0x44,
-	0x0c, 0xb9, 0x7f, 0x20, 0x22, 0x48, 0xfb, 0x6e, 0xd2, 0x0d, 0xb4, 0x20, 0xdd, 0x10, 0x14, 0x77,
-	0x7b, 0x13, 0xd8, 0x25, 0x77, 0x9a, 0x2b, 0xcd, 0x22, 0x25, 0x42, 0x98, 0x30, 0x3c, 0x9c, 0x65,
-	0x90, 0xfe, 0x01, 0x84, 0xfc, 0xa2, 0xcf, 0xf9, 0x5a, 0xc3, 0xb7, 0xb6, 0x47, 0x75, 0xef, 0x89,
-	0x20, 0x12, 0x51, 0xe0, 0xc1, 0xc7, 0x0c, 0xa4, 0x22, 0xbb, 0x78, 0x4e, 0x57, 0xd8, 0xe1, 0x8a,
-	0xdb, 0xa8, 0x8d, 0x56, 0x16, 0xd6, 0x1e, 0xb0, 0x51, 0xe0, 0xe1, 0x8f, 0x58, 0xd2, 0x0d, 0xb4,
-	0x20, 0x99, 0xfe, 0x9a, 0xf5, 0x56, 0xd9, 0x8b, 0xfd, 0x0f, 0xe0, 0xab, 0xe7, 0xa0, 0xb8, 0x37,
-	0x24, 0x10, 0x0f, 0x37, 0x64, 0x02, 0xbe, 0x5d, 0x33, 0xa4, 0x47, 0x6c, 0x46, 0xeb, 0xd8, 0xd4,
-	0xba, 0xf6, 0x12, 0xf0, 0x3d, 0xc3, 0x22, 0x6f, 0x71, 0x4b, 0x2a, 0xae, 0x32, 0x69, 0xd7, 0x0d,
-	0xf5, 0xf1, 0x35, 0xa8, 0x86, 0xe3, 0x95, 0x3c, 0x67, 0x80, 0xb0, 0x33, 0xf5, 0xdb, 0xed, 0x38,
-	0xea, 0x08, 0x25, 0xe2, 0x88, 0xd8, 0xb8, 0xa1, 0xfa, 0x09, 0x98, 0xf6, 0xcc, 0x6f, 0x35, 0x8e,
-	0x7e, 0x2e, 0x5b, 0x9e, 0x51, 0xc8, 0x6d, 0xdc, 0x4a, 0x81, 0xcb, 0x38, 0x32, 0x81, 0xab, 0xbb,
-	0x52, 0x23, 0x14, 0xff, 0x17, 0x82, 0x94, 0x3c, 0x00, 0x53, 0x79, 0x75, 0x5d, 0x89, 0xc4, 0xc3,
-	0x37, 0x0e, 0xb9, 0x54, 0xaf, 0x93, 0x0e, 0x57, 0xf0, 0x4a, 0x84, 0x60, 0x37, 0x4c, 0xc0, 0x7b,
-	0x97, 0x1b, 0x80, 0x76, 0x78, 0x17, 0x08, 0xce, 0x0f, 0x84, 0xef, 0x4c, 0x8d, 0xb4, 0x2b, 0xa4,
-	0x22, 0xcf, 0x26, 0x06, 0xce, 0x2e, 0xf7, 0x3f, 0xed, 0xbe, 0x30, 0xee, 0x97, 0xb8, 0x29, 0x14,
-	0x84, 0xd2, 0xae, 0xb5, 0xeb, 0x2b, 0x0b, 0x6b, 0x9b, 0x57, 0x9f, 0x8c, 0x57, 0x80, 0x9c, 0x3f,
-	0xb5, 0x7f, 0xd4, 0xaf, 0x1f, 0x85, 0xee, 0x6a, 0x5a, 0x1c, 0x4d, 0xf9, 0xff, 0x57, 0x5d, 0x2d,
-	0x45, 0xb2, 0x88, 0x5b, 0x99, 0x6e, 0xaf, 0xb4, 0x9b, 0xed, 0xfa, 0xca, 0xbc, 0x57, 0x9e, 0x48,
-	0x1b, 0xcf, 0x65, 0x12, 0xd2, 0x88, 0x87, 0x70, 0x6e, 0x5a, 0x43, 0x95, 0x2c, 0xe2, 0x7a, 0x26,
-	0x3a, 0xe7, 0x66, 0xa5, 0x05, 0x4d, 0x0c, 0xd2, 0x38, 0x4b, 0xa4, 0xdd, 0x28, 0x88, 0xc5, 0x89,
-	0xbc, 0xc3, 0x4d, 0xf8, 0xa4, 0x52, 0x6e, 0xb7, 0x4c, 0xfa, 0xa7, 0xd7, 0x7b, 0xed, 0x6c, 0x47,
-	0xb3, 0x76, 0x22, 0x95, 0xf6, 0xbd, 0x82, 0xbb, 0xd4, 0xc5, 0x78, 0x24, 0xea, 0xf2, 0xba, 0xd0,
-	0x3f, 0xf7, 0x0a, 0xb5, 0x40, 0x9e, 0xe0, 0x66, 0x8f, 0x1f, 0x66, 0x50, 0x2e, 0xdd, 0xfd, 0x99,
-	0x65, 0x18, 0xe6, 0x1b, 0x6d, 0xf1, 0x0a, 0xe7, 0x66, 0x6d, 0x03, 0x39, 0xdf, 0x11, 0x5e, 0x9e,
-	0xb1, 0x38, 0xc4, 0xc7, 0xd8, 0xaf, 0xd6, 0x42, 0xda, 0xc8, 0xc4, 0xde, 0xbe, 0x7a, 0xec, 0xe1,
-	0x8a, 0x79, 0x63, 0x58, 0x72, 0x17, 0x2f, 0x8c, 0x61, 0x4c, 0xaa, 0x6a, 0xc8, 0xe3, 0x17, 0x8e,
-	0x53, 0x76, 0xc7, 0x24, 0x21, 0x37, 0xab, 0xa7, 0x88, 0xcc, 0x8c, 0x8a, 0xc3, 0xd6, 0xfa, 0xe0,
-	0x84, 0x5a, 0xc7, 0x27, 0xd4, 0x3a, 0x3b, 0xa1, 0xe8, 0x73, 0x4e, 0xd1, 0xb7, 0x9c, 0xa2, 0xa3,
-	0x9c, 0xa2, 0x41, 0x4e, 0xd1, 0xaf, 0x9c, 0xa2, 0xdf, 0x39, 0xb5, 0xce, 0x72, 0x8a, 0xbe, 0x9c,
-	0x52, 0x6b, 0x70, 0x4a, 0xad, 0xe3, 0x53, 0x6a, 0xfd, 0x0d, 0x00, 0x00, 0xff, 0xff, 0x7f, 0xe9,
-	0x34, 0x8c, 0x23, 0x06, 0x00, 0x00,
+	// 570 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x93, 0xdd, 0x6a, 0x13, 0x41,
+	0x14, 0xc7, 0x99, 0x7c, 0xd4, 0xe6, 0x24, 0x88, 0x0c, 0x22, 0x6b, 0xc0, 0x34, 0xec, 0x55, 0x51,
+	0x98, 0x35, 0x45, 0xa4, 0xf4, 0x42, 0xd4, 0xd0, 0x0b, 0xa5, 0xa2, 0x4c, 0x55, 0xbc, 0x93, 0xe9,
+	0xee, 0x71, 0x3b, 0xa6, 0xfb, 0xe1, 0xcc, 0x6c, 0x30, 0x4f, 0xe2, 0x2b, 0xf8, 0x12, 0x7a, 0xed,
+	0xa5, 0x6f, 0xa0, 0xe4, 0x49, 0x64, 0x66, 0x37, 0x1f, 0x24, 0xc4, 0x94, 0xf6, 0x6e, 0xce, 0xb0,
+	0xff, 0xdf, 0x9e, 0xff, 0xf9, 0x9f, 0x81, 0x60, 0x74, 0xa8, 0x99, 0xcc, 0x02, 0x91, 0xcb, 0x20,
+	0x44, 0x65, 0xe4, 0x27, 0x19, 0x0a, 0x83, 0x3a, 0x18, 0x0f, 0xce, 0xd0, 0x88, 0x41, 0x10, 0x63,
+	0x8a, 0x4a, 0x18, 0x8c, 0x58, 0xae, 0x32, 0x93, 0xd1, 0xbd, 0x52, 0xc0, 0x44, 0x2e, 0xd9, 0xb2,
+	0x80, 0x55, 0x82, 0xee, 0xa3, 0x05, 0x31, 0x11, 0xe1, 0xb9, 0x4c, 0x51, 0x4d, 0x82, 0x7c, 0x14,
+	0xdb, 0x0b, 0x1d, 0x24, 0x68, 0x44, 0x30, 0x5e, 0xc3, 0x76, 0x83, 0x4d, 0x2a, 0x55, 0xa4, 0x46,
+	0x26, 0xb8, 0x26, 0x78, 0xbc, 0x4d, 0xa0, 0xc3, 0x73, 0x4c, 0xc4, 0xaa, 0xce, 0xff, 0x56, 0x83,
+	0xbb, 0xc3, 0x45, 0xdf, 0xa7, 0x32, 0x4e, 0x65, 0x1a, 0x73, 0xfc, 0x52, 0xa0, 0x36, 0xf4, 0x04,
+	0x76, 0x6d, 0x87, 0x91, 0x30, 0xc2, 0x23, 0x7d, 0xb2, 0xdf, 0x3e, 0x78, 0xc8, 0x16, 0x86, 0xe7,
+	0x3f, 0x62, 0xf9, 0x28, 0xb6, 0x17, 0x9a, 0xd9, 0xaf, 0xd9, 0x78, 0xc0, 0x5e, 0x9f, 0x7d, 0xc6,
+	0xd0, 0xbc, 0x42, 0x23, 0xf8, 0x9c, 0x40, 0x39, 0x34, 0x74, 0x8e, 0xa1, 0x57, 0x73, 0xa4, 0x27,
+	0x6c, 0xcb, 0xe8, 0xd8, 0xc6, 0xbe, 0x4e, 0x73, 0x0c, 0xb9, 0x63, 0xd1, 0x0f, 0xb0, 0xa3, 0x8d,
+	0x30, 0x85, 0xf6, 0xea, 0x8e, 0xfa, 0xf4, 0x1a, 0x54, 0xc7, 0xe1, 0x15, 0xcf, 0xff, 0x49, 0xc0,
+	0xdf, 0xf8, 0xed, 0x30, 0x4b, 0x23, 0x69, 0x64, 0x96, 0x52, 0x0a, 0x0d, 0x33, 0xc9, 0xd1, 0x8d,
+	0xa7, 0xc5, 0xdd, 0x99, 0xde, 0x81, 0x1d, 0x85, 0x42, 0x67, 0xa9, 0xb3, 0xda, 0xe2, 0x55, 0x45,
+	0x3d, 0xb8, 0x91, 0xa0, 0xd6, 0x22, 0x46, 0xd7, 0x6d, 0x8b, 0xcf, 0x4a, 0xca, 0xe1, 0xe6, 0x85,
+	0xd0, 0xe6, 0x5d, 0x1e, 0x09, 0x83, 0x6f, 0x65, 0x82, 0x5e, 0xc3, 0xd9, 0xb9, 0x7f, 0xb9, 0x71,
+	0x5b, 0x05, 0x5f, 0x21, 0xf8, 0x3f, 0x08, 0xdc, 0xdb, 0x68, 0xe0, 0x44, 0x6a, 0x43, 0x5f, 0xae,
+	0xc5, 0xcb, 0x2e, 0xf7, 0x3f, 0xab, 0x5e, 0x09, 0xf7, 0x0d, 0x34, 0xa5, 0xc1, 0x44, 0x7b, 0xb5,
+	0x7e, 0x7d, 0xbf, 0x7d, 0x70, 0x74, 0xf5, 0x1c, 0x78, 0x09, 0xf2, 0xff, 0xd4, 0xfe, 0xd3, 0xbf,
+	0x5d, 0x01, 0x3b, 0x4f, 0x55, 0x96, 0xae, 0xfd, 0x0e, 0x9f, 0x95, 0x36, 0x81, 0xc2, 0x0e, 0x56,
+	0x7b, 0xcd, 0x7e, 0xdd, 0x26, 0x50, 0x56, 0xb4, 0x0b, 0xbb, 0x85, 0x46, 0x95, 0x8a, 0x04, 0xab,
+	0x6c, 0xe6, 0x35, 0xbd, 0x05, 0xf5, 0x42, 0x46, 0x55, 0x32, 0xf6, 0x68, 0x29, 0xb1, 0xca, 0x8a,
+	0x5c, 0x7b, 0x8d, 0x92, 0x52, 0x56, 0xf4, 0x23, 0x34, 0xf1, 0xab, 0x51, 0xc2, 0xdb, 0x71, 0x5e,
+	0x5f, 0x5c, 0x6f, 0x93, 0xd9, 0xb1, 0x65, 0x1d, 0xa7, 0x46, 0x4d, 0x78, 0xc9, 0xed, 0x22, 0xc0,
+	0xe2, 0xd2, 0x36, 0x36, 0xc2, 0x49, 0xb5, 0x61, 0xf6, 0x48, 0x9f, 0x41, 0x73, 0x2c, 0x2e, 0x0a,
+	0xac, 0x9e, 0xd2, 0x83, 0xad, 0x0d, 0x38, 0xda, 0x7b, 0x2b, 0xe1, 0xa5, 0xf2, 0xa8, 0x76, 0x48,
+	0xfc, 0xef, 0x04, 0xf6, 0xb6, 0x3c, 0x07, 0x1a, 0x02, 0x84, 0xb3, 0x65, 0xd7, 0x1e, 0x71, 0x86,
+	0x87, 0x57, 0x37, 0x3c, 0x7f, 0x38, 0x7c, 0x09, 0x4b, 0xfb, 0xd0, 0x5e, 0xc2, 0x38, 0x57, 0x1d,
+	0xbe, 0x7c, 0xe5, 0xfb, 0xd5, 0x44, 0x9c, 0x07, 0x7a, 0x7b, 0xb6, 0x6c, 0xc4, 0xe5, 0x52, 0x16,
+	0xcf, 0x3b, 0xbf, 0xa6, 0x3d, 0xf2, 0x7b, 0xda, 0x23, 0x7f, 0xa7, 0x3d, 0xf2, 0x2f, 0x00, 0x00,
+	0xff, 0xff, 0x9c, 0x27, 0xf0, 0x55, 0xcb, 0x05, 0x00, 0x00,
 }
 
-func (this *CertificateSigningRequest) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*CertificateSigningRequest)
-	if !ok {
-		that2, ok := that.(CertificateSigningRequest)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if !this.Spec.Equal(that1.Spec) {
-		return false
-	}
-	if !this.Status.Equal(that1.Status) {
-		return false
-	}
-	return true
-}
-func (this *CertificateSigningRequestCondition) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*CertificateSigningRequestCondition)
-	if !ok {
-		that2, ok := that.(CertificateSigningRequestCondition)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Type != that1.Type {
-		return false
-	}
-	if this.Reason != that1.Reason {
-		return false
-	}
-	if this.Message != that1.Message {
-		return false
-	}
-	if !this.LastUpdateTime.Equal(that1.LastUpdateTime) {
-		return false
-	}
-	return true
-}
-func (this *CertificateSigningRequestList) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*CertificateSigningRequestList)
-	if !ok {
-		that2, ok := that.(CertificateSigningRequestList)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if len(this.Items) != len(that1.Items) {
-		return false
-	}
-	for i := range this.Items {
-		if !this.Items[i].Equal(that1.Items[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *CertificateSigningRequestSpec) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*CertificateSigningRequestSpec)
-	if !ok {
-		that2, ok := that.(CertificateSigningRequestSpec)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !bytes.Equal(this.Request, that1.Request) {
-		return false
-	}
-	if len(this.Usages) != len(that1.Usages) {
-		return false
-	}
-	for i := range this.Usages {
-		if this.Usages[i] != that1.Usages[i] {
-			return false
-		}
-	}
-	if this.Username != that1.Username {
-		return false
-	}
-	if this.Uid != that1.Uid {
-		return false
-	}
-	if len(this.Groups) != len(that1.Groups) {
-		return false
-	}
-	for i := range this.Groups {
-		if this.Groups[i] != that1.Groups[i] {
-			return false
-		}
-	}
-	if len(this.Extra) != len(that1.Extra) {
-		return false
-	}
-	for i := range this.Extra {
-		if !this.Extra[i].Equal(that1.Extra[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *CertificateSigningRequestStatus) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*CertificateSigningRequestStatus)
-	if !ok {
-		that2, ok := that.(CertificateSigningRequestStatus)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if len(this.Conditions) != len(that1.Conditions) {
-		return false
-	}
-	for i := range this.Conditions {
-		if !this.Conditions[i].Equal(that1.Conditions[i]) {
-			return false
-		}
-	}
-	if !bytes.Equal(this.Certificate, that1.Certificate) {
-		return false
-	}
-	return true
-}
-func (this *ExtraValue) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*ExtraValue)
-	if !ok {
-		that2, ok := that.(ExtraValue)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if len(this.Items) != len(that1.Items) {
-		return false
-	}
-	for i := range this.Items {
-		if this.Items[i] != that1.Items[i] {
-			return false
-		}
-	}
-	return true
-}
-func (this *CertificateSigningRequest) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 7)
-	s = append(s, "&k8s_io_api_certificates_v1beta1.CertificateSigningRequest{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Spec != nil {
-		s = append(s, "Spec: "+fmt.Sprintf("%#v", this.Spec)+",\n")
-	}
-	if this.Status != nil {
-		s = append(s, "Status: "+fmt.Sprintf("%#v", this.Status)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *CertificateSigningRequestCondition) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 8)
-	s = append(s, "&k8s_io_api_certificates_v1beta1.CertificateSigningRequestCondition{")
-	s = append(s, "Type: "+fmt.Sprintf("%#v", this.Type)+",\n")
-	s = append(s, "Reason: "+fmt.Sprintf("%#v", this.Reason)+",\n")
-	s = append(s, "Message: "+fmt.Sprintf("%#v", this.Message)+",\n")
-	if this.LastUpdateTime != nil {
-		s = append(s, "LastUpdateTime: "+fmt.Sprintf("%#v", this.LastUpdateTime)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *CertificateSigningRequestList) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_certificates_v1beta1.CertificateSigningRequestList{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Items != nil {
-		s = append(s, "Items: "+fmt.Sprintf("%#v", this.Items)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *CertificateSigningRequestSpec) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 10)
-	s = append(s, "&k8s_io_api_certificates_v1beta1.CertificateSigningRequestSpec{")
-	s = append(s, "Request: "+fmt.Sprintf("%#v", this.Request)+",\n")
-	if this.Usages != nil {
-		s = append(s, "Usages: "+fmt.Sprintf("%#v", this.Usages)+",\n")
-	}
-	s = append(s, "Username: "+fmt.Sprintf("%#v", this.Username)+",\n")
-	s = append(s, "Uid: "+fmt.Sprintf("%#v", this.Uid)+",\n")
-	if this.Groups != nil {
-		s = append(s, "Groups: "+fmt.Sprintf("%#v", this.Groups)+",\n")
-	}
-	keysForExtra := make([]string, 0, len(this.Extra))
-	for k, _ := range this.Extra {
-		keysForExtra = append(keysForExtra, k)
-	}
-	github_com_gogo_protobuf_sortkeys.Strings(keysForExtra)
-	mapStringForExtra := "map[string]*ExtraValue{"
-	for _, k := range keysForExtra {
-		mapStringForExtra += fmt.Sprintf("%#v: %#v,", k, this.Extra[k])
-	}
-	mapStringForExtra += "}"
-	if this.Extra != nil {
-		s = append(s, "Extra: "+mapStringForExtra+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *CertificateSigningRequestStatus) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_certificates_v1beta1.CertificateSigningRequestStatus{")
-	if this.Conditions != nil {
-		s = append(s, "Conditions: "+fmt.Sprintf("%#v", this.Conditions)+",\n")
-	}
-	s = append(s, "Certificate: "+fmt.Sprintf("%#v", this.Certificate)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *ExtraValue) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 5)
-	s = append(s, "&k8s_io_api_certificates_v1beta1.ExtraValue{")
-	if this.Items != nil {
-		s = append(s, "Items: "+fmt.Sprintf("%#v", this.Items)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func valueToGoStringGenerated(v interface{}, typ string) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("func(v %v) *%v { return &v } ( %#v )", typ, typ, pv)
-}
 func (m *CertificateSigningRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -824,6 +518,10 @@ func (m *CertificateSigningRequest) MarshalToSizedBuffer(dAtA []byte) (int, erro
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Status != nil {
 		{
 			size, err := m.Status.MarshalToSizedBuffer(dAtA[:i])
@@ -883,6 +581,10 @@ func (m *CertificateSigningRequestCondition) MarshalToSizedBuffer(dAtA []byte) (
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.LastUpdateTime != nil {
 		{
 			size, err := m.LastUpdateTime.MarshalToSizedBuffer(dAtA[:i])
@@ -895,21 +597,27 @@ func (m *CertificateSigningRequestCondition) MarshalToSizedBuffer(dAtA []byte) (
 		i--
 		dAtA[i] = 0x22
 	}
-	i -= len(m.Message)
-	copy(dAtA[i:], m.Message)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Message)))
-	i--
-	dAtA[i] = 0x1a
-	i -= len(m.Reason)
-	copy(dAtA[i:], m.Reason)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Reason)))
-	i--
-	dAtA[i] = 0x12
-	i -= len(m.Type)
-	copy(dAtA[i:], m.Type)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Type)))
-	i--
-	dAtA[i] = 0xa
+	if m.Message != nil {
+		i -= len(*m.Message)
+		copy(dAtA[i:], *m.Message)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Message)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if m.Reason != nil {
+		i -= len(*m.Reason)
+		copy(dAtA[i:], *m.Reason)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Reason)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Type != nil {
+		i -= len(*m.Type)
+		copy(dAtA[i:], *m.Type)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Type)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -933,6 +641,10 @@ func (m *CertificateSigningRequestList) MarshalToSizedBuffer(dAtA []byte) (int, 
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Items) > 0 {
 		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -982,6 +694,10 @@ func (m *CertificateSigningRequestSpec) MarshalToSizedBuffer(dAtA []byte) (int, 
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Extra) > 0 {
 		for k := range m.Extra {
 			v := m.Extra[k]
@@ -1026,16 +742,20 @@ func (m *CertificateSigningRequestSpec) MarshalToSizedBuffer(dAtA []byte) (int, 
 			dAtA[i] = 0x22
 		}
 	}
-	i -= len(m.Uid)
-	copy(dAtA[i:], m.Uid)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Uid)))
-	i--
-	dAtA[i] = 0x1a
-	i -= len(m.Username)
-	copy(dAtA[i:], m.Username)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Username)))
-	i--
-	dAtA[i] = 0x12
+	if m.Uid != nil {
+		i -= len(*m.Uid)
+		copy(dAtA[i:], *m.Uid)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Uid)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if m.Username != nil {
+		i -= len(*m.Username)
+		copy(dAtA[i:], *m.Username)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Username)))
+		i--
+		dAtA[i] = 0x12
+	}
 	if m.Request != nil {
 		i -= len(m.Request)
 		copy(dAtA[i:], m.Request)
@@ -1066,6 +786,10 @@ func (m *CertificateSigningRequestStatus) MarshalToSizedBuffer(dAtA []byte) (int
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Certificate != nil {
 		i -= len(m.Certificate)
 		copy(dAtA[i:], m.Certificate)
@@ -1110,6 +834,10 @@ func (m *ExtraValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Items) > 0 {
 		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
 			i -= len(m.Items[iNdEx])
@@ -1151,6 +879,9 @@ func (m *CertificateSigningRequest) Size() (n int) {
 		l = m.Status.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -1160,15 +891,24 @@ func (m *CertificateSigningRequestCondition) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Type)
-	n += 1 + l + sovGenerated(uint64(l))
-	l = len(m.Reason)
-	n += 1 + l + sovGenerated(uint64(l))
-	l = len(m.Message)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.Type != nil {
+		l = len(*m.Type)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.Reason != nil {
+		l = len(*m.Reason)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.Message != nil {
+		l = len(*m.Message)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if m.LastUpdateTime != nil {
 		l = m.LastUpdateTime.Size()
 		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -1189,6 +929,9 @@ func (m *CertificateSigningRequestList) Size() (n int) {
 			n += 1 + l + sovGenerated(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -1202,10 +945,14 @@ func (m *CertificateSigningRequestSpec) Size() (n int) {
 		l = len(m.Request)
 		n += 1 + l + sovGenerated(uint64(l))
 	}
-	l = len(m.Username)
-	n += 1 + l + sovGenerated(uint64(l))
-	l = len(m.Uid)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.Username != nil {
+		l = len(*m.Username)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.Uid != nil {
+		l = len(*m.Uid)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if len(m.Groups) > 0 {
 		for _, s := range m.Groups {
 			l = len(s)
@@ -1231,6 +978,9 @@ func (m *CertificateSigningRequestSpec) Size() (n int) {
 			n += mapEntrySize + 1 + sovGenerated(uint64(mapEntrySize))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -1250,6 +1000,9 @@ func (m *CertificateSigningRequestStatus) Size() (n int) {
 		l = len(m.Certificate)
 		n += 1 + l + sovGenerated(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -1265,6 +1018,9 @@ func (m *ExtraValue) Size() (n int) {
 			n += 1 + l + sovGenerated(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -1273,106 +1029,6 @@ func sovGenerated(x uint64) (n int) {
 }
 func sozGenerated(x uint64) (n int) {
 	return sovGenerated(uint64((x << 1) ^ uint64((int64(x) >> 63))))
-}
-func (this *CertificateSigningRequest) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&CertificateSigningRequest{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ObjectMeta", "v1.ObjectMeta", 1) + `,`,
-		`Spec:` + strings.Replace(this.Spec.String(), "CertificateSigningRequestSpec", "CertificateSigningRequestSpec", 1) + `,`,
-		`Status:` + strings.Replace(this.Status.String(), "CertificateSigningRequestStatus", "CertificateSigningRequestStatus", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *CertificateSigningRequestCondition) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&CertificateSigningRequestCondition{`,
-		`Type:` + fmt.Sprintf("%v", this.Type) + `,`,
-		`Reason:` + fmt.Sprintf("%v", this.Reason) + `,`,
-		`Message:` + fmt.Sprintf("%v", this.Message) + `,`,
-		`LastUpdateTime:` + strings.Replace(fmt.Sprintf("%v", this.LastUpdateTime), "Time", "v1.Time", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *CertificateSigningRequestList) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForItems := "[]*CertificateSigningRequest{"
-	for _, f := range this.Items {
-		repeatedStringForItems += strings.Replace(f.String(), "CertificateSigningRequest", "CertificateSigningRequest", 1) + ","
-	}
-	repeatedStringForItems += "}"
-	s := strings.Join([]string{`&CertificateSigningRequestList{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ListMeta", "v1.ListMeta", 1) + `,`,
-		`Items:` + repeatedStringForItems + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *CertificateSigningRequestSpec) String() string {
-	if this == nil {
-		return "nil"
-	}
-	keysForExtra := make([]string, 0, len(this.Extra))
-	for k, _ := range this.Extra {
-		keysForExtra = append(keysForExtra, k)
-	}
-	github_com_gogo_protobuf_sortkeys.Strings(keysForExtra)
-	mapStringForExtra := "map[string]*ExtraValue{"
-	for _, k := range keysForExtra {
-		mapStringForExtra += fmt.Sprintf("%v: %v,", k, this.Extra[k])
-	}
-	mapStringForExtra += "}"
-	s := strings.Join([]string{`&CertificateSigningRequestSpec{`,
-		`Request:` + fmt.Sprintf("%v", this.Request) + `,`,
-		`Username:` + fmt.Sprintf("%v", this.Username) + `,`,
-		`Uid:` + fmt.Sprintf("%v", this.Uid) + `,`,
-		`Groups:` + fmt.Sprintf("%v", this.Groups) + `,`,
-		`Usages:` + fmt.Sprintf("%v", this.Usages) + `,`,
-		`Extra:` + mapStringForExtra + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *CertificateSigningRequestStatus) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForConditions := "[]*CertificateSigningRequestCondition{"
-	for _, f := range this.Conditions {
-		repeatedStringForConditions += strings.Replace(f.String(), "CertificateSigningRequestCondition", "CertificateSigningRequestCondition", 1) + ","
-	}
-	repeatedStringForConditions += "}"
-	s := strings.Join([]string{`&CertificateSigningRequestStatus{`,
-		`Conditions:` + repeatedStringForConditions + `,`,
-		`Certificate:` + fmt.Sprintf("%v", this.Certificate) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *ExtraValue) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&ExtraValue{`,
-		`Items:` + fmt.Sprintf("%v", this.Items) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func valueToStringGenerated(v interface{}) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("*%v", pv)
 }
 func (m *CertificateSigningRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
@@ -1523,6 +1179,7 @@ func (m *CertificateSigningRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -1591,7 +1248,8 @@ func (m *CertificateSigningRequestCondition) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Type = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Type = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -1623,7 +1281,8 @@ func (m *CertificateSigningRequestCondition) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Reason = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Reason = &s
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
@@ -1655,7 +1314,8 @@ func (m *CertificateSigningRequestCondition) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Message = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Message = &s
 			iNdEx = postIndex
 		case 4:
 			if wireType != 2 {
@@ -1705,6 +1365,7 @@ func (m *CertificateSigningRequestCondition) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -1825,6 +1486,7 @@ func (m *CertificateSigningRequestList) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -1927,7 +1589,8 @@ func (m *CertificateSigningRequestSpec) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Username = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Username = &s
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
@@ -1959,7 +1622,8 @@ func (m *CertificateSigningRequestSpec) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Uid = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Uid = &s
 			iNdEx = postIndex
 		case 4:
 			if wireType != 2 {
@@ -2166,6 +1830,7 @@ func (m *CertificateSigningRequestSpec) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -2284,6 +1949,7 @@ func (m *CertificateSigningRequestStatus) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -2366,6 +2032,7 @@ func (m *ExtraValue) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}

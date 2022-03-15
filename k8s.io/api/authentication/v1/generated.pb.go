@@ -6,15 +6,12 @@ package k8s_io_api_authentication_v1
 import (
 	fmt "fmt"
 	proto "github.com/gogo/protobuf/proto"
-	github_com_gogo_protobuf_sortkeys "github.com/gogo/protobuf/sortkeys"
 	io "io"
 	v1 "istio.io/gogo-genproto/k8s.io/apimachinery/pkg/apis/meta/v1"
 	_ "istio.io/gogo-genproto/k8s.io/apimachinery/pkg/runtime"
 	_ "istio.io/gogo-genproto/k8s.io/apimachinery/pkg/runtime/schema"
 	math "math"
 	math_bits "math/bits"
-	reflect "reflect"
-	strings "strings"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -32,20 +29,24 @@ const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 type BoundObjectReference struct {
 	// Kind of the referent. Valid kinds are 'Pod' and 'Secret'.
 	// +optional
-	Kind string `protobuf:"bytes,1,opt,name=kind" json:"kind"`
+	Kind *string `protobuf:"bytes,1,opt,name=kind" json:"kind,omitempty"`
 	// API version of the referent.
 	// +optional
-	APIVersion string `protobuf:"bytes,2,opt,name=aPIVersion" json:"aPIVersion"`
+	APIVersion *string `protobuf:"bytes,2,opt,name=aPIVersion" json:"aPIVersion,omitempty"`
 	// Name of the referent.
 	// +optional
-	Name string `protobuf:"bytes,3,opt,name=name" json:"name"`
+	Name *string `protobuf:"bytes,3,opt,name=name" json:"name,omitempty"`
 	// UID of the referent.
 	// +optional
-	UID string `protobuf:"bytes,4,opt,name=uID" json:"uID"`
+	UID                  *string  `protobuf:"bytes,4,opt,name=uID" json:"uID,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *BoundObjectReference) Reset()      { *m = BoundObjectReference{} }
-func (*BoundObjectReference) ProtoMessage() {}
+func (m *BoundObjectReference) Reset()         { *m = BoundObjectReference{} }
+func (m *BoundObjectReference) String() string { return proto.CompactTextString(m) }
+func (*BoundObjectReference) ProtoMessage()    {}
 func (*BoundObjectReference) Descriptor() ([]byte, []int) {
 	return fileDescriptor_d1237cbf54dccd53, []int{0}
 }
@@ -77,29 +78,29 @@ func (m *BoundObjectReference) XXX_DiscardUnknown() {
 var xxx_messageInfo_BoundObjectReference proto.InternalMessageInfo
 
 func (m *BoundObjectReference) GetKind() string {
-	if m != nil {
-		return m.Kind
+	if m != nil && m.Kind != nil {
+		return *m.Kind
 	}
 	return ""
 }
 
 func (m *BoundObjectReference) GetAPIVersion() string {
-	if m != nil {
-		return m.APIVersion
+	if m != nil && m.APIVersion != nil {
+		return *m.APIVersion
 	}
 	return ""
 }
 
 func (m *BoundObjectReference) GetName() string {
-	if m != nil {
-		return m.Name
+	if m != nil && m.Name != nil {
+		return *m.Name
 	}
 	return ""
 }
 
 func (m *BoundObjectReference) GetUID() string {
-	if m != nil {
-		return m.UID
+	if m != nil && m.UID != nil {
+		return *m.UID
 	}
 	return ""
 }
@@ -108,11 +109,15 @@ func (m *BoundObjectReference) GetUID() string {
 // +protobuf.nullable=true
 // +protobuf.options.(gogoproto.goproto_stringer)=false
 type ExtraValue struct {
-	Items []string `protobuf:"bytes,1,rep,name=items" json:"items,omitempty"`
+	Items                []string `protobuf:"bytes,1,rep,name=items" json:"items,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *ExtraValue) Reset()      { *m = ExtraValue{} }
-func (*ExtraValue) ProtoMessage() {}
+func (m *ExtraValue) Reset()         { *m = ExtraValue{} }
+func (m *ExtraValue) String() string { return proto.CompactTextString(m) }
+func (*ExtraValue) ProtoMessage()    {}
 func (*ExtraValue) Descriptor() ([]byte, []int) {
 	return fileDescriptor_d1237cbf54dccd53, []int{1}
 }
@@ -156,11 +161,15 @@ type TokenRequest struct {
 	Metadata *v1.ObjectMeta    `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	Spec     *TokenRequestSpec `protobuf:"bytes,2,opt,name=spec" json:"spec,omitempty"`
 	// +optional
-	Status *TokenRequestStatus `protobuf:"bytes,3,opt,name=status" json:"status,omitempty"`
+	Status               *TokenRequestStatus `protobuf:"bytes,3,opt,name=status" json:"status,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}            `json:"-"`
+	XXX_unrecognized     []byte              `json:"-"`
+	XXX_sizecache        int32               `json:"-"`
 }
 
-func (m *TokenRequest) Reset()      { *m = TokenRequest{} }
-func (*TokenRequest) ProtoMessage() {}
+func (m *TokenRequest) Reset()         { *m = TokenRequest{} }
+func (m *TokenRequest) String() string { return proto.CompactTextString(m) }
+func (*TokenRequest) ProtoMessage()    {}
 func (*TokenRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_d1237cbf54dccd53, []int{2}
 }
@@ -225,18 +234,22 @@ type TokenRequestSpec struct {
 	// token issuer may return a token with a different validity duration so a
 	// client needs to check the 'expiration' field in a response.
 	// +optional
-	ExpirationSeconds int64 `protobuf:"varint,4,opt,name=expirationSeconds" json:"expirationSeconds"`
+	ExpirationSeconds *int64 `protobuf:"varint,4,opt,name=expirationSeconds" json:"expirationSeconds,omitempty"`
 	// BoundObjectRef is a reference to an object that the token will be bound to.
 	// The token will only be valid for as long as the bound object exists.
 	// NOTE: The API server's TokenReview endpoint will validate the
 	// BoundObjectRef, but other audiences may not. Keep ExpirationSeconds
 	// small if you want prompt revocation.
 	// +optional
-	BoundObjectRef *BoundObjectReference `protobuf:"bytes,3,opt,name=boundObjectRef" json:"boundObjectRef,omitempty"`
+	BoundObjectRef       *BoundObjectReference `protobuf:"bytes,3,opt,name=boundObjectRef" json:"boundObjectRef,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}              `json:"-"`
+	XXX_unrecognized     []byte                `json:"-"`
+	XXX_sizecache        int32                 `json:"-"`
 }
 
-func (m *TokenRequestSpec) Reset()      { *m = TokenRequestSpec{} }
-func (*TokenRequestSpec) ProtoMessage() {}
+func (m *TokenRequestSpec) Reset()         { *m = TokenRequestSpec{} }
+func (m *TokenRequestSpec) String() string { return proto.CompactTextString(m) }
+func (*TokenRequestSpec) ProtoMessage()    {}
 func (*TokenRequestSpec) Descriptor() ([]byte, []int) {
 	return fileDescriptor_d1237cbf54dccd53, []int{3}
 }
@@ -275,8 +288,8 @@ func (m *TokenRequestSpec) GetAudiences() []string {
 }
 
 func (m *TokenRequestSpec) GetExpirationSeconds() int64 {
-	if m != nil {
-		return m.ExpirationSeconds
+	if m != nil && m.ExpirationSeconds != nil {
+		return *m.ExpirationSeconds
 	}
 	return 0
 }
@@ -291,13 +304,17 @@ func (m *TokenRequestSpec) GetBoundObjectRef() *BoundObjectReference {
 // TokenRequestStatus is the result of a token request.
 type TokenRequestStatus struct {
 	// Token is the opaque bearer token.
-	Token string `protobuf:"bytes,1,opt,name=token" json:"token"`
+	Token *string `protobuf:"bytes,1,opt,name=token" json:"token,omitempty"`
 	// ExpirationTimestamp is the time of expiration of the returned token.
-	ExpirationTimestamp *v1.Time `protobuf:"bytes,2,opt,name=expirationTimestamp" json:"expirationTimestamp,omitempty"`
+	ExpirationTimestamp  *v1.Time `protobuf:"bytes,2,opt,name=expirationTimestamp" json:"expirationTimestamp,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *TokenRequestStatus) Reset()      { *m = TokenRequestStatus{} }
-func (*TokenRequestStatus) ProtoMessage() {}
+func (m *TokenRequestStatus) Reset()         { *m = TokenRequestStatus{} }
+func (m *TokenRequestStatus) String() string { return proto.CompactTextString(m) }
+func (*TokenRequestStatus) ProtoMessage()    {}
 func (*TokenRequestStatus) Descriptor() ([]byte, []int) {
 	return fileDescriptor_d1237cbf54dccd53, []int{4}
 }
@@ -329,8 +346,8 @@ func (m *TokenRequestStatus) XXX_DiscardUnknown() {
 var xxx_messageInfo_TokenRequestStatus proto.InternalMessageInfo
 
 func (m *TokenRequestStatus) GetToken() string {
-	if m != nil {
-		return m.Token
+	if m != nil && m.Token != nil {
+		return *m.Token
 	}
 	return ""
 }
@@ -352,11 +369,15 @@ type TokenReview struct {
 	Spec *TokenReviewSpec `protobuf:"bytes,2,opt,name=spec" json:"spec,omitempty"`
 	// Status is filled in by the server and indicates whether the request can be authenticated.
 	// +optional
-	Status *TokenReviewStatus `protobuf:"bytes,3,opt,name=status" json:"status,omitempty"`
+	Status               *TokenReviewStatus `protobuf:"bytes,3,opt,name=status" json:"status,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}           `json:"-"`
+	XXX_unrecognized     []byte             `json:"-"`
+	XXX_sizecache        int32              `json:"-"`
 }
 
-func (m *TokenReview) Reset()      { *m = TokenReview{} }
-func (*TokenReview) ProtoMessage() {}
+func (m *TokenReview) Reset()         { *m = TokenReview{} }
+func (m *TokenReview) String() string { return proto.CompactTextString(m) }
+func (*TokenReview) ProtoMessage()    {}
 func (*TokenReview) Descriptor() ([]byte, []int) {
 	return fileDescriptor_d1237cbf54dccd53, []int{5}
 }
@@ -412,18 +433,22 @@ func (m *TokenReview) GetStatus() *TokenReviewStatus {
 type TokenReviewSpec struct {
 	// Token is the opaque bearer token.
 	// +optional
-	Token string `protobuf:"bytes,1,opt,name=token" json:"token"`
+	Token *string `protobuf:"bytes,1,opt,name=token" json:"token,omitempty"`
 	// Audiences is a list of the identifiers that the resource server presented
 	// with the token identifies as. Audience-aware token authenticators will
 	// verify that the token was intended for at least one of the audiences in
 	// this list. If no audiences are provided, the audience will default to the
 	// audience of the Kubernetes apiserver.
 	// +optional
-	Audiences []string `protobuf:"bytes,2,rep,name=audiences" json:"audiences,omitempty"`
+	Audiences            []string `protobuf:"bytes,2,rep,name=audiences" json:"audiences,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *TokenReviewSpec) Reset()      { *m = TokenReviewSpec{} }
-func (*TokenReviewSpec) ProtoMessage() {}
+func (m *TokenReviewSpec) Reset()         { *m = TokenReviewSpec{} }
+func (m *TokenReviewSpec) String() string { return proto.CompactTextString(m) }
+func (*TokenReviewSpec) ProtoMessage()    {}
 func (*TokenReviewSpec) Descriptor() ([]byte, []int) {
 	return fileDescriptor_d1237cbf54dccd53, []int{6}
 }
@@ -455,8 +480,8 @@ func (m *TokenReviewSpec) XXX_DiscardUnknown() {
 var xxx_messageInfo_TokenReviewSpec proto.InternalMessageInfo
 
 func (m *TokenReviewSpec) GetToken() string {
-	if m != nil {
-		return m.Token
+	if m != nil && m.Token != nil {
+		return *m.Token
 	}
 	return ""
 }
@@ -472,7 +497,7 @@ func (m *TokenReviewSpec) GetAudiences() []string {
 type TokenReviewStatus struct {
 	// Authenticated indicates that the token was associated with a known user.
 	// +optional
-	Authenticated bool `protobuf:"varint,1,opt,name=authenticated" json:"authenticated"`
+	Authenticated *bool `protobuf:"varint,1,opt,name=authenticated" json:"authenticated,omitempty"`
 	// User is the UserInfo associated with the provided token.
 	// +optional
 	User *UserInfo `protobuf:"bytes,2,opt,name=user" json:"user,omitempty"`
@@ -489,11 +514,15 @@ type TokenReviewStatus struct {
 	Audiences []string `protobuf:"bytes,4,rep,name=audiences" json:"audiences,omitempty"`
 	// Error indicates that the token couldn't be checked
 	// +optional
-	Error string `protobuf:"bytes,3,opt,name=error" json:"error"`
+	Error                *string  `protobuf:"bytes,3,opt,name=error" json:"error,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *TokenReviewStatus) Reset()      { *m = TokenReviewStatus{} }
-func (*TokenReviewStatus) ProtoMessage() {}
+func (m *TokenReviewStatus) Reset()         { *m = TokenReviewStatus{} }
+func (m *TokenReviewStatus) String() string { return proto.CompactTextString(m) }
+func (*TokenReviewStatus) ProtoMessage()    {}
 func (*TokenReviewStatus) Descriptor() ([]byte, []int) {
 	return fileDescriptor_d1237cbf54dccd53, []int{7}
 }
@@ -525,8 +554,8 @@ func (m *TokenReviewStatus) XXX_DiscardUnknown() {
 var xxx_messageInfo_TokenReviewStatus proto.InternalMessageInfo
 
 func (m *TokenReviewStatus) GetAuthenticated() bool {
-	if m != nil {
-		return m.Authenticated
+	if m != nil && m.Authenticated != nil {
+		return *m.Authenticated
 	}
 	return false
 }
@@ -546,8 +575,8 @@ func (m *TokenReviewStatus) GetAudiences() []string {
 }
 
 func (m *TokenReviewStatus) GetError() string {
-	if m != nil {
-		return m.Error
+	if m != nil && m.Error != nil {
+		return *m.Error
 	}
 	return ""
 }
@@ -557,22 +586,26 @@ func (m *TokenReviewStatus) GetError() string {
 type UserInfo struct {
 	// The name that uniquely identifies this user among all active users.
 	// +optional
-	Username string `protobuf:"bytes,1,opt,name=username" json:"username"`
+	Username *string `protobuf:"bytes,1,opt,name=username" json:"username,omitempty"`
 	// A unique value that identifies this user across time. If this user is
 	// deleted and another user by the same name is added, they will have
 	// different UIDs.
 	// +optional
-	Uid string `protobuf:"bytes,2,opt,name=uid" json:"uid"`
+	Uid *string `protobuf:"bytes,2,opt,name=uid" json:"uid,omitempty"`
 	// The names of groups this user is a part of.
 	// +optional
 	Groups []string `protobuf:"bytes,3,rep,name=groups" json:"groups,omitempty"`
 	// Any additional information provided by the authenticator.
 	// +optional
-	Extra map[string]*ExtraValue `protobuf:"bytes,4,rep,name=extra" json:"extra,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Extra                map[string]*ExtraValue `protobuf:"bytes,4,rep,name=extra" json:"extra,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	XXX_NoUnkeyedLiteral struct{}               `json:"-"`
+	XXX_unrecognized     []byte                 `json:"-"`
+	XXX_sizecache        int32                  `json:"-"`
 }
 
-func (m *UserInfo) Reset()      { *m = UserInfo{} }
-func (*UserInfo) ProtoMessage() {}
+func (m *UserInfo) Reset()         { *m = UserInfo{} }
+func (m *UserInfo) String() string { return proto.CompactTextString(m) }
+func (*UserInfo) ProtoMessage()    {}
 func (*UserInfo) Descriptor() ([]byte, []int) {
 	return fileDescriptor_d1237cbf54dccd53, []int{8}
 }
@@ -604,15 +637,15 @@ func (m *UserInfo) XXX_DiscardUnknown() {
 var xxx_messageInfo_UserInfo proto.InternalMessageInfo
 
 func (m *UserInfo) GetUsername() string {
-	if m != nil {
-		return m.Username
+	if m != nil && m.Username != nil {
+		return *m.Username
 	}
 	return ""
 }
 
 func (m *UserInfo) GetUid() string {
-	if m != nil {
-		return m.Uid
+	if m != nil && m.Uid != nil {
+		return *m.Uid
 	}
 	return ""
 }
@@ -649,506 +682,50 @@ func init() {
 }
 
 var fileDescriptor_d1237cbf54dccd53 = []byte{
-	// 714 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x54, 0x4f, 0x4f, 0x13, 0x5f,
-	0x14, 0xed, 0xeb, 0x1f, 0x52, 0x6e, 0x7f, 0x3f, 0x95, 0x27, 0x21, 0x4d, 0x43, 0x46, 0x32, 0x31,
-	0x86, 0x10, 0x9d, 0xb1, 0x0d, 0x31, 0x84, 0x85, 0x89, 0x8d, 0x04, 0x89, 0x1a, 0xcd, 0x80, 0x2c,
-	0x8c, 0x9b, 0xc7, 0xf4, 0xd2, 0x3e, 0xeb, 0xfc, 0xf1, 0xcd, 0x9b, 0x0a, 0x3b, 0x97, 0xae, 0xd4,
-	0x8f, 0xe1, 0x17, 0x70, 0xef, 0x92, 0x25, 0x4b, 0x56, 0x46, 0xca, 0x42, 0xe3, 0x8a, 0x8f, 0x60,
-	0xde, 0xcc, 0x40, 0x67, 0x5a, 0x2c, 0x5d, 0xb8, 0x9c, 0xf3, 0xe6, 0x9c, 0x7b, 0xee, 0xbd, 0x27,
-	0x17, 0x6e, 0x77, 0x57, 0x02, 0x83, 0x7b, 0x26, 0xf3, 0xb9, 0xc9, 0x42, 0xd9, 0x41, 0x57, 0x72,
-	0x9b, 0x49, 0xee, 0xb9, 0x66, 0xaf, 0x6e, 0xb6, 0xd1, 0x45, 0xc1, 0x24, 0xb6, 0x0c, 0x5f, 0x78,
-	0xd2, 0xa3, 0xf3, 0xf1, 0xdf, 0x06, 0xf3, 0xb9, 0x91, 0xfd, 0xdb, 0xe8, 0xd5, 0x6b, 0xcb, 0x03,
-	0x2d, 0x87, 0xd9, 0x1d, 0xee, 0xa2, 0xd8, 0x37, 0xfd, 0x6e, 0x5b, 0x01, 0x81, 0xe9, 0xa0, 0x64,
-	0x17, 0x68, 0xd6, 0xcc, 0xbf, 0xb1, 0x44, 0xe8, 0x4a, 0xee, 0xe0, 0x08, 0xe1, 0xde, 0x65, 0x84,
-	0xc0, 0xee, 0xa0, 0xc3, 0x86, 0x79, 0xfa, 0x07, 0x02, 0xb3, 0x4d, 0x2f, 0x74, 0x5b, 0xcf, 0x76,
-	0x5e, 0xa3, 0x2d, 0x2d, 0xdc, 0x45, 0x81, 0xae, 0x8d, 0xb4, 0x0a, 0xc5, 0x2e, 0x77, 0x5b, 0x55,
-	0xb2, 0x40, 0x16, 0xa7, 0x9b, 0xc5, 0x83, 0xef, 0x37, 0x72, 0x56, 0x84, 0xd0, 0x9b, 0x00, 0xec,
-	0xf9, 0xc6, 0x36, 0x8a, 0x80, 0x7b, 0x6e, 0x35, 0x9f, 0x7a, 0x4f, 0xe1, 0x8a, 0xef, 0x32, 0x07,
-	0xab, 0x85, 0x34, 0x5f, 0x21, 0x74, 0x0e, 0x0a, 0xe1, 0xc6, 0xc3, 0x6a, 0x31, 0xf5, 0xa0, 0x00,
-	0x5d, 0x07, 0x58, 0xdb, 0x93, 0x82, 0x6d, 0xb3, 0x37, 0x21, 0xd2, 0x59, 0x28, 0x71, 0x89, 0x4e,
-	0x50, 0x25, 0x0b, 0x85, 0xc5, 0x69, 0x2b, 0xfe, 0xd0, 0x7f, 0x13, 0xf8, 0x6f, 0xcb, 0xeb, 0xa2,
-	0x6b, 0xe1, 0xdb, 0x10, 0x03, 0x49, 0x9f, 0x40, 0x59, 0xcd, 0xb0, 0xc5, 0x24, 0x8b, 0xac, 0x56,
-	0x1a, 0x77, 0x8d, 0xc1, 0x3e, 0xce, 0x47, 0x61, 0xf8, 0xdd, 0xb6, 0x02, 0x02, 0x43, 0xfd, 0x6d,
-	0xf4, 0xea, 0x46, 0xdc, 0xef, 0x53, 0x94, 0xcc, 0x3a, 0x57, 0xa0, 0x4d, 0x28, 0x06, 0x3e, 0xda,
-	0x51, 0x53, 0x95, 0x86, 0x61, 0x8c, 0xdb, 0xac, 0x91, 0xf6, 0xb1, 0xe9, 0xa3, 0x6d, 0x45, 0x5c,
-	0xfa, 0x08, 0xa6, 0x02, 0xc9, 0x64, 0x18, 0x44, 0xad, 0x67, 0xfd, 0x5c, 0xa6, 0x12, 0xf1, 0xac,
-	0x84, 0xaf, 0x7f, 0x23, 0x70, 0x6d, 0xb8, 0x08, 0x9d, 0x87, 0x69, 0x16, 0xb6, 0xb8, 0xda, 0xd1,
-	0xd9, 0x6c, 0x06, 0x00, 0x6d, 0xc0, 0x0c, 0xee, 0xf9, 0x5c, 0x44, 0xf2, 0x9b, 0x68, 0x7b, 0x6e,
-	0x2b, 0x88, 0x26, 0x5d, 0x48, 0x26, 0x3d, 0xfa, 0x4c, 0x5f, 0xc2, 0x95, 0x9d, 0x4c, 0x02, 0x12,
-	0xe3, 0x8d, 0xf1, 0xc6, 0x2f, 0x4a, 0x8d, 0x35, 0xa4, 0xa4, 0x7f, 0x24, 0x40, 0x47, 0x3b, 0xa4,
-	0x35, 0x28, 0x49, 0x85, 0x66, 0xd2, 0x15, 0x43, 0xf4, 0x15, 0x5c, 0x1f, 0x78, 0xdc, 0xe2, 0x0e,
-	0x06, 0x92, 0x39, 0x7e, 0xb2, 0x92, 0xa5, 0xc9, 0x96, 0xab, 0x68, 0xd6, 0x45, 0x32, 0xfa, 0x4f,
-	0x02, 0x95, 0xc4, 0x50, 0x8f, 0xe3, 0xbb, 0x7f, 0x9c, 0x9f, 0x07, 0x99, 0xfc, 0xdc, 0x99, 0x68,
-	0xf3, 0xca, 0x46, 0x2a, 0x3e, 0xeb, 0x43, 0xf1, 0x31, 0x27, 0x17, 0xc9, 0xa6, 0xe7, 0x31, 0x5c,
-	0x1d, 0xaa, 0x30, 0x76, 0xec, 0x99, 0x5c, 0xe5, 0x87, 0x72, 0xa5, 0x7f, 0x25, 0x30, 0x33, 0x52,
-	0x8a, 0x2e, 0xc1, 0xff, 0x29, 0x47, 0x18, 0x1f, 0x8b, 0x72, 0xa2, 0x9b, 0x7d, 0xa2, 0xab, 0x50,
-	0x0c, 0x03, 0x14, 0xc9, 0x68, 0x6e, 0x8d, 0xef, 0xea, 0x45, 0x80, 0x62, 0xc3, 0xdd, 0xf5, 0xac,
-	0x88, 0x93, 0xf5, 0x56, 0x1c, 0xce, 0x7c, 0x0d, 0x4a, 0x28, 0x84, 0x27, 0x32, 0xa7, 0x26, 0x86,
-	0xf4, 0x4f, 0x79, 0x28, 0x9f, 0x89, 0xd1, 0x05, 0x28, 0x2b, 0xb9, 0xe8, 0x2c, 0xa5, 0x27, 0x70,
-	0x8e, 0x46, 0xa7, 0x89, 0xb7, 0x32, 0x37, 0x4d, 0x01, 0x74, 0x0e, 0xa6, 0xda, 0xc2, 0x0b, 0x7d,
-	0xb5, 0x14, 0x55, 0x3d, 0xf9, 0xa2, 0xeb, 0x50, 0x42, 0x75, 0xb2, 0x22, 0x53, 0x95, 0x46, 0x7d,
-	0xb2, 0xae, 0x8c, 0xe8, 0xcc, 0xad, 0xb9, 0x52, 0xec, 0x5b, 0x31, 0xbf, 0xd6, 0x49, 0x6e, 0x5f,
-	0x04, 0x2a, 0x1b, 0x5d, 0xdc, 0xcf, 0x78, 0x54, 0x00, 0xbd, 0x0f, 0xa5, 0x9e, 0x3a, 0x8e, 0xc9,
-	0x10, 0x17, 0xc7, 0x97, 0x1b, 0x1c, 0x53, 0x2b, 0xa6, 0xad, 0xe6, 0x57, 0x48, 0x73, 0xf9, 0xf0,
-	0x58, 0xcb, 0x1d, 0x1d, 0x6b, 0xb9, 0xd3, 0x63, 0x8d, 0xbc, 0xef, 0x6b, 0xe4, 0x4b, 0x5f, 0x23,
-	0x07, 0x7d, 0x8d, 0x1c, 0xf6, 0x35, 0xf2, 0xa3, 0xaf, 0x91, 0x5f, 0x7d, 0x2d, 0x77, 0xda, 0xd7,
-	0xc8, 0xe7, 0x13, 0x2d, 0x77, 0x78, 0xa2, 0xe5, 0x8e, 0x4e, 0xb4, 0xdc, 0x9f, 0x00, 0x00, 0x00,
-	0xff, 0xff, 0x48, 0x85, 0xf1, 0x33, 0x12, 0x07, 0x00, 0x00,
+	// 656 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x54, 0xd1, 0x6a, 0x13, 0x41,
+	0x14, 0x65, 0x9b, 0xa4, 0xa4, 0x37, 0x55, 0xdb, 0xb1, 0x48, 0x08, 0x25, 0x94, 0x45, 0xa4, 0x48,
+	0x9d, 0x35, 0x41, 0xa4, 0xf4, 0x41, 0xb0, 0x58, 0x6a, 0x41, 0x51, 0xa6, 0xb5, 0x0f, 0xe2, 0xcb,
+	0x74, 0x73, 0x9b, 0x8e, 0x71, 0x67, 0xd7, 0x99, 0xd9, 0xd8, 0xfe, 0x81, 0xbf, 0xe2, 0x2f, 0xf8,
+	0x05, 0x3e, 0xfa, 0x09, 0xd2, 0x17, 0xc1, 0x7f, 0x10, 0x64, 0x66, 0xb7, 0x4d, 0x76, 0xd3, 0xa6,
+	0x79, 0xf0, 0x6d, 0xe6, 0xee, 0x9e, 0x33, 0xe7, 0xde, 0x7b, 0x38, 0xb0, 0x31, 0xd8, 0xd4, 0x54,
+	0xc4, 0x01, 0x4f, 0x44, 0xc0, 0x53, 0x73, 0x82, 0xd2, 0x88, 0x90, 0x1b, 0x11, 0xcb, 0x60, 0xd8,
+	0x09, 0xfa, 0x28, 0x51, 0x71, 0x83, 0x3d, 0x9a, 0xa8, 0xd8, 0xc4, 0x64, 0x35, 0xfb, 0x9b, 0xf2,
+	0x44, 0xd0, 0xe2, 0xdf, 0x74, 0xd8, 0x69, 0x3d, 0x19, 0x71, 0x45, 0x3c, 0x3c, 0x11, 0x12, 0xd5,
+	0x59, 0x90, 0x0c, 0xfa, 0xb6, 0xa0, 0x83, 0x08, 0x0d, 0xbf, 0x82, 0xb3, 0x15, 0x5c, 0x87, 0x52,
+	0xa9, 0x34, 0x22, 0xc2, 0x09, 0xc0, 0xd3, 0x9b, 0x00, 0x3a, 0x3c, 0xc1, 0x88, 0x97, 0x71, 0x7e,
+	0x02, 0x2b, 0xdb, 0x71, 0x2a, 0x7b, 0x6f, 0x8e, 0x3e, 0x62, 0x68, 0x18, 0x1e, 0xa3, 0x42, 0x19,
+	0x22, 0x21, 0x50, 0x1d, 0x08, 0xd9, 0x6b, 0x7a, 0x6b, 0xde, 0xfa, 0x02, 0x73, 0x67, 0xd2, 0x06,
+	0xe0, 0x6f, 0xf7, 0x0e, 0x51, 0x69, 0x11, 0xcb, 0xe6, 0x9c, 0xfb, 0x32, 0x56, 0xb1, 0x18, 0xc9,
+	0x23, 0x6c, 0x56, 0x32, 0x8c, 0x3d, 0x93, 0x25, 0xa8, 0xa4, 0x7b, 0x2f, 0x9a, 0x55, 0x57, 0xb2,
+	0x47, 0xdf, 0x07, 0xd8, 0x39, 0x35, 0x8a, 0x1f, 0xf2, 0x4f, 0x29, 0x92, 0x15, 0xa8, 0x09, 0x83,
+	0x91, 0x6e, 0x7a, 0x6b, 0x95, 0xf5, 0x05, 0x96, 0x5d, 0xfc, 0x3f, 0x1e, 0x2c, 0x1e, 0xc4, 0x03,
+	0x94, 0x0c, 0x3f, 0xa7, 0xa8, 0x0d, 0x79, 0x05, 0x75, 0x3b, 0xaa, 0x1e, 0x37, 0xdc, 0x49, 0x6a,
+	0x74, 0x1f, 0xd3, 0xd1, 0xd8, 0x2f, 0x3b, 0xa6, 0xc9, 0xa0, 0x6f, 0x0b, 0x9a, 0xda, 0xbf, 0xe9,
+	0xb0, 0x43, 0xb3, 0xbe, 0x5e, 0xa3, 0xe1, 0xec, 0x92, 0x81, 0x6c, 0x43, 0x55, 0x27, 0x18, 0xba,
+	0x16, 0x1a, 0x5d, 0x4a, 0xa7, 0x2d, 0x90, 0x8e, 0xeb, 0xd8, 0x4f, 0x30, 0x64, 0x0e, 0x4b, 0x5e,
+	0xc2, 0xbc, 0x36, 0xdc, 0xa4, 0xda, 0xb5, 0x5b, 0xd4, 0x73, 0x13, 0x8b, 0xc3, 0xb1, 0x1c, 0xef,
+	0x7f, 0xf7, 0x60, 0xa9, 0xfc, 0x08, 0x59, 0x85, 0x05, 0x9e, 0xf6, 0x84, 0xdd, 0xc5, 0xc5, 0x6c,
+	0x46, 0x05, 0xb2, 0x01, 0xcb, 0x78, 0x9a, 0x08, 0xe5, 0xe8, 0xf7, 0x31, 0x8c, 0x65, 0x4f, 0xbb,
+	0x19, 0x57, 0xd8, 0xe4, 0x07, 0xf2, 0x1e, 0x6e, 0x1f, 0x15, 0x76, 0x9c, 0x4b, 0xee, 0x4e, 0x97,
+	0x7c, 0x95, 0x2f, 0x58, 0x89, 0xc9, 0xff, 0xea, 0x01, 0x99, 0xec, 0xcd, 0xae, 0xd5, 0xd8, 0x6a,
+	0xee, 0x9f, 0xec, 0x42, 0x3e, 0xc0, 0xdd, 0x91, 0xba, 0x03, 0x11, 0xa1, 0x36, 0x3c, 0x4a, 0xf2,
+	0x35, 0x3c, 0x9c, 0x6d, 0xa1, 0x16, 0xc6, 0xae, 0xa2, 0xf1, 0x7f, 0x7b, 0xd0, 0xc8, 0xa5, 0x0c,
+	0x05, 0x7e, 0xf9, 0xcf, 0x9e, 0x79, 0x5e, 0xf0, 0xcc, 0xa3, 0x99, 0xb6, 0x6d, 0x65, 0x8c, 0x59,
+	0x66, 0xb7, 0x64, 0x99, 0x60, 0x76, 0x92, 0xa2, 0x63, 0x76, 0xe0, 0x4e, 0xe9, 0x85, 0x6b, 0x06,
+	0x5e, 0x70, 0xd1, 0x5c, 0xc9, 0x45, 0xfe, 0x37, 0x0f, 0x96, 0x27, 0x1e, 0x21, 0xf7, 0xe1, 0xd6,
+	0x98, 0x16, 0xcc, 0x22, 0xa0, 0xce, 0x8a, 0x45, 0xb2, 0x05, 0xd5, 0x54, 0xa3, 0xca, 0xc7, 0xf1,
+	0x60, 0x7a, 0x27, 0xef, 0x34, 0xaa, 0x3d, 0x79, 0x1c, 0x33, 0x87, 0x29, 0xaa, 0xaa, 0x96, 0xbd,
+	0xbd, 0x02, 0x35, 0x54, 0x2a, 0x56, 0x79, 0x8c, 0x64, 0x17, 0xff, 0xaf, 0x07, 0xf5, 0x0b, 0x1a,
+	0xd2, 0x82, 0xba, 0x25, 0x72, 0x61, 0x93, 0xf5, 0x7b, 0x79, 0x77, 0x81, 0x23, 0x7a, 0x79, 0x3a,
+	0xd9, 0x23, 0xb9, 0x07, 0xf3, 0x7d, 0x15, 0xa7, 0x89, 0x1d, 0xbb, 0x7d, 0x2b, 0xbf, 0x91, 0x5d,
+	0xa8, 0xa1, 0x0d, 0x22, 0x27, 0xa1, 0xd1, 0xed, 0xcc, 0xd6, 0x03, 0x75, 0xe1, 0xb5, 0x23, 0x8d,
+	0x3a, 0x63, 0x19, 0xbe, 0x75, 0x94, 0x27, 0x9a, 0x2b, 0x5a, 0x01, 0x03, 0x3c, 0xcb, 0x75, 0xd9,
+	0x23, 0x79, 0x06, 0xb5, 0xa1, 0x0d, 0xbb, 0x7c, 0x58, 0xeb, 0xd3, 0x1f, 0x1a, 0x85, 0x23, 0xcb,
+	0x60, 0x5b, 0x73, 0x9b, 0xde, 0xf6, 0xe2, 0x8f, 0xf3, 0xb6, 0xf7, 0xf3, 0xbc, 0xed, 0xfd, 0x3a,
+	0x6f, 0x7b, 0xff, 0x02, 0x00, 0x00, 0xff, 0xff, 0xf5, 0x49, 0x7d, 0x22, 0xa1, 0x06, 0x00, 0x00,
 }
 
-func (this *BoundObjectReference) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*BoundObjectReference)
-	if !ok {
-		that2, ok := that.(BoundObjectReference)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Kind != that1.Kind {
-		return false
-	}
-	if this.APIVersion != that1.APIVersion {
-		return false
-	}
-	if this.Name != that1.Name {
-		return false
-	}
-	if this.UID != that1.UID {
-		return false
-	}
-	return true
-}
-func (this *ExtraValue) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*ExtraValue)
-	if !ok {
-		that2, ok := that.(ExtraValue)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if len(this.Items) != len(that1.Items) {
-		return false
-	}
-	for i := range this.Items {
-		if this.Items[i] != that1.Items[i] {
-			return false
-		}
-	}
-	return true
-}
-func (this *TokenRequest) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*TokenRequest)
-	if !ok {
-		that2, ok := that.(TokenRequest)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if !this.Spec.Equal(that1.Spec) {
-		return false
-	}
-	if !this.Status.Equal(that1.Status) {
-		return false
-	}
-	return true
-}
-func (this *TokenRequestSpec) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*TokenRequestSpec)
-	if !ok {
-		that2, ok := that.(TokenRequestSpec)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if len(this.Audiences) != len(that1.Audiences) {
-		return false
-	}
-	for i := range this.Audiences {
-		if this.Audiences[i] != that1.Audiences[i] {
-			return false
-		}
-	}
-	if this.ExpirationSeconds != that1.ExpirationSeconds {
-		return false
-	}
-	if !this.BoundObjectRef.Equal(that1.BoundObjectRef) {
-		return false
-	}
-	return true
-}
-func (this *TokenRequestStatus) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*TokenRequestStatus)
-	if !ok {
-		that2, ok := that.(TokenRequestStatus)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Token != that1.Token {
-		return false
-	}
-	if !this.ExpirationTimestamp.Equal(that1.ExpirationTimestamp) {
-		return false
-	}
-	return true
-}
-func (this *TokenReview) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*TokenReview)
-	if !ok {
-		that2, ok := that.(TokenReview)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if !this.Spec.Equal(that1.Spec) {
-		return false
-	}
-	if !this.Status.Equal(that1.Status) {
-		return false
-	}
-	return true
-}
-func (this *TokenReviewSpec) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*TokenReviewSpec)
-	if !ok {
-		that2, ok := that.(TokenReviewSpec)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Token != that1.Token {
-		return false
-	}
-	if len(this.Audiences) != len(that1.Audiences) {
-		return false
-	}
-	for i := range this.Audiences {
-		if this.Audiences[i] != that1.Audiences[i] {
-			return false
-		}
-	}
-	return true
-}
-func (this *TokenReviewStatus) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*TokenReviewStatus)
-	if !ok {
-		that2, ok := that.(TokenReviewStatus)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Authenticated != that1.Authenticated {
-		return false
-	}
-	if !this.User.Equal(that1.User) {
-		return false
-	}
-	if len(this.Audiences) != len(that1.Audiences) {
-		return false
-	}
-	for i := range this.Audiences {
-		if this.Audiences[i] != that1.Audiences[i] {
-			return false
-		}
-	}
-	if this.Error != that1.Error {
-		return false
-	}
-	return true
-}
-func (this *UserInfo) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*UserInfo)
-	if !ok {
-		that2, ok := that.(UserInfo)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Username != that1.Username {
-		return false
-	}
-	if this.Uid != that1.Uid {
-		return false
-	}
-	if len(this.Groups) != len(that1.Groups) {
-		return false
-	}
-	for i := range this.Groups {
-		if this.Groups[i] != that1.Groups[i] {
-			return false
-		}
-	}
-	if len(this.Extra) != len(that1.Extra) {
-		return false
-	}
-	for i := range this.Extra {
-		if !this.Extra[i].Equal(that1.Extra[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *BoundObjectReference) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 8)
-	s = append(s, "&k8s_io_api_authentication_v1.BoundObjectReference{")
-	s = append(s, "Kind: "+fmt.Sprintf("%#v", this.Kind)+",\n")
-	s = append(s, "APIVersion: "+fmt.Sprintf("%#v", this.APIVersion)+",\n")
-	s = append(s, "Name: "+fmt.Sprintf("%#v", this.Name)+",\n")
-	s = append(s, "UID: "+fmt.Sprintf("%#v", this.UID)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *ExtraValue) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 5)
-	s = append(s, "&k8s_io_api_authentication_v1.ExtraValue{")
-	if this.Items != nil {
-		s = append(s, "Items: "+fmt.Sprintf("%#v", this.Items)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *TokenRequest) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 7)
-	s = append(s, "&k8s_io_api_authentication_v1.TokenRequest{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Spec != nil {
-		s = append(s, "Spec: "+fmt.Sprintf("%#v", this.Spec)+",\n")
-	}
-	if this.Status != nil {
-		s = append(s, "Status: "+fmt.Sprintf("%#v", this.Status)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *TokenRequestSpec) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 7)
-	s = append(s, "&k8s_io_api_authentication_v1.TokenRequestSpec{")
-	if this.Audiences != nil {
-		s = append(s, "Audiences: "+fmt.Sprintf("%#v", this.Audiences)+",\n")
-	}
-	s = append(s, "ExpirationSeconds: "+fmt.Sprintf("%#v", this.ExpirationSeconds)+",\n")
-	if this.BoundObjectRef != nil {
-		s = append(s, "BoundObjectRef: "+fmt.Sprintf("%#v", this.BoundObjectRef)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *TokenRequestStatus) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_authentication_v1.TokenRequestStatus{")
-	s = append(s, "Token: "+fmt.Sprintf("%#v", this.Token)+",\n")
-	if this.ExpirationTimestamp != nil {
-		s = append(s, "ExpirationTimestamp: "+fmt.Sprintf("%#v", this.ExpirationTimestamp)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *TokenReview) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 7)
-	s = append(s, "&k8s_io_api_authentication_v1.TokenReview{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Spec != nil {
-		s = append(s, "Spec: "+fmt.Sprintf("%#v", this.Spec)+",\n")
-	}
-	if this.Status != nil {
-		s = append(s, "Status: "+fmt.Sprintf("%#v", this.Status)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *TokenReviewSpec) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_authentication_v1.TokenReviewSpec{")
-	s = append(s, "Token: "+fmt.Sprintf("%#v", this.Token)+",\n")
-	if this.Audiences != nil {
-		s = append(s, "Audiences: "+fmt.Sprintf("%#v", this.Audiences)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *TokenReviewStatus) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 8)
-	s = append(s, "&k8s_io_api_authentication_v1.TokenReviewStatus{")
-	s = append(s, "Authenticated: "+fmt.Sprintf("%#v", this.Authenticated)+",\n")
-	if this.User != nil {
-		s = append(s, "User: "+fmt.Sprintf("%#v", this.User)+",\n")
-	}
-	if this.Audiences != nil {
-		s = append(s, "Audiences: "+fmt.Sprintf("%#v", this.Audiences)+",\n")
-	}
-	s = append(s, "Error: "+fmt.Sprintf("%#v", this.Error)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *UserInfo) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 8)
-	s = append(s, "&k8s_io_api_authentication_v1.UserInfo{")
-	s = append(s, "Username: "+fmt.Sprintf("%#v", this.Username)+",\n")
-	s = append(s, "Uid: "+fmt.Sprintf("%#v", this.Uid)+",\n")
-	if this.Groups != nil {
-		s = append(s, "Groups: "+fmt.Sprintf("%#v", this.Groups)+",\n")
-	}
-	keysForExtra := make([]string, 0, len(this.Extra))
-	for k, _ := range this.Extra {
-		keysForExtra = append(keysForExtra, k)
-	}
-	github_com_gogo_protobuf_sortkeys.Strings(keysForExtra)
-	mapStringForExtra := "map[string]*ExtraValue{"
-	for _, k := range keysForExtra {
-		mapStringForExtra += fmt.Sprintf("%#v: %#v,", k, this.Extra[k])
-	}
-	mapStringForExtra += "}"
-	if this.Extra != nil {
-		s = append(s, "Extra: "+mapStringForExtra+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func valueToGoStringGenerated(v interface{}, typ string) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("func(v %v) *%v { return &v } ( %#v )", typ, typ, pv)
-}
 func (m *BoundObjectReference) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -1169,26 +746,38 @@ func (m *BoundObjectReference) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	i -= len(m.UID)
-	copy(dAtA[i:], m.UID)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.UID)))
-	i--
-	dAtA[i] = 0x22
-	i -= len(m.Name)
-	copy(dAtA[i:], m.Name)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Name)))
-	i--
-	dAtA[i] = 0x1a
-	i -= len(m.APIVersion)
-	copy(dAtA[i:], m.APIVersion)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.APIVersion)))
-	i--
-	dAtA[i] = 0x12
-	i -= len(m.Kind)
-	copy(dAtA[i:], m.Kind)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Kind)))
-	i--
-	dAtA[i] = 0xa
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.UID != nil {
+		i -= len(*m.UID)
+		copy(dAtA[i:], *m.UID)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.UID)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if m.Name != nil {
+		i -= len(*m.Name)
+		copy(dAtA[i:], *m.Name)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Name)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if m.APIVersion != nil {
+		i -= len(*m.APIVersion)
+		copy(dAtA[i:], *m.APIVersion)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.APIVersion)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Kind != nil {
+		i -= len(*m.Kind)
+		copy(dAtA[i:], *m.Kind)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Kind)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -1212,6 +801,10 @@ func (m *ExtraValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Items) > 0 {
 		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
 			i -= len(m.Items[iNdEx])
@@ -1244,6 +837,10 @@ func (m *TokenRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Status != nil {
 		{
 			size, err := m.Status.MarshalToSizedBuffer(dAtA[:i])
@@ -1303,9 +900,15 @@ func (m *TokenRequestSpec) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	i = encodeVarintGenerated(dAtA, i, uint64(m.ExpirationSeconds))
-	i--
-	dAtA[i] = 0x20
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.ExpirationSeconds != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.ExpirationSeconds))
+		i--
+		dAtA[i] = 0x20
+	}
 	if m.BoundObjectRef != nil {
 		{
 			size, err := m.BoundObjectRef.MarshalToSizedBuffer(dAtA[:i])
@@ -1350,6 +953,10 @@ func (m *TokenRequestStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.ExpirationTimestamp != nil {
 		{
 			size, err := m.ExpirationTimestamp.MarshalToSizedBuffer(dAtA[:i])
@@ -1362,11 +969,13 @@ func (m *TokenRequestStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x12
 	}
-	i -= len(m.Token)
-	copy(dAtA[i:], m.Token)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Token)))
-	i--
-	dAtA[i] = 0xa
+	if m.Token != nil {
+		i -= len(*m.Token)
+		copy(dAtA[i:], *m.Token)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Token)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -1390,6 +999,10 @@ func (m *TokenReview) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Status != nil {
 		{
 			size, err := m.Status.MarshalToSizedBuffer(dAtA[:i])
@@ -1449,6 +1062,10 @@ func (m *TokenReviewSpec) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Audiences) > 0 {
 		for iNdEx := len(m.Audiences) - 1; iNdEx >= 0; iNdEx-- {
 			i -= len(m.Audiences[iNdEx])
@@ -1458,11 +1075,13 @@ func (m *TokenReviewSpec) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			dAtA[i] = 0x12
 		}
 	}
-	i -= len(m.Token)
-	copy(dAtA[i:], m.Token)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Token)))
-	i--
-	dAtA[i] = 0xa
+	if m.Token != nil {
+		i -= len(*m.Token)
+		copy(dAtA[i:], *m.Token)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Token)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -1486,6 +1105,10 @@ func (m *TokenReviewStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Audiences) > 0 {
 		for iNdEx := len(m.Audiences) - 1; iNdEx >= 0; iNdEx-- {
 			i -= len(m.Audiences[iNdEx])
@@ -1495,11 +1118,13 @@ func (m *TokenReviewStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			dAtA[i] = 0x22
 		}
 	}
-	i -= len(m.Error)
-	copy(dAtA[i:], m.Error)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Error)))
-	i--
-	dAtA[i] = 0x1a
+	if m.Error != nil {
+		i -= len(*m.Error)
+		copy(dAtA[i:], *m.Error)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Error)))
+		i--
+		dAtA[i] = 0x1a
+	}
 	if m.User != nil {
 		{
 			size, err := m.User.MarshalToSizedBuffer(dAtA[:i])
@@ -1512,14 +1137,16 @@ func (m *TokenReviewStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x12
 	}
-	i--
-	if m.Authenticated {
-		dAtA[i] = 1
-	} else {
-		dAtA[i] = 0
+	if m.Authenticated != nil {
+		i--
+		if *m.Authenticated {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x8
 	}
-	i--
-	dAtA[i] = 0x8
 	return len(dAtA) - i, nil
 }
 
@@ -1543,6 +1170,10 @@ func (m *UserInfo) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Extra) > 0 {
 		for k := range m.Extra {
 			v := m.Extra[k]
@@ -1578,16 +1209,20 @@ func (m *UserInfo) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			dAtA[i] = 0x1a
 		}
 	}
-	i -= len(m.Uid)
-	copy(dAtA[i:], m.Uid)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Uid)))
-	i--
-	dAtA[i] = 0x12
-	i -= len(m.Username)
-	copy(dAtA[i:], m.Username)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Username)))
-	i--
-	dAtA[i] = 0xa
+	if m.Uid != nil {
+		i -= len(*m.Uid)
+		copy(dAtA[i:], *m.Uid)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Uid)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Username != nil {
+		i -= len(*m.Username)
+		copy(dAtA[i:], *m.Username)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Username)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -1608,14 +1243,25 @@ func (m *BoundObjectReference) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Kind)
-	n += 1 + l + sovGenerated(uint64(l))
-	l = len(m.APIVersion)
-	n += 1 + l + sovGenerated(uint64(l))
-	l = len(m.Name)
-	n += 1 + l + sovGenerated(uint64(l))
-	l = len(m.UID)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.Kind != nil {
+		l = len(*m.Kind)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.APIVersion != nil {
+		l = len(*m.APIVersion)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.Name != nil {
+		l = len(*m.Name)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.UID != nil {
+		l = len(*m.UID)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -1630,6 +1276,9 @@ func (m *ExtraValue) Size() (n int) {
 			l = len(s)
 			n += 1 + l + sovGenerated(uint64(l))
 		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -1652,6 +1301,9 @@ func (m *TokenRequest) Size() (n int) {
 		l = m.Status.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -1671,7 +1323,12 @@ func (m *TokenRequestSpec) Size() (n int) {
 		l = m.BoundObjectRef.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
-	n += 1 + sovGenerated(uint64(m.ExpirationSeconds))
+	if m.ExpirationSeconds != nil {
+		n += 1 + sovGenerated(uint64(*m.ExpirationSeconds))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -1681,11 +1338,16 @@ func (m *TokenRequestStatus) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Token)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.Token != nil {
+		l = len(*m.Token)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if m.ExpirationTimestamp != nil {
 		l = m.ExpirationTimestamp.Size()
 		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -1708,6 +1370,9 @@ func (m *TokenReview) Size() (n int) {
 		l = m.Status.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -1717,13 +1382,18 @@ func (m *TokenReviewSpec) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Token)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.Token != nil {
+		l = len(*m.Token)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if len(m.Audiences) > 0 {
 		for _, s := range m.Audiences {
 			l = len(s)
 			n += 1 + l + sovGenerated(uint64(l))
 		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -1734,18 +1404,25 @@ func (m *TokenReviewStatus) Size() (n int) {
 	}
 	var l int
 	_ = l
-	n += 2
+	if m.Authenticated != nil {
+		n += 2
+	}
 	if m.User != nil {
 		l = m.User.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
-	l = len(m.Error)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.Error != nil {
+		l = len(*m.Error)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if len(m.Audiences) > 0 {
 		for _, s := range m.Audiences {
 			l = len(s)
 			n += 1 + l + sovGenerated(uint64(l))
 		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -1756,10 +1433,14 @@ func (m *UserInfo) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Username)
-	n += 1 + l + sovGenerated(uint64(l))
-	l = len(m.Uid)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.Username != nil {
+		l = len(*m.Username)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.Uid != nil {
+		l = len(*m.Uid)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if len(m.Groups) > 0 {
 		for _, s := range m.Groups {
 			l = len(s)
@@ -1779,6 +1460,9 @@ func (m *UserInfo) Size() (n int) {
 			n += mapEntrySize + 1 + sovGenerated(uint64(mapEntrySize))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -1787,131 +1471,6 @@ func sovGenerated(x uint64) (n int) {
 }
 func sozGenerated(x uint64) (n int) {
 	return sovGenerated(uint64((x << 1) ^ uint64((int64(x) >> 63))))
-}
-func (this *BoundObjectReference) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&BoundObjectReference{`,
-		`Kind:` + fmt.Sprintf("%v", this.Kind) + `,`,
-		`APIVersion:` + fmt.Sprintf("%v", this.APIVersion) + `,`,
-		`Name:` + fmt.Sprintf("%v", this.Name) + `,`,
-		`UID:` + fmt.Sprintf("%v", this.UID) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *ExtraValue) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&ExtraValue{`,
-		`Items:` + fmt.Sprintf("%v", this.Items) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *TokenRequest) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&TokenRequest{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ObjectMeta", "v1.ObjectMeta", 1) + `,`,
-		`Spec:` + strings.Replace(this.Spec.String(), "TokenRequestSpec", "TokenRequestSpec", 1) + `,`,
-		`Status:` + strings.Replace(this.Status.String(), "TokenRequestStatus", "TokenRequestStatus", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *TokenRequestSpec) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&TokenRequestSpec{`,
-		`Audiences:` + fmt.Sprintf("%v", this.Audiences) + `,`,
-		`BoundObjectRef:` + strings.Replace(this.BoundObjectRef.String(), "BoundObjectReference", "BoundObjectReference", 1) + `,`,
-		`ExpirationSeconds:` + fmt.Sprintf("%v", this.ExpirationSeconds) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *TokenRequestStatus) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&TokenRequestStatus{`,
-		`Token:` + fmt.Sprintf("%v", this.Token) + `,`,
-		`ExpirationTimestamp:` + strings.Replace(fmt.Sprintf("%v", this.ExpirationTimestamp), "Time", "v1.Time", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *TokenReview) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&TokenReview{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ObjectMeta", "v1.ObjectMeta", 1) + `,`,
-		`Spec:` + strings.Replace(this.Spec.String(), "TokenReviewSpec", "TokenReviewSpec", 1) + `,`,
-		`Status:` + strings.Replace(this.Status.String(), "TokenReviewStatus", "TokenReviewStatus", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *TokenReviewSpec) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&TokenReviewSpec{`,
-		`Token:` + fmt.Sprintf("%v", this.Token) + `,`,
-		`Audiences:` + fmt.Sprintf("%v", this.Audiences) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *TokenReviewStatus) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&TokenReviewStatus{`,
-		`Authenticated:` + fmt.Sprintf("%v", this.Authenticated) + `,`,
-		`User:` + strings.Replace(this.User.String(), "UserInfo", "UserInfo", 1) + `,`,
-		`Error:` + fmt.Sprintf("%v", this.Error) + `,`,
-		`Audiences:` + fmt.Sprintf("%v", this.Audiences) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *UserInfo) String() string {
-	if this == nil {
-		return "nil"
-	}
-	keysForExtra := make([]string, 0, len(this.Extra))
-	for k, _ := range this.Extra {
-		keysForExtra = append(keysForExtra, k)
-	}
-	github_com_gogo_protobuf_sortkeys.Strings(keysForExtra)
-	mapStringForExtra := "map[string]*ExtraValue{"
-	for _, k := range keysForExtra {
-		mapStringForExtra += fmt.Sprintf("%v: %v,", k, this.Extra[k])
-	}
-	mapStringForExtra += "}"
-	s := strings.Join([]string{`&UserInfo{`,
-		`Username:` + fmt.Sprintf("%v", this.Username) + `,`,
-		`Uid:` + fmt.Sprintf("%v", this.Uid) + `,`,
-		`Groups:` + fmt.Sprintf("%v", this.Groups) + `,`,
-		`Extra:` + mapStringForExtra + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func valueToStringGenerated(v interface{}) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("*%v", pv)
 }
 func (m *BoundObjectReference) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
@@ -1972,7 +1531,8 @@ func (m *BoundObjectReference) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Kind = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Kind = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -2004,7 +1564,8 @@ func (m *BoundObjectReference) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.APIVersion = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.APIVersion = &s
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
@@ -2036,7 +1597,8 @@ func (m *BoundObjectReference) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Name = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Name = &s
 			iNdEx = postIndex
 		case 4:
 			if wireType != 2 {
@@ -2068,7 +1630,8 @@ func (m *BoundObjectReference) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.UID = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.UID = &s
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -2082,6 +1645,7 @@ func (m *BoundObjectReference) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -2164,6 +1728,7 @@ func (m *ExtraValue) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -2322,6 +1887,7 @@ func (m *TokenRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -2432,7 +1998,7 @@ func (m *TokenRequestSpec) Unmarshal(dAtA []byte) error {
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ExpirationSeconds", wireType)
 			}
-			m.ExpirationSeconds = 0
+			var v int64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -2442,11 +2008,12 @@ func (m *TokenRequestSpec) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.ExpirationSeconds |= int64(b&0x7F) << shift
+				v |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.ExpirationSeconds = &v
 		default:
 			iNdEx = preIndex
 			skippy, err := skipGenerated(dAtA[iNdEx:])
@@ -2459,6 +2026,7 @@ func (m *TokenRequestSpec) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -2527,7 +2095,8 @@ func (m *TokenRequestStatus) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Token = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Token = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -2577,6 +2146,7 @@ func (m *TokenRequestStatus) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -2735,6 +2305,7 @@ func (m *TokenReview) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -2803,7 +2374,8 @@ func (m *TokenReviewSpec) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Token = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Token = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -2849,6 +2421,7 @@ func (m *TokenReviewSpec) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -2906,7 +2479,8 @@ func (m *TokenReviewStatus) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
-			m.Authenticated = bool(v != 0)
+			b := bool(v != 0)
+			m.Authenticated = &b
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field User", wireType)
@@ -2973,7 +2547,8 @@ func (m *TokenReviewStatus) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Error = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Error = &s
 			iNdEx = postIndex
 		case 4:
 			if wireType != 2 {
@@ -3019,6 +2594,7 @@ func (m *TokenReviewStatus) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3087,7 +2663,8 @@ func (m *UserInfo) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Username = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Username = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -3119,7 +2696,8 @@ func (m *UserInfo) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Uid = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Uid = &s
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
@@ -3294,6 +2872,7 @@ func (m *UserInfo) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}

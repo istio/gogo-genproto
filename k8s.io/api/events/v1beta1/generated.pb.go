@@ -13,8 +13,6 @@ import (
 	_ "istio.io/gogo-genproto/k8s.io/apimachinery/pkg/runtime/schema"
 	math "math"
 	math_bits "math/bits"
-	reflect "reflect"
-	strings "strings"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -39,15 +37,15 @@ type Event struct {
 	Series *EventSeries `protobuf:"bytes,3,opt,name=series" json:"series,omitempty"`
 	// Name of the controller that emitted this Event, e.g. `kubernetes.io/kubelet`.
 	// +optional
-	ReportingController string `protobuf:"bytes,4,opt,name=reportingController" json:"reportingController"`
+	ReportingController *string `protobuf:"bytes,4,opt,name=reportingController" json:"reportingController,omitempty"`
 	// ID of the controller instance, e.g. `kubelet-xyzf`.
 	// +optional
-	ReportingInstance string `protobuf:"bytes,5,opt,name=reportingInstance" json:"reportingInstance"`
+	ReportingInstance *string `protobuf:"bytes,5,opt,name=reportingInstance" json:"reportingInstance,omitempty"`
 	// What action was taken/failed regarding to the regarding object.
 	// +optional
-	Action string `protobuf:"bytes,6,opt,name=action" json:"action"`
+	Action *string `protobuf:"bytes,6,opt,name=action" json:"action,omitempty"`
 	// Why the action was taken.
-	Reason string `protobuf:"bytes,7,opt,name=reason" json:"reason"`
+	Reason *string `protobuf:"bytes,7,opt,name=reason" json:"reason,omitempty"`
 	// The object this Event is about. In most cases it's an Object reporting controller implements.
 	// E.g. ReplicaSetController implements ReplicaSets and this event is emitted because
 	// it acts on some changes in a ReplicaSet object.
@@ -61,11 +59,11 @@ type Event struct {
 	// Maximal length of the note is 1kB, but libraries should be prepared to
 	// handle values up to 64kB.
 	// +optional
-	Note string `protobuf:"bytes,10,opt,name=note" json:"note"`
+	Note *string `protobuf:"bytes,10,opt,name=note" json:"note,omitempty"`
 	// Type of this event (Normal, Warning), new types could be added in the
 	// future.
 	// +optional
-	Type string `protobuf:"bytes,11,opt,name=type" json:"type"`
+	Type *string `protobuf:"bytes,11,opt,name=type" json:"type,omitempty"`
 	// Deprecated field assuring backward compatibility with core.v1 Event type
 	// +optional
 	DeprecatedSource *v11.EventSource `protobuf:"bytes,12,opt,name=deprecatedSource" json:"deprecatedSource,omitempty"`
@@ -77,11 +75,15 @@ type Event struct {
 	DeprecatedLastTimestamp *v1.Time `protobuf:"bytes,14,opt,name=deprecatedLastTimestamp" json:"deprecatedLastTimestamp,omitempty"`
 	// Deprecated field assuring backward compatibility with core.v1 Event type
 	// +optional
-	DeprecatedCount int32 `protobuf:"varint,15,opt,name=deprecatedCount" json:"deprecatedCount"`
+	DeprecatedCount      *int32   `protobuf:"varint,15,opt,name=deprecatedCount" json:"deprecatedCount,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *Event) Reset()      { *m = Event{} }
-func (*Event) ProtoMessage() {}
+func (m *Event) Reset()         { *m = Event{} }
+func (m *Event) String() string { return proto.CompactTextString(m) }
+func (*Event) ProtoMessage()    {}
 func (*Event) Descriptor() ([]byte, []int) {
 	return fileDescriptor_99027a32dee7673b, []int{0}
 }
@@ -134,29 +136,29 @@ func (m *Event) GetSeries() *EventSeries {
 }
 
 func (m *Event) GetReportingController() string {
-	if m != nil {
-		return m.ReportingController
+	if m != nil && m.ReportingController != nil {
+		return *m.ReportingController
 	}
 	return ""
 }
 
 func (m *Event) GetReportingInstance() string {
-	if m != nil {
-		return m.ReportingInstance
+	if m != nil && m.ReportingInstance != nil {
+		return *m.ReportingInstance
 	}
 	return ""
 }
 
 func (m *Event) GetAction() string {
-	if m != nil {
-		return m.Action
+	if m != nil && m.Action != nil {
+		return *m.Action
 	}
 	return ""
 }
 
 func (m *Event) GetReason() string {
-	if m != nil {
-		return m.Reason
+	if m != nil && m.Reason != nil {
+		return *m.Reason
 	}
 	return ""
 }
@@ -176,15 +178,15 @@ func (m *Event) GetRelated() *v11.ObjectReference {
 }
 
 func (m *Event) GetNote() string {
-	if m != nil {
-		return m.Note
+	if m != nil && m.Note != nil {
+		return *m.Note
 	}
 	return ""
 }
 
 func (m *Event) GetType() string {
-	if m != nil {
-		return m.Type
+	if m != nil && m.Type != nil {
+		return *m.Type
 	}
 	return ""
 }
@@ -211,8 +213,8 @@ func (m *Event) GetDeprecatedLastTimestamp() *v1.Time {
 }
 
 func (m *Event) GetDeprecatedCount() int32 {
-	if m != nil {
-		return m.DeprecatedCount
+	if m != nil && m.DeprecatedCount != nil {
+		return *m.DeprecatedCount
 	}
 	return 0
 }
@@ -224,11 +226,15 @@ type EventList struct {
 	// +optional
 	Metadata *v1.ListMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// Items is a list of schema objects.
-	Items []*Event `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	Items                []*Event `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *EventList) Reset()      { *m = EventList{} }
-func (*EventList) ProtoMessage() {}
+func (m *EventList) Reset()         { *m = EventList{} }
+func (m *EventList) String() string { return proto.CompactTextString(m) }
+func (*EventList) ProtoMessage()    {}
 func (*EventList) Descriptor() ([]byte, []int) {
 	return fileDescriptor_99027a32dee7673b, []int{1}
 }
@@ -277,16 +283,20 @@ func (m *EventList) GetItems() []*Event {
 // continuously for some time.
 type EventSeries struct {
 	// Number of occurrences in this series up to the last heartbeat time
-	Count int32 `protobuf:"varint,1,opt,name=count" json:"count"`
+	Count *int32 `protobuf:"varint,1,opt,name=count" json:"count,omitempty"`
 	// Time when last Event from the series was seen before last heartbeat.
 	LastObservedTime *v1.MicroTime `protobuf:"bytes,2,opt,name=lastObservedTime" json:"lastObservedTime,omitempty"`
 	// Information whether this series is ongoing or finished.
 	// Deprecated. Planned removal for 1.18
-	State string `protobuf:"bytes,3,opt,name=state" json:"state"`
+	State                *string  `protobuf:"bytes,3,opt,name=state" json:"state,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *EventSeries) Reset()      { *m = EventSeries{} }
-func (*EventSeries) ProtoMessage() {}
+func (m *EventSeries) Reset()         { *m = EventSeries{} }
+func (m *EventSeries) String() string { return proto.CompactTextString(m) }
+func (*EventSeries) ProtoMessage()    {}
 func (*EventSeries) Descriptor() ([]byte, []int) {
 	return fileDescriptor_99027a32dee7673b, []int{2}
 }
@@ -318,8 +328,8 @@ func (m *EventSeries) XXX_DiscardUnknown() {
 var xxx_messageInfo_EventSeries proto.InternalMessageInfo
 
 func (m *EventSeries) GetCount() int32 {
-	if m != nil {
-		return m.Count
+	if m != nil && m.Count != nil {
+		return *m.Count
 	}
 	return 0
 }
@@ -332,8 +342,8 @@ func (m *EventSeries) GetLastObservedTime() *v1.MicroTime {
 }
 
 func (m *EventSeries) GetState() string {
-	if m != nil {
-		return m.State
+	if m != nil && m.State != nil {
+		return *m.State
 	}
 	return ""
 }
@@ -349,254 +359,45 @@ func init() {
 }
 
 var fileDescriptor_99027a32dee7673b = []byte{
-	// 626 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x54, 0xcf, 0x4e, 0x14, 0x4d,
-	0x10, 0x9f, 0x06, 0x16, 0xd8, 0xde, 0xef, 0x13, 0x6c, 0x0f, 0xb6, 0xc4, 0x0c, 0x9b, 0x35, 0x31,
-	0xab, 0x87, 0x1e, 0x21, 0x84, 0x78, 0xd1, 0x44, 0x88, 0x26, 0x2a, 0x84, 0x64, 0xf0, 0xe6, 0xa9,
-	0x99, 0x2d, 0x96, 0x96, 0x9d, 0xee, 0x49, 0x77, 0xb3, 0x09, 0x37, 0x5f, 0xc0, 0xe8, 0x33, 0x78,
-	0xf2, 0x51, 0x38, 0x72, 0xe4, 0x64, 0x64, 0xb8, 0x78, 0xe4, 0x11, 0x4c, 0xf7, 0x2c, 0xcc, 0x84,
-	0xdd, 0x0d, 0x6b, 0xbc, 0xfe, 0xfe, 0xd5, 0x54, 0x75, 0xd5, 0xe0, 0x27, 0x87, 0xcf, 0x0d, 0x13,
-	0x2a, 0xe2, 0x99, 0x88, 0xa0, 0x0f, 0xd2, 0x9a, 0xa8, 0xbf, 0xb2, 0x07, 0x96, 0xaf, 0x44, 0x5d,
-	0x90, 0xa0, 0xb9, 0x85, 0x0e, 0xcb, 0xb4, 0xb2, 0x8a, 0x3c, 0x28, 0xa4, 0x8c, 0x67, 0x82, 0x15,
-	0x52, 0x36, 0x90, 0x2e, 0xb5, 0x2a, 0x29, 0x89, 0xd2, 0x10, 0xf5, 0x87, 0xec, 0x4b, 0x6b, 0xa5,
-	0x26, 0xe5, 0xc9, 0x81, 0x90, 0xa0, 0x8f, 0xa3, 0xec, 0xb0, 0xeb, 0x00, 0x13, 0xa5, 0x60, 0xf9,
-	0x28, 0x57, 0x34, 0xce, 0xa5, 0x8f, 0xa4, 0x15, 0x29, 0x0c, 0x19, 0xd6, 0x6f, 0x33, 0x98, 0xe4,
-	0x00, 0x52, 0x7e, 0xd3, 0xd7, 0xfa, 0x32, 0x87, 0x6b, 0xaf, 0x5d, 0x57, 0x64, 0x0b, 0xcf, 0xbb,
-	0xaf, 0xe9, 0x70, 0xcb, 0x29, 0x6a, 0xa2, 0x76, 0x63, 0xf5, 0x19, 0x2b, 0x5b, 0xbf, 0x0e, 0x65,
-	0xd9, 0x61, 0xd7, 0x01, 0x86, 0x39, 0x35, 0xeb, 0xaf, 0xb0, 0x9d, 0xbd, 0x4f, 0x90, 0xd8, 0x6d,
-	0xb0, 0x3c, 0xbe, 0x4e, 0x20, 0xdb, 0xb8, 0xee, 0x87, 0xf5, 0x41, 0xa4, 0x40, 0xa7, 0x7c, 0x5c,
-	0x34, 0x59, 0xdc, 0xb6, 0x48, 0xb4, 0x72, 0xb6, 0xb8, 0x4c, 0x20, 0x2f, 0xf1, 0xac, 0x01, 0x2d,
-	0xc0, 0xd0, 0x69, 0x9f, 0xf5, 0x98, 0x8d, 0x7d, 0x15, 0xe6, 0xdb, 0xd9, 0xf5, 0xea, 0x78, 0xe0,
-	0x22, 0xeb, 0xf8, 0x9e, 0x86, 0x4c, 0x69, 0x2b, 0x64, 0x77, 0x53, 0x49, 0xab, 0x55, 0xaf, 0x07,
-	0x9a, 0xce, 0x34, 0x51, 0xbb, 0xbe, 0x31, 0x73, 0xf2, 0x73, 0x39, 0x88, 0x47, 0x09, 0xc8, 0x2a,
-	0xbe, 0x7b, 0x0d, 0xbf, 0x95, 0xc6, 0x72, 0x99, 0x00, 0xad, 0x55, 0x5c, 0xc3, 0x34, 0x79, 0x88,
-	0x67, 0x79, 0x62, 0x85, 0x92, 0x74, 0xb6, 0x22, 0x1c, 0x60, 0x8e, 0xd5, 0xc0, 0x8d, 0x92, 0x74,
-	0xae, 0xca, 0x16, 0x18, 0x79, 0x85, 0xeb, 0x1a, 0xba, 0x5c, 0x77, 0x84, 0xec, 0xd2, 0x79, 0xdf,
-	0xea, 0xa3, 0x6a, 0xab, 0x6e, 0xcb, 0xca, 0x99, 0xc7, 0xb0, 0x0f, 0x1a, 0x64, 0x02, 0x71, 0xe9,
-	0x22, 0x2f, 0xf0, 0x9c, 0x86, 0x9e, 0x7b, 0x62, 0x5a, 0x9f, 0x3c, 0xe0, 0xca, 0x43, 0x28, 0x9e,
-	0x91, 0xca, 0x02, 0xc5, 0x95, 0xaf, 0xf3, 0x88, 0x63, 0xec, 0x71, 0x06, 0xb4, 0x51, 0x65, 0x1c,
-	0x42, 0xde, 0xe3, 0xc5, 0x0e, 0x64, 0x1a, 0x12, 0x97, 0xb0, 0xab, 0x8e, 0x74, 0x02, 0xf4, 0x3f,
-	0x5f, 0x7b, 0x79, 0x54, 0xed, 0xe2, 0x81, 0xbc, 0x2c, 0x1e, 0x32, 0x92, 0x7d, 0x4c, 0x4b, 0xec,
-	0x8d, 0xd0, 0xc6, 0x6f, 0x80, 0xb1, 0x3c, 0xcd, 0xe8, 0xff, 0x3e, 0xf4, 0xe9, 0x64, 0x8b, 0xe4,
-	0x77, 0x68, 0x6c, 0x16, 0xe9, 0xe0, 0xfb, 0x25, 0xb7, 0xc5, 0xab, 0x65, 0xee, 0xfc, 0x75, 0x99,
-	0x71, 0x51, 0x84, 0xe1, 0x85, 0x92, 0xda, 0x54, 0x47, 0xd2, 0xd2, 0x85, 0x26, 0x6a, 0xd7, 0x06,
-	0xf3, 0xbb, 0x49, 0xb6, 0xbe, 0x22, 0x5c, 0xf7, 0xf3, 0xd9, 0x12, 0xc6, 0x92, 0x77, 0x43, 0x37,
-	0xc9, 0x26, 0xfb, 0x28, 0xe7, 0xbe, 0x71, 0x91, 0xeb, 0xb8, 0x26, 0x2c, 0xa4, 0x86, 0x4e, 0x35,
-	0xa7, 0xdb, 0x8d, 0xd5, 0xe6, 0x6d, 0x17, 0x14, 0x17, 0xf2, 0xd6, 0x77, 0x84, 0x1b, 0x95, 0x93,
-	0x22, 0x4b, 0xb8, 0x96, 0xf8, 0x3e, 0x50, 0xa5, 0x8f, 0x02, 0x22, 0x1f, 0xf1, 0x62, 0x8f, 0x1b,
-	0xbb, 0xb3, 0x67, 0x40, 0xf7, 0xa1, 0xf3, 0x2f, 0xc7, 0x3f, 0x14, 0xe4, 0x0a, 0x1b, 0xcb, 0x2d,
-	0xf8, 0x5f, 0xc0, 0xd5, 0x02, 0x16, 0xd0, 0xc6, 0xda, 0xe9, 0x79, 0x18, 0x9c, 0x9d, 0x87, 0xc1,
-	0xe5, 0x79, 0x88, 0x3e, 0xe7, 0x21, 0xfa, 0x91, 0x87, 0xe8, 0x24, 0x0f, 0xd1, 0x69, 0x1e, 0xa2,
-	0x5f, 0x79, 0x88, 0x7e, 0xe7, 0x61, 0x70, 0x99, 0x87, 0xe8, 0xdb, 0x45, 0x18, 0x9c, 0x5e, 0x84,
-	0xc1, 0xd9, 0x45, 0x18, 0xfc, 0x09, 0x00, 0x00, 0xff, 0xff, 0x16, 0x96, 0x9a, 0x68, 0x06, 0x06,
-	0x00, 0x00,
+	// 571 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x53, 0xc1, 0x6e, 0x13, 0x31,
+	0x10, 0xd5, 0xb6, 0x4d, 0xda, 0x75, 0x0a, 0x2d, 0x06, 0x81, 0xe9, 0x21, 0x44, 0x41, 0x42, 0x01,
+	0x21, 0x6f, 0x53, 0xa1, 0x8a, 0x0b, 0x48, 0x50, 0x81, 0x04, 0x24, 0xaa, 0xb4, 0xe5, 0xc6, 0xc9,
+	0xf1, 0x4e, 0xb7, 0x26, 0x59, 0x7b, 0x65, 0x3b, 0x91, 0xfa, 0x15, 0xdc, 0xf8, 0x26, 0x8e, 0x7c,
+	0x02, 0x0a, 0x3f, 0x82, 0xec, 0x0d, 0xd9, 0x28, 0x9b, 0xa8, 0x41, 0xdc, 0x3c, 0x6f, 0xde, 0x7b,
+	0xe3, 0x19, 0x7b, 0xd0, 0xd3, 0xe1, 0x4b, 0x43, 0x85, 0x8a, 0x58, 0x2e, 0x22, 0x98, 0x80, 0xb4,
+	0x26, 0x9a, 0x74, 0x07, 0x60, 0x59, 0x37, 0x4a, 0x41, 0x82, 0x66, 0x16, 0x12, 0x9a, 0x6b, 0x65,
+	0x15, 0x7e, 0x58, 0x50, 0x29, 0xcb, 0x05, 0x2d, 0xa8, 0x74, 0x46, 0x3d, 0x6a, 0x2f, 0xb8, 0x70,
+	0xa5, 0x21, 0x9a, 0x54, 0xe4, 0x47, 0x2f, 0x4a, 0x4e, 0xc6, 0xf8, 0x95, 0x90, 0xa0, 0xaf, 0xa3,
+	0x7c, 0x98, 0x3a, 0xc0, 0x44, 0x19, 0x58, 0xb6, 0x4a, 0x15, 0xad, 0x53, 0xe9, 0xb1, 0xb4, 0x22,
+	0x83, 0x8a, 0xe0, 0xf4, 0x26, 0x81, 0xe1, 0x57, 0x90, 0xb1, 0x65, 0x5d, 0xfb, 0x77, 0x1d, 0xd5,
+	0xde, 0xb9, 0xae, 0x70, 0x0f, 0xed, 0xb9, 0xdb, 0x24, 0xcc, 0x32, 0x12, 0xb4, 0x82, 0x4e, 0xe3,
+	0xe4, 0x98, 0x96, 0xad, 0xcf, 0x4d, 0x69, 0x3e, 0x4c, 0x1d, 0x60, 0xa8, 0x63, 0xd3, 0x49, 0x97,
+	0x9e, 0x0f, 0xbe, 0x02, 0xb7, 0x7d, 0xb0, 0x2c, 0x9e, 0x3b, 0xe0, 0x3e, 0x0a, 0xfd, 0xb0, 0x3e,
+	0x8b, 0x0c, 0xc8, 0x96, 0xb7, 0x8b, 0x36, 0xb3, 0xeb, 0x0b, 0xae, 0x95, 0x93, 0xc5, 0xa5, 0x03,
+	0x7e, 0x8d, 0xea, 0x06, 0xb4, 0x00, 0x43, 0xb6, 0xbd, 0xd7, 0x13, 0xba, 0xf6, 0x55, 0xa8, 0x6f,
+	0xe7, 0xc2, 0xb3, 0xe3, 0x99, 0x0a, 0x1f, 0xa3, 0xbb, 0x1a, 0x72, 0xa5, 0xad, 0x90, 0xe9, 0x99,
+	0x92, 0x56, 0xab, 0xd1, 0x08, 0x34, 0xd9, 0x69, 0x05, 0x9d, 0x30, 0x5e, 0x95, 0xc2, 0xcf, 0xd1,
+	0x9d, 0x39, 0xfc, 0x41, 0x1a, 0xcb, 0x24, 0x07, 0x52, 0xf3, 0xfc, 0x6a, 0x02, 0xdf, 0x47, 0x75,
+	0xc6, 0xad, 0x50, 0x92, 0xd4, 0x3d, 0x65, 0x16, 0x39, 0x5c, 0x03, 0x33, 0x4a, 0x92, 0xdd, 0x02,
+	0x2f, 0x22, 0xfc, 0x06, 0x85, 0x1a, 0x52, 0xa6, 0x13, 0x21, 0x53, 0xb2, 0xe7, 0x5b, 0x7a, 0xbc,
+	0xd8, 0x92, 0xfb, 0x4d, 0xe5, 0x6c, 0x63, 0xb8, 0x04, 0x0d, 0x92, 0x43, 0x5c, 0xaa, 0xf0, 0x2b,
+	0xb4, 0xab, 0x61, 0xe4, 0x9e, 0x92, 0x84, 0x9b, 0x1b, 0xfc, 0xd5, 0x60, 0x8c, 0x76, 0xa4, 0xb2,
+	0x40, 0x90, 0xbf, 0x97, 0x3f, 0x3b, 0xcc, 0x5e, 0xe7, 0x40, 0x1a, 0x05, 0xe6, 0xce, 0xf8, 0x13,
+	0x3a, 0x4c, 0x20, 0xd7, 0xc0, 0x9d, 0xea, 0x42, 0x8d, 0x35, 0x07, 0xb2, 0xef, 0xeb, 0x3d, 0x5a,
+	0x55, 0xaf, 0x18, 0xbe, 0xa7, 0xc5, 0x15, 0x21, 0xbe, 0x44, 0xa4, 0xc4, 0xde, 0x0b, 0x6d, 0xfc,
+	0xeb, 0x1a, 0xcb, 0xb2, 0x9c, 0xdc, 0xf2, 0xa6, 0xcf, 0x36, 0xfb, 0x24, 0xfe, 0x7f, 0xac, 0xf5,
+	0xc2, 0x09, 0x7a, 0x50, 0xe6, 0x7a, 0x6c, 0xb1, 0xcc, 0xed, 0x7f, 0x2e, 0xb3, 0xce, 0x0a, 0x77,
+	0xd0, 0x41, 0x99, 0x3a, 0x53, 0x63, 0x69, 0xc9, 0x41, 0x2b, 0xe8, 0xd4, 0xe2, 0x65, 0xb8, 0xfd,
+	0x2d, 0x40, 0xa1, 0x9f, 0x4c, 0x4f, 0x18, 0x8b, 0x3f, 0x56, 0x36, 0x8d, 0x6e, 0x76, 0x1d, 0xa7,
+	0x5e, 0xda, 0xb3, 0x53, 0x54, 0x13, 0x16, 0x32, 0x43, 0xb6, 0x5a, 0xdb, 0x9d, 0xc6, 0x49, 0xeb,
+	0xa6, 0xbd, 0x88, 0x0b, 0x7a, 0xfb, 0x7b, 0x80, 0x1a, 0x0b, 0x8b, 0x82, 0xef, 0xa1, 0x1a, 0xf7,
+	0x1d, 0x04, 0xbe, 0x83, 0x22, 0xc0, 0x5f, 0xd0, 0xe1, 0x88, 0x19, 0x7b, 0x3e, 0x30, 0xa0, 0x27,
+	0x90, 0xfc, 0xcf, 0x32, 0x57, 0x8c, 0x5c, 0x49, 0x63, 0x99, 0x05, 0xbf, 0xd2, 0x61, 0x5c, 0x04,
+	0x6f, 0xf7, 0x7f, 0x4c, 0x9b, 0xc1, 0xcf, 0x69, 0x33, 0xf8, 0x35, 0x6d, 0x06, 0x7f, 0x02, 0x00,
+	0x00, 0xff, 0xff, 0x39, 0x06, 0xcb, 0x1b, 0xa8, 0x05, 0x00, 0x00,
 }
 
-func (this *Event) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*Event)
-	if !ok {
-		that2, ok := that.(Event)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if !this.EventTime.Equal(that1.EventTime) {
-		return false
-	}
-	if !this.Series.Equal(that1.Series) {
-		return false
-	}
-	if this.ReportingController != that1.ReportingController {
-		return false
-	}
-	if this.ReportingInstance != that1.ReportingInstance {
-		return false
-	}
-	if this.Action != that1.Action {
-		return false
-	}
-	if this.Reason != that1.Reason {
-		return false
-	}
-	if !this.Regarding.Equal(that1.Regarding) {
-		return false
-	}
-	if !this.Related.Equal(that1.Related) {
-		return false
-	}
-	if this.Note != that1.Note {
-		return false
-	}
-	if this.Type != that1.Type {
-		return false
-	}
-	if !this.DeprecatedSource.Equal(that1.DeprecatedSource) {
-		return false
-	}
-	if !this.DeprecatedFirstTimestamp.Equal(that1.DeprecatedFirstTimestamp) {
-		return false
-	}
-	if !this.DeprecatedLastTimestamp.Equal(that1.DeprecatedLastTimestamp) {
-		return false
-	}
-	if this.DeprecatedCount != that1.DeprecatedCount {
-		return false
-	}
-	return true
-}
-func (this *EventList) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*EventList)
-	if !ok {
-		that2, ok := that.(EventList)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if len(this.Items) != len(that1.Items) {
-		return false
-	}
-	for i := range this.Items {
-		if !this.Items[i].Equal(that1.Items[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *EventSeries) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*EventSeries)
-	if !ok {
-		that2, ok := that.(EventSeries)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Count != that1.Count {
-		return false
-	}
-	if !this.LastObservedTime.Equal(that1.LastObservedTime) {
-		return false
-	}
-	if this.State != that1.State {
-		return false
-	}
-	return true
-}
-func (this *Event) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 19)
-	s = append(s, "&k8s_io_api_events_v1beta1.Event{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.EventTime != nil {
-		s = append(s, "EventTime: "+fmt.Sprintf("%#v", this.EventTime)+",\n")
-	}
-	if this.Series != nil {
-		s = append(s, "Series: "+fmt.Sprintf("%#v", this.Series)+",\n")
-	}
-	s = append(s, "ReportingController: "+fmt.Sprintf("%#v", this.ReportingController)+",\n")
-	s = append(s, "ReportingInstance: "+fmt.Sprintf("%#v", this.ReportingInstance)+",\n")
-	s = append(s, "Action: "+fmt.Sprintf("%#v", this.Action)+",\n")
-	s = append(s, "Reason: "+fmt.Sprintf("%#v", this.Reason)+",\n")
-	if this.Regarding != nil {
-		s = append(s, "Regarding: "+fmt.Sprintf("%#v", this.Regarding)+",\n")
-	}
-	if this.Related != nil {
-		s = append(s, "Related: "+fmt.Sprintf("%#v", this.Related)+",\n")
-	}
-	s = append(s, "Note: "+fmt.Sprintf("%#v", this.Note)+",\n")
-	s = append(s, "Type: "+fmt.Sprintf("%#v", this.Type)+",\n")
-	if this.DeprecatedSource != nil {
-		s = append(s, "DeprecatedSource: "+fmt.Sprintf("%#v", this.DeprecatedSource)+",\n")
-	}
-	if this.DeprecatedFirstTimestamp != nil {
-		s = append(s, "DeprecatedFirstTimestamp: "+fmt.Sprintf("%#v", this.DeprecatedFirstTimestamp)+",\n")
-	}
-	if this.DeprecatedLastTimestamp != nil {
-		s = append(s, "DeprecatedLastTimestamp: "+fmt.Sprintf("%#v", this.DeprecatedLastTimestamp)+",\n")
-	}
-	s = append(s, "DeprecatedCount: "+fmt.Sprintf("%#v", this.DeprecatedCount)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *EventList) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_events_v1beta1.EventList{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Items != nil {
-		s = append(s, "Items: "+fmt.Sprintf("%#v", this.Items)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *EventSeries) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 7)
-	s = append(s, "&k8s_io_api_events_v1beta1.EventSeries{")
-	s = append(s, "Count: "+fmt.Sprintf("%#v", this.Count)+",\n")
-	if this.LastObservedTime != nil {
-		s = append(s, "LastObservedTime: "+fmt.Sprintf("%#v", this.LastObservedTime)+",\n")
-	}
-	s = append(s, "State: "+fmt.Sprintf("%#v", this.State)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func valueToGoStringGenerated(v interface{}, typ string) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("func(v %v) *%v { return &v } ( %#v )", typ, typ, pv)
-}
 func (m *Event) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -617,9 +418,15 @@ func (m *Event) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	i = encodeVarintGenerated(dAtA, i, uint64(m.DeprecatedCount))
-	i--
-	dAtA[i] = 0x78
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.DeprecatedCount != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.DeprecatedCount))
+		i--
+		dAtA[i] = 0x78
+	}
 	if m.DeprecatedLastTimestamp != nil {
 		{
 			size, err := m.DeprecatedLastTimestamp.MarshalToSizedBuffer(dAtA[:i])
@@ -656,16 +463,20 @@ func (m *Event) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x62
 	}
-	i -= len(m.Type)
-	copy(dAtA[i:], m.Type)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Type)))
-	i--
-	dAtA[i] = 0x5a
-	i -= len(m.Note)
-	copy(dAtA[i:], m.Note)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Note)))
-	i--
-	dAtA[i] = 0x52
+	if m.Type != nil {
+		i -= len(*m.Type)
+		copy(dAtA[i:], *m.Type)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Type)))
+		i--
+		dAtA[i] = 0x5a
+	}
+	if m.Note != nil {
+		i -= len(*m.Note)
+		copy(dAtA[i:], *m.Note)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Note)))
+		i--
+		dAtA[i] = 0x52
+	}
 	if m.Related != nil {
 		{
 			size, err := m.Related.MarshalToSizedBuffer(dAtA[:i])
@@ -690,26 +501,34 @@ func (m *Event) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x42
 	}
-	i -= len(m.Reason)
-	copy(dAtA[i:], m.Reason)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Reason)))
-	i--
-	dAtA[i] = 0x3a
-	i -= len(m.Action)
-	copy(dAtA[i:], m.Action)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Action)))
-	i--
-	dAtA[i] = 0x32
-	i -= len(m.ReportingInstance)
-	copy(dAtA[i:], m.ReportingInstance)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.ReportingInstance)))
-	i--
-	dAtA[i] = 0x2a
-	i -= len(m.ReportingController)
-	copy(dAtA[i:], m.ReportingController)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.ReportingController)))
-	i--
-	dAtA[i] = 0x22
+	if m.Reason != nil {
+		i -= len(*m.Reason)
+		copy(dAtA[i:], *m.Reason)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Reason)))
+		i--
+		dAtA[i] = 0x3a
+	}
+	if m.Action != nil {
+		i -= len(*m.Action)
+		copy(dAtA[i:], *m.Action)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Action)))
+		i--
+		dAtA[i] = 0x32
+	}
+	if m.ReportingInstance != nil {
+		i -= len(*m.ReportingInstance)
+		copy(dAtA[i:], *m.ReportingInstance)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.ReportingInstance)))
+		i--
+		dAtA[i] = 0x2a
+	}
+	if m.ReportingController != nil {
+		i -= len(*m.ReportingController)
+		copy(dAtA[i:], *m.ReportingController)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.ReportingController)))
+		i--
+		dAtA[i] = 0x22
+	}
 	if m.Series != nil {
 		{
 			size, err := m.Series.MarshalToSizedBuffer(dAtA[:i])
@@ -769,6 +588,10 @@ func (m *EventList) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Items) > 0 {
 		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -818,11 +641,17 @@ func (m *EventSeries) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	i -= len(m.State)
-	copy(dAtA[i:], m.State)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.State)))
-	i--
-	dAtA[i] = 0x1a
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.State != nil {
+		i -= len(*m.State)
+		copy(dAtA[i:], *m.State)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.State)))
+		i--
+		dAtA[i] = 0x1a
+	}
 	if m.LastObservedTime != nil {
 		{
 			size, err := m.LastObservedTime.MarshalToSizedBuffer(dAtA[:i])
@@ -835,9 +664,11 @@ func (m *EventSeries) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x12
 	}
-	i = encodeVarintGenerated(dAtA, i, uint64(m.Count))
-	i--
-	dAtA[i] = 0x8
+	if m.Count != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.Count))
+		i--
+		dAtA[i] = 0x8
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -870,14 +701,22 @@ func (m *Event) Size() (n int) {
 		l = m.Series.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
-	l = len(m.ReportingController)
-	n += 1 + l + sovGenerated(uint64(l))
-	l = len(m.ReportingInstance)
-	n += 1 + l + sovGenerated(uint64(l))
-	l = len(m.Action)
-	n += 1 + l + sovGenerated(uint64(l))
-	l = len(m.Reason)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.ReportingController != nil {
+		l = len(*m.ReportingController)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.ReportingInstance != nil {
+		l = len(*m.ReportingInstance)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.Action != nil {
+		l = len(*m.Action)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.Reason != nil {
+		l = len(*m.Reason)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if m.Regarding != nil {
 		l = m.Regarding.Size()
 		n += 1 + l + sovGenerated(uint64(l))
@@ -886,10 +725,14 @@ func (m *Event) Size() (n int) {
 		l = m.Related.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
-	l = len(m.Note)
-	n += 1 + l + sovGenerated(uint64(l))
-	l = len(m.Type)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.Note != nil {
+		l = len(*m.Note)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.Type != nil {
+		l = len(*m.Type)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if m.DeprecatedSource != nil {
 		l = m.DeprecatedSource.Size()
 		n += 1 + l + sovGenerated(uint64(l))
@@ -902,7 +745,12 @@ func (m *Event) Size() (n int) {
 		l = m.DeprecatedLastTimestamp.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
-	n += 1 + sovGenerated(uint64(m.DeprecatedCount))
+	if m.DeprecatedCount != nil {
+		n += 1 + sovGenerated(uint64(*m.DeprecatedCount))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -922,6 +770,9 @@ func (m *EventList) Size() (n int) {
 			n += 1 + l + sovGenerated(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -931,13 +782,20 @@ func (m *EventSeries) Size() (n int) {
 	}
 	var l int
 	_ = l
-	n += 1 + sovGenerated(uint64(m.Count))
+	if m.Count != nil {
+		n += 1 + sovGenerated(uint64(*m.Count))
+	}
 	if m.LastObservedTime != nil {
 		l = m.LastObservedTime.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
-	l = len(m.State)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.State != nil {
+		l = len(*m.State)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -946,66 +804,6 @@ func sovGenerated(x uint64) (n int) {
 }
 func sozGenerated(x uint64) (n int) {
 	return sovGenerated(uint64((x << 1) ^ uint64((int64(x) >> 63))))
-}
-func (this *Event) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&Event{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ObjectMeta", "v1.ObjectMeta", 1) + `,`,
-		`EventTime:` + strings.Replace(fmt.Sprintf("%v", this.EventTime), "MicroTime", "v1.MicroTime", 1) + `,`,
-		`Series:` + strings.Replace(this.Series.String(), "EventSeries", "EventSeries", 1) + `,`,
-		`ReportingController:` + fmt.Sprintf("%v", this.ReportingController) + `,`,
-		`ReportingInstance:` + fmt.Sprintf("%v", this.ReportingInstance) + `,`,
-		`Action:` + fmt.Sprintf("%v", this.Action) + `,`,
-		`Reason:` + fmt.Sprintf("%v", this.Reason) + `,`,
-		`Regarding:` + strings.Replace(fmt.Sprintf("%v", this.Regarding), "ObjectReference", "v11.ObjectReference", 1) + `,`,
-		`Related:` + strings.Replace(fmt.Sprintf("%v", this.Related), "ObjectReference", "v11.ObjectReference", 1) + `,`,
-		`Note:` + fmt.Sprintf("%v", this.Note) + `,`,
-		`Type:` + fmt.Sprintf("%v", this.Type) + `,`,
-		`DeprecatedSource:` + strings.Replace(fmt.Sprintf("%v", this.DeprecatedSource), "EventSource", "v11.EventSource", 1) + `,`,
-		`DeprecatedFirstTimestamp:` + strings.Replace(fmt.Sprintf("%v", this.DeprecatedFirstTimestamp), "Time", "v1.Time", 1) + `,`,
-		`DeprecatedLastTimestamp:` + strings.Replace(fmt.Sprintf("%v", this.DeprecatedLastTimestamp), "Time", "v1.Time", 1) + `,`,
-		`DeprecatedCount:` + fmt.Sprintf("%v", this.DeprecatedCount) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *EventList) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForItems := "[]*Event{"
-	for _, f := range this.Items {
-		repeatedStringForItems += strings.Replace(f.String(), "Event", "Event", 1) + ","
-	}
-	repeatedStringForItems += "}"
-	s := strings.Join([]string{`&EventList{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ListMeta", "v1.ListMeta", 1) + `,`,
-		`Items:` + repeatedStringForItems + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *EventSeries) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&EventSeries{`,
-		`Count:` + fmt.Sprintf("%v", this.Count) + `,`,
-		`LastObservedTime:` + strings.Replace(fmt.Sprintf("%v", this.LastObservedTime), "MicroTime", "v1.MicroTime", 1) + `,`,
-		`State:` + fmt.Sprintf("%v", this.State) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func valueToStringGenerated(v interface{}) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("*%v", pv)
 }
 func (m *Event) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
@@ -1174,7 +972,8 @@ func (m *Event) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.ReportingController = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.ReportingController = &s
 			iNdEx = postIndex
 		case 5:
 			if wireType != 2 {
@@ -1206,7 +1005,8 @@ func (m *Event) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.ReportingInstance = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.ReportingInstance = &s
 			iNdEx = postIndex
 		case 6:
 			if wireType != 2 {
@@ -1238,7 +1038,8 @@ func (m *Event) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Action = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Action = &s
 			iNdEx = postIndex
 		case 7:
 			if wireType != 2 {
@@ -1270,7 +1071,8 @@ func (m *Event) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Reason = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Reason = &s
 			iNdEx = postIndex
 		case 8:
 			if wireType != 2 {
@@ -1374,7 +1176,8 @@ func (m *Event) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Note = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Note = &s
 			iNdEx = postIndex
 		case 11:
 			if wireType != 2 {
@@ -1406,7 +1209,8 @@ func (m *Event) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Type = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Type = &s
 			iNdEx = postIndex
 		case 12:
 			if wireType != 2 {
@@ -1520,7 +1324,7 @@ func (m *Event) Unmarshal(dAtA []byte) error {
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field DeprecatedCount", wireType)
 			}
-			m.DeprecatedCount = 0
+			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -1530,11 +1334,12 @@ func (m *Event) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.DeprecatedCount |= int32(b&0x7F) << shift
+				v |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.DeprecatedCount = &v
 		default:
 			iNdEx = preIndex
 			skippy, err := skipGenerated(dAtA[iNdEx:])
@@ -1547,6 +1352,7 @@ func (m *Event) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -1667,6 +1473,7 @@ func (m *EventList) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -1709,7 +1516,7 @@ func (m *EventSeries) Unmarshal(dAtA []byte) error {
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Count", wireType)
 			}
-			m.Count = 0
+			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -1719,11 +1526,12 @@ func (m *EventSeries) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Count |= int32(b&0x7F) << shift
+				v |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.Count = &v
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field LastObservedTime", wireType)
@@ -1790,7 +1598,8 @@ func (m *EventSeries) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.State = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.State = &s
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -1804,6 +1613,7 @@ func (m *EventSeries) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}

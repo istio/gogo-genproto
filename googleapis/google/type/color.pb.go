@@ -11,8 +11,6 @@ import (
 	io "io"
 	math "math"
 	math_bits "math/bits"
-	reflect "reflect"
-	strings "strings"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -163,11 +161,15 @@ type Color struct {
 	// possible to distinguish between a default value and the value being unset.
 	// If omitted, this color object is to be rendered as a solid color
 	// (as if the alpha value had been explicitly given with a value of 1.0).
-	Alpha *types.FloatValue `protobuf:"bytes,4,opt,name=alpha,proto3" json:"alpha,omitempty"`
+	Alpha                *types.FloatValue `protobuf:"bytes,4,opt,name=alpha,proto3" json:"alpha,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
+	XXX_unrecognized     []byte            `json:"-"`
+	XXX_sizecache        int32             `json:"-"`
 }
 
-func (m *Color) Reset()      { *m = Color{} }
-func (*Color) ProtoMessage() {}
+func (m *Color) Reset()         { *m = Color{} }
+func (m *Color) String() string { return proto.CompactTextString(m) }
+func (*Color) ProtoMessage()    {}
 func (*Color) Descriptor() ([]byte, []int) {
 	return fileDescriptor_8454902cb8a2d34f, []int{0}
 }
@@ -233,7 +235,7 @@ func init() {
 func init() { proto.RegisterFile("google/type/color.proto", fileDescriptor_8454902cb8a2d34f) }
 
 var fileDescriptor_8454902cb8a2d34f = []byte{
-	// 252 bytes of a gzipped FileDescriptorProto
+	// 210 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x12, 0x4f, 0xcf, 0xcf, 0x4f,
 	0xcf, 0x49, 0xd5, 0x2f, 0xa9, 0x2c, 0x48, 0xd5, 0x4f, 0xce, 0xcf, 0xc9, 0x2f, 0xd2, 0x2b, 0x28,
 	0xca, 0x2f, 0xc9, 0x17, 0xe2, 0x86, 0x48, 0xe8, 0x81, 0x24, 0xa4, 0xe4, 0xa0, 0xaa, 0xc0, 0x52,
@@ -243,71 +245,13 @@ var fileDescriptor_8454902cb8a2d34f = []byte{
 	0x58, 0x0c, 0xc2, 0x11, 0x12, 0xe2, 0x62, 0x49, 0xca, 0x29, 0x4d, 0x95, 0x60, 0x06, 0x0b, 0x82,
 	0xd9, 0x42, 0x86, 0x5c, 0xac, 0x89, 0x39, 0x05, 0x19, 0x89, 0x12, 0x2c, 0x0a, 0x8c, 0x1a, 0xdc,
 	0x46, 0xd2, 0x7a, 0x50, 0x17, 0xc0, 0x2c, 0xd5, 0x73, 0xcb, 0xc9, 0x4f, 0x2c, 0x09, 0x4b, 0xcc,
-	0x29, 0x4d, 0x0d, 0x82, 0xa8, 0x74, 0x8a, 0xb9, 0xf0, 0x50, 0x8e, 0xe1, 0xc6, 0x43, 0x39, 0x86,
-	0x0f, 0x0f, 0xe5, 0x18, 0x1b, 0x1e, 0xc9, 0x31, 0xae, 0x78, 0x24, 0xc7, 0x78, 0xe2, 0x91, 0x1c,
-	0xe3, 0x85, 0x47, 0x72, 0x8c, 0x0f, 0x1e, 0xc9, 0x31, 0xbe, 0x78, 0x24, 0xc7, 0xf0, 0xe1, 0x91,
-	0x1c, 0xe3, 0x84, 0xc7, 0x72, 0x0c, 0x17, 0x1e, 0xcb, 0x31, 0xdc, 0x78, 0x2c, 0xc7, 0xc0, 0xc5,
-	0x9f, 0x9c, 0x9f, 0xab, 0x87, 0xe4, 0x3d, 0x27, 0x2e, 0xb0, 0xe3, 0x03, 0x40, 0xf6, 0x04, 0x30,
-	0xfe, 0x60, 0x64, 0x5c, 0xc4, 0xc4, 0xec, 0x1e, 0x12, 0x90, 0xc4, 0x06, 0xb6, 0xd9, 0x18, 0x10,
-	0x00, 0x00, 0xff, 0xff, 0x00, 0xc7, 0x50, 0xb8, 0x24, 0x01, 0x00, 0x00,
+	0x29, 0x4d, 0x0d, 0x82, 0xa8, 0x74, 0x32, 0x39, 0xf1, 0x48, 0x8e, 0xf1, 0xc2, 0x23, 0x39, 0xc6,
+	0x07, 0x8f, 0xe4, 0x18, 0xb9, 0xf8, 0x93, 0xf3, 0x73, 0xf5, 0x90, 0x9c, 0xed, 0xc4, 0x05, 0x76,
+	0x54, 0x00, 0x48, 0x7f, 0x00, 0xe3, 0x0f, 0x46, 0xc6, 0x45, 0x4c, 0xcc, 0xee, 0x21, 0x01, 0x49,
+	0x6c, 0x60, 0x13, 0x8d, 0x01, 0x01, 0x00, 0x00, 0xff, 0xff, 0x13, 0xe8, 0x83, 0xbe, 0xfc, 0x00,
+	0x00, 0x00,
 }
 
-func (this *Color) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*Color)
-	if !ok {
-		that2, ok := that.(Color)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Red != that1.Red {
-		return false
-	}
-	if this.Green != that1.Green {
-		return false
-	}
-	if this.Blue != that1.Blue {
-		return false
-	}
-	if !this.Alpha.Equal(that1.Alpha) {
-		return false
-	}
-	return true
-}
-func (this *Color) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 8)
-	s = append(s, "&google_type.Color{")
-	s = append(s, "Red: "+fmt.Sprintf("%#v", this.Red)+",\n")
-	s = append(s, "Green: "+fmt.Sprintf("%#v", this.Green)+",\n")
-	s = append(s, "Blue: "+fmt.Sprintf("%#v", this.Blue)+",\n")
-	if this.Alpha != nil {
-		s = append(s, "Alpha: "+fmt.Sprintf("%#v", this.Alpha)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func valueToGoStringColor(v interface{}, typ string) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("func(v %v) *%v { return &v } ( %#v )", typ, typ, pv)
-}
 func (m *Color) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -328,6 +272,10 @@ func (m *Color) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Alpha != nil {
 		{
 			size, err := m.Alpha.MarshalToSizedBuffer(dAtA[:i])
@@ -391,6 +339,9 @@ func (m *Color) Size() (n int) {
 		l = m.Alpha.Size()
 		n += 1 + l + sovColor(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -399,27 +350,6 @@ func sovColor(x uint64) (n int) {
 }
 func sozColor(x uint64) (n int) {
 	return sovColor(uint64((x << 1) ^ uint64((int64(x) >> 63))))
-}
-func (this *Color) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&Color{`,
-		`Red:` + fmt.Sprintf("%v", this.Red) + `,`,
-		`Green:` + fmt.Sprintf("%v", this.Green) + `,`,
-		`Blue:` + fmt.Sprintf("%v", this.Blue) + `,`,
-		`Alpha:` + strings.Replace(fmt.Sprintf("%v", this.Alpha), "FloatValue", "types.FloatValue", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func valueToStringColor(v interface{}) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("*%v", pv)
 }
 func (m *Color) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
@@ -531,6 +461,7 @@ func (m *Color) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}

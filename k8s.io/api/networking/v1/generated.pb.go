@@ -14,8 +14,6 @@ import (
 	intstr "istio.io/gogo-genproto/k8s.io/apimachinery/pkg/util/intstr"
 	math "math"
 	math_bits "math/bits"
-	reflect "reflect"
-	strings "strings"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -35,16 +33,20 @@ const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 type IPBlock struct {
 	// CIDR is a string representing the IP Block
 	// Valid examples are "192.168.1.1/24"
-	Cidr string `protobuf:"bytes,1,opt,name=cidr" json:"cidr"`
+	Cidr *string `protobuf:"bytes,1,opt,name=cidr" json:"cidr,omitempty"`
 	// Except is a slice of CIDRs that should not be included within an IP Block
 	// Valid examples are "192.168.1.1/24"
 	// Except values will be rejected if they are outside the CIDR range
 	// +optional
-	Except []string `protobuf:"bytes,2,rep,name=except" json:"except,omitempty"`
+	Except               []string `protobuf:"bytes,2,rep,name=except" json:"except,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *IPBlock) Reset()      { *m = IPBlock{} }
-func (*IPBlock) ProtoMessage() {}
+func (m *IPBlock) Reset()         { *m = IPBlock{} }
+func (m *IPBlock) String() string { return proto.CompactTextString(m) }
+func (*IPBlock) ProtoMessage()    {}
 func (*IPBlock) Descriptor() ([]byte, []int) {
 	return fileDescriptor_2c41434372fec1d7, []int{0}
 }
@@ -76,8 +78,8 @@ func (m *IPBlock) XXX_DiscardUnknown() {
 var xxx_messageInfo_IPBlock proto.InternalMessageInfo
 
 func (m *IPBlock) GetCidr() string {
-	if m != nil {
-		return m.Cidr
+	if m != nil && m.Cidr != nil {
+		return *m.Cidr
 	}
 	return ""
 }
@@ -97,11 +99,15 @@ type NetworkPolicy struct {
 	Metadata *v1.ObjectMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// Specification of the desired behavior for this NetworkPolicy.
 	// +optional
-	Spec *NetworkPolicySpec `protobuf:"bytes,2,opt,name=spec" json:"spec,omitempty"`
+	Spec                 *NetworkPolicySpec `protobuf:"bytes,2,opt,name=spec" json:"spec,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}           `json:"-"`
+	XXX_unrecognized     []byte             `json:"-"`
+	XXX_sizecache        int32              `json:"-"`
 }
 
-func (m *NetworkPolicy) Reset()      { *m = NetworkPolicy{} }
-func (*NetworkPolicy) ProtoMessage() {}
+func (m *NetworkPolicy) Reset()         { *m = NetworkPolicy{} }
+func (m *NetworkPolicy) String() string { return proto.CompactTextString(m) }
+func (*NetworkPolicy) ProtoMessage()    {}
 func (*NetworkPolicy) Descriptor() ([]byte, []int) {
 	return fileDescriptor_2c41434372fec1d7, []int{1}
 }
@@ -163,11 +169,15 @@ type NetworkPolicyEgressRule struct {
 	// destination). If this field is present and contains at least one item, this rule
 	// allows traffic only if the traffic matches at least one item in the to list.
 	// +optional
-	To []*NetworkPolicyPeer `protobuf:"bytes,2,rep,name=to" json:"to,omitempty"`
+	To                   []*NetworkPolicyPeer `protobuf:"bytes,2,rep,name=to" json:"to,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
+	XXX_unrecognized     []byte               `json:"-"`
+	XXX_sizecache        int32                `json:"-"`
 }
 
-func (m *NetworkPolicyEgressRule) Reset()      { *m = NetworkPolicyEgressRule{} }
-func (*NetworkPolicyEgressRule) ProtoMessage() {}
+func (m *NetworkPolicyEgressRule) Reset()         { *m = NetworkPolicyEgressRule{} }
+func (m *NetworkPolicyEgressRule) String() string { return proto.CompactTextString(m) }
+func (*NetworkPolicyEgressRule) ProtoMessage()    {}
 func (*NetworkPolicyEgressRule) Descriptor() ([]byte, []int) {
 	return fileDescriptor_2c41434372fec1d7, []int{2}
 }
@@ -228,11 +238,15 @@ type NetworkPolicyIngressRule struct {
 	// source). If this field is present and contains at least one item, this rule
 	// allows traffic only if the traffic matches at least one item in the from list.
 	// +optional
-	From []*NetworkPolicyPeer `protobuf:"bytes,2,rep,name=from" json:"from,omitempty"`
+	From                 []*NetworkPolicyPeer `protobuf:"bytes,2,rep,name=from" json:"from,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
+	XXX_unrecognized     []byte               `json:"-"`
+	XXX_sizecache        int32                `json:"-"`
 }
 
-func (m *NetworkPolicyIngressRule) Reset()      { *m = NetworkPolicyIngressRule{} }
-func (*NetworkPolicyIngressRule) ProtoMessage() {}
+func (m *NetworkPolicyIngressRule) Reset()         { *m = NetworkPolicyIngressRule{} }
+func (m *NetworkPolicyIngressRule) String() string { return proto.CompactTextString(m) }
+func (*NetworkPolicyIngressRule) ProtoMessage()    {}
 func (*NetworkPolicyIngressRule) Descriptor() ([]byte, []int) {
 	return fileDescriptor_2c41434372fec1d7, []int{3}
 }
@@ -284,11 +298,15 @@ type NetworkPolicyList struct {
 	// +optional
 	Metadata *v1.ListMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// Items is a list of schema objects.
-	Items []*NetworkPolicy `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	Items                []*NetworkPolicy `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}         `json:"-"`
+	XXX_unrecognized     []byte           `json:"-"`
+	XXX_sizecache        int32            `json:"-"`
 }
 
-func (m *NetworkPolicyList) Reset()      { *m = NetworkPolicyList{} }
-func (*NetworkPolicyList) ProtoMessage() {}
+func (m *NetworkPolicyList) Reset()         { *m = NetworkPolicyList{} }
+func (m *NetworkPolicyList) String() string { return proto.CompactTextString(m) }
+func (*NetworkPolicyList) ProtoMessage()    {}
 func (*NetworkPolicyList) Descriptor() ([]byte, []int) {
 	return fileDescriptor_2c41434372fec1d7, []int{4}
 }
@@ -355,11 +373,15 @@ type NetworkPolicyPeer struct {
 	// IPBlock defines policy on a particular IPBlock. If this field is set then
 	// neither of the other fields can be.
 	// +optional
-	IpBlock *IPBlock `protobuf:"bytes,3,opt,name=ipBlock" json:"ipBlock,omitempty"`
+	IpBlock              *IPBlock `protobuf:"bytes,3,opt,name=ipBlock" json:"ipBlock,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *NetworkPolicyPeer) Reset()      { *m = NetworkPolicyPeer{} }
-func (*NetworkPolicyPeer) ProtoMessage() {}
+func (m *NetworkPolicyPeer) Reset()         { *m = NetworkPolicyPeer{} }
+func (m *NetworkPolicyPeer) String() string { return proto.CompactTextString(m) }
+func (*NetworkPolicyPeer) ProtoMessage()    {}
 func (*NetworkPolicyPeer) Descriptor() ([]byte, []int) {
 	return fileDescriptor_2c41434372fec1d7, []int{5}
 }
@@ -416,15 +438,19 @@ type NetworkPolicyPort struct {
 	// The protocol (TCP, UDP, or SCTP) which traffic must match. If not specified, this
 	// field defaults to TCP.
 	// +optional
-	Protocol string `protobuf:"bytes,1,opt,name=protocol" json:"protocol"`
+	Protocol *string `protobuf:"bytes,1,opt,name=protocol" json:"protocol,omitempty"`
 	// The port on the given protocol. This can either be a numerical or named port on
 	// a pod. If this field is not provided, this matches all port names and numbers.
 	// +optional
-	Port *intstr.IntOrString `protobuf:"bytes,2,opt,name=port" json:"port,omitempty"`
+	Port                 *intstr.IntOrString `protobuf:"bytes,2,opt,name=port" json:"port,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}            `json:"-"`
+	XXX_unrecognized     []byte              `json:"-"`
+	XXX_sizecache        int32               `json:"-"`
 }
 
-func (m *NetworkPolicyPort) Reset()      { *m = NetworkPolicyPort{} }
-func (*NetworkPolicyPort) ProtoMessage() {}
+func (m *NetworkPolicyPort) Reset()         { *m = NetworkPolicyPort{} }
+func (m *NetworkPolicyPort) String() string { return proto.CompactTextString(m) }
+func (*NetworkPolicyPort) ProtoMessage()    {}
 func (*NetworkPolicyPort) Descriptor() ([]byte, []int) {
 	return fileDescriptor_2c41434372fec1d7, []int{6}
 }
@@ -456,8 +482,8 @@ func (m *NetworkPolicyPort) XXX_DiscardUnknown() {
 var xxx_messageInfo_NetworkPolicyPort proto.InternalMessageInfo
 
 func (m *NetworkPolicyPort) GetProtocol() string {
-	if m != nil {
-		return m.Protocol
+	if m != nil && m.Protocol != nil {
+		return *m.Protocol
 	}
 	return ""
 }
@@ -507,11 +533,15 @@ type NetworkPolicySpec struct {
 	// an Egress section and would otherwise default to just [ "Ingress" ]).
 	// This field is beta-level in 1.8
 	// +optional
-	PolicyTypes []string `protobuf:"bytes,4,rep,name=policyTypes" json:"policyTypes,omitempty"`
+	PolicyTypes          []string `protobuf:"bytes,4,rep,name=policyTypes" json:"policyTypes,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *NetworkPolicySpec) Reset()      { *m = NetworkPolicySpec{} }
-func (*NetworkPolicySpec) ProtoMessage() {}
+func (m *NetworkPolicySpec) Reset()         { *m = NetworkPolicySpec{} }
+func (m *NetworkPolicySpec) String() string { return proto.CompactTextString(m) }
+func (*NetworkPolicySpec) ProtoMessage()    {}
 func (*NetworkPolicySpec) Descriptor() ([]byte, []int) {
 	return fileDescriptor_2c41434372fec1d7, []int{7}
 }
@@ -586,452 +616,46 @@ func init() {
 }
 
 var fileDescriptor_2c41434372fec1d7 = []byte{
-	// 628 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x94, 0x3f, 0x6f, 0xd4, 0x30,
-	0x18, 0xc6, 0x93, 0xbb, 0xeb, 0x3f, 0x57, 0x0c, 0xf5, 0x00, 0x51, 0x87, 0x70, 0x64, 0xa1, 0x12,
-	0x92, 0xc3, 0xb5, 0x15, 0x42, 0xaa, 0x50, 0x45, 0x05, 0xc3, 0xa1, 0x42, 0xab, 0x14, 0x3e, 0x80,
-	0xeb, 0x7b, 0xb9, 0x9a, 0x4b, 0x62, 0xcb, 0x76, 0x0b, 0x15, 0x0b, 0x33, 0x13, 0x2b, 0x0b, 0x1b,
-	0x12, 0x1f, 0xa5, 0x63, 0xc7, 0x4e, 0x88, 0xa6, 0x0b, 0x63, 0x3f, 0x02, 0x72, 0x92, 0xfb, 0xdf,
-	0x13, 0xd7, 0x0a, 0xc6, 0xbc, 0xf6, 0xef, 0xd1, 0x93, 0xf7, 0xf5, 0xf3, 0xa2, 0x95, 0xce, 0x63,
-	0x4d, 0xb8, 0x08, 0xa9, 0xe4, 0x61, 0x0a, 0xe6, 0xbd, 0x50, 0x1d, 0x9e, 0xb6, 0xc3, 0xa3, 0x46,
-	0xd8, 0x86, 0x14, 0x14, 0x35, 0xd0, 0x22, 0x52, 0x09, 0x23, 0xb0, 0x57, 0xdc, 0x24, 0x54, 0x72,
-	0xd2, 0xbf, 0x49, 0x8e, 0x1a, 0xcb, 0xc1, 0x80, 0x06, 0x13, 0x0a, 0xae, 0xa0, 0x97, 0xd7, 0xfb,
-	0x77, 0x12, 0xca, 0x0e, 0x78, 0x0a, 0xea, 0x38, 0x94, 0x9d, 0xb6, 0x2d, 0xe8, 0x30, 0x01, 0x43,
-	0xaf, 0xa2, 0xc2, 0x49, 0x94, 0x3a, 0x4c, 0x0d, 0x4f, 0x60, 0x0c, 0x78, 0xf4, 0x37, 0x40, 0xb3,
-	0x03, 0x48, 0xe8, 0x18, 0xb7, 0x36, 0x89, 0x3b, 0x34, 0x3c, 0x0e, 0x79, 0x6a, 0xb4, 0x51, 0xa3,
-	0x50, 0xb0, 0x81, 0xe6, 0x9a, 0xbb, 0x5b, 0xb1, 0x60, 0x1d, 0xec, 0xa1, 0x1a, 0xe3, 0x2d, 0xe5,
-	0xb9, 0x75, 0x77, 0x65, 0x61, 0xab, 0x76, 0xf2, 0xf3, 0xae, 0x13, 0xe5, 0x15, 0x7c, 0x1b, 0xcd,
-	0xc2, 0x07, 0x06, 0xd2, 0x78, 0x95, 0x7a, 0x75, 0x65, 0x21, 0x2a, 0xbf, 0x82, 0x6f, 0x2e, 0xba,
-	0xf5, 0xaa, 0x68, 0xe3, 0xae, 0x88, 0x39, 0x3b, 0xc6, 0xdb, 0x68, 0xde, 0xf6, 0xa1, 0x45, 0x0d,
-	0xcd, 0x75, 0x16, 0x57, 0x1f, 0x92, 0x7e, 0xcf, 0x7b, 0xb6, 0x88, 0xec, 0xb4, 0x6d, 0x41, 0x13,
-	0x7b, 0x9b, 0x1c, 0x35, 0xc8, 0xce, 0xfe, 0x3b, 0x60, 0xe6, 0x25, 0x18, 0x1a, 0xf5, 0x14, 0xf0,
-	0x26, 0xaa, 0x69, 0x09, 0xcc, 0xab, 0xe4, 0x4a, 0x0f, 0xc8, 0xa4, 0xe9, 0x91, 0x21, 0x13, 0x7b,
-	0x12, 0x58, 0x94, 0x83, 0xc1, 0x57, 0x17, 0xdd, 0x19, 0x3a, 0x7b, 0xde, 0x56, 0xa0, 0x75, 0x74,
-	0x18, 0x03, 0x7e, 0x8a, 0x66, 0xa4, 0x50, 0x46, 0x7b, 0x6e, 0xbd, 0x7a, 0x0d, 0xf5, 0x5d, 0xa1,
-	0x4c, 0x54, 0x90, 0x78, 0x03, 0x55, 0x8c, 0xc8, 0x7b, 0x72, 0x0d, 0x1e, 0x40, 0x45, 0x15, 0x23,
-	0x6c, 0xf3, 0xbc, 0xa1, 0x93, 0x66, 0xfa, 0x4f, 0xcd, 0x6d, 0xa2, 0xda, 0x5b, 0x25, 0x92, 0x9b,
-	0xd8, 0xcb, 0x41, 0x6b, 0x70, 0x69, 0xe8, 0x6c, 0x9b, 0x6b, 0x83, 0x5f, 0x8c, 0x4d, 0x98, 0x4c,
-	0x37, 0x61, 0x4b, 0x8f, 0xcc, 0xf7, 0x09, 0x9a, 0xe1, 0x06, 0x12, 0x5d, 0x7a, 0xbc, 0x3f, 0xa5,
-	0xc7, 0xa8, 0xa0, 0x82, 0xcf, 0x95, 0x11, 0x83, 0xd6, 0x3c, 0x7e, 0x83, 0x16, 0xa5, 0x68, 0xed,
-	0x41, 0x0c, 0xcc, 0x08, 0x55, 0x7a, 0x5c, 0x9b, 0xd2, 0x23, 0xdd, 0x87, 0xb8, 0x8b, 0x46, 0x83,
-	0x3a, 0x98, 0xa2, 0xa5, 0x94, 0x26, 0xa0, 0x25, 0x65, 0xd0, 0x13, 0xaf, 0xdc, 0x5c, 0x7c, 0x5c,
-	0x0d, 0x6f, 0xa0, 0x39, 0x2e, 0xf3, 0x2c, 0x7a, 0xd5, 0x5c, 0xf8, 0xde, 0xe4, 0x86, 0x94, 0xa1,
-	0x8d, 0xba, 0x44, 0xf0, 0x71, 0xb4, 0x17, 0x42, 0x19, 0x5c, 0x47, 0xf3, 0x79, 0xcc, 0x99, 0x88,
-	0x87, 0x62, 0xdd, 0xab, 0xe2, 0x67, 0xa8, 0x66, 0x9f, 0x4b, 0xf9, 0x27, 0x93, 0xc3, 0x6a, 0x77,
-	0x08, 0x29, 0x76, 0x08, 0x69, 0xa6, 0x66, 0x47, 0xed, 0x19, 0xc5, 0xd3, 0x76, 0x94, 0xd3, 0xc1,
-	0xf7, 0xd1, 0x49, 0xd8, 0x0c, 0xfe, 0xaf, 0x49, 0x6c, 0xa3, 0x39, 0x5e, 0x44, 0xa5, 0x7c, 0x37,
-	0xab, 0x53, 0xbe, 0x9b, 0x81, 0x80, 0x45, 0x5d, 0x09, 0xdc, 0x44, 0xb3, 0x50, 0x88, 0x55, 0x73,
-	0xb1, 0xc6, 0x94, 0x62, 0xfd, 0x4d, 0x12, 0x95, 0x02, 0xb8, 0x6e, 0xff, 0xd7, 0x9e, 0xbd, 0x3e,
-	0x96, 0xa0, 0xbd, 0x5a, 0xbe, 0x2b, 0x07, 0x4b, 0x5b, 0xeb, 0xa7, 0xe7, 0xbe, 0x73, 0x76, 0xee,
-	0x3b, 0x97, 0xe7, 0xbe, 0xfb, 0x29, 0xf3, 0xdd, 0x1f, 0x99, 0xef, 0x9e, 0x64, 0xbe, 0x7b, 0x9a,
-	0xf9, 0xee, 0xaf, 0xcc, 0x77, 0x7f, 0x67, 0xbe, 0x73, 0x99, 0xf9, 0xee, 0x97, 0x0b, 0xdf, 0x39,
-	0xbd, 0xf0, 0x9d, 0xb3, 0x0b, 0xdf, 0xf9, 0x13, 0x00, 0x00, 0xff, 0xff, 0xe4, 0xc4, 0x3d, 0x70,
-	0xe0, 0x06, 0x00, 0x00,
+	// 577 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x94, 0x4f, 0x6e, 0x13, 0x31,
+	0x14, 0xc6, 0x35, 0x93, 0xf4, 0x9f, 0x0b, 0x8b, 0x7a, 0x01, 0xa3, 0x2e, 0xaa, 0x30, 0x1b, 0x2a,
+	0x21, 0x79, 0x48, 0x0b, 0x08, 0xa9, 0x42, 0x15, 0x15, 0x2c, 0x82, 0x0a, 0x8d, 0x1c, 0x38, 0x80,
+	0xeb, 0x3c, 0xa6, 0x26, 0x33, 0x63, 0xcb, 0x76, 0x02, 0xb9, 0x02, 0x37, 0x60, 0xc3, 0x8e, 0xbb,
+	0xb0, 0xe4, 0x08, 0x28, 0x27, 0x41, 0xf6, 0x4c, 0xfe, 0x37, 0x22, 0xad, 0x60, 0x37, 0x63, 0xfb,
+	0xf7, 0xe9, 0xf3, 0x7b, 0xfe, 0x1e, 0x3a, 0xec, 0x3d, 0x37, 0x44, 0xc8, 0x84, 0x29, 0x91, 0x14,
+	0x60, 0x3f, 0x4b, 0xdd, 0x13, 0x45, 0x9a, 0x0c, 0x9a, 0x49, 0x0a, 0x05, 0x68, 0x66, 0xa1, 0x4b,
+	0x94, 0x96, 0x56, 0xe2, 0xa8, 0x3c, 0x49, 0x98, 0x12, 0x64, 0x7a, 0x92, 0x0c, 0x9a, 0xfb, 0xf1,
+	0x8c, 0x06, 0x97, 0x1a, 0xae, 0xa1, 0xf7, 0x9f, 0x4c, 0xcf, 0xe4, 0x8c, 0x5f, 0x89, 0x02, 0xf4,
+	0x30, 0x51, 0xbd, 0xd4, 0x2d, 0x98, 0x24, 0x07, 0xcb, 0xae, 0xa3, 0x92, 0x55, 0x94, 0xee, 0x17,
+	0x56, 0xe4, 0xb0, 0x04, 0x3c, 0xfb, 0x1b, 0x60, 0xf8, 0x15, 0xe4, 0x6c, 0x89, 0x3b, 0x5e, 0xc5,
+	0xf5, 0xad, 0xc8, 0x12, 0x51, 0x58, 0x63, 0xf5, 0x22, 0x14, 0x3f, 0x45, 0x5b, 0xad, 0xf6, 0x59,
+	0x26, 0x79, 0x0f, 0x63, 0x54, 0xe7, 0xa2, 0xab, 0xa3, 0xa0, 0x11, 0x1c, 0xee, 0x50, 0xff, 0x8d,
+	0xef, 0xa1, 0x4d, 0xf8, 0xc2, 0x41, 0xd9, 0x28, 0x6c, 0xd4, 0x0e, 0x77, 0x68, 0xf5, 0x17, 0x7f,
+	0x0f, 0xd0, 0xdd, 0x77, 0x65, 0x01, 0xdb, 0x32, 0x13, 0x7c, 0x88, 0xcf, 0xd1, 0xb6, 0xab, 0x40,
+	0x97, 0x59, 0xe6, 0x15, 0x76, 0x8f, 0x1e, 0x93, 0x69, 0xb5, 0x27, 0x86, 0x88, 0xea, 0xa5, 0x6e,
+	0xc1, 0x10, 0x77, 0x9a, 0x0c, 0x9a, 0xe4, 0xe2, 0xf2, 0x13, 0x70, 0xfb, 0x16, 0x2c, 0xa3, 0x13,
+	0x05, 0x7c, 0x8a, 0xea, 0x46, 0x01, 0x8f, 0x42, 0xaf, 0xf4, 0x88, 0xac, 0xea, 0x1b, 0x99, 0x33,
+	0xd1, 0x51, 0xc0, 0xa9, 0x07, 0xe3, 0x6f, 0x01, 0xba, 0x3f, 0xb7, 0xf7, 0x3a, 0xd5, 0x60, 0x0c,
+	0xed, 0x67, 0x80, 0x5f, 0xa2, 0x0d, 0x25, 0xb5, 0x35, 0x51, 0xd0, 0xa8, 0xdd, 0x40, 0xbd, 0x2d,
+	0xb5, 0xa5, 0x25, 0x89, 0x4f, 0x50, 0x68, 0xa5, 0xaf, 0xc9, 0x0d, 0x78, 0x00, 0x4d, 0x43, 0x2b,
+	0x5d, 0xf1, 0xa2, 0xb9, 0x9d, 0x56, 0xf1, 0x4f, 0xcd, 0x9d, 0xa2, 0xfa, 0x47, 0x2d, 0xf3, 0xdb,
+	0xd8, 0xf3, 0xa0, 0x33, 0xb8, 0x37, 0xb7, 0x77, 0x2e, 0x8c, 0xc5, 0x6f, 0x96, 0x3a, 0x4c, 0xd6,
+	0xeb, 0xb0, 0xa3, 0x17, 0xfa, 0xfb, 0x02, 0x6d, 0x08, 0x0b, 0xb9, 0xa9, 0x3c, 0x3e, 0x5c, 0xd3,
+	0x23, 0x2d, 0xa9, 0xf8, 0x6b, 0xb8, 0x60, 0xd0, 0x99, 0xc7, 0x1f, 0xd0, 0xae, 0x92, 0xdd, 0x0e,
+	0x64, 0xc0, 0xad, 0xd4, 0x95, 0xc7, 0xe3, 0x35, 0x3d, 0xb2, 0x4b, 0xc8, 0xc6, 0x28, 0x9d, 0xd5,
+	0xc1, 0x0c, 0xed, 0x15, 0x2c, 0x07, 0xa3, 0x18, 0x87, 0x89, 0x78, 0x78, 0x7b, 0xf1, 0x65, 0x35,
+	0x7c, 0x82, 0xb6, 0x84, 0xf2, 0x29, 0x8c, 0x6a, 0x5e, 0xf8, 0xc1, 0xea, 0x82, 0x54, 0x71, 0xa5,
+	0x63, 0x22, 0xee, 0x2f, 0xd6, 0x42, 0x6a, 0x8b, 0xf7, 0xd1, 0xb6, 0x0f, 0x38, 0x97, 0x59, 0x15,
+	0xe8, 0xc9, 0x3f, 0x7e, 0x85, 0xea, 0xee, 0xa1, 0x54, 0x77, 0x58, 0x1d, 0x53, 0x37, 0x37, 0x48,
+	0x39, 0x37, 0x48, 0xab, 0xb0, 0x17, 0xba, 0x63, 0xb5, 0x28, 0x52, 0xea, 0xe9, 0xf8, 0xc7, 0x62,
+	0x0f, 0x5c, 0xfa, 0xfe, 0x57, 0x0f, 0xce, 0xd1, 0x96, 0x28, 0x43, 0x52, 0xbd, 0x98, 0xa3, 0x35,
+	0x5f, 0xcc, 0x4c, 0xb4, 0xe8, 0x58, 0x02, 0xb7, 0xd0, 0x26, 0x94, 0x62, 0x35, 0x2f, 0xd6, 0x5c,
+	0x53, 0x6c, 0x3a, 0x43, 0x68, 0x25, 0x80, 0x1b, 0xee, 0xbe, 0x6e, 0xef, 0xfd, 0x50, 0x81, 0x89,
+	0xea, 0x7e, 0x4a, 0xce, 0x2e, 0x9d, 0xdd, 0xf9, 0x39, 0x3a, 0x08, 0x7e, 0x8d, 0x0e, 0x82, 0xdf,
+	0xa3, 0x83, 0xe0, 0x4f, 0x00, 0x00, 0x00, 0xff, 0xff, 0x26, 0x87, 0x3f, 0xdc, 0xac, 0x06, 0x00,
+	0x00,
 }
 
-func (this *IPBlock) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*IPBlock)
-	if !ok {
-		that2, ok := that.(IPBlock)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Cidr != that1.Cidr {
-		return false
-	}
-	if len(this.Except) != len(that1.Except) {
-		return false
-	}
-	for i := range this.Except {
-		if this.Except[i] != that1.Except[i] {
-			return false
-		}
-	}
-	return true
-}
-func (this *NetworkPolicy) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*NetworkPolicy)
-	if !ok {
-		that2, ok := that.(NetworkPolicy)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if !this.Spec.Equal(that1.Spec) {
-		return false
-	}
-	return true
-}
-func (this *NetworkPolicyEgressRule) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*NetworkPolicyEgressRule)
-	if !ok {
-		that2, ok := that.(NetworkPolicyEgressRule)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if len(this.Ports) != len(that1.Ports) {
-		return false
-	}
-	for i := range this.Ports {
-		if !this.Ports[i].Equal(that1.Ports[i]) {
-			return false
-		}
-	}
-	if len(this.To) != len(that1.To) {
-		return false
-	}
-	for i := range this.To {
-		if !this.To[i].Equal(that1.To[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *NetworkPolicyIngressRule) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*NetworkPolicyIngressRule)
-	if !ok {
-		that2, ok := that.(NetworkPolicyIngressRule)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if len(this.Ports) != len(that1.Ports) {
-		return false
-	}
-	for i := range this.Ports {
-		if !this.Ports[i].Equal(that1.Ports[i]) {
-			return false
-		}
-	}
-	if len(this.From) != len(that1.From) {
-		return false
-	}
-	for i := range this.From {
-		if !this.From[i].Equal(that1.From[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *NetworkPolicyList) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*NetworkPolicyList)
-	if !ok {
-		that2, ok := that.(NetworkPolicyList)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if len(this.Items) != len(that1.Items) {
-		return false
-	}
-	for i := range this.Items {
-		if !this.Items[i].Equal(that1.Items[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *NetworkPolicyPeer) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*NetworkPolicyPeer)
-	if !ok {
-		that2, ok := that.(NetworkPolicyPeer)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.PodSelector.Equal(that1.PodSelector) {
-		return false
-	}
-	if !this.NamespaceSelector.Equal(that1.NamespaceSelector) {
-		return false
-	}
-	if !this.IpBlock.Equal(that1.IpBlock) {
-		return false
-	}
-	return true
-}
-func (this *NetworkPolicyPort) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*NetworkPolicyPort)
-	if !ok {
-		that2, ok := that.(NetworkPolicyPort)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Protocol != that1.Protocol {
-		return false
-	}
-	if !this.Port.Equal(that1.Port) {
-		return false
-	}
-	return true
-}
-func (this *NetworkPolicySpec) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*NetworkPolicySpec)
-	if !ok {
-		that2, ok := that.(NetworkPolicySpec)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.PodSelector.Equal(that1.PodSelector) {
-		return false
-	}
-	if len(this.Ingress) != len(that1.Ingress) {
-		return false
-	}
-	for i := range this.Ingress {
-		if !this.Ingress[i].Equal(that1.Ingress[i]) {
-			return false
-		}
-	}
-	if len(this.Egress) != len(that1.Egress) {
-		return false
-	}
-	for i := range this.Egress {
-		if !this.Egress[i].Equal(that1.Egress[i]) {
-			return false
-		}
-	}
-	if len(this.PolicyTypes) != len(that1.PolicyTypes) {
-		return false
-	}
-	for i := range this.PolicyTypes {
-		if this.PolicyTypes[i] != that1.PolicyTypes[i] {
-			return false
-		}
-	}
-	return true
-}
-func (this *IPBlock) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_networking_v1.IPBlock{")
-	s = append(s, "Cidr: "+fmt.Sprintf("%#v", this.Cidr)+",\n")
-	if this.Except != nil {
-		s = append(s, "Except: "+fmt.Sprintf("%#v", this.Except)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *NetworkPolicy) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_networking_v1.NetworkPolicy{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Spec != nil {
-		s = append(s, "Spec: "+fmt.Sprintf("%#v", this.Spec)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *NetworkPolicyEgressRule) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_networking_v1.NetworkPolicyEgressRule{")
-	if this.Ports != nil {
-		s = append(s, "Ports: "+fmt.Sprintf("%#v", this.Ports)+",\n")
-	}
-	if this.To != nil {
-		s = append(s, "To: "+fmt.Sprintf("%#v", this.To)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *NetworkPolicyIngressRule) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_networking_v1.NetworkPolicyIngressRule{")
-	if this.Ports != nil {
-		s = append(s, "Ports: "+fmt.Sprintf("%#v", this.Ports)+",\n")
-	}
-	if this.From != nil {
-		s = append(s, "From: "+fmt.Sprintf("%#v", this.From)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *NetworkPolicyList) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_networking_v1.NetworkPolicyList{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Items != nil {
-		s = append(s, "Items: "+fmt.Sprintf("%#v", this.Items)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *NetworkPolicyPeer) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 7)
-	s = append(s, "&k8s_io_api_networking_v1.NetworkPolicyPeer{")
-	if this.PodSelector != nil {
-		s = append(s, "PodSelector: "+fmt.Sprintf("%#v", this.PodSelector)+",\n")
-	}
-	if this.NamespaceSelector != nil {
-		s = append(s, "NamespaceSelector: "+fmt.Sprintf("%#v", this.NamespaceSelector)+",\n")
-	}
-	if this.IpBlock != nil {
-		s = append(s, "IpBlock: "+fmt.Sprintf("%#v", this.IpBlock)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *NetworkPolicyPort) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_networking_v1.NetworkPolicyPort{")
-	s = append(s, "Protocol: "+fmt.Sprintf("%#v", this.Protocol)+",\n")
-	if this.Port != nil {
-		s = append(s, "Port: "+fmt.Sprintf("%#v", this.Port)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *NetworkPolicySpec) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 8)
-	s = append(s, "&k8s_io_api_networking_v1.NetworkPolicySpec{")
-	if this.PodSelector != nil {
-		s = append(s, "PodSelector: "+fmt.Sprintf("%#v", this.PodSelector)+",\n")
-	}
-	if this.Ingress != nil {
-		s = append(s, "Ingress: "+fmt.Sprintf("%#v", this.Ingress)+",\n")
-	}
-	if this.Egress != nil {
-		s = append(s, "Egress: "+fmt.Sprintf("%#v", this.Egress)+",\n")
-	}
-	if this.PolicyTypes != nil {
-		s = append(s, "PolicyTypes: "+fmt.Sprintf("%#v", this.PolicyTypes)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func valueToGoStringGenerated(v interface{}, typ string) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("func(v %v) *%v { return &v } ( %#v )", typ, typ, pv)
-}
 func (m *IPBlock) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -1052,6 +676,10 @@ func (m *IPBlock) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Except) > 0 {
 		for iNdEx := len(m.Except) - 1; iNdEx >= 0; iNdEx-- {
 			i -= len(m.Except[iNdEx])
@@ -1061,11 +689,13 @@ func (m *IPBlock) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			dAtA[i] = 0x12
 		}
 	}
-	i -= len(m.Cidr)
-	copy(dAtA[i:], m.Cidr)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Cidr)))
-	i--
-	dAtA[i] = 0xa
+	if m.Cidr != nil {
+		i -= len(*m.Cidr)
+		copy(dAtA[i:], *m.Cidr)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Cidr)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -1089,6 +719,10 @@ func (m *NetworkPolicy) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Spec != nil {
 		{
 			size, err := m.Spec.MarshalToSizedBuffer(dAtA[:i])
@@ -1136,6 +770,10 @@ func (m *NetworkPolicyEgressRule) MarshalToSizedBuffer(dAtA []byte) (int, error)
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.To) > 0 {
 		for iNdEx := len(m.To) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -1187,6 +825,10 @@ func (m *NetworkPolicyIngressRule) MarshalToSizedBuffer(dAtA []byte) (int, error
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.From) > 0 {
 		for iNdEx := len(m.From) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -1238,6 +880,10 @@ func (m *NetworkPolicyList) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Items) > 0 {
 		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -1287,6 +933,10 @@ func (m *NetworkPolicyPeer) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.IpBlock != nil {
 		{
 			size, err := m.IpBlock.MarshalToSizedBuffer(dAtA[:i])
@@ -1346,6 +996,10 @@ func (m *NetworkPolicyPort) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Port != nil {
 		{
 			size, err := m.Port.MarshalToSizedBuffer(dAtA[:i])
@@ -1358,11 +1012,13 @@ func (m *NetworkPolicyPort) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x12
 	}
-	i -= len(m.Protocol)
-	copy(dAtA[i:], m.Protocol)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Protocol)))
-	i--
-	dAtA[i] = 0xa
+	if m.Protocol != nil {
+		i -= len(*m.Protocol)
+		copy(dAtA[i:], *m.Protocol)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Protocol)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -1386,6 +1042,10 @@ func (m *NetworkPolicySpec) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.PolicyTypes) > 0 {
 		for iNdEx := len(m.PolicyTypes) - 1; iNdEx >= 0; iNdEx-- {
 			i -= len(m.PolicyTypes[iNdEx])
@@ -1455,13 +1115,18 @@ func (m *IPBlock) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Cidr)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.Cidr != nil {
+		l = len(*m.Cidr)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if len(m.Except) > 0 {
 		for _, s := range m.Except {
 			l = len(s)
 			n += 1 + l + sovGenerated(uint64(l))
 		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -1479,6 +1144,9 @@ func (m *NetworkPolicy) Size() (n int) {
 	if m.Spec != nil {
 		l = m.Spec.Size()
 		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -1501,6 +1169,9 @@ func (m *NetworkPolicyEgressRule) Size() (n int) {
 			n += 1 + l + sovGenerated(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -1522,6 +1193,9 @@ func (m *NetworkPolicyIngressRule) Size() (n int) {
 			n += 1 + l + sovGenerated(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -1540,6 +1214,9 @@ func (m *NetworkPolicyList) Size() (n int) {
 			l = e.Size()
 			n += 1 + l + sovGenerated(uint64(l))
 		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -1562,6 +1239,9 @@ func (m *NetworkPolicyPeer) Size() (n int) {
 		l = m.IpBlock.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -1571,11 +1251,16 @@ func (m *NetworkPolicyPort) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Protocol)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.Protocol != nil {
+		l = len(*m.Protocol)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if m.Port != nil {
 		l = m.Port.Size()
 		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -1608,6 +1293,9 @@ func (m *NetworkPolicySpec) Size() (n int) {
 			n += 1 + l + sovGenerated(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -1616,140 +1304,6 @@ func sovGenerated(x uint64) (n int) {
 }
 func sozGenerated(x uint64) (n int) {
 	return sovGenerated(uint64((x << 1) ^ uint64((int64(x) >> 63))))
-}
-func (this *IPBlock) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&IPBlock{`,
-		`Cidr:` + fmt.Sprintf("%v", this.Cidr) + `,`,
-		`Except:` + fmt.Sprintf("%v", this.Except) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *NetworkPolicy) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&NetworkPolicy{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ObjectMeta", "v1.ObjectMeta", 1) + `,`,
-		`Spec:` + strings.Replace(this.Spec.String(), "NetworkPolicySpec", "NetworkPolicySpec", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *NetworkPolicyEgressRule) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForPorts := "[]*NetworkPolicyPort{"
-	for _, f := range this.Ports {
-		repeatedStringForPorts += strings.Replace(f.String(), "NetworkPolicyPort", "NetworkPolicyPort", 1) + ","
-	}
-	repeatedStringForPorts += "}"
-	repeatedStringForTo := "[]*NetworkPolicyPeer{"
-	for _, f := range this.To {
-		repeatedStringForTo += strings.Replace(f.String(), "NetworkPolicyPeer", "NetworkPolicyPeer", 1) + ","
-	}
-	repeatedStringForTo += "}"
-	s := strings.Join([]string{`&NetworkPolicyEgressRule{`,
-		`Ports:` + repeatedStringForPorts + `,`,
-		`To:` + repeatedStringForTo + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *NetworkPolicyIngressRule) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForPorts := "[]*NetworkPolicyPort{"
-	for _, f := range this.Ports {
-		repeatedStringForPorts += strings.Replace(f.String(), "NetworkPolicyPort", "NetworkPolicyPort", 1) + ","
-	}
-	repeatedStringForPorts += "}"
-	repeatedStringForFrom := "[]*NetworkPolicyPeer{"
-	for _, f := range this.From {
-		repeatedStringForFrom += strings.Replace(f.String(), "NetworkPolicyPeer", "NetworkPolicyPeer", 1) + ","
-	}
-	repeatedStringForFrom += "}"
-	s := strings.Join([]string{`&NetworkPolicyIngressRule{`,
-		`Ports:` + repeatedStringForPorts + `,`,
-		`From:` + repeatedStringForFrom + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *NetworkPolicyList) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForItems := "[]*NetworkPolicy{"
-	for _, f := range this.Items {
-		repeatedStringForItems += strings.Replace(f.String(), "NetworkPolicy", "NetworkPolicy", 1) + ","
-	}
-	repeatedStringForItems += "}"
-	s := strings.Join([]string{`&NetworkPolicyList{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ListMeta", "v1.ListMeta", 1) + `,`,
-		`Items:` + repeatedStringForItems + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *NetworkPolicyPeer) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&NetworkPolicyPeer{`,
-		`PodSelector:` + strings.Replace(fmt.Sprintf("%v", this.PodSelector), "LabelSelector", "v1.LabelSelector", 1) + `,`,
-		`NamespaceSelector:` + strings.Replace(fmt.Sprintf("%v", this.NamespaceSelector), "LabelSelector", "v1.LabelSelector", 1) + `,`,
-		`IpBlock:` + strings.Replace(this.IpBlock.String(), "IPBlock", "IPBlock", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *NetworkPolicyPort) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&NetworkPolicyPort{`,
-		`Protocol:` + fmt.Sprintf("%v", this.Protocol) + `,`,
-		`Port:` + strings.Replace(fmt.Sprintf("%v", this.Port), "IntOrString", "intstr.IntOrString", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *NetworkPolicySpec) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForIngress := "[]*NetworkPolicyIngressRule{"
-	for _, f := range this.Ingress {
-		repeatedStringForIngress += strings.Replace(f.String(), "NetworkPolicyIngressRule", "NetworkPolicyIngressRule", 1) + ","
-	}
-	repeatedStringForIngress += "}"
-	repeatedStringForEgress := "[]*NetworkPolicyEgressRule{"
-	for _, f := range this.Egress {
-		repeatedStringForEgress += strings.Replace(f.String(), "NetworkPolicyEgressRule", "NetworkPolicyEgressRule", 1) + ","
-	}
-	repeatedStringForEgress += "}"
-	s := strings.Join([]string{`&NetworkPolicySpec{`,
-		`PodSelector:` + strings.Replace(fmt.Sprintf("%v", this.PodSelector), "LabelSelector", "v1.LabelSelector", 1) + `,`,
-		`Ingress:` + repeatedStringForIngress + `,`,
-		`Egress:` + repeatedStringForEgress + `,`,
-		`PolicyTypes:` + fmt.Sprintf("%v", this.PolicyTypes) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func valueToStringGenerated(v interface{}) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("*%v", pv)
 }
 func (m *IPBlock) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
@@ -1810,7 +1364,8 @@ func (m *IPBlock) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Cidr = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Cidr = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -1856,6 +1411,7 @@ func (m *IPBlock) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -1978,6 +1534,7 @@ func (m *NetworkPolicy) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -2096,6 +1653,7 @@ func (m *NetworkPolicyEgressRule) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -2214,6 +1772,7 @@ func (m *NetworkPolicyIngressRule) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -2334,6 +1893,7 @@ func (m *NetworkPolicyList) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -2492,6 +2052,7 @@ func (m *NetworkPolicyPeer) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -2560,7 +2121,8 @@ func (m *NetworkPolicyPort) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Protocol = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Protocol = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -2610,6 +2172,7 @@ func (m *NetworkPolicyPort) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -2796,6 +2359,7 @@ func (m *NetworkPolicySpec) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}

@@ -14,8 +14,6 @@ import (
 	_ "istio.io/gogo-genproto/k8s.io/apimachinery/pkg/runtime/schema"
 	math "math"
 	math_bits "math/bits"
-	reflect "reflect"
-	strings "strings"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -32,16 +30,20 @@ const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 // CrossVersionObjectReference contains enough information to let you identify the referred resource.
 type CrossVersionObjectReference struct {
 	// Kind of the referent; More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds"
-	Kind string `protobuf:"bytes,1,opt,name=kind" json:"kind"`
+	Kind *string `protobuf:"bytes,1,opt,name=kind" json:"kind,omitempty"`
 	// Name of the referent; More info: http://kubernetes.io/docs/user-guide/identifiers#names
-	Name string `protobuf:"bytes,2,opt,name=name" json:"name"`
+	Name *string `protobuf:"bytes,2,opt,name=name" json:"name,omitempty"`
 	// API version of the referent
 	// +optional
-	ApiVersion string `protobuf:"bytes,3,opt,name=apiVersion" json:"apiVersion"`
+	ApiVersion           *string  `protobuf:"bytes,3,opt,name=apiVersion" json:"apiVersion,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *CrossVersionObjectReference) Reset()      { *m = CrossVersionObjectReference{} }
-func (*CrossVersionObjectReference) ProtoMessage() {}
+func (m *CrossVersionObjectReference) Reset()         { *m = CrossVersionObjectReference{} }
+func (m *CrossVersionObjectReference) String() string { return proto.CompactTextString(m) }
+func (*CrossVersionObjectReference) ProtoMessage()    {}
 func (*CrossVersionObjectReference) Descriptor() ([]byte, []int) {
 	return fileDescriptor_ea74040359c1ed83, []int{0}
 }
@@ -73,22 +75,22 @@ func (m *CrossVersionObjectReference) XXX_DiscardUnknown() {
 var xxx_messageInfo_CrossVersionObjectReference proto.InternalMessageInfo
 
 func (m *CrossVersionObjectReference) GetKind() string {
-	if m != nil {
-		return m.Kind
+	if m != nil && m.Kind != nil {
+		return *m.Kind
 	}
 	return ""
 }
 
 func (m *CrossVersionObjectReference) GetName() string {
-	if m != nil {
-		return m.Name
+	if m != nil && m.Name != nil {
+		return *m.Name
 	}
 	return ""
 }
 
 func (m *CrossVersionObjectReference) GetApiVersion() string {
-	if m != nil {
-		return m.ApiVersion
+	if m != nil && m.ApiVersion != nil {
+		return *m.ApiVersion
 	}
 	return ""
 }
@@ -99,7 +101,7 @@ func (m *CrossVersionObjectReference) GetApiVersion() string {
 // Exactly one "target" type should be set.
 type ExternalMetricSource struct {
 	// metricName is the name of the metric in question.
-	MetricName string `protobuf:"bytes,1,opt,name=metricName" json:"metricName"`
+	MetricName *string `protobuf:"bytes,1,opt,name=metricName" json:"metricName,omitempty"`
 	// metricSelector is used to identify a specific time series
 	// within a given metric.
 	// +optional
@@ -111,11 +113,15 @@ type ExternalMetricSource struct {
 	// targetAverageValue is the target per-pod value of global metric (as a quantity).
 	// Mutually exclusive with TargetValue.
 	// +optional
-	TargetAverageValue *resource.Quantity `protobuf:"bytes,4,opt,name=targetAverageValue" json:"targetAverageValue,omitempty"`
+	TargetAverageValue   *resource.Quantity `protobuf:"bytes,4,opt,name=targetAverageValue" json:"targetAverageValue,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}           `json:"-"`
+	XXX_unrecognized     []byte             `json:"-"`
+	XXX_sizecache        int32              `json:"-"`
 }
 
-func (m *ExternalMetricSource) Reset()      { *m = ExternalMetricSource{} }
-func (*ExternalMetricSource) ProtoMessage() {}
+func (m *ExternalMetricSource) Reset()         { *m = ExternalMetricSource{} }
+func (m *ExternalMetricSource) String() string { return proto.CompactTextString(m) }
+func (*ExternalMetricSource) ProtoMessage()    {}
 func (*ExternalMetricSource) Descriptor() ([]byte, []int) {
 	return fileDescriptor_ea74040359c1ed83, []int{1}
 }
@@ -147,8 +153,8 @@ func (m *ExternalMetricSource) XXX_DiscardUnknown() {
 var xxx_messageInfo_ExternalMetricSource proto.InternalMessageInfo
 
 func (m *ExternalMetricSource) GetMetricName() string {
-	if m != nil {
-		return m.MetricName
+	if m != nil && m.MetricName != nil {
+		return *m.MetricName
 	}
 	return ""
 }
@@ -179,7 +185,7 @@ func (m *ExternalMetricSource) GetTargetAverageValue() *resource.Quantity {
 type ExternalMetricStatus struct {
 	// metricName is the name of a metric used for autoscaling in
 	// metric system.
-	MetricName string `protobuf:"bytes,1,opt,name=metricName" json:"metricName"`
+	MetricName *string `protobuf:"bytes,1,opt,name=metricName" json:"metricName,omitempty"`
 	// metricSelector is used to identify a specific time series
 	// within a given metric.
 	// +optional
@@ -188,11 +194,15 @@ type ExternalMetricStatus struct {
 	CurrentValue *resource.Quantity `protobuf:"bytes,3,opt,name=currentValue" json:"currentValue,omitempty"`
 	// currentAverageValue is the current value of metric averaged over autoscaled pods.
 	// +optional
-	CurrentAverageValue *resource.Quantity `protobuf:"bytes,4,opt,name=currentAverageValue" json:"currentAverageValue,omitempty"`
+	CurrentAverageValue  *resource.Quantity `protobuf:"bytes,4,opt,name=currentAverageValue" json:"currentAverageValue,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}           `json:"-"`
+	XXX_unrecognized     []byte             `json:"-"`
+	XXX_sizecache        int32              `json:"-"`
 }
 
-func (m *ExternalMetricStatus) Reset()      { *m = ExternalMetricStatus{} }
-func (*ExternalMetricStatus) ProtoMessage() {}
+func (m *ExternalMetricStatus) Reset()         { *m = ExternalMetricStatus{} }
+func (m *ExternalMetricStatus) String() string { return proto.CompactTextString(m) }
+func (*ExternalMetricStatus) ProtoMessage()    {}
 func (*ExternalMetricStatus) Descriptor() ([]byte, []int) {
 	return fileDescriptor_ea74040359c1ed83, []int{2}
 }
@@ -224,8 +234,8 @@ func (m *ExternalMetricStatus) XXX_DiscardUnknown() {
 var xxx_messageInfo_ExternalMetricStatus proto.InternalMessageInfo
 
 func (m *ExternalMetricStatus) GetMetricName() string {
-	if m != nil {
-		return m.MetricName
+	if m != nil && m.MetricName != nil {
+		return *m.MetricName
 	}
 	return ""
 }
@@ -265,11 +275,15 @@ type HorizontalPodAutoscaler struct {
 	Spec *HorizontalPodAutoscalerSpec `protobuf:"bytes,2,opt,name=spec" json:"spec,omitempty"`
 	// status is the current information about the autoscaler.
 	// +optional
-	Status *HorizontalPodAutoscalerStatus `protobuf:"bytes,3,opt,name=status" json:"status,omitempty"`
+	Status               *HorizontalPodAutoscalerStatus `protobuf:"bytes,3,opt,name=status" json:"status,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                       `json:"-"`
+	XXX_unrecognized     []byte                         `json:"-"`
+	XXX_sizecache        int32                          `json:"-"`
 }
 
-func (m *HorizontalPodAutoscaler) Reset()      { *m = HorizontalPodAutoscaler{} }
-func (*HorizontalPodAutoscaler) ProtoMessage() {}
+func (m *HorizontalPodAutoscaler) Reset()         { *m = HorizontalPodAutoscaler{} }
+func (m *HorizontalPodAutoscaler) String() string { return proto.CompactTextString(m) }
+func (*HorizontalPodAutoscaler) ProtoMessage()    {}
 func (*HorizontalPodAutoscaler) Descriptor() ([]byte, []int) {
 	return fileDescriptor_ea74040359c1ed83, []int{3}
 }
@@ -325,24 +339,28 @@ func (m *HorizontalPodAutoscaler) GetStatus() *HorizontalPodAutoscalerStatus {
 // a HorizontalPodAutoscaler at a certain point.
 type HorizontalPodAutoscalerCondition struct {
 	// type describes the current condition
-	Type string `protobuf:"bytes,1,opt,name=type" json:"type"`
+	Type *string `protobuf:"bytes,1,opt,name=type" json:"type,omitempty"`
 	// status is the status of the condition (True, False, Unknown)
-	Status string `protobuf:"bytes,2,opt,name=status" json:"status"`
+	Status *string `protobuf:"bytes,2,opt,name=status" json:"status,omitempty"`
 	// lastTransitionTime is the last time the condition transitioned from
 	// one status to another
 	// +optional
 	LastTransitionTime *v1.Time `protobuf:"bytes,3,opt,name=lastTransitionTime" json:"lastTransitionTime,omitempty"`
 	// reason is the reason for the condition's last transition.
 	// +optional
-	Reason string `protobuf:"bytes,4,opt,name=reason" json:"reason"`
+	Reason *string `protobuf:"bytes,4,opt,name=reason" json:"reason,omitempty"`
 	// message is a human-readable explanation containing details about
 	// the transition
 	// +optional
-	Message string `protobuf:"bytes,5,opt,name=message" json:"message"`
+	Message              *string  `protobuf:"bytes,5,opt,name=message" json:"message,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *HorizontalPodAutoscalerCondition) Reset()      { *m = HorizontalPodAutoscalerCondition{} }
-func (*HorizontalPodAutoscalerCondition) ProtoMessage() {}
+func (m *HorizontalPodAutoscalerCondition) Reset()         { *m = HorizontalPodAutoscalerCondition{} }
+func (m *HorizontalPodAutoscalerCondition) String() string { return proto.CompactTextString(m) }
+func (*HorizontalPodAutoscalerCondition) ProtoMessage()    {}
 func (*HorizontalPodAutoscalerCondition) Descriptor() ([]byte, []int) {
 	return fileDescriptor_ea74040359c1ed83, []int{4}
 }
@@ -374,15 +392,15 @@ func (m *HorizontalPodAutoscalerCondition) XXX_DiscardUnknown() {
 var xxx_messageInfo_HorizontalPodAutoscalerCondition proto.InternalMessageInfo
 
 func (m *HorizontalPodAutoscalerCondition) GetType() string {
-	if m != nil {
-		return m.Type
+	if m != nil && m.Type != nil {
+		return *m.Type
 	}
 	return ""
 }
 
 func (m *HorizontalPodAutoscalerCondition) GetStatus() string {
-	if m != nil {
-		return m.Status
+	if m != nil && m.Status != nil {
+		return *m.Status
 	}
 	return ""
 }
@@ -395,15 +413,15 @@ func (m *HorizontalPodAutoscalerCondition) GetLastTransitionTime() *v1.Time {
 }
 
 func (m *HorizontalPodAutoscalerCondition) GetReason() string {
-	if m != nil {
-		return m.Reason
+	if m != nil && m.Reason != nil {
+		return *m.Reason
 	}
 	return ""
 }
 
 func (m *HorizontalPodAutoscalerCondition) GetMessage() string {
-	if m != nil {
-		return m.Message
+	if m != nil && m.Message != nil {
+		return *m.Message
 	}
 	return ""
 }
@@ -414,11 +432,15 @@ type HorizontalPodAutoscalerList struct {
 	// +optional
 	Metadata *v1.ListMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// items is the list of horizontal pod autoscaler objects.
-	Items []*HorizontalPodAutoscaler `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	Items                []*HorizontalPodAutoscaler `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                   `json:"-"`
+	XXX_unrecognized     []byte                     `json:"-"`
+	XXX_sizecache        int32                      `json:"-"`
 }
 
-func (m *HorizontalPodAutoscalerList) Reset()      { *m = HorizontalPodAutoscalerList{} }
-func (*HorizontalPodAutoscalerList) ProtoMessage() {}
+func (m *HorizontalPodAutoscalerList) Reset()         { *m = HorizontalPodAutoscalerList{} }
+func (m *HorizontalPodAutoscalerList) String() string { return proto.CompactTextString(m) }
+func (*HorizontalPodAutoscalerList) ProtoMessage()    {}
 func (*HorizontalPodAutoscalerList) Descriptor() ([]byte, []int) {
 	return fileDescriptor_ea74040359c1ed83, []int{5}
 }
@@ -474,10 +496,10 @@ type HorizontalPodAutoscalerSpec struct {
 	// metric is configured.  Scaling is active as long as at least one metric value is
 	// available.
 	// +optional
-	MinReplicas int32 `protobuf:"varint,2,opt,name=minReplicas" json:"minReplicas"`
+	MinReplicas *int32 `protobuf:"varint,2,opt,name=minReplicas" json:"minReplicas,omitempty"`
 	// maxReplicas is the upper limit for the number of replicas to which the autoscaler can scale up.
 	// It cannot be less that minReplicas.
-	MaxReplicas int32 `protobuf:"varint,3,opt,name=maxReplicas" json:"maxReplicas"`
+	MaxReplicas *int32 `protobuf:"varint,3,opt,name=maxReplicas" json:"maxReplicas,omitempty"`
 	// metrics contains the specifications for which to use to calculate the
 	// desired replica count (the maximum replica count across all metrics will
 	// be used).  The desired replica count is calculated multiplying the
@@ -486,11 +508,15 @@ type HorizontalPodAutoscalerSpec struct {
 	// increased, and vice-versa.  See the individual metric source types for
 	// more information about how each type of metric must respond.
 	// +optional
-	Metrics []*MetricSpec `protobuf:"bytes,4,rep,name=metrics" json:"metrics,omitempty"`
+	Metrics              []*MetricSpec `protobuf:"bytes,4,rep,name=metrics" json:"metrics,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
+	XXX_unrecognized     []byte        `json:"-"`
+	XXX_sizecache        int32         `json:"-"`
 }
 
-func (m *HorizontalPodAutoscalerSpec) Reset()      { *m = HorizontalPodAutoscalerSpec{} }
-func (*HorizontalPodAutoscalerSpec) ProtoMessage() {}
+func (m *HorizontalPodAutoscalerSpec) Reset()         { *m = HorizontalPodAutoscalerSpec{} }
+func (m *HorizontalPodAutoscalerSpec) String() string { return proto.CompactTextString(m) }
+func (*HorizontalPodAutoscalerSpec) ProtoMessage()    {}
 func (*HorizontalPodAutoscalerSpec) Descriptor() ([]byte, []int) {
 	return fileDescriptor_ea74040359c1ed83, []int{6}
 }
@@ -529,15 +555,15 @@ func (m *HorizontalPodAutoscalerSpec) GetScaleTargetRef() *CrossVersionObjectRef
 }
 
 func (m *HorizontalPodAutoscalerSpec) GetMinReplicas() int32 {
-	if m != nil {
-		return m.MinReplicas
+	if m != nil && m.MinReplicas != nil {
+		return *m.MinReplicas
 	}
 	return 0
 }
 
 func (m *HorizontalPodAutoscalerSpec) GetMaxReplicas() int32 {
-	if m != nil {
-		return m.MaxReplicas
+	if m != nil && m.MaxReplicas != nil {
+		return *m.MaxReplicas
 	}
 	return 0
 }
@@ -553,27 +579,31 @@ func (m *HorizontalPodAutoscalerSpec) GetMetrics() []*MetricSpec {
 type HorizontalPodAutoscalerStatus struct {
 	// observedGeneration is the most recent generation observed by this autoscaler.
 	// +optional
-	ObservedGeneration int64 `protobuf:"varint,1,opt,name=observedGeneration" json:"observedGeneration"`
+	ObservedGeneration *int64 `protobuf:"varint,1,opt,name=observedGeneration" json:"observedGeneration,omitempty"`
 	// lastScaleTime is the last time the HorizontalPodAutoscaler scaled the number of pods,
 	// used by the autoscaler to control how often the number of pods is changed.
 	// +optional
 	LastScaleTime *v1.Time `protobuf:"bytes,2,opt,name=lastScaleTime" json:"lastScaleTime,omitempty"`
 	// currentReplicas is current number of replicas of pods managed by this autoscaler,
 	// as last seen by the autoscaler.
-	CurrentReplicas int32 `protobuf:"varint,3,opt,name=currentReplicas" json:"currentReplicas"`
+	CurrentReplicas *int32 `protobuf:"varint,3,opt,name=currentReplicas" json:"currentReplicas,omitempty"`
 	// desiredReplicas is the desired number of replicas of pods managed by this autoscaler,
 	// as last calculated by the autoscaler.
-	DesiredReplicas int32 `protobuf:"varint,4,opt,name=desiredReplicas" json:"desiredReplicas"`
+	DesiredReplicas *int32 `protobuf:"varint,4,opt,name=desiredReplicas" json:"desiredReplicas,omitempty"`
 	// currentMetrics is the last read state of the metrics used by this autoscaler.
 	// +optional
 	CurrentMetrics []*MetricStatus `protobuf:"bytes,5,rep,name=currentMetrics" json:"currentMetrics,omitempty"`
 	// conditions is the set of conditions required for this autoscaler to scale its target,
 	// and indicates whether or not those conditions are met.
-	Conditions []*HorizontalPodAutoscalerCondition `protobuf:"bytes,6,rep,name=conditions" json:"conditions,omitempty"`
+	Conditions           []*HorizontalPodAutoscalerCondition `protobuf:"bytes,6,rep,name=conditions" json:"conditions,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                            `json:"-"`
+	XXX_unrecognized     []byte                              `json:"-"`
+	XXX_sizecache        int32                               `json:"-"`
 }
 
-func (m *HorizontalPodAutoscalerStatus) Reset()      { *m = HorizontalPodAutoscalerStatus{} }
-func (*HorizontalPodAutoscalerStatus) ProtoMessage() {}
+func (m *HorizontalPodAutoscalerStatus) Reset()         { *m = HorizontalPodAutoscalerStatus{} }
+func (m *HorizontalPodAutoscalerStatus) String() string { return proto.CompactTextString(m) }
+func (*HorizontalPodAutoscalerStatus) ProtoMessage()    {}
 func (*HorizontalPodAutoscalerStatus) Descriptor() ([]byte, []int) {
 	return fileDescriptor_ea74040359c1ed83, []int{7}
 }
@@ -605,8 +635,8 @@ func (m *HorizontalPodAutoscalerStatus) XXX_DiscardUnknown() {
 var xxx_messageInfo_HorizontalPodAutoscalerStatus proto.InternalMessageInfo
 
 func (m *HorizontalPodAutoscalerStatus) GetObservedGeneration() int64 {
-	if m != nil {
-		return m.ObservedGeneration
+	if m != nil && m.ObservedGeneration != nil {
+		return *m.ObservedGeneration
 	}
 	return 0
 }
@@ -619,15 +649,15 @@ func (m *HorizontalPodAutoscalerStatus) GetLastScaleTime() *v1.Time {
 }
 
 func (m *HorizontalPodAutoscalerStatus) GetCurrentReplicas() int32 {
-	if m != nil {
-		return m.CurrentReplicas
+	if m != nil && m.CurrentReplicas != nil {
+		return *m.CurrentReplicas
 	}
 	return 0
 }
 
 func (m *HorizontalPodAutoscalerStatus) GetDesiredReplicas() int32 {
-	if m != nil {
-		return m.DesiredReplicas
+	if m != nil && m.DesiredReplicas != nil {
+		return *m.DesiredReplicas
 	}
 	return 0
 }
@@ -651,7 +681,7 @@ func (m *HorizontalPodAutoscalerStatus) GetConditions() []*HorizontalPodAutoscal
 type MetricSpec struct {
 	// type is the type of metric source.  It should be one of "Object",
 	// "Pods" or "Resource", each mapping to a matching field in the object.
-	Type string `protobuf:"bytes,1,opt,name=type" json:"type"`
+	Type *string `protobuf:"bytes,1,opt,name=type" json:"type,omitempty"`
 	// object refers to a metric describing a single kubernetes object
 	// (for example, hits-per-second on an Ingress object).
 	// +optional
@@ -674,11 +704,15 @@ type MetricSpec struct {
 	// (for example length of queue in cloud messaging service, or
 	// QPS from loadbalancer running outside of cluster).
 	// +optional
-	External *ExternalMetricSource `protobuf:"bytes,5,opt,name=external" json:"external,omitempty"`
+	External             *ExternalMetricSource `protobuf:"bytes,5,opt,name=external" json:"external,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}              `json:"-"`
+	XXX_unrecognized     []byte                `json:"-"`
+	XXX_sizecache        int32                 `json:"-"`
 }
 
-func (m *MetricSpec) Reset()      { *m = MetricSpec{} }
-func (*MetricSpec) ProtoMessage() {}
+func (m *MetricSpec) Reset()         { *m = MetricSpec{} }
+func (m *MetricSpec) String() string { return proto.CompactTextString(m) }
+func (*MetricSpec) ProtoMessage()    {}
 func (*MetricSpec) Descriptor() ([]byte, []int) {
 	return fileDescriptor_ea74040359c1ed83, []int{8}
 }
@@ -710,8 +744,8 @@ func (m *MetricSpec) XXX_DiscardUnknown() {
 var xxx_messageInfo_MetricSpec proto.InternalMessageInfo
 
 func (m *MetricSpec) GetType() string {
-	if m != nil {
-		return m.Type
+	if m != nil && m.Type != nil {
+		return *m.Type
 	}
 	return ""
 }
@@ -748,7 +782,7 @@ func (m *MetricSpec) GetExternal() *ExternalMetricSource {
 type MetricStatus struct {
 	// type is the type of metric source.  It will be one of "Object",
 	// "Pods" or "Resource", each corresponds to a matching field in the object.
-	Type string `protobuf:"bytes,1,opt,name=type" json:"type"`
+	Type *string `protobuf:"bytes,1,opt,name=type" json:"type,omitempty"`
 	// object refers to a metric describing a single kubernetes object
 	// (for example, hits-per-second on an Ingress object).
 	// +optional
@@ -771,11 +805,15 @@ type MetricStatus struct {
 	// (for example length of queue in cloud messaging service, or
 	// QPS from loadbalancer running outside of cluster).
 	// +optional
-	External *ExternalMetricStatus `protobuf:"bytes,5,opt,name=external" json:"external,omitempty"`
+	External             *ExternalMetricStatus `protobuf:"bytes,5,opt,name=external" json:"external,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}              `json:"-"`
+	XXX_unrecognized     []byte                `json:"-"`
+	XXX_sizecache        int32                 `json:"-"`
 }
 
-func (m *MetricStatus) Reset()      { *m = MetricStatus{} }
-func (*MetricStatus) ProtoMessage() {}
+func (m *MetricStatus) Reset()         { *m = MetricStatus{} }
+func (m *MetricStatus) String() string { return proto.CompactTextString(m) }
+func (*MetricStatus) ProtoMessage()    {}
 func (*MetricStatus) Descriptor() ([]byte, []int) {
 	return fileDescriptor_ea74040359c1ed83, []int{9}
 }
@@ -807,8 +845,8 @@ func (m *MetricStatus) XXX_DiscardUnknown() {
 var xxx_messageInfo_MetricStatus proto.InternalMessageInfo
 
 func (m *MetricStatus) GetType() string {
-	if m != nil {
-		return m.Type
+	if m != nil && m.Type != nil {
+		return *m.Type
 	}
 	return ""
 }
@@ -847,7 +885,7 @@ type ObjectMetricSource struct {
 	// target is the described Kubernetes object.
 	Target *CrossVersionObjectReference `protobuf:"bytes,1,opt,name=target" json:"target,omitempty"`
 	// metricName is the name of the metric in question.
-	MetricName string `protobuf:"bytes,2,opt,name=metricName" json:"metricName"`
+	MetricName *string `protobuf:"bytes,2,opt,name=metricName" json:"metricName,omitempty"`
 	// targetValue is the target value of the metric (as a quantity).
 	TargetValue *resource.Quantity `protobuf:"bytes,3,opt,name=targetValue" json:"targetValue,omitempty"`
 	// selector is the string-encoded form of a standard kubernetes label selector for the given metric
@@ -858,11 +896,15 @@ type ObjectMetricSource struct {
 	// averageValue is the target value of the average of the
 	// metric across all relevant pods (as a quantity)
 	// +optional
-	AverageValue *resource.Quantity `protobuf:"bytes,5,opt,name=averageValue" json:"averageValue,omitempty"`
+	AverageValue         *resource.Quantity `protobuf:"bytes,5,opt,name=averageValue" json:"averageValue,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}           `json:"-"`
+	XXX_unrecognized     []byte             `json:"-"`
+	XXX_sizecache        int32              `json:"-"`
 }
 
-func (m *ObjectMetricSource) Reset()      { *m = ObjectMetricSource{} }
-func (*ObjectMetricSource) ProtoMessage() {}
+func (m *ObjectMetricSource) Reset()         { *m = ObjectMetricSource{} }
+func (m *ObjectMetricSource) String() string { return proto.CompactTextString(m) }
+func (*ObjectMetricSource) ProtoMessage()    {}
 func (*ObjectMetricSource) Descriptor() ([]byte, []int) {
 	return fileDescriptor_ea74040359c1ed83, []int{10}
 }
@@ -901,8 +943,8 @@ func (m *ObjectMetricSource) GetTarget() *CrossVersionObjectReference {
 }
 
 func (m *ObjectMetricSource) GetMetricName() string {
-	if m != nil {
-		return m.MetricName
+	if m != nil && m.MetricName != nil {
+		return *m.MetricName
 	}
 	return ""
 }
@@ -934,7 +976,7 @@ type ObjectMetricStatus struct {
 	// target is the described Kubernetes object.
 	Target *CrossVersionObjectReference `protobuf:"bytes,1,opt,name=target" json:"target,omitempty"`
 	// metricName is the name of the metric in question.
-	MetricName string `protobuf:"bytes,2,opt,name=metricName" json:"metricName"`
+	MetricName *string `protobuf:"bytes,2,opt,name=metricName" json:"metricName,omitempty"`
 	// currentValue is the current value of the metric (as a quantity).
 	CurrentValue *resource.Quantity `protobuf:"bytes,3,opt,name=currentValue" json:"currentValue,omitempty"`
 	// selector is the string-encoded form of a standard kubernetes label selector for the given metric
@@ -945,11 +987,15 @@ type ObjectMetricStatus struct {
 	// averageValue is the current value of the average of the
 	// metric across all relevant pods (as a quantity)
 	// +optional
-	AverageValue *resource.Quantity `protobuf:"bytes,5,opt,name=averageValue" json:"averageValue,omitempty"`
+	AverageValue         *resource.Quantity `protobuf:"bytes,5,opt,name=averageValue" json:"averageValue,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}           `json:"-"`
+	XXX_unrecognized     []byte             `json:"-"`
+	XXX_sizecache        int32              `json:"-"`
 }
 
-func (m *ObjectMetricStatus) Reset()      { *m = ObjectMetricStatus{} }
-func (*ObjectMetricStatus) ProtoMessage() {}
+func (m *ObjectMetricStatus) Reset()         { *m = ObjectMetricStatus{} }
+func (m *ObjectMetricStatus) String() string { return proto.CompactTextString(m) }
+func (*ObjectMetricStatus) ProtoMessage()    {}
 func (*ObjectMetricStatus) Descriptor() ([]byte, []int) {
 	return fileDescriptor_ea74040359c1ed83, []int{11}
 }
@@ -988,8 +1034,8 @@ func (m *ObjectMetricStatus) GetTarget() *CrossVersionObjectReference {
 }
 
 func (m *ObjectMetricStatus) GetMetricName() string {
-	if m != nil {
-		return m.MetricName
+	if m != nil && m.MetricName != nil {
+		return *m.MetricName
 	}
 	return ""
 }
@@ -1021,7 +1067,7 @@ func (m *ObjectMetricStatus) GetAverageValue() *resource.Quantity {
 // value.
 type PodsMetricSource struct {
 	// metricName is the name of the metric in question
-	MetricName string `protobuf:"bytes,1,opt,name=metricName" json:"metricName"`
+	MetricName *string `protobuf:"bytes,1,opt,name=metricName" json:"metricName,omitempty"`
 	// targetAverageValue is the target value of the average of the
 	// metric across all relevant pods (as a quantity)
 	TargetAverageValue *resource.Quantity `protobuf:"bytes,2,opt,name=targetAverageValue" json:"targetAverageValue,omitempty"`
@@ -1029,11 +1075,15 @@ type PodsMetricSource struct {
 	// When set, it is passed as an additional parameter to the metrics server for more specific metrics scoping
 	// When unset, just the metricName will be used to gather metrics.
 	// +optional
-	Selector *v1.LabelSelector `protobuf:"bytes,3,opt,name=selector" json:"selector,omitempty"`
+	Selector             *v1.LabelSelector `protobuf:"bytes,3,opt,name=selector" json:"selector,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
+	XXX_unrecognized     []byte            `json:"-"`
+	XXX_sizecache        int32             `json:"-"`
 }
 
-func (m *PodsMetricSource) Reset()      { *m = PodsMetricSource{} }
-func (*PodsMetricSource) ProtoMessage() {}
+func (m *PodsMetricSource) Reset()         { *m = PodsMetricSource{} }
+func (m *PodsMetricSource) String() string { return proto.CompactTextString(m) }
+func (*PodsMetricSource) ProtoMessage()    {}
 func (*PodsMetricSource) Descriptor() ([]byte, []int) {
 	return fileDescriptor_ea74040359c1ed83, []int{12}
 }
@@ -1065,8 +1115,8 @@ func (m *PodsMetricSource) XXX_DiscardUnknown() {
 var xxx_messageInfo_PodsMetricSource proto.InternalMessageInfo
 
 func (m *PodsMetricSource) GetMetricName() string {
-	if m != nil {
-		return m.MetricName
+	if m != nil && m.MetricName != nil {
+		return *m.MetricName
 	}
 	return ""
 }
@@ -1089,7 +1139,7 @@ func (m *PodsMetricSource) GetSelector() *v1.LabelSelector {
 // the current scale target (for example, transactions-processed-per-second).
 type PodsMetricStatus struct {
 	// metricName is the name of the metric in question
-	MetricName string `protobuf:"bytes,1,opt,name=metricName" json:"metricName"`
+	MetricName *string `protobuf:"bytes,1,opt,name=metricName" json:"metricName,omitempty"`
 	// currentAverageValue is the current value of the average of the
 	// metric across all relevant pods (as a quantity)
 	CurrentAverageValue *resource.Quantity `protobuf:"bytes,2,opt,name=currentAverageValue" json:"currentAverageValue,omitempty"`
@@ -1097,11 +1147,15 @@ type PodsMetricStatus struct {
 	// When set in the PodsMetricSource, it is passed as an additional parameter to the metrics server for more specific metrics scoping.
 	// When unset, just the metricName will be used to gather metrics.
 	// +optional
-	Selector *v1.LabelSelector `protobuf:"bytes,3,opt,name=selector" json:"selector,omitempty"`
+	Selector             *v1.LabelSelector `protobuf:"bytes,3,opt,name=selector" json:"selector,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
+	XXX_unrecognized     []byte            `json:"-"`
+	XXX_sizecache        int32             `json:"-"`
 }
 
-func (m *PodsMetricStatus) Reset()      { *m = PodsMetricStatus{} }
-func (*PodsMetricStatus) ProtoMessage() {}
+func (m *PodsMetricStatus) Reset()         { *m = PodsMetricStatus{} }
+func (m *PodsMetricStatus) String() string { return proto.CompactTextString(m) }
+func (*PodsMetricStatus) ProtoMessage()    {}
 func (*PodsMetricStatus) Descriptor() ([]byte, []int) {
 	return fileDescriptor_ea74040359c1ed83, []int{13}
 }
@@ -1133,8 +1187,8 @@ func (m *PodsMetricStatus) XXX_DiscardUnknown() {
 var xxx_messageInfo_PodsMetricStatus proto.InternalMessageInfo
 
 func (m *PodsMetricStatus) GetMetricName() string {
-	if m != nil {
-		return m.MetricName
+	if m != nil && m.MetricName != nil {
+		return *m.MetricName
 	}
 	return ""
 }
@@ -1162,21 +1216,25 @@ func (m *PodsMetricStatus) GetSelector() *v1.LabelSelector {
 // should be set.
 type ResourceMetricSource struct {
 	// name is the name of the resource in question.
-	Name string `protobuf:"bytes,1,opt,name=name" json:"name"`
+	Name *string `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
 	// targetAverageUtilization is the target value of the average of the
 	// resource metric across all relevant pods, represented as a percentage of
 	// the requested value of the resource for the pods.
 	// +optional
-	TargetAverageUtilization int32 `protobuf:"varint,2,opt,name=targetAverageUtilization" json:"targetAverageUtilization"`
+	TargetAverageUtilization *int32 `protobuf:"varint,2,opt,name=targetAverageUtilization" json:"targetAverageUtilization,omitempty"`
 	// targetAverageValue is the target value of the average of the
 	// resource metric across all relevant pods, as a raw value (instead of as
 	// a percentage of the request), similar to the "pods" metric source type.
 	// +optional
-	TargetAverageValue *resource.Quantity `protobuf:"bytes,3,opt,name=targetAverageValue" json:"targetAverageValue,omitempty"`
+	TargetAverageValue   *resource.Quantity `protobuf:"bytes,3,opt,name=targetAverageValue" json:"targetAverageValue,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}           `json:"-"`
+	XXX_unrecognized     []byte             `json:"-"`
+	XXX_sizecache        int32              `json:"-"`
 }
 
-func (m *ResourceMetricSource) Reset()      { *m = ResourceMetricSource{} }
-func (*ResourceMetricSource) ProtoMessage() {}
+func (m *ResourceMetricSource) Reset()         { *m = ResourceMetricSource{} }
+func (m *ResourceMetricSource) String() string { return proto.CompactTextString(m) }
+func (*ResourceMetricSource) ProtoMessage()    {}
 func (*ResourceMetricSource) Descriptor() ([]byte, []int) {
 	return fileDescriptor_ea74040359c1ed83, []int{14}
 }
@@ -1208,15 +1266,15 @@ func (m *ResourceMetricSource) XXX_DiscardUnknown() {
 var xxx_messageInfo_ResourceMetricSource proto.InternalMessageInfo
 
 func (m *ResourceMetricSource) GetName() string {
-	if m != nil {
-		return m.Name
+	if m != nil && m.Name != nil {
+		return *m.Name
 	}
 	return ""
 }
 
 func (m *ResourceMetricSource) GetTargetAverageUtilization() int32 {
-	if m != nil {
-		return m.TargetAverageUtilization
+	if m != nil && m.TargetAverageUtilization != nil {
+		return *m.TargetAverageUtilization
 	}
 	return 0
 }
@@ -1235,23 +1293,27 @@ func (m *ResourceMetricSource) GetTargetAverageValue() *resource.Quantity {
 // normal per-pod metrics using the "pods" source.
 type ResourceMetricStatus struct {
 	// name is the name of the resource in question.
-	Name string `protobuf:"bytes,1,opt,name=name" json:"name"`
+	Name *string `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
 	// currentAverageUtilization is the current value of the average of the
 	// resource metric across all relevant pods, represented as a percentage of
 	// the requested value of the resource for the pods.  It will only be
 	// present if `targetAverageValue` was set in the corresponding metric
 	// specification.
 	// +optional
-	CurrentAverageUtilization int32 `protobuf:"varint,2,opt,name=currentAverageUtilization" json:"currentAverageUtilization"`
+	CurrentAverageUtilization *int32 `protobuf:"varint,2,opt,name=currentAverageUtilization" json:"currentAverageUtilization,omitempty"`
 	// currentAverageValue is the current value of the average of the
 	// resource metric across all relevant pods, as a raw value (instead of as
 	// a percentage of the request), similar to the "pods" metric source type.
 	// It will always be set, regardless of the corresponding metric specification.
-	CurrentAverageValue *resource.Quantity `protobuf:"bytes,3,opt,name=currentAverageValue" json:"currentAverageValue,omitempty"`
+	CurrentAverageValue  *resource.Quantity `protobuf:"bytes,3,opt,name=currentAverageValue" json:"currentAverageValue,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}           `json:"-"`
+	XXX_unrecognized     []byte             `json:"-"`
+	XXX_sizecache        int32              `json:"-"`
 }
 
-func (m *ResourceMetricStatus) Reset()      { *m = ResourceMetricStatus{} }
-func (*ResourceMetricStatus) ProtoMessage() {}
+func (m *ResourceMetricStatus) Reset()         { *m = ResourceMetricStatus{} }
+func (m *ResourceMetricStatus) String() string { return proto.CompactTextString(m) }
+func (*ResourceMetricStatus) ProtoMessage()    {}
 func (*ResourceMetricStatus) Descriptor() ([]byte, []int) {
 	return fileDescriptor_ea74040359c1ed83, []int{15}
 }
@@ -1283,15 +1345,15 @@ func (m *ResourceMetricStatus) XXX_DiscardUnknown() {
 var xxx_messageInfo_ResourceMetricStatus proto.InternalMessageInfo
 
 func (m *ResourceMetricStatus) GetName() string {
-	if m != nil {
-		return m.Name
+	if m != nil && m.Name != nil {
+		return *m.Name
 	}
 	return ""
 }
 
 func (m *ResourceMetricStatus) GetCurrentAverageUtilization() int32 {
-	if m != nil {
-		return m.CurrentAverageUtilization
+	if m != nil && m.CurrentAverageUtilization != nil {
+		return *m.CurrentAverageUtilization
 	}
 	return 0
 }
@@ -1327,918 +1389,76 @@ func init() {
 }
 
 var fileDescriptor_ea74040359c1ed83 = []byte{
-	// 1135 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xd4, 0x98, 0x41, 0x6f, 0x1b, 0x45,
-	0x14, 0xc7, 0xbd, 0xb6, 0x13, 0xc2, 0x73, 0x09, 0x68, 0xa8, 0x84, 0x69, 0x61, 0xa9, 0x56, 0x08,
-	0x55, 0x15, 0x5a, 0xb7, 0x26, 0x02, 0x24, 0x84, 0xd4, 0xa6, 0x45, 0xa0, 0x2a, 0x21, 0x61, 0x93,
-	0xf6, 0x00, 0x12, 0xea, 0x64, 0xfd, 0xea, 0x0e, 0xb1, 0x77, 0x57, 0x33, 0xe3, 0xd0, 0xf4, 0xc4,
-	0x09, 0x71, 0x83, 0x23, 0x1f, 0x81, 0x8f, 0xc0, 0x8d, 0x6b, 0x25, 0x0e, 0x44, 0x1c, 0x50, 0x0f,
-	0xa8, 0x22, 0xce, 0x05, 0xc4, 0xa5, 0x07, 0x3e, 0x00, 0x9a, 0xd9, 0xf1, 0x66, 0xd7, 0xf6, 0xda,
-	0x8e, 0xbb, 0x15, 0xf4, 0xb8, 0x33, 0x6f, 0x7e, 0x33, 0xf3, 0x7f, 0xcf, 0xef, 0xbd, 0x31, 0xb8,
-	0xbb, 0xef, 0x0a, 0x97, 0x85, 0x0d, 0x1a, 0xb1, 0x06, 0xed, 0xc9, 0x50, 0xf8, 0xb4, 0xc3, 0x82,
-	0x76, 0x63, 0xaf, 0xb9, 0x83, 0x92, 0x5e, 0x6a, 0xb4, 0x31, 0x40, 0x4e, 0x25, 0xb6, 0xdc, 0x88,
-	0x87, 0x32, 0x24, 0x76, 0x6c, 0xef, 0xd2, 0x88, 0xb9, 0x29, 0x7b, 0xd7, 0xd8, 0x9f, 0x71, 0x52,
-	0x3c, 0x3f, 0xe4, 0xd8, 0xd8, 0x1b, 0x61, 0x9c, 0x59, 0x39, 0xb6, 0xe9, 0x52, 0xff, 0x0e, 0x0b,
-	0x90, 0xef, 0x37, 0xa2, 0xdd, 0xb6, 0x5e, 0xc4, 0x51, 0x84, 0x3d, 0xee, 0xe3, 0x89, 0x56, 0x89,
-	0x46, 0x17, 0x25, 0x1d, 0xb7, 0x57, 0x23, 0x6f, 0x15, 0xef, 0x05, 0x92, 0x75, 0x47, 0xb7, 0x79,
-	0x7b, 0xda, 0x02, 0xe1, 0xdf, 0xc1, 0x2e, 0x1d, 0x5e, 0xe7, 0x7c, 0x09, 0x67, 0xaf, 0xf2, 0x50,
-	0x88, 0x9b, 0xc8, 0x05, 0x0b, 0x83, 0x8d, 0x9d, 0x2f, 0xd0, 0x97, 0x1e, 0xde, 0x46, 0x8e, 0x81,
-	0x8f, 0xa4, 0x0e, 0xd5, 0x5d, 0x16, 0xb4, 0xea, 0xd6, 0x39, 0xeb, 0xfc, 0xb3, 0xab, 0xd5, 0xfb,
-	0x0f, 0x5f, 0x2b, 0x79, 0x7a, 0x44, 0xcd, 0x04, 0xb4, 0x8b, 0xf5, 0x72, 0x7a, 0x46, 0x8d, 0x90,
-	0xd7, 0x01, 0x68, 0xc4, 0x0c, 0xb0, 0x5e, 0x49, 0xcd, 0xa7, 0xc6, 0x9d, 0x9f, 0xcb, 0x70, 0xfa,
-	0x83, 0xbb, 0x12, 0x79, 0x40, 0x3b, 0xeb, 0x28, 0x39, 0xf3, 0xb7, 0xb4, 0x80, 0x6a, 0x79, 0x57,
-	0x7f, 0x7f, 0xac, 0xf0, 0xe9, 0x8d, 0x53, 0xe3, 0xe4, 0x33, 0x58, 0x8e, 0xbf, 0xb6, 0xb0, 0x83,
-	0xbe, 0x0c, 0xb9, 0x3e, 0x48, 0xad, 0xf9, 0x96, 0x7b, 0xec, 0xe9, 0x44, 0x08, 0x37, 0xda, 0x6d,
-	0xab, 0x01, 0xe1, 0x2a, 0xbd, 0xdd, 0xbd, 0x4b, 0xee, 0x1a, 0xdd, 0xc1, 0xce, 0x60, 0xa9, 0x37,
-	0x84, 0x22, 0x9b, 0x50, 0x93, 0x94, 0xb7, 0x51, 0xde, 0xa4, 0x9d, 0x1e, 0xea, 0x2b, 0xd4, 0x9a,
-	0xee, 0x24, 0xb2, 0x3b, 0xf0, 0xbf, 0xfb, 0x49, 0x8f, 0x06, 0x92, 0xc9, 0x7d, 0x2f, 0x8d, 0x20,
-	0x9f, 0x03, 0x89, 0x3f, 0xaf, 0xec, 0x21, 0xa7, 0x6d, 0x8c, 0xc1, 0xd5, 0xb9, 0xc0, 0x63, 0x48,
-	0xce, 0x2f, 0xa3, 0x6a, 0x4a, 0x2a, 0x7b, 0xe2, 0xff, 0xa0, 0xa6, 0x07, 0xa7, 0xfc, 0x1e, 0xe7,
-	0x18, 0x3c, 0x96, 0x9c, 0x19, 0x06, 0xb9, 0x05, 0x2f, 0x9a, 0xef, 0x02, 0x04, 0x1d, 0x87, 0x72,
-	0xbe, 0x2d, 0xc3, 0x4b, 0x1f, 0x85, 0x9c, 0xdd, 0x0b, 0x03, 0x49, 0x3b, 0x9b, 0x61, 0xeb, 0x8a,
-	0x49, 0x1b, 0xc8, 0xc9, 0x1a, 0x2c, 0xa9, 0xab, 0xb7, 0xa8, 0xa4, 0x5a, 0xd2, 0x5a, 0xf3, 0xe2,
-	0x6c, 0x42, 0xc5, 0x3f, 0xaf, 0x75, 0x94, 0xd4, 0x4b, 0x08, 0x64, 0x03, 0xaa, 0x22, 0x42, 0xdf,
-	0x48, 0xfe, 0x9e, 0x3b, 0x39, 0x55, 0xb9, 0x39, 0x87, 0xda, 0x8a, 0xd0, 0xf7, 0x34, 0x88, 0xdc,
-	0x80, 0x45, 0xa1, 0xbd, 0x6f, 0xa4, 0x7e, 0x7f, 0x5e, 0xa4, 0x86, 0x78, 0x06, 0xe6, 0xfc, 0x63,
-	0xc1, 0xb9, 0x1c, 0xcb, 0xab, 0x61, 0xd0, 0x62, 0x92, 0x85, 0x81, 0x4a, 0x0b, 0x72, 0x3f, 0xca,
-	0x46, 0x9a, 0x1e, 0x21, 0xaf, 0x24, 0xa7, 0x4a, 0xa7, 0x0c, 0x33, 0x46, 0x3e, 0x05, 0xd2, 0xa1,
-	0x42, 0x6e, 0x73, 0x1a, 0x08, 0x4d, 0xda, 0x66, 0xdd, 0x41, 0xa8, 0x5c, 0x98, 0x4d, 0x5c, 0xb5,
-	0xc2, 0x1b, 0x43, 0x51, 0x3b, 0x73, 0xa4, 0x22, 0x0c, 0x74, 0x7c, 0x24, 0x3b, 0xc7, 0x63, 0xc4,
-	0x86, 0x67, 0xba, 0x28, 0x04, 0x6d, 0x63, 0x7d, 0x21, 0x35, 0x3d, 0x18, 0x74, 0x7e, 0xb4, 0xe0,
-	0x6c, 0xce, 0xb5, 0xd7, 0x98, 0x90, 0xe4, 0xfa, 0x48, 0x30, 0xb8, 0x33, 0xfe, 0x6a, 0x98, 0x18,
-	0x0e, 0x85, 0x75, 0x58, 0x60, 0x12, 0xbb, 0x4a, 0xa2, 0xca, 0xf9, 0x5a, 0xf3, 0x9d, 0x39, 0x1d,
-	0xe7, 0xc5, 0x14, 0xe7, 0xfb, 0x72, 0xee, 0xd1, 0x55, 0xb8, 0x10, 0x1f, 0x96, 0xf5, 0xd7, 0xb6,
-	0x4e, 0x28, 0x1e, 0xde, 0x36, 0x17, 0x98, 0x1a, 0x83, 0x13, 0x4a, 0x86, 0x37, 0x84, 0x24, 0x6f,
-	0x40, 0xad, 0xcb, 0x02, 0x0f, 0xa3, 0x0e, 0xf3, 0x69, 0xec, 0xfc, 0x05, 0xa3, 0x71, 0x7a, 0x42,
-	0xdb, 0xd1, 0xbb, 0x89, 0x5d, 0x25, 0x63, 0x77, 0x3c, 0x41, 0xae, 0x29, 0x7f, 0xa9, 0x04, 0x23,
-	0xea, 0x55, 0xad, 0xd2, 0x85, 0x69, 0xa7, 0x35, 0x09, 0x51, 0xfd, 0x40, 0x06, 0x4b, 0x9d, 0x9f,
-	0x2a, 0xf0, 0xea, 0xc4, 0xb0, 0x27, 0x2b, 0x40, 0xc2, 0x1d, 0x81, 0x7c, 0x0f, 0x5b, 0x1f, 0xc6,
-	0x45, 0x53, 0x95, 0x33, 0x25, 0x50, 0xc5, 0x1c, 0x6b, 0xcc, 0x3c, 0xd9, 0x84, 0xe7, 0x54, 0x04,
-	0x6e, 0x69, 0x0d, 0x98, 0xa9, 0x8f, 0x27, 0x0b, 0xe1, 0x2c, 0x80, 0xb8, 0xf0, 0xbc, 0xc9, 0x4f,
-	0x63, 0xb5, 0x19, 0x9e, 0x54, 0xf6, 0x2d, 0x14, 0x8c, 0x63, 0x2b, 0xb1, 0xaf, 0xa6, 0xed, 0x87,
-	0x26, 0xc9, 0x36, 0x2c, 0x1b, 0xc4, 0xba, 0x91, 0x75, 0x41, 0xcb, 0xfa, 0xe6, 0x8c, 0xb2, 0xc6,
-	0x49, 0x62, 0x88, 0x41, 0x6e, 0x01, 0xf8, 0x83, 0xa4, 0x20, 0xea, 0x8b, 0x9a, 0x78, 0x79, 0xce,
-	0x70, 0x4e, 0xb2, 0x8b, 0x97, 0x62, 0x3a, 0xbf, 0x97, 0x01, 0x8e, 0x3d, 0x3b, 0x21, 0xf1, 0x5c,
-	0x87, 0xc5, 0x50, 0xc7, 0xa8, 0xf1, 0x45, 0x73, 0xda, 0x31, 0x92, 0x2c, 0x9d, 0x34, 0x25, 0x9e,
-	0x21, 0x90, 0x6b, 0x50, 0x8d, 0xc2, 0xd6, 0x20, 0xb1, 0x5e, 0x9c, 0x46, 0xda, 0x0c, 0x5b, 0x22,
-	0xc3, 0xd1, 0xab, 0xc9, 0x26, 0x2c, 0x0d, 0xaa, 0x90, 0x29, 0x59, 0x2b, 0xd3, 0x48, 0x9e, 0xb1,
-	0xcf, 0xd0, 0x12, 0x8a, 0x22, 0xa2, 0x29, 0xff, 0x3a, 0x8b, 0xcd, 0x40, 0x1c, 0xd7, 0x7c, 0x79,
-	0x09, 0xc5, 0x79, 0x58, 0x86, 0x53, 0x99, 0x4e, 0xe2, 0x49, 0x09, 0x6c, 0x8a, 0xcc, 0x63, 0x0b,
-	0x1c, 0x73, 0x8a, 0x12, 0x38, 0xa6, 0x15, 0x29, 0xb0, 0x21, 0x26, 0x02, 0x7f, 0x5d, 0x01, 0x32,
-	0x1a, 0x69, 0x64, 0x0b, 0x16, 0xe3, 0xfe, 0xae, 0x88, 0x5c, 0x6c, 0x50, 0x43, 0x5d, 0x60, 0x39,
-	0xa7, 0x0b, 0x2c, 0xbe, 0xed, 0xdd, 0x80, 0x25, 0x31, 0xe8, 0x28, 0xab, 0xf3, 0x77, 0x94, 0x09,
-	0x44, 0xf5, 0x92, 0x34, 0xdd, 0xf0, 0x2d, 0xcc, 0xd7, 0x4b, 0xa6, 0x19, 0xce, 0x37, 0xc3, 0x8e,
-	0x88, 0xe3, 0xfd, 0x3f, 0x74, 0xc4, 0x93, 0xe8, 0x98, 0x9f, 0x0a, 0x57, 0xfc, 0x65, 0xc1, 0x0b,
-	0xc3, 0x39, 0x73, 0xc6, 0x27, 0xcc, 0xf8, 0x17, 0x56, 0xb9, 0xa8, 0x17, 0x56, 0x46, 0xbf, 0x4a,
-	0x01, 0xfa, 0x39, 0x7f, 0x67, 0xef, 0x7a, 0x92, 0xe7, 0x5a, 0xce, 0xeb, 0xa7, 0x5c, 0xd8, 0xeb,
-	0xa7, 0xf8, 0xdb, 0xfe, 0x6a, 0xc1, 0xe9, 0x71, 0x35, 0x2c, 0xf9, 0x1f, 0xc1, 0x1a, 0xf9, 0x1f,
-	0xe1, 0x32, 0xd4, 0x33, 0x7e, 0xb8, 0x21, 0x59, 0x87, 0xdd, 0x8b, 0xdb, 0xb0, 0x74, 0x17, 0x99,
-	0x6b, 0x95, 0x13, 0x13, 0x95, 0xc2, 0x5e, 0xdd, 0xbf, 0x8d, 0x5e, 0x2a, 0xa9, 0x95, 0x39, 0x97,
-	0x5a, 0x85, 0x97, 0xb3, 0x7a, 0xe7, 0xdd, 0x2a, 0xdf, 0x2c, 0xcf, 0xfd, 0x95, 0xc2, 0xdc, 0xbf,
-	0xba, 0x72, 0x70, 0x68, 0x97, 0x1e, 0x1c, 0xda, 0xa5, 0x47, 0x87, 0xb6, 0xf5, 0x55, 0xdf, 0xb6,
-	0x7e, 0xe8, 0xdb, 0xd6, 0xfd, 0xbe, 0x6d, 0x1d, 0xf4, 0x6d, 0xeb, 0x8f, 0xbe, 0x6d, 0xfd, 0xd9,
-	0xb7, 0x4b, 0x8f, 0xfa, 0xb6, 0xf5, 0xdd, 0x91, 0x5d, 0x3a, 0x38, 0xb2, 0x4b, 0x0f, 0x8e, 0xec,
-	0xd2, 0xbf, 0x01, 0x00, 0x00, 0xff, 0xff, 0xb5, 0x66, 0x5a, 0x6c, 0x95, 0x13, 0x00, 0x00,
+	// 1071 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xd4, 0x97, 0xcf, 0x8f, 0xdb, 0x44,
+	0x14, 0xc7, 0xe5, 0x24, 0xbb, 0xb4, 0x2f, 0xcb, 0x82, 0x86, 0x0a, 0x42, 0x2b, 0xa2, 0x95, 0x4f,
+	0xab, 0x0a, 0x39, 0x6d, 0xa8, 0x00, 0xf1, 0x43, 0xa2, 0xb4, 0x08, 0x54, 0xed, 0xb2, 0x61, 0xb2,
+	0xed, 0x01, 0x24, 0xd4, 0x59, 0xfb, 0x35, 0x1d, 0x36, 0xfe, 0xa1, 0x99, 0x49, 0xd4, 0xed, 0x09,
+	0x71, 0x46, 0xe2, 0x2f, 0xe1, 0xce, 0x3f, 0x00, 0x02, 0x4e, 0x9c, 0x10, 0x07, 0x0e, 0x68, 0x11,
+	0xff, 0x07, 0x9a, 0xf1, 0xd8, 0xeb, 0x38, 0xf1, 0x26, 0x4d, 0x8d, 0x2a, 0x6e, 0x9e, 0xf1, 0x7b,
+	0x1f, 0xcf, 0x7c, 0xdf, 0xf3, 0x9b, 0x37, 0xe0, 0x1d, 0xbf, 0x2d, 0x3d, 0x1e, 0xf7, 0x58, 0xc2,
+	0x7b, 0x6c, 0xa2, 0x62, 0xe9, 0xb3, 0x31, 0x8f, 0x46, 0xbd, 0x69, 0xff, 0x08, 0x15, 0xbb, 0xde,
+	0x1b, 0x61, 0x84, 0x82, 0x29, 0x0c, 0xbc, 0x44, 0xc4, 0x2a, 0x26, 0xdd, 0xd4, 0xde, 0x63, 0x09,
+	0xf7, 0x0a, 0xf6, 0x9e, 0xb5, 0xbf, 0xec, 0x16, 0x78, 0x7e, 0x2c, 0xb0, 0x37, 0x9d, 0x63, 0x5c,
+	0xbe, 0x71, 0x66, 0x13, 0x32, 0xff, 0x21, 0x8f, 0x50, 0x9c, 0xf4, 0x92, 0xe3, 0x91, 0x71, 0x12,
+	0x28, 0xe3, 0x89, 0xf0, 0xf1, 0x89, 0xbc, 0x64, 0x2f, 0x44, 0xc5, 0x16, 0x7d, 0xab, 0x57, 0xe5,
+	0x25, 0x26, 0x91, 0xe2, 0xe1, 0xfc, 0x67, 0xde, 0x5c, 0xe6, 0x20, 0xfd, 0x87, 0x18, 0xb2, 0xb2,
+	0x9f, 0x8b, 0x70, 0xe5, 0x96, 0x88, 0xa5, 0xbc, 0x87, 0x42, 0xf2, 0x38, 0x3a, 0x38, 0xfa, 0x0a,
+	0x7d, 0x45, 0xf1, 0x01, 0x0a, 0x8c, 0x7c, 0x24, 0x04, 0x5a, 0xc7, 0x3c, 0x0a, 0x3a, 0xce, 0x8e,
+	0xb3, 0x7b, 0x91, 0x9a, 0x67, 0x3d, 0x17, 0xb1, 0x10, 0x3b, 0x8d, 0x74, 0x4e, 0x3f, 0x93, 0x2e,
+	0x00, 0x4b, 0xb8, 0x85, 0x74, 0x9a, 0xe6, 0x4d, 0x61, 0xc6, 0xfd, 0xb1, 0x01, 0x97, 0x3e, 0x7a,
+	0xa4, 0x50, 0x44, 0x6c, 0xbc, 0x8f, 0x4a, 0x70, 0x7f, 0x68, 0xe4, 0xd2, 0x8e, 0xa1, 0x19, 0x7f,
+	0xaa, 0x91, 0xe9, 0x67, 0x0a, 0x33, 0xe4, 0x0b, 0xd8, 0x4e, 0x47, 0x43, 0x1c, 0xa3, 0xaf, 0x62,
+	0x61, 0x3e, 0xdb, 0xee, 0xbf, 0xe1, 0x9d, 0x45, 0x34, 0xdf, 0xb0, 0x97, 0x1c, 0x8f, 0xf4, 0x84,
+	0xf4, 0xb4, 0xae, 0xde, 0xf4, 0xba, 0xb7, 0xc7, 0x8e, 0x70, 0x9c, 0xb9, 0xd2, 0x12, 0x8a, 0x0c,
+	0xa0, 0xad, 0x98, 0x18, 0xa1, 0xba, 0xc7, 0xc6, 0x13, 0x34, 0xcb, 0x6e, 0xf7, 0xbd, 0xf3, 0xc8,
+	0x5e, 0x16, 0x67, 0xef, 0xb3, 0x09, 0x8b, 0x14, 0x57, 0x27, 0xb4, 0x88, 0x20, 0x5f, 0x02, 0x49,
+	0x87, 0x37, 0xa7, 0x28, 0xd8, 0x08, 0x53, 0x70, 0x6b, 0x2d, 0xf0, 0x02, 0x92, 0xfb, 0xcb, 0xbc,
+	0x8e, 0x8a, 0xa9, 0x89, 0x7c, 0xb6, 0x3a, 0x52, 0xd8, 0xf2, 0x27, 0x42, 0x60, 0xf4, 0x54, 0x42,
+	0xce, 0x30, 0xc8, 0x7d, 0x78, 0xc9, 0x8e, 0x6b, 0x90, 0x72, 0x11, 0xca, 0xfd, 0xae, 0x01, 0xaf,
+	0x7c, 0x12, 0x0b, 0xfe, 0x38, 0x8e, 0x14, 0x1b, 0x0f, 0xe2, 0xe0, 0xa6, 0x2d, 0x0c, 0x28, 0xc8,
+	0x1e, 0x5c, 0xd0, 0x5b, 0x0f, 0x98, 0x62, 0x46, 0xcc, 0x76, 0xff, 0xda, 0x6a, 0x42, 0xa5, 0x3f,
+	0xd0, 0x3e, 0x2a, 0x46, 0x73, 0x02, 0x39, 0x80, 0x96, 0x4c, 0xd0, 0xb7, 0x92, 0xbf, 0xeb, 0x9d,
+	0x5f, 0x8c, 0xbc, 0x8a, 0x45, 0x0d, 0x13, 0xf4, 0xa9, 0x01, 0x91, 0xbb, 0xb0, 0x29, 0x4d, 0xdc,
+	0xad, 0xd4, 0xef, 0xaf, 0x8b, 0x34, 0x10, 0x6a, 0x61, 0xee, 0x9f, 0x0e, 0xec, 0x54, 0x58, 0xde,
+	0x8a, 0xa3, 0x80, 0x2b, 0x1e, 0x47, 0xfa, 0xf7, 0x57, 0x27, 0x49, 0x96, 0x63, 0xe6, 0x99, 0xbc,
+	0x9c, 0xaf, 0x27, 0x2d, 0x0a, 0x76, 0x44, 0x3e, 0x07, 0x32, 0x66, 0x52, 0x1d, 0x0a, 0x16, 0x49,
+	0xe3, 0x7d, 0xc8, 0xc3, 0x2c, 0x3d, 0xae, 0xae, 0x26, 0xa8, 0xf6, 0xa0, 0x0b, 0x28, 0xfa, 0x9b,
+	0x02, 0x99, 0x8c, 0x23, 0x93, 0x13, 0x17, 0xa9, 0x1d, 0x91, 0x0e, 0x3c, 0x17, 0xa2, 0x94, 0x6c,
+	0x84, 0x9d, 0x0d, 0xf3, 0x22, 0x1b, 0xba, 0x3f, 0x38, 0x70, 0xa5, 0x62, 0x7b, 0x7b, 0x5c, 0x2a,
+	0x72, 0x67, 0x2e, 0xe8, 0xde, 0x8a, 0x7f, 0x07, 0x97, 0xe5, 0x90, 0xef, 0xc3, 0x06, 0x57, 0x18,
+	0x6a, 0x41, 0x9a, 0xbb, 0xed, 0xfe, 0x5b, 0x6b, 0x06, 0x88, 0xa6, 0x14, 0xf7, 0xdb, 0x46, 0xe5,
+	0xd2, 0x75, 0x5a, 0x10, 0x1f, 0xb6, 0xcd, 0xe8, 0xd0, 0x94, 0x0c, 0x8a, 0x0f, 0xec, 0x06, 0x96,
+	0xe6, 0xda, 0x39, 0xc5, 0x9f, 0x96, 0x90, 0x64, 0x07, 0xda, 0x21, 0x8f, 0x28, 0x26, 0x63, 0xee,
+	0xb3, 0x34, 0xd4, 0x1b, 0xb4, 0x38, 0x65, 0x2c, 0xd8, 0xa3, 0xdc, 0xa2, 0x69, 0x2d, 0xce, 0xa6,
+	0xc8, 0x6d, 0x1d, 0x1d, 0x5d, 0x3c, 0x64, 0xa7, 0x65, 0x94, 0xb9, 0xba, 0x6c, 0x85, 0xb6, 0xcc,
+	0xe9, 0xe4, 0xcf, 0x5c, 0xdd, 0xef, 0x9b, 0xf0, 0xda, 0xb9, 0x29, 0x4d, 0x3c, 0x20, 0xf1, 0x91,
+	0x44, 0x31, 0xc5, 0xe0, 0xe3, 0xf4, 0xc8, 0xd3, 0x07, 0x93, 0x16, 0xa5, 0x49, 0x17, 0xbc, 0x21,
+	0x03, 0x78, 0x5e, 0xe7, 0xd8, 0xd0, 0xec, 0x98, 0xdb, 0xd3, 0xed, 0xc9, 0x92, 0x74, 0x16, 0x40,
+	0x76, 0xe1, 0x05, 0x5b, 0x75, 0x4a, 0x7a, 0x94, 0xa7, 0xb5, 0x65, 0x80, 0x92, 0x0b, 0x0c, 0x72,
+	0xcb, 0x56, 0x6a, 0x59, 0x9a, 0x26, 0x87, 0xb0, 0x6d, 0x9d, 0xf7, 0xad, 0x88, 0x1b, 0x46, 0xc4,
+	0xd7, 0x57, 0x14, 0x31, 0xfd, 0xdd, 0x4b, 0x0c, 0x72, 0x1f, 0xc0, 0xcf, 0x7e, 0x6f, 0xd9, 0xd9,
+	0x34, 0xc4, 0x0f, 0xd6, 0x4c, 0xd8, 0xbc, 0x4e, 0xd0, 0x02, 0xd3, 0xfd, 0xbd, 0x01, 0x70, 0x16,
+	0xc7, 0x85, 0x25, 0xe4, 0x0e, 0x6c, 0xc6, 0x26, 0xff, 0xac, 0xf2, 0xfd, 0x65, 0x0b, 0xc8, 0x2b,
+	0x6d, 0xde, 0x4c, 0x50, 0x4b, 0x20, 0xb7, 0xa1, 0x95, 0xc4, 0x41, 0x56, 0x1c, 0xaf, 0x2d, 0x23,
+	0x0d, 0xe2, 0x40, 0xce, 0x70, 0x8c, 0x37, 0x19, 0xc0, 0x85, 0xec, 0x24, 0xb1, 0xc7, 0xce, 0x8d,
+	0x65, 0x24, 0x6a, 0xed, 0x67, 0x68, 0x39, 0x45, 0x13, 0xd1, 0x1e, 0xde, 0xa6, 0x36, 0xad, 0x40,
+	0x5c, 0xd4, 0x34, 0xd1, 0x9c, 0xe2, 0xfe, 0xd1, 0x80, 0xad, 0x99, 0x3e, 0xa0, 0x7e, 0x69, 0xed,
+	0x11, 0xf1, 0xd4, 0xd2, 0xa6, 0x9c, 0xba, 0xa4, 0x4d, 0x69, 0x75, 0x4a, 0x6b, 0x89, 0xb9, 0xb4,
+	0x5f, 0x37, 0x81, 0xcc, 0xe7, 0x18, 0x19, 0xc2, 0x66, 0xda, 0x97, 0xd5, 0x51, 0x61, 0x2d, 0xaa,
+	0xd4, 0xbd, 0x35, 0xe6, 0xba, 0xb7, 0xfa, 0x1b, 0xd5, 0x03, 0xb8, 0x20, 0xb3, 0x4e, 0xb0, 0xb5,
+	0x7e, 0x27, 0x98, 0x43, 0x74, 0x0f, 0xc8, 0x8a, 0x8d, 0xda, 0xc6, 0x7a, 0x3d, 0x60, 0x91, 0xe1,
+	0x7e, 0x53, 0x0e, 0x41, 0x9a, 0xe3, 0xcf, 0x24, 0x04, 0xff, 0x45, 0x8f, 0xfb, 0xbf, 0x08, 0xc2,
+	0xdf, 0x0e, 0xbc, 0x58, 0xae, 0x90, 0x4b, 0xaf, 0x1b, 0x8b, 0xef, 0x41, 0x8d, 0xba, 0xee, 0x41,
+	0x33, 0xca, 0x35, 0x6b, 0x50, 0xce, 0xfd, 0x67, 0x76, 0x97, 0xab, 0x5d, 0xaa, 0x2a, 0xee, 0x28,
+	0x8d, 0xda, 0xee, 0x28, 0xf5, 0xef, 0xf3, 0x27, 0x07, 0x2e, 0x2d, 0x3a, 0xa5, 0xf2, 0x5b, 0xbd,
+	0x53, 0xb8, 0xd5, 0xbf, 0x03, 0x9d, 0x19, 0xed, 0xef, 0x2a, 0x3e, 0xe6, 0x8f, 0xd3, 0x56, 0x2a,
+	0xed, 0xfe, 0x2a, 0xdf, 0x57, 0x64, 0x40, 0xb3, 0xb6, 0x9b, 0xf0, 0xaf, 0xf3, 0x1b, 0xc9, 0x4f,
+	0xc0, 0xb9, 0x8d, 0xbc, 0x07, 0xaf, 0xce, 0xaa, 0x3b, 0xbf, 0x93, 0x6a, 0x83, 0xaa, 0x30, 0x37,
+	0x6b, 0x0b, 0xf3, 0x87, 0x5b, 0x3f, 0x9f, 0x76, 0x9d, 0xdf, 0x4e, 0xbb, 0xce, 0x5f, 0xa7, 0x5d,
+	0xe7, 0xdf, 0x00, 0x00, 0x00, 0xff, 0xff, 0x9e, 0xa0, 0x62, 0x63, 0xdd, 0x12, 0x00, 0x00,
 }
 
-func (this *CrossVersionObjectReference) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*CrossVersionObjectReference)
-	if !ok {
-		that2, ok := that.(CrossVersionObjectReference)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Kind != that1.Kind {
-		return false
-	}
-	if this.Name != that1.Name {
-		return false
-	}
-	if this.ApiVersion != that1.ApiVersion {
-		return false
-	}
-	return true
-}
-func (this *ExternalMetricSource) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*ExternalMetricSource)
-	if !ok {
-		that2, ok := that.(ExternalMetricSource)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.MetricName != that1.MetricName {
-		return false
-	}
-	if !this.MetricSelector.Equal(that1.MetricSelector) {
-		return false
-	}
-	if !this.TargetValue.Equal(that1.TargetValue) {
-		return false
-	}
-	if !this.TargetAverageValue.Equal(that1.TargetAverageValue) {
-		return false
-	}
-	return true
-}
-func (this *ExternalMetricStatus) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*ExternalMetricStatus)
-	if !ok {
-		that2, ok := that.(ExternalMetricStatus)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.MetricName != that1.MetricName {
-		return false
-	}
-	if !this.MetricSelector.Equal(that1.MetricSelector) {
-		return false
-	}
-	if !this.CurrentValue.Equal(that1.CurrentValue) {
-		return false
-	}
-	if !this.CurrentAverageValue.Equal(that1.CurrentAverageValue) {
-		return false
-	}
-	return true
-}
-func (this *HorizontalPodAutoscaler) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*HorizontalPodAutoscaler)
-	if !ok {
-		that2, ok := that.(HorizontalPodAutoscaler)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if !this.Spec.Equal(that1.Spec) {
-		return false
-	}
-	if !this.Status.Equal(that1.Status) {
-		return false
-	}
-	return true
-}
-func (this *HorizontalPodAutoscalerCondition) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*HorizontalPodAutoscalerCondition)
-	if !ok {
-		that2, ok := that.(HorizontalPodAutoscalerCondition)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Type != that1.Type {
-		return false
-	}
-	if this.Status != that1.Status {
-		return false
-	}
-	if !this.LastTransitionTime.Equal(that1.LastTransitionTime) {
-		return false
-	}
-	if this.Reason != that1.Reason {
-		return false
-	}
-	if this.Message != that1.Message {
-		return false
-	}
-	return true
-}
-func (this *HorizontalPodAutoscalerList) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*HorizontalPodAutoscalerList)
-	if !ok {
-		that2, ok := that.(HorizontalPodAutoscalerList)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if len(this.Items) != len(that1.Items) {
-		return false
-	}
-	for i := range this.Items {
-		if !this.Items[i].Equal(that1.Items[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *HorizontalPodAutoscalerSpec) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*HorizontalPodAutoscalerSpec)
-	if !ok {
-		that2, ok := that.(HorizontalPodAutoscalerSpec)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.ScaleTargetRef.Equal(that1.ScaleTargetRef) {
-		return false
-	}
-	if this.MinReplicas != that1.MinReplicas {
-		return false
-	}
-	if this.MaxReplicas != that1.MaxReplicas {
-		return false
-	}
-	if len(this.Metrics) != len(that1.Metrics) {
-		return false
-	}
-	for i := range this.Metrics {
-		if !this.Metrics[i].Equal(that1.Metrics[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *HorizontalPodAutoscalerStatus) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*HorizontalPodAutoscalerStatus)
-	if !ok {
-		that2, ok := that.(HorizontalPodAutoscalerStatus)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.ObservedGeneration != that1.ObservedGeneration {
-		return false
-	}
-	if !this.LastScaleTime.Equal(that1.LastScaleTime) {
-		return false
-	}
-	if this.CurrentReplicas != that1.CurrentReplicas {
-		return false
-	}
-	if this.DesiredReplicas != that1.DesiredReplicas {
-		return false
-	}
-	if len(this.CurrentMetrics) != len(that1.CurrentMetrics) {
-		return false
-	}
-	for i := range this.CurrentMetrics {
-		if !this.CurrentMetrics[i].Equal(that1.CurrentMetrics[i]) {
-			return false
-		}
-	}
-	if len(this.Conditions) != len(that1.Conditions) {
-		return false
-	}
-	for i := range this.Conditions {
-		if !this.Conditions[i].Equal(that1.Conditions[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *MetricSpec) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*MetricSpec)
-	if !ok {
-		that2, ok := that.(MetricSpec)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Type != that1.Type {
-		return false
-	}
-	if !this.Object.Equal(that1.Object) {
-		return false
-	}
-	if !this.Pods.Equal(that1.Pods) {
-		return false
-	}
-	if !this.Resource.Equal(that1.Resource) {
-		return false
-	}
-	if !this.External.Equal(that1.External) {
-		return false
-	}
-	return true
-}
-func (this *MetricStatus) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*MetricStatus)
-	if !ok {
-		that2, ok := that.(MetricStatus)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Type != that1.Type {
-		return false
-	}
-	if !this.Object.Equal(that1.Object) {
-		return false
-	}
-	if !this.Pods.Equal(that1.Pods) {
-		return false
-	}
-	if !this.Resource.Equal(that1.Resource) {
-		return false
-	}
-	if !this.External.Equal(that1.External) {
-		return false
-	}
-	return true
-}
-func (this *ObjectMetricSource) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*ObjectMetricSource)
-	if !ok {
-		that2, ok := that.(ObjectMetricSource)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Target.Equal(that1.Target) {
-		return false
-	}
-	if this.MetricName != that1.MetricName {
-		return false
-	}
-	if !this.TargetValue.Equal(that1.TargetValue) {
-		return false
-	}
-	if !this.Selector.Equal(that1.Selector) {
-		return false
-	}
-	if !this.AverageValue.Equal(that1.AverageValue) {
-		return false
-	}
-	return true
-}
-func (this *ObjectMetricStatus) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*ObjectMetricStatus)
-	if !ok {
-		that2, ok := that.(ObjectMetricStatus)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Target.Equal(that1.Target) {
-		return false
-	}
-	if this.MetricName != that1.MetricName {
-		return false
-	}
-	if !this.CurrentValue.Equal(that1.CurrentValue) {
-		return false
-	}
-	if !this.Selector.Equal(that1.Selector) {
-		return false
-	}
-	if !this.AverageValue.Equal(that1.AverageValue) {
-		return false
-	}
-	return true
-}
-func (this *PodsMetricSource) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*PodsMetricSource)
-	if !ok {
-		that2, ok := that.(PodsMetricSource)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.MetricName != that1.MetricName {
-		return false
-	}
-	if !this.TargetAverageValue.Equal(that1.TargetAverageValue) {
-		return false
-	}
-	if !this.Selector.Equal(that1.Selector) {
-		return false
-	}
-	return true
-}
-func (this *PodsMetricStatus) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*PodsMetricStatus)
-	if !ok {
-		that2, ok := that.(PodsMetricStatus)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.MetricName != that1.MetricName {
-		return false
-	}
-	if !this.CurrentAverageValue.Equal(that1.CurrentAverageValue) {
-		return false
-	}
-	if !this.Selector.Equal(that1.Selector) {
-		return false
-	}
-	return true
-}
-func (this *ResourceMetricSource) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*ResourceMetricSource)
-	if !ok {
-		that2, ok := that.(ResourceMetricSource)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Name != that1.Name {
-		return false
-	}
-	if this.TargetAverageUtilization != that1.TargetAverageUtilization {
-		return false
-	}
-	if !this.TargetAverageValue.Equal(that1.TargetAverageValue) {
-		return false
-	}
-	return true
-}
-func (this *ResourceMetricStatus) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*ResourceMetricStatus)
-	if !ok {
-		that2, ok := that.(ResourceMetricStatus)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Name != that1.Name {
-		return false
-	}
-	if this.CurrentAverageUtilization != that1.CurrentAverageUtilization {
-		return false
-	}
-	if !this.CurrentAverageValue.Equal(that1.CurrentAverageValue) {
-		return false
-	}
-	return true
-}
-func (this *CrossVersionObjectReference) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 7)
-	s = append(s, "&k8s_io_api_autoscaling_v2beta1.CrossVersionObjectReference{")
-	s = append(s, "Kind: "+fmt.Sprintf("%#v", this.Kind)+",\n")
-	s = append(s, "Name: "+fmt.Sprintf("%#v", this.Name)+",\n")
-	s = append(s, "ApiVersion: "+fmt.Sprintf("%#v", this.ApiVersion)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *ExternalMetricSource) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 8)
-	s = append(s, "&k8s_io_api_autoscaling_v2beta1.ExternalMetricSource{")
-	s = append(s, "MetricName: "+fmt.Sprintf("%#v", this.MetricName)+",\n")
-	if this.MetricSelector != nil {
-		s = append(s, "MetricSelector: "+fmt.Sprintf("%#v", this.MetricSelector)+",\n")
-	}
-	if this.TargetValue != nil {
-		s = append(s, "TargetValue: "+fmt.Sprintf("%#v", this.TargetValue)+",\n")
-	}
-	if this.TargetAverageValue != nil {
-		s = append(s, "TargetAverageValue: "+fmt.Sprintf("%#v", this.TargetAverageValue)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *ExternalMetricStatus) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 8)
-	s = append(s, "&k8s_io_api_autoscaling_v2beta1.ExternalMetricStatus{")
-	s = append(s, "MetricName: "+fmt.Sprintf("%#v", this.MetricName)+",\n")
-	if this.MetricSelector != nil {
-		s = append(s, "MetricSelector: "+fmt.Sprintf("%#v", this.MetricSelector)+",\n")
-	}
-	if this.CurrentValue != nil {
-		s = append(s, "CurrentValue: "+fmt.Sprintf("%#v", this.CurrentValue)+",\n")
-	}
-	if this.CurrentAverageValue != nil {
-		s = append(s, "CurrentAverageValue: "+fmt.Sprintf("%#v", this.CurrentAverageValue)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *HorizontalPodAutoscaler) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 7)
-	s = append(s, "&k8s_io_api_autoscaling_v2beta1.HorizontalPodAutoscaler{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Spec != nil {
-		s = append(s, "Spec: "+fmt.Sprintf("%#v", this.Spec)+",\n")
-	}
-	if this.Status != nil {
-		s = append(s, "Status: "+fmt.Sprintf("%#v", this.Status)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *HorizontalPodAutoscalerCondition) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 9)
-	s = append(s, "&k8s_io_api_autoscaling_v2beta1.HorizontalPodAutoscalerCondition{")
-	s = append(s, "Type: "+fmt.Sprintf("%#v", this.Type)+",\n")
-	s = append(s, "Status: "+fmt.Sprintf("%#v", this.Status)+",\n")
-	if this.LastTransitionTime != nil {
-		s = append(s, "LastTransitionTime: "+fmt.Sprintf("%#v", this.LastTransitionTime)+",\n")
-	}
-	s = append(s, "Reason: "+fmt.Sprintf("%#v", this.Reason)+",\n")
-	s = append(s, "Message: "+fmt.Sprintf("%#v", this.Message)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *HorizontalPodAutoscalerList) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_autoscaling_v2beta1.HorizontalPodAutoscalerList{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Items != nil {
-		s = append(s, "Items: "+fmt.Sprintf("%#v", this.Items)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *HorizontalPodAutoscalerSpec) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 8)
-	s = append(s, "&k8s_io_api_autoscaling_v2beta1.HorizontalPodAutoscalerSpec{")
-	if this.ScaleTargetRef != nil {
-		s = append(s, "ScaleTargetRef: "+fmt.Sprintf("%#v", this.ScaleTargetRef)+",\n")
-	}
-	s = append(s, "MinReplicas: "+fmt.Sprintf("%#v", this.MinReplicas)+",\n")
-	s = append(s, "MaxReplicas: "+fmt.Sprintf("%#v", this.MaxReplicas)+",\n")
-	if this.Metrics != nil {
-		s = append(s, "Metrics: "+fmt.Sprintf("%#v", this.Metrics)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *HorizontalPodAutoscalerStatus) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 10)
-	s = append(s, "&k8s_io_api_autoscaling_v2beta1.HorizontalPodAutoscalerStatus{")
-	s = append(s, "ObservedGeneration: "+fmt.Sprintf("%#v", this.ObservedGeneration)+",\n")
-	if this.LastScaleTime != nil {
-		s = append(s, "LastScaleTime: "+fmt.Sprintf("%#v", this.LastScaleTime)+",\n")
-	}
-	s = append(s, "CurrentReplicas: "+fmt.Sprintf("%#v", this.CurrentReplicas)+",\n")
-	s = append(s, "DesiredReplicas: "+fmt.Sprintf("%#v", this.DesiredReplicas)+",\n")
-	if this.CurrentMetrics != nil {
-		s = append(s, "CurrentMetrics: "+fmt.Sprintf("%#v", this.CurrentMetrics)+",\n")
-	}
-	if this.Conditions != nil {
-		s = append(s, "Conditions: "+fmt.Sprintf("%#v", this.Conditions)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *MetricSpec) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 9)
-	s = append(s, "&k8s_io_api_autoscaling_v2beta1.MetricSpec{")
-	s = append(s, "Type: "+fmt.Sprintf("%#v", this.Type)+",\n")
-	if this.Object != nil {
-		s = append(s, "Object: "+fmt.Sprintf("%#v", this.Object)+",\n")
-	}
-	if this.Pods != nil {
-		s = append(s, "Pods: "+fmt.Sprintf("%#v", this.Pods)+",\n")
-	}
-	if this.Resource != nil {
-		s = append(s, "Resource: "+fmt.Sprintf("%#v", this.Resource)+",\n")
-	}
-	if this.External != nil {
-		s = append(s, "External: "+fmt.Sprintf("%#v", this.External)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *MetricStatus) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 9)
-	s = append(s, "&k8s_io_api_autoscaling_v2beta1.MetricStatus{")
-	s = append(s, "Type: "+fmt.Sprintf("%#v", this.Type)+",\n")
-	if this.Object != nil {
-		s = append(s, "Object: "+fmt.Sprintf("%#v", this.Object)+",\n")
-	}
-	if this.Pods != nil {
-		s = append(s, "Pods: "+fmt.Sprintf("%#v", this.Pods)+",\n")
-	}
-	if this.Resource != nil {
-		s = append(s, "Resource: "+fmt.Sprintf("%#v", this.Resource)+",\n")
-	}
-	if this.External != nil {
-		s = append(s, "External: "+fmt.Sprintf("%#v", this.External)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *ObjectMetricSource) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 9)
-	s = append(s, "&k8s_io_api_autoscaling_v2beta1.ObjectMetricSource{")
-	if this.Target != nil {
-		s = append(s, "Target: "+fmt.Sprintf("%#v", this.Target)+",\n")
-	}
-	s = append(s, "MetricName: "+fmt.Sprintf("%#v", this.MetricName)+",\n")
-	if this.TargetValue != nil {
-		s = append(s, "TargetValue: "+fmt.Sprintf("%#v", this.TargetValue)+",\n")
-	}
-	if this.Selector != nil {
-		s = append(s, "Selector: "+fmt.Sprintf("%#v", this.Selector)+",\n")
-	}
-	if this.AverageValue != nil {
-		s = append(s, "AverageValue: "+fmt.Sprintf("%#v", this.AverageValue)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *ObjectMetricStatus) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 9)
-	s = append(s, "&k8s_io_api_autoscaling_v2beta1.ObjectMetricStatus{")
-	if this.Target != nil {
-		s = append(s, "Target: "+fmt.Sprintf("%#v", this.Target)+",\n")
-	}
-	s = append(s, "MetricName: "+fmt.Sprintf("%#v", this.MetricName)+",\n")
-	if this.CurrentValue != nil {
-		s = append(s, "CurrentValue: "+fmt.Sprintf("%#v", this.CurrentValue)+",\n")
-	}
-	if this.Selector != nil {
-		s = append(s, "Selector: "+fmt.Sprintf("%#v", this.Selector)+",\n")
-	}
-	if this.AverageValue != nil {
-		s = append(s, "AverageValue: "+fmt.Sprintf("%#v", this.AverageValue)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *PodsMetricSource) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 7)
-	s = append(s, "&k8s_io_api_autoscaling_v2beta1.PodsMetricSource{")
-	s = append(s, "MetricName: "+fmt.Sprintf("%#v", this.MetricName)+",\n")
-	if this.TargetAverageValue != nil {
-		s = append(s, "TargetAverageValue: "+fmt.Sprintf("%#v", this.TargetAverageValue)+",\n")
-	}
-	if this.Selector != nil {
-		s = append(s, "Selector: "+fmt.Sprintf("%#v", this.Selector)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *PodsMetricStatus) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 7)
-	s = append(s, "&k8s_io_api_autoscaling_v2beta1.PodsMetricStatus{")
-	s = append(s, "MetricName: "+fmt.Sprintf("%#v", this.MetricName)+",\n")
-	if this.CurrentAverageValue != nil {
-		s = append(s, "CurrentAverageValue: "+fmt.Sprintf("%#v", this.CurrentAverageValue)+",\n")
-	}
-	if this.Selector != nil {
-		s = append(s, "Selector: "+fmt.Sprintf("%#v", this.Selector)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *ResourceMetricSource) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 7)
-	s = append(s, "&k8s_io_api_autoscaling_v2beta1.ResourceMetricSource{")
-	s = append(s, "Name: "+fmt.Sprintf("%#v", this.Name)+",\n")
-	s = append(s, "TargetAverageUtilization: "+fmt.Sprintf("%#v", this.TargetAverageUtilization)+",\n")
-	if this.TargetAverageValue != nil {
-		s = append(s, "TargetAverageValue: "+fmt.Sprintf("%#v", this.TargetAverageValue)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *ResourceMetricStatus) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 7)
-	s = append(s, "&k8s_io_api_autoscaling_v2beta1.ResourceMetricStatus{")
-	s = append(s, "Name: "+fmt.Sprintf("%#v", this.Name)+",\n")
-	s = append(s, "CurrentAverageUtilization: "+fmt.Sprintf("%#v", this.CurrentAverageUtilization)+",\n")
-	if this.CurrentAverageValue != nil {
-		s = append(s, "CurrentAverageValue: "+fmt.Sprintf("%#v", this.CurrentAverageValue)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func valueToGoStringGenerated(v interface{}, typ string) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("func(v %v) *%v { return &v } ( %#v )", typ, typ, pv)
-}
 func (m *CrossVersionObjectReference) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -2259,21 +1479,31 @@ func (m *CrossVersionObjectReference) MarshalToSizedBuffer(dAtA []byte) (int, er
 	_ = i
 	var l int
 	_ = l
-	i -= len(m.ApiVersion)
-	copy(dAtA[i:], m.ApiVersion)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.ApiVersion)))
-	i--
-	dAtA[i] = 0x1a
-	i -= len(m.Name)
-	copy(dAtA[i:], m.Name)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Name)))
-	i--
-	dAtA[i] = 0x12
-	i -= len(m.Kind)
-	copy(dAtA[i:], m.Kind)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Kind)))
-	i--
-	dAtA[i] = 0xa
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.ApiVersion != nil {
+		i -= len(*m.ApiVersion)
+		copy(dAtA[i:], *m.ApiVersion)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.ApiVersion)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if m.Name != nil {
+		i -= len(*m.Name)
+		copy(dAtA[i:], *m.Name)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Name)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Kind != nil {
+		i -= len(*m.Kind)
+		copy(dAtA[i:], *m.Kind)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Kind)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -2297,6 +1527,10 @@ func (m *ExternalMetricSource) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.TargetAverageValue != nil {
 		{
 			size, err := m.TargetAverageValue.MarshalToSizedBuffer(dAtA[:i])
@@ -2333,11 +1567,13 @@ func (m *ExternalMetricSource) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x12
 	}
-	i -= len(m.MetricName)
-	copy(dAtA[i:], m.MetricName)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.MetricName)))
-	i--
-	dAtA[i] = 0xa
+	if m.MetricName != nil {
+		i -= len(*m.MetricName)
+		copy(dAtA[i:], *m.MetricName)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.MetricName)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -2361,6 +1597,10 @@ func (m *ExternalMetricStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.CurrentAverageValue != nil {
 		{
 			size, err := m.CurrentAverageValue.MarshalToSizedBuffer(dAtA[:i])
@@ -2397,11 +1637,13 @@ func (m *ExternalMetricStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x12
 	}
-	i -= len(m.MetricName)
-	copy(dAtA[i:], m.MetricName)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.MetricName)))
-	i--
-	dAtA[i] = 0xa
+	if m.MetricName != nil {
+		i -= len(*m.MetricName)
+		copy(dAtA[i:], *m.MetricName)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.MetricName)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -2425,6 +1667,10 @@ func (m *HorizontalPodAutoscaler) MarshalToSizedBuffer(dAtA []byte) (int, error)
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Status != nil {
 		{
 			size, err := m.Status.MarshalToSizedBuffer(dAtA[:i])
@@ -2484,16 +1730,24 @@ func (m *HorizontalPodAutoscalerCondition) MarshalToSizedBuffer(dAtA []byte) (in
 	_ = i
 	var l int
 	_ = l
-	i -= len(m.Message)
-	copy(dAtA[i:], m.Message)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Message)))
-	i--
-	dAtA[i] = 0x2a
-	i -= len(m.Reason)
-	copy(dAtA[i:], m.Reason)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Reason)))
-	i--
-	dAtA[i] = 0x22
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Message != nil {
+		i -= len(*m.Message)
+		copy(dAtA[i:], *m.Message)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Message)))
+		i--
+		dAtA[i] = 0x2a
+	}
+	if m.Reason != nil {
+		i -= len(*m.Reason)
+		copy(dAtA[i:], *m.Reason)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Reason)))
+		i--
+		dAtA[i] = 0x22
+	}
 	if m.LastTransitionTime != nil {
 		{
 			size, err := m.LastTransitionTime.MarshalToSizedBuffer(dAtA[:i])
@@ -2506,16 +1760,20 @@ func (m *HorizontalPodAutoscalerCondition) MarshalToSizedBuffer(dAtA []byte) (in
 		i--
 		dAtA[i] = 0x1a
 	}
-	i -= len(m.Status)
-	copy(dAtA[i:], m.Status)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Status)))
-	i--
-	dAtA[i] = 0x12
-	i -= len(m.Type)
-	copy(dAtA[i:], m.Type)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Type)))
-	i--
-	dAtA[i] = 0xa
+	if m.Status != nil {
+		i -= len(*m.Status)
+		copy(dAtA[i:], *m.Status)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Status)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Type != nil {
+		i -= len(*m.Type)
+		copy(dAtA[i:], *m.Type)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Type)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -2539,6 +1797,10 @@ func (m *HorizontalPodAutoscalerList) MarshalToSizedBuffer(dAtA []byte) (int, er
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Items) > 0 {
 		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -2588,6 +1850,10 @@ func (m *HorizontalPodAutoscalerSpec) MarshalToSizedBuffer(dAtA []byte) (int, er
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Metrics) > 0 {
 		for iNdEx := len(m.Metrics) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -2602,12 +1868,16 @@ func (m *HorizontalPodAutoscalerSpec) MarshalToSizedBuffer(dAtA []byte) (int, er
 			dAtA[i] = 0x22
 		}
 	}
-	i = encodeVarintGenerated(dAtA, i, uint64(m.MaxReplicas))
-	i--
-	dAtA[i] = 0x18
-	i = encodeVarintGenerated(dAtA, i, uint64(m.MinReplicas))
-	i--
-	dAtA[i] = 0x10
+	if m.MaxReplicas != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.MaxReplicas))
+		i--
+		dAtA[i] = 0x18
+	}
+	if m.MinReplicas != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.MinReplicas))
+		i--
+		dAtA[i] = 0x10
+	}
 	if m.ScaleTargetRef != nil {
 		{
 			size, err := m.ScaleTargetRef.MarshalToSizedBuffer(dAtA[:i])
@@ -2643,6 +1913,10 @@ func (m *HorizontalPodAutoscalerStatus) MarshalToSizedBuffer(dAtA []byte) (int, 
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Conditions) > 0 {
 		for iNdEx := len(m.Conditions) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -2671,12 +1945,16 @@ func (m *HorizontalPodAutoscalerStatus) MarshalToSizedBuffer(dAtA []byte) (int, 
 			dAtA[i] = 0x2a
 		}
 	}
-	i = encodeVarintGenerated(dAtA, i, uint64(m.DesiredReplicas))
-	i--
-	dAtA[i] = 0x20
-	i = encodeVarintGenerated(dAtA, i, uint64(m.CurrentReplicas))
-	i--
-	dAtA[i] = 0x18
+	if m.DesiredReplicas != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.DesiredReplicas))
+		i--
+		dAtA[i] = 0x20
+	}
+	if m.CurrentReplicas != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.CurrentReplicas))
+		i--
+		dAtA[i] = 0x18
+	}
 	if m.LastScaleTime != nil {
 		{
 			size, err := m.LastScaleTime.MarshalToSizedBuffer(dAtA[:i])
@@ -2689,9 +1967,11 @@ func (m *HorizontalPodAutoscalerStatus) MarshalToSizedBuffer(dAtA []byte) (int, 
 		i--
 		dAtA[i] = 0x12
 	}
-	i = encodeVarintGenerated(dAtA, i, uint64(m.ObservedGeneration))
-	i--
-	dAtA[i] = 0x8
+	if m.ObservedGeneration != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.ObservedGeneration))
+		i--
+		dAtA[i] = 0x8
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -2715,6 +1995,10 @@ func (m *MetricSpec) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.External != nil {
 		{
 			size, err := m.External.MarshalToSizedBuffer(dAtA[:i])
@@ -2763,11 +2047,13 @@ func (m *MetricSpec) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x12
 	}
-	i -= len(m.Type)
-	copy(dAtA[i:], m.Type)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Type)))
-	i--
-	dAtA[i] = 0xa
+	if m.Type != nil {
+		i -= len(*m.Type)
+		copy(dAtA[i:], *m.Type)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Type)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -2791,6 +2077,10 @@ func (m *MetricStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.External != nil {
 		{
 			size, err := m.External.MarshalToSizedBuffer(dAtA[:i])
@@ -2839,11 +2129,13 @@ func (m *MetricStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x12
 	}
-	i -= len(m.Type)
-	copy(dAtA[i:], m.Type)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Type)))
-	i--
-	dAtA[i] = 0xa
+	if m.Type != nil {
+		i -= len(*m.Type)
+		copy(dAtA[i:], *m.Type)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Type)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -2867,6 +2159,10 @@ func (m *ObjectMetricSource) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.AverageValue != nil {
 		{
 			size, err := m.AverageValue.MarshalToSizedBuffer(dAtA[:i])
@@ -2903,11 +2199,13 @@ func (m *ObjectMetricSource) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x1a
 	}
-	i -= len(m.MetricName)
-	copy(dAtA[i:], m.MetricName)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.MetricName)))
-	i--
-	dAtA[i] = 0x12
+	if m.MetricName != nil {
+		i -= len(*m.MetricName)
+		copy(dAtA[i:], *m.MetricName)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.MetricName)))
+		i--
+		dAtA[i] = 0x12
+	}
 	if m.Target != nil {
 		{
 			size, err := m.Target.MarshalToSizedBuffer(dAtA[:i])
@@ -2943,6 +2241,10 @@ func (m *ObjectMetricStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.AverageValue != nil {
 		{
 			size, err := m.AverageValue.MarshalToSizedBuffer(dAtA[:i])
@@ -2979,11 +2281,13 @@ func (m *ObjectMetricStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x1a
 	}
-	i -= len(m.MetricName)
-	copy(dAtA[i:], m.MetricName)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.MetricName)))
-	i--
-	dAtA[i] = 0x12
+	if m.MetricName != nil {
+		i -= len(*m.MetricName)
+		copy(dAtA[i:], *m.MetricName)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.MetricName)))
+		i--
+		dAtA[i] = 0x12
+	}
 	if m.Target != nil {
 		{
 			size, err := m.Target.MarshalToSizedBuffer(dAtA[:i])
@@ -3019,6 +2323,10 @@ func (m *PodsMetricSource) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Selector != nil {
 		{
 			size, err := m.Selector.MarshalToSizedBuffer(dAtA[:i])
@@ -3043,11 +2351,13 @@ func (m *PodsMetricSource) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x12
 	}
-	i -= len(m.MetricName)
-	copy(dAtA[i:], m.MetricName)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.MetricName)))
-	i--
-	dAtA[i] = 0xa
+	if m.MetricName != nil {
+		i -= len(*m.MetricName)
+		copy(dAtA[i:], *m.MetricName)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.MetricName)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -3071,6 +2381,10 @@ func (m *PodsMetricStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Selector != nil {
 		{
 			size, err := m.Selector.MarshalToSizedBuffer(dAtA[:i])
@@ -3095,11 +2409,13 @@ func (m *PodsMetricStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x12
 	}
-	i -= len(m.MetricName)
-	copy(dAtA[i:], m.MetricName)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.MetricName)))
-	i--
-	dAtA[i] = 0xa
+	if m.MetricName != nil {
+		i -= len(*m.MetricName)
+		copy(dAtA[i:], *m.MetricName)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.MetricName)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -3123,6 +2439,10 @@ func (m *ResourceMetricSource) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.TargetAverageValue != nil {
 		{
 			size, err := m.TargetAverageValue.MarshalToSizedBuffer(dAtA[:i])
@@ -3135,14 +2455,18 @@ func (m *ResourceMetricSource) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x1a
 	}
-	i = encodeVarintGenerated(dAtA, i, uint64(m.TargetAverageUtilization))
-	i--
-	dAtA[i] = 0x10
-	i -= len(m.Name)
-	copy(dAtA[i:], m.Name)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Name)))
-	i--
-	dAtA[i] = 0xa
+	if m.TargetAverageUtilization != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.TargetAverageUtilization))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.Name != nil {
+		i -= len(*m.Name)
+		copy(dAtA[i:], *m.Name)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Name)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -3166,6 +2490,10 @@ func (m *ResourceMetricStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.CurrentAverageValue != nil {
 		{
 			size, err := m.CurrentAverageValue.MarshalToSizedBuffer(dAtA[:i])
@@ -3178,14 +2506,18 @@ func (m *ResourceMetricStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x1a
 	}
-	i = encodeVarintGenerated(dAtA, i, uint64(m.CurrentAverageUtilization))
-	i--
-	dAtA[i] = 0x10
-	i -= len(m.Name)
-	copy(dAtA[i:], m.Name)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Name)))
-	i--
-	dAtA[i] = 0xa
+	if m.CurrentAverageUtilization != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.CurrentAverageUtilization))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.Name != nil {
+		i -= len(*m.Name)
+		copy(dAtA[i:], *m.Name)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Name)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -3206,12 +2538,21 @@ func (m *CrossVersionObjectReference) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Kind)
-	n += 1 + l + sovGenerated(uint64(l))
-	l = len(m.Name)
-	n += 1 + l + sovGenerated(uint64(l))
-	l = len(m.ApiVersion)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.Kind != nil {
+		l = len(*m.Kind)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.Name != nil {
+		l = len(*m.Name)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.ApiVersion != nil {
+		l = len(*m.ApiVersion)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -3221,8 +2562,10 @@ func (m *ExternalMetricSource) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.MetricName)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.MetricName != nil {
+		l = len(*m.MetricName)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if m.MetricSelector != nil {
 		l = m.MetricSelector.Size()
 		n += 1 + l + sovGenerated(uint64(l))
@@ -3235,6 +2578,9 @@ func (m *ExternalMetricSource) Size() (n int) {
 		l = m.TargetAverageValue.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -3244,8 +2590,10 @@ func (m *ExternalMetricStatus) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.MetricName)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.MetricName != nil {
+		l = len(*m.MetricName)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if m.MetricSelector != nil {
 		l = m.MetricSelector.Size()
 		n += 1 + l + sovGenerated(uint64(l))
@@ -3257,6 +2605,9 @@ func (m *ExternalMetricStatus) Size() (n int) {
 	if m.CurrentAverageValue != nil {
 		l = m.CurrentAverageValue.Size()
 		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -3279,6 +2630,9 @@ func (m *HorizontalPodAutoscaler) Size() (n int) {
 		l = m.Status.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -3288,18 +2642,29 @@ func (m *HorizontalPodAutoscalerCondition) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Type)
-	n += 1 + l + sovGenerated(uint64(l))
-	l = len(m.Status)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.Type != nil {
+		l = len(*m.Type)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.Status != nil {
+		l = len(*m.Status)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if m.LastTransitionTime != nil {
 		l = m.LastTransitionTime.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
-	l = len(m.Reason)
-	n += 1 + l + sovGenerated(uint64(l))
-	l = len(m.Message)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.Reason != nil {
+		l = len(*m.Reason)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.Message != nil {
+		l = len(*m.Message)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -3319,6 +2684,9 @@ func (m *HorizontalPodAutoscalerList) Size() (n int) {
 			n += 1 + l + sovGenerated(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -3332,13 +2700,20 @@ func (m *HorizontalPodAutoscalerSpec) Size() (n int) {
 		l = m.ScaleTargetRef.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
-	n += 1 + sovGenerated(uint64(m.MinReplicas))
-	n += 1 + sovGenerated(uint64(m.MaxReplicas))
+	if m.MinReplicas != nil {
+		n += 1 + sovGenerated(uint64(*m.MinReplicas))
+	}
+	if m.MaxReplicas != nil {
+		n += 1 + sovGenerated(uint64(*m.MaxReplicas))
+	}
 	if len(m.Metrics) > 0 {
 		for _, e := range m.Metrics {
 			l = e.Size()
 			n += 1 + l + sovGenerated(uint64(l))
 		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -3349,13 +2724,19 @@ func (m *HorizontalPodAutoscalerStatus) Size() (n int) {
 	}
 	var l int
 	_ = l
-	n += 1 + sovGenerated(uint64(m.ObservedGeneration))
+	if m.ObservedGeneration != nil {
+		n += 1 + sovGenerated(uint64(*m.ObservedGeneration))
+	}
 	if m.LastScaleTime != nil {
 		l = m.LastScaleTime.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
-	n += 1 + sovGenerated(uint64(m.CurrentReplicas))
-	n += 1 + sovGenerated(uint64(m.DesiredReplicas))
+	if m.CurrentReplicas != nil {
+		n += 1 + sovGenerated(uint64(*m.CurrentReplicas))
+	}
+	if m.DesiredReplicas != nil {
+		n += 1 + sovGenerated(uint64(*m.DesiredReplicas))
+	}
 	if len(m.CurrentMetrics) > 0 {
 		for _, e := range m.CurrentMetrics {
 			l = e.Size()
@@ -3368,6 +2749,9 @@ func (m *HorizontalPodAutoscalerStatus) Size() (n int) {
 			n += 1 + l + sovGenerated(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -3377,8 +2761,10 @@ func (m *MetricSpec) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Type)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.Type != nil {
+		l = len(*m.Type)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if m.Object != nil {
 		l = m.Object.Size()
 		n += 1 + l + sovGenerated(uint64(l))
@@ -3394,6 +2780,9 @@ func (m *MetricSpec) Size() (n int) {
 	if m.External != nil {
 		l = m.External.Size()
 		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -3404,8 +2793,10 @@ func (m *MetricStatus) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Type)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.Type != nil {
+		l = len(*m.Type)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if m.Object != nil {
 		l = m.Object.Size()
 		n += 1 + l + sovGenerated(uint64(l))
@@ -3421,6 +2812,9 @@ func (m *MetricStatus) Size() (n int) {
 	if m.External != nil {
 		l = m.External.Size()
 		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -3435,8 +2829,10 @@ func (m *ObjectMetricSource) Size() (n int) {
 		l = m.Target.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
-	l = len(m.MetricName)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.MetricName != nil {
+		l = len(*m.MetricName)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if m.TargetValue != nil {
 		l = m.TargetValue.Size()
 		n += 1 + l + sovGenerated(uint64(l))
@@ -3448,6 +2844,9 @@ func (m *ObjectMetricSource) Size() (n int) {
 	if m.AverageValue != nil {
 		l = m.AverageValue.Size()
 		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -3462,8 +2861,10 @@ func (m *ObjectMetricStatus) Size() (n int) {
 		l = m.Target.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
-	l = len(m.MetricName)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.MetricName != nil {
+		l = len(*m.MetricName)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if m.CurrentValue != nil {
 		l = m.CurrentValue.Size()
 		n += 1 + l + sovGenerated(uint64(l))
@@ -3476,6 +2877,9 @@ func (m *ObjectMetricStatus) Size() (n int) {
 		l = m.AverageValue.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -3485,8 +2889,10 @@ func (m *PodsMetricSource) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.MetricName)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.MetricName != nil {
+		l = len(*m.MetricName)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if m.TargetAverageValue != nil {
 		l = m.TargetAverageValue.Size()
 		n += 1 + l + sovGenerated(uint64(l))
@@ -3494,6 +2900,9 @@ func (m *PodsMetricSource) Size() (n int) {
 	if m.Selector != nil {
 		l = m.Selector.Size()
 		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -3504,8 +2913,10 @@ func (m *PodsMetricStatus) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.MetricName)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.MetricName != nil {
+		l = len(*m.MetricName)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if m.CurrentAverageValue != nil {
 		l = m.CurrentAverageValue.Size()
 		n += 1 + l + sovGenerated(uint64(l))
@@ -3513,6 +2924,9 @@ func (m *PodsMetricStatus) Size() (n int) {
 	if m.Selector != nil {
 		l = m.Selector.Size()
 		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -3523,12 +2937,19 @@ func (m *ResourceMetricSource) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Name)
-	n += 1 + l + sovGenerated(uint64(l))
-	n += 1 + sovGenerated(uint64(m.TargetAverageUtilization))
+	if m.Name != nil {
+		l = len(*m.Name)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.TargetAverageUtilization != nil {
+		n += 1 + sovGenerated(uint64(*m.TargetAverageUtilization))
+	}
 	if m.TargetAverageValue != nil {
 		l = m.TargetAverageValue.Size()
 		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -3539,12 +2960,19 @@ func (m *ResourceMetricStatus) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Name)
-	n += 1 + l + sovGenerated(uint64(l))
-	n += 1 + sovGenerated(uint64(m.CurrentAverageUtilization))
+	if m.Name != nil {
+		l = len(*m.Name)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.CurrentAverageUtilization != nil {
+		n += 1 + sovGenerated(uint64(*m.CurrentAverageUtilization))
+	}
 	if m.CurrentAverageValue != nil {
 		l = m.CurrentAverageValue.Size()
 		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -3554,241 +2982,6 @@ func sovGenerated(x uint64) (n int) {
 }
 func sozGenerated(x uint64) (n int) {
 	return sovGenerated(uint64((x << 1) ^ uint64((int64(x) >> 63))))
-}
-func (this *CrossVersionObjectReference) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&CrossVersionObjectReference{`,
-		`Kind:` + fmt.Sprintf("%v", this.Kind) + `,`,
-		`Name:` + fmt.Sprintf("%v", this.Name) + `,`,
-		`ApiVersion:` + fmt.Sprintf("%v", this.ApiVersion) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *ExternalMetricSource) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&ExternalMetricSource{`,
-		`MetricName:` + fmt.Sprintf("%v", this.MetricName) + `,`,
-		`MetricSelector:` + strings.Replace(fmt.Sprintf("%v", this.MetricSelector), "LabelSelector", "v1.LabelSelector", 1) + `,`,
-		`TargetValue:` + strings.Replace(fmt.Sprintf("%v", this.TargetValue), "Quantity", "resource.Quantity", 1) + `,`,
-		`TargetAverageValue:` + strings.Replace(fmt.Sprintf("%v", this.TargetAverageValue), "Quantity", "resource.Quantity", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *ExternalMetricStatus) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&ExternalMetricStatus{`,
-		`MetricName:` + fmt.Sprintf("%v", this.MetricName) + `,`,
-		`MetricSelector:` + strings.Replace(fmt.Sprintf("%v", this.MetricSelector), "LabelSelector", "v1.LabelSelector", 1) + `,`,
-		`CurrentValue:` + strings.Replace(fmt.Sprintf("%v", this.CurrentValue), "Quantity", "resource.Quantity", 1) + `,`,
-		`CurrentAverageValue:` + strings.Replace(fmt.Sprintf("%v", this.CurrentAverageValue), "Quantity", "resource.Quantity", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *HorizontalPodAutoscaler) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&HorizontalPodAutoscaler{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ObjectMeta", "v1.ObjectMeta", 1) + `,`,
-		`Spec:` + strings.Replace(this.Spec.String(), "HorizontalPodAutoscalerSpec", "HorizontalPodAutoscalerSpec", 1) + `,`,
-		`Status:` + strings.Replace(this.Status.String(), "HorizontalPodAutoscalerStatus", "HorizontalPodAutoscalerStatus", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *HorizontalPodAutoscalerCondition) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&HorizontalPodAutoscalerCondition{`,
-		`Type:` + fmt.Sprintf("%v", this.Type) + `,`,
-		`Status:` + fmt.Sprintf("%v", this.Status) + `,`,
-		`LastTransitionTime:` + strings.Replace(fmt.Sprintf("%v", this.LastTransitionTime), "Time", "v1.Time", 1) + `,`,
-		`Reason:` + fmt.Sprintf("%v", this.Reason) + `,`,
-		`Message:` + fmt.Sprintf("%v", this.Message) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *HorizontalPodAutoscalerList) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForItems := "[]*HorizontalPodAutoscaler{"
-	for _, f := range this.Items {
-		repeatedStringForItems += strings.Replace(f.String(), "HorizontalPodAutoscaler", "HorizontalPodAutoscaler", 1) + ","
-	}
-	repeatedStringForItems += "}"
-	s := strings.Join([]string{`&HorizontalPodAutoscalerList{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ListMeta", "v1.ListMeta", 1) + `,`,
-		`Items:` + repeatedStringForItems + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *HorizontalPodAutoscalerSpec) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForMetrics := "[]*MetricSpec{"
-	for _, f := range this.Metrics {
-		repeatedStringForMetrics += strings.Replace(f.String(), "MetricSpec", "MetricSpec", 1) + ","
-	}
-	repeatedStringForMetrics += "}"
-	s := strings.Join([]string{`&HorizontalPodAutoscalerSpec{`,
-		`ScaleTargetRef:` + strings.Replace(this.ScaleTargetRef.String(), "CrossVersionObjectReference", "CrossVersionObjectReference", 1) + `,`,
-		`MinReplicas:` + fmt.Sprintf("%v", this.MinReplicas) + `,`,
-		`MaxReplicas:` + fmt.Sprintf("%v", this.MaxReplicas) + `,`,
-		`Metrics:` + repeatedStringForMetrics + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *HorizontalPodAutoscalerStatus) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForCurrentMetrics := "[]*MetricStatus{"
-	for _, f := range this.CurrentMetrics {
-		repeatedStringForCurrentMetrics += strings.Replace(f.String(), "MetricStatus", "MetricStatus", 1) + ","
-	}
-	repeatedStringForCurrentMetrics += "}"
-	repeatedStringForConditions := "[]*HorizontalPodAutoscalerCondition{"
-	for _, f := range this.Conditions {
-		repeatedStringForConditions += strings.Replace(f.String(), "HorizontalPodAutoscalerCondition", "HorizontalPodAutoscalerCondition", 1) + ","
-	}
-	repeatedStringForConditions += "}"
-	s := strings.Join([]string{`&HorizontalPodAutoscalerStatus{`,
-		`ObservedGeneration:` + fmt.Sprintf("%v", this.ObservedGeneration) + `,`,
-		`LastScaleTime:` + strings.Replace(fmt.Sprintf("%v", this.LastScaleTime), "Time", "v1.Time", 1) + `,`,
-		`CurrentReplicas:` + fmt.Sprintf("%v", this.CurrentReplicas) + `,`,
-		`DesiredReplicas:` + fmt.Sprintf("%v", this.DesiredReplicas) + `,`,
-		`CurrentMetrics:` + repeatedStringForCurrentMetrics + `,`,
-		`Conditions:` + repeatedStringForConditions + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *MetricSpec) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&MetricSpec{`,
-		`Type:` + fmt.Sprintf("%v", this.Type) + `,`,
-		`Object:` + strings.Replace(this.Object.String(), "ObjectMetricSource", "ObjectMetricSource", 1) + `,`,
-		`Pods:` + strings.Replace(this.Pods.String(), "PodsMetricSource", "PodsMetricSource", 1) + `,`,
-		`Resource:` + strings.Replace(this.Resource.String(), "ResourceMetricSource", "ResourceMetricSource", 1) + `,`,
-		`External:` + strings.Replace(this.External.String(), "ExternalMetricSource", "ExternalMetricSource", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *MetricStatus) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&MetricStatus{`,
-		`Type:` + fmt.Sprintf("%v", this.Type) + `,`,
-		`Object:` + strings.Replace(this.Object.String(), "ObjectMetricStatus", "ObjectMetricStatus", 1) + `,`,
-		`Pods:` + strings.Replace(this.Pods.String(), "PodsMetricStatus", "PodsMetricStatus", 1) + `,`,
-		`Resource:` + strings.Replace(this.Resource.String(), "ResourceMetricStatus", "ResourceMetricStatus", 1) + `,`,
-		`External:` + strings.Replace(this.External.String(), "ExternalMetricStatus", "ExternalMetricStatus", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *ObjectMetricSource) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&ObjectMetricSource{`,
-		`Target:` + strings.Replace(this.Target.String(), "CrossVersionObjectReference", "CrossVersionObjectReference", 1) + `,`,
-		`MetricName:` + fmt.Sprintf("%v", this.MetricName) + `,`,
-		`TargetValue:` + strings.Replace(fmt.Sprintf("%v", this.TargetValue), "Quantity", "resource.Quantity", 1) + `,`,
-		`Selector:` + strings.Replace(fmt.Sprintf("%v", this.Selector), "LabelSelector", "v1.LabelSelector", 1) + `,`,
-		`AverageValue:` + strings.Replace(fmt.Sprintf("%v", this.AverageValue), "Quantity", "resource.Quantity", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *ObjectMetricStatus) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&ObjectMetricStatus{`,
-		`Target:` + strings.Replace(this.Target.String(), "CrossVersionObjectReference", "CrossVersionObjectReference", 1) + `,`,
-		`MetricName:` + fmt.Sprintf("%v", this.MetricName) + `,`,
-		`CurrentValue:` + strings.Replace(fmt.Sprintf("%v", this.CurrentValue), "Quantity", "resource.Quantity", 1) + `,`,
-		`Selector:` + strings.Replace(fmt.Sprintf("%v", this.Selector), "LabelSelector", "v1.LabelSelector", 1) + `,`,
-		`AverageValue:` + strings.Replace(fmt.Sprintf("%v", this.AverageValue), "Quantity", "resource.Quantity", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *PodsMetricSource) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&PodsMetricSource{`,
-		`MetricName:` + fmt.Sprintf("%v", this.MetricName) + `,`,
-		`TargetAverageValue:` + strings.Replace(fmt.Sprintf("%v", this.TargetAverageValue), "Quantity", "resource.Quantity", 1) + `,`,
-		`Selector:` + strings.Replace(fmt.Sprintf("%v", this.Selector), "LabelSelector", "v1.LabelSelector", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *PodsMetricStatus) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&PodsMetricStatus{`,
-		`MetricName:` + fmt.Sprintf("%v", this.MetricName) + `,`,
-		`CurrentAverageValue:` + strings.Replace(fmt.Sprintf("%v", this.CurrentAverageValue), "Quantity", "resource.Quantity", 1) + `,`,
-		`Selector:` + strings.Replace(fmt.Sprintf("%v", this.Selector), "LabelSelector", "v1.LabelSelector", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *ResourceMetricSource) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&ResourceMetricSource{`,
-		`Name:` + fmt.Sprintf("%v", this.Name) + `,`,
-		`TargetAverageUtilization:` + fmt.Sprintf("%v", this.TargetAverageUtilization) + `,`,
-		`TargetAverageValue:` + strings.Replace(fmt.Sprintf("%v", this.TargetAverageValue), "Quantity", "resource.Quantity", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *ResourceMetricStatus) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&ResourceMetricStatus{`,
-		`Name:` + fmt.Sprintf("%v", this.Name) + `,`,
-		`CurrentAverageUtilization:` + fmt.Sprintf("%v", this.CurrentAverageUtilization) + `,`,
-		`CurrentAverageValue:` + strings.Replace(fmt.Sprintf("%v", this.CurrentAverageValue), "Quantity", "resource.Quantity", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func valueToStringGenerated(v interface{}) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("*%v", pv)
 }
 func (m *CrossVersionObjectReference) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
@@ -3849,7 +3042,8 @@ func (m *CrossVersionObjectReference) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Kind = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Kind = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -3881,7 +3075,8 @@ func (m *CrossVersionObjectReference) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Name = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Name = &s
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
@@ -3913,7 +3108,8 @@ func (m *CrossVersionObjectReference) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.ApiVersion = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.ApiVersion = &s
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -3927,6 +3123,7 @@ func (m *CrossVersionObjectReference) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3995,7 +3192,8 @@ func (m *ExternalMetricSource) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.MetricName = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.MetricName = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -4117,6 +3315,7 @@ func (m *ExternalMetricSource) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4185,7 +3384,8 @@ func (m *ExternalMetricStatus) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.MetricName = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.MetricName = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -4307,6 +3507,7 @@ func (m *ExternalMetricStatus) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4465,6 +3666,7 @@ func (m *HorizontalPodAutoscaler) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4533,7 +3735,8 @@ func (m *HorizontalPodAutoscalerCondition) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Type = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Type = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -4565,7 +3768,8 @@ func (m *HorizontalPodAutoscalerCondition) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Status = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Status = &s
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
@@ -4633,7 +3837,8 @@ func (m *HorizontalPodAutoscalerCondition) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Reason = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Reason = &s
 			iNdEx = postIndex
 		case 5:
 			if wireType != 2 {
@@ -4665,7 +3870,8 @@ func (m *HorizontalPodAutoscalerCondition) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Message = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Message = &s
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -4679,6 +3885,7 @@ func (m *HorizontalPodAutoscalerCondition) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4799,6 +4006,7 @@ func (m *HorizontalPodAutoscalerList) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4877,7 +4085,7 @@ func (m *HorizontalPodAutoscalerSpec) Unmarshal(dAtA []byte) error {
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field MinReplicas", wireType)
 			}
-			m.MinReplicas = 0
+			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -4887,16 +4095,17 @@ func (m *HorizontalPodAutoscalerSpec) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.MinReplicas |= int32(b&0x7F) << shift
+				v |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.MinReplicas = &v
 		case 3:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field MaxReplicas", wireType)
 			}
-			m.MaxReplicas = 0
+			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -4906,11 +4115,12 @@ func (m *HorizontalPodAutoscalerSpec) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.MaxReplicas |= int32(b&0x7F) << shift
+				v |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.MaxReplicas = &v
 		case 4:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Metrics", wireType)
@@ -4957,6 +4167,7 @@ func (m *HorizontalPodAutoscalerSpec) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4999,7 +4210,7 @@ func (m *HorizontalPodAutoscalerStatus) Unmarshal(dAtA []byte) error {
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ObservedGeneration", wireType)
 			}
-			m.ObservedGeneration = 0
+			var v int64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -5009,11 +4220,12 @@ func (m *HorizontalPodAutoscalerStatus) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.ObservedGeneration |= int64(b&0x7F) << shift
+				v |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.ObservedGeneration = &v
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field LastScaleTime", wireType)
@@ -5054,7 +4266,7 @@ func (m *HorizontalPodAutoscalerStatus) Unmarshal(dAtA []byte) error {
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field CurrentReplicas", wireType)
 			}
-			m.CurrentReplicas = 0
+			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -5064,16 +4276,17 @@ func (m *HorizontalPodAutoscalerStatus) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.CurrentReplicas |= int32(b&0x7F) << shift
+				v |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.CurrentReplicas = &v
 		case 4:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field DesiredReplicas", wireType)
 			}
-			m.DesiredReplicas = 0
+			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -5083,11 +4296,12 @@ func (m *HorizontalPodAutoscalerStatus) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.DesiredReplicas |= int32(b&0x7F) << shift
+				v |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.DesiredReplicas = &v
 		case 5:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field CurrentMetrics", wireType)
@@ -5168,6 +4382,7 @@ func (m *HorizontalPodAutoscalerStatus) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5236,7 +4451,8 @@ func (m *MetricSpec) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Type = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Type = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -5394,6 +4610,7 @@ func (m *MetricSpec) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5462,7 +4679,8 @@ func (m *MetricStatus) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Type = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Type = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -5620,6 +4838,7 @@ func (m *MetricStatus) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5724,7 +4943,8 @@ func (m *ObjectMetricSource) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.MetricName = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.MetricName = &s
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
@@ -5846,6 +5066,7 @@ func (m *ObjectMetricSource) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5950,7 +5171,8 @@ func (m *ObjectMetricStatus) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.MetricName = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.MetricName = &s
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
@@ -6072,6 +5294,7 @@ func (m *ObjectMetricStatus) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -6140,7 +5363,8 @@ func (m *PodsMetricSource) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.MetricName = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.MetricName = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -6226,6 +5450,7 @@ func (m *PodsMetricSource) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -6294,7 +5519,8 @@ func (m *PodsMetricStatus) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.MetricName = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.MetricName = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -6380,6 +5606,7 @@ func (m *PodsMetricStatus) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -6448,13 +5675,14 @@ func (m *ResourceMetricSource) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Name = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Name = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field TargetAverageUtilization", wireType)
 			}
-			m.TargetAverageUtilization = 0
+			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -6464,11 +5692,12 @@ func (m *ResourceMetricSource) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.TargetAverageUtilization |= int32(b&0x7F) << shift
+				v |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.TargetAverageUtilization = &v
 		case 3:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field TargetAverageValue", wireType)
@@ -6517,6 +5746,7 @@ func (m *ResourceMetricSource) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -6585,13 +5815,14 @@ func (m *ResourceMetricStatus) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Name = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Name = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field CurrentAverageUtilization", wireType)
 			}
-			m.CurrentAverageUtilization = 0
+			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -6601,11 +5832,12 @@ func (m *ResourceMetricStatus) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.CurrentAverageUtilization |= int32(b&0x7F) << shift
+				v |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.CurrentAverageUtilization = &v
 		case 3:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field CurrentAverageValue", wireType)
@@ -6654,6 +5886,7 @@ func (m *ResourceMetricStatus) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}

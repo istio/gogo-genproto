@@ -9,8 +9,6 @@ import (
 	io "io"
 	math "math"
 	math_bits "math/bits"
-	reflect "reflect"
-	strings "strings"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -44,11 +42,15 @@ type Date struct {
 	// Day of month. Must be from 1 to 31 and valid for the year and month, or 0
 	// if specifying a year by itself or a year and month where the day is not
 	// significant.
-	Day int32 `protobuf:"varint,3,opt,name=day,proto3" json:"day,omitempty"`
+	Day                  int32    `protobuf:"varint,3,opt,name=day,proto3" json:"day,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *Date) Reset()      { *m = Date{} }
-func (*Date) ProtoMessage() {}
+func (m *Date) Reset()         { *m = Date{} }
+func (m *Date) String() string { return proto.CompactTextString(m) }
+func (*Date) ProtoMessage()    {}
 func (*Date) Descriptor() ([]byte, []int) {
 	return fileDescriptor_92c30699df886e3f, []int{0}
 }
@@ -107,72 +109,19 @@ func init() {
 func init() { proto.RegisterFile("google/type/date.proto", fileDescriptor_92c30699df886e3f) }
 
 var fileDescriptor_92c30699df886e3f = []byte{
-	// 196 bytes of a gzipped FileDescriptorProto
+	// 154 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x12, 0x4b, 0xcf, 0xcf, 0x4f,
 	0xcf, 0x49, 0xd5, 0x2f, 0xa9, 0x2c, 0x48, 0xd5, 0x4f, 0x49, 0x2c, 0x49, 0xd5, 0x2b, 0x28, 0xca,
 	0x2f, 0xc9, 0x17, 0xe2, 0x86, 0x88, 0xeb, 0x81, 0xc4, 0x95, 0x9c, 0xb8, 0x58, 0x5c, 0x12, 0x4b,
 	0x52, 0x85, 0x84, 0xb8, 0x58, 0x2a, 0x53, 0x13, 0x8b, 0x24, 0x18, 0x15, 0x18, 0x35, 0x58, 0x83,
 	0xc0, 0x6c, 0x21, 0x11, 0x2e, 0xd6, 0xdc, 0xfc, 0xbc, 0x92, 0x0c, 0x09, 0x26, 0xb0, 0x20, 0x84,
-	0x23, 0x24, 0xc0, 0xc5, 0x9c, 0x92, 0x58, 0x29, 0xc1, 0x0c, 0x16, 0x03, 0x31, 0x9d, 0xa2, 0x2f,
-	0x3c, 0x94, 0x63, 0xb8, 0xf1, 0x50, 0x8e, 0xe1, 0xc3, 0x43, 0x39, 0xc6, 0x86, 0x47, 0x72, 0x8c,
-	0x2b, 0x1e, 0xc9, 0x31, 0x9e, 0x78, 0x24, 0xc7, 0x78, 0xe1, 0x91, 0x1c, 0xe3, 0x83, 0x47, 0x72,
-	0x8c, 0x2f, 0x1e, 0xc9, 0x31, 0x7c, 0x78, 0x24, 0xc7, 0x38, 0xe1, 0xb1, 0x1c, 0xc3, 0x85, 0xc7,
-	0x72, 0x0c, 0x37, 0x1e, 0xcb, 0x31, 0x70, 0xf1, 0x27, 0xe7, 0xe7, 0xea, 0x21, 0x39, 0xc5, 0x89,
-	0x13, 0xe4, 0x90, 0x00, 0x90, 0x13, 0x03, 0x18, 0x7f, 0x30, 0x32, 0x2e, 0x62, 0x62, 0x76, 0x0f,
-	0x09, 0x48, 0x62, 0x03, 0x3b, 0xda, 0x18, 0x10, 0x00, 0x00, 0xff, 0xff, 0xa2, 0xef, 0x4e, 0xfa,
-	0xce, 0x00, 0x00, 0x00,
+	0x23, 0x24, 0xc0, 0xc5, 0x9c, 0x92, 0x58, 0x29, 0xc1, 0x0c, 0x16, 0x03, 0x31, 0x9d, 0x8c, 0x4f,
+	0x3c, 0x92, 0x63, 0xbc, 0xf0, 0x48, 0x8e, 0xf1, 0xc1, 0x23, 0x39, 0x46, 0x2e, 0xfe, 0xe4, 0xfc,
+	0x5c, 0x3d, 0x24, 0x2b, 0x9c, 0x38, 0x41, 0x16, 0x04, 0x80, 0xac, 0x0e, 0x60, 0xfc, 0xc1, 0xc8,
+	0xb8, 0x88, 0x89, 0xd9, 0x3d, 0x24, 0x20, 0x89, 0x0d, 0xec, 0x18, 0x63, 0x40, 0x00, 0x00, 0x00,
+	0xff, 0xff, 0x26, 0x66, 0x69, 0x6f, 0xa6, 0x00, 0x00, 0x00,
 }
 
-func (this *Date) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*Date)
-	if !ok {
-		that2, ok := that.(Date)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Year != that1.Year {
-		return false
-	}
-	if this.Month != that1.Month {
-		return false
-	}
-	if this.Day != that1.Day {
-		return false
-	}
-	return true
-}
-func (this *Date) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 7)
-	s = append(s, "&google_type.Date{")
-	s = append(s, "Year: "+fmt.Sprintf("%#v", this.Year)+",\n")
-	s = append(s, "Month: "+fmt.Sprintf("%#v", this.Month)+",\n")
-	s = append(s, "Day: "+fmt.Sprintf("%#v", this.Day)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func valueToGoStringDate(v interface{}, typ string) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("func(v %v) *%v { return &v } ( %#v )", typ, typ, pv)
-}
 func (m *Date) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -193,6 +142,10 @@ func (m *Date) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Day != 0 {
 		i = encodeVarintDate(dAtA, i, uint64(m.Day))
 		i--
@@ -237,6 +190,9 @@ func (m *Date) Size() (n int) {
 	if m.Day != 0 {
 		n += 1 + sovDate(uint64(m.Day))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -245,26 +201,6 @@ func sovDate(x uint64) (n int) {
 }
 func sozDate(x uint64) (n int) {
 	return sovDate(uint64((x << 1) ^ uint64((int64(x) >> 63))))
-}
-func (this *Date) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&Date{`,
-		`Year:` + fmt.Sprintf("%v", this.Year) + `,`,
-		`Month:` + fmt.Sprintf("%v", this.Month) + `,`,
-		`Day:` + fmt.Sprintf("%v", this.Day) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func valueToStringDate(v interface{}) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("*%v", pv)
 }
 func (m *Date) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
@@ -364,6 +300,7 @@ func (m *Date) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}

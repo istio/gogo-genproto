@@ -12,8 +12,6 @@ import (
 	_ "istio.io/gogo-genproto/k8s.io/apimachinery/pkg/runtime/schema"
 	math "math"
 	math_bits "math/bits"
-	reflect "reflect"
-	strings "strings"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -35,11 +33,15 @@ type Lease struct {
 	// Specification of the Lease.
 	// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status
 	// +optional
-	Spec *LeaseSpec `protobuf:"bytes,2,opt,name=spec" json:"spec,omitempty"`
+	Spec                 *LeaseSpec `protobuf:"bytes,2,opt,name=spec" json:"spec,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}   `json:"-"`
+	XXX_unrecognized     []byte     `json:"-"`
+	XXX_sizecache        int32      `json:"-"`
 }
 
-func (m *Lease) Reset()      { *m = Lease{} }
-func (*Lease) ProtoMessage() {}
+func (m *Lease) Reset()         { *m = Lease{} }
+func (m *Lease) String() string { return proto.CompactTextString(m) }
+func (*Lease) ProtoMessage()    {}
 func (*Lease) Descriptor() ([]byte, []int) {
 	return fileDescriptor_8d4e223b8bb23da3, []int{0}
 }
@@ -91,11 +93,15 @@ type LeaseList struct {
 	// +optional
 	Metadata *v1.ListMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// Items is a list of schema objects.
-	Items []*Lease `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	Items                []*Lease `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *LeaseList) Reset()      { *m = LeaseList{} }
-func (*LeaseList) ProtoMessage() {}
+func (m *LeaseList) Reset()         { *m = LeaseList{} }
+func (m *LeaseList) String() string { return proto.CompactTextString(m) }
+func (*LeaseList) ProtoMessage()    {}
 func (*LeaseList) Descriptor() ([]byte, []int) {
 	return fileDescriptor_8d4e223b8bb23da3, []int{1}
 }
@@ -144,12 +150,12 @@ func (m *LeaseList) GetItems() []*Lease {
 type LeaseSpec struct {
 	// holderIdentity contains the identity of the holder of a current lease.
 	// +optional
-	HolderIdentity string `protobuf:"bytes,1,opt,name=holderIdentity" json:"holderIdentity"`
+	HolderIdentity *string `protobuf:"bytes,1,opt,name=holderIdentity" json:"holderIdentity,omitempty"`
 	// leaseDurationSeconds is a duration that candidates for a lease need
 	// to wait to force acquire it. This is measure against time of last
 	// observed RenewTime.
 	// +optional
-	LeaseDurationSeconds int32 `protobuf:"varint,2,opt,name=leaseDurationSeconds" json:"leaseDurationSeconds"`
+	LeaseDurationSeconds *int32 `protobuf:"varint,2,opt,name=leaseDurationSeconds" json:"leaseDurationSeconds,omitempty"`
 	// acquireTime is a time when the current lease was acquired.
 	// +optional
 	AcquireTime *v1.MicroTime `protobuf:"bytes,3,opt,name=acquireTime" json:"acquireTime,omitempty"`
@@ -160,11 +166,15 @@ type LeaseSpec struct {
 	// leaseTransitions is the number of transitions of a lease between
 	// holders.
 	// +optional
-	LeaseTransitions int32 `protobuf:"varint,5,opt,name=leaseTransitions" json:"leaseTransitions"`
+	LeaseTransitions     *int32   `protobuf:"varint,5,opt,name=leaseTransitions" json:"leaseTransitions,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *LeaseSpec) Reset()      { *m = LeaseSpec{} }
-func (*LeaseSpec) ProtoMessage() {}
+func (m *LeaseSpec) Reset()         { *m = LeaseSpec{} }
+func (m *LeaseSpec) String() string { return proto.CompactTextString(m) }
+func (*LeaseSpec) ProtoMessage()    {}
 func (*LeaseSpec) Descriptor() ([]byte, []int) {
 	return fileDescriptor_8d4e223b8bb23da3, []int{2}
 }
@@ -196,15 +206,15 @@ func (m *LeaseSpec) XXX_DiscardUnknown() {
 var xxx_messageInfo_LeaseSpec proto.InternalMessageInfo
 
 func (m *LeaseSpec) GetHolderIdentity() string {
-	if m != nil {
-		return m.HolderIdentity
+	if m != nil && m.HolderIdentity != nil {
+		return *m.HolderIdentity
 	}
 	return ""
 }
 
 func (m *LeaseSpec) GetLeaseDurationSeconds() int32 {
-	if m != nil {
-		return m.LeaseDurationSeconds
+	if m != nil && m.LeaseDurationSeconds != nil {
+		return *m.LeaseDurationSeconds
 	}
 	return 0
 }
@@ -224,8 +234,8 @@ func (m *LeaseSpec) GetRenewTime() *v1.MicroTime {
 }
 
 func (m *LeaseSpec) GetLeaseTransitions() int32 {
-	if m != nil {
-		return m.LeaseTransitions
+	if m != nil && m.LeaseTransitions != nil {
+		return *m.LeaseTransitions
 	}
 	return 0
 }
@@ -241,188 +251,34 @@ func init() {
 }
 
 var fileDescriptor_8d4e223b8bb23da3 = []byte{
-	// 438 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x90, 0xb1, 0x6e, 0x13, 0x31,
-	0x18, 0x80, 0xcf, 0x69, 0x22, 0x11, 0x47, 0x42, 0xc8, 0x62, 0x38, 0x75, 0x70, 0xab, 0x0e, 0xa8,
-	0x42, 0xc8, 0x6e, 0xaa, 0x0a, 0x75, 0x40, 0x0c, 0x15, 0x0b, 0x28, 0x11, 0xe2, 0xda, 0x17, 0x70,
-	0x7d, 0xbf, 0x12, 0x93, 0x9e, 0x7d, 0xd8, 0x4e, 0x50, 0x37, 0x1e, 0x81, 0x85, 0x77, 0xe0, 0x4d,
-	0xe8, 0x98, 0xb1, 0x13, 0x22, 0x97, 0x85, 0xb1, 0x8f, 0x80, 0xec, 0x46, 0x4d, 0x94, 0x03, 0x25,
-	0x62, 0xfd, 0xed, 0xef, 0xf3, 0xe7, 0x1f, 0xf3, 0xd1, 0xa9, 0x63, 0xca, 0x70, 0x51, 0x2a, 0x2e,
-	0x8d, 0xb1, 0xb9, 0xd2, 0xc2, 0x2b, 0xa3, 0xf9, 0xa4, 0x7b, 0x09, 0x5e, 0x74, 0xf9, 0x00, 0x34,
-	0x58, 0xe1, 0x21, 0x67, 0xa5, 0x35, 0xde, 0x90, 0xbd, 0x7b, 0x80, 0x89, 0x52, 0xb1, 0x55, 0x80,
-	0x2d, 0x80, 0xdd, 0x93, 0xa5, 0xb1, 0x10, 0x72, 0xa8, 0x34, 0xd8, 0x6b, 0x5e, 0x8e, 0x06, 0x61,
-	0xe0, 0x78, 0x01, 0x5e, 0xf0, 0x49, 0x4d, 0xbb, 0xcb, 0xff, 0x45, 0xd9, 0xb1, 0xf6, 0xaa, 0x80,
-	0x1a, 0xf0, 0x72, 0x13, 0xe0, 0xe4, 0x10, 0x0a, 0xb1, 0xce, 0x1d, 0x7c, 0x43, 0xb8, 0xd5, 0x03,
-	0xe1, 0x80, 0xf4, 0xf0, 0xa3, 0x50, 0x93, 0x0b, 0x2f, 0x52, 0xb4, 0x8f, 0x0e, 0x3b, 0xc7, 0x47,
-	0x6c, 0xf9, 0xb9, 0x07, 0x29, 0x2b, 0x47, 0x83, 0x30, 0x70, 0x2c, 0xdc, 0x66, 0x93, 0x2e, 0x7b,
-	0x7f, 0xf9, 0x11, 0xa4, 0xef, 0x83, 0x17, 0xd9, 0x83, 0x81, 0xbc, 0xc6, 0x4d, 0x57, 0x82, 0x4c,
-	0x1b, 0xd1, 0xf4, 0x9c, 0x6d, 0x58, 0x13, 0x8b, 0x0d, 0xe7, 0x25, 0xc8, 0x2c, 0x72, 0xa1, 0xab,
-	0x1d, 0x67, 0x3d, 0xe5, 0x3c, 0x79, 0x57, 0x6b, 0x63, 0xdb, 0xb5, 0x05, 0x7a, 0xad, 0xec, 0x15,
-	0x6e, 0x29, 0x0f, 0x85, 0x4b, 0x1b, 0xfb, 0x3b, 0x87, 0x9d, 0xe3, 0x67, 0xdb, 0xa5, 0x65, 0xf7,
-	0xd0, 0xc1, 0x8f, 0xc6, 0xa2, 0x2b, 0xb4, 0x92, 0x17, 0xf8, 0xf1, 0xd0, 0x5c, 0xe5, 0x60, 0xdf,
-	0xe6, 0xa0, 0xbd, 0xf2, 0xd7, 0xb1, 0xae, 0x7d, 0xd6, 0xbc, 0xf9, 0xb9, 0x97, 0x64, 0x6b, 0x67,
-	0xe4, 0x14, 0x3f, 0xbd, 0x0a, 0xe8, 0x9b, 0xb1, 0x8d, 0x2f, 0x9c, 0x83, 0x34, 0x3a, 0x77, 0x71,
-	0x47, 0xad, 0x05, 0xf3, 0xd7, 0x1b, 0xe4, 0x03, 0xee, 0x08, 0xf9, 0x69, 0xac, 0x2c, 0x5c, 0xa8,
-	0x02, 0xd2, 0x9d, 0xb8, 0x02, 0xbe, 0xdd, 0x0a, 0xfa, 0x4a, 0x5a, 0x13, 0xb0, 0x6c, 0xd5, 0x41,
-	0xfa, 0xb8, 0x6d, 0x41, 0xc3, 0xe7, 0x28, 0x6c, 0xfe, 0x9f, 0x70, 0x69, 0x20, 0x47, 0xf8, 0x49,
-	0x2c, 0xbf, 0xb0, 0x42, 0x3b, 0x15, 0xda, 0x5d, 0xda, 0x5a, 0xf9, 0x57, 0xed, 0xf4, 0xec, 0x64,
-	0x3a, 0xa3, 0xc9, 0xed, 0x8c, 0x26, 0x77, 0x33, 0x8a, 0xbe, 0x54, 0x14, 0x7d, 0xaf, 0x28, 0xba,
-	0xa9, 0x28, 0x9a, 0x56, 0x14, 0xfd, 0xaa, 0x28, 0xfa, 0x5d, 0xd1, 0xe4, 0xae, 0xa2, 0xe8, 0xeb,
-	0x9c, 0x26, 0xd3, 0x39, 0x4d, 0x6e, 0xe7, 0x34, 0xf9, 0x13, 0x00, 0x00, 0xff, 0xff, 0x48, 0x33,
-	0x01, 0x3d, 0xa1, 0x03, 0x00, 0x00,
+	// 386 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x90, 0xc1, 0x6a, 0x22, 0x31,
+	0x1c, 0x87, 0x19, 0x75, 0x60, 0x8d, 0xcb, 0xb2, 0x84, 0x3d, 0x0c, 0x1e, 0x5c, 0xf1, 0x20, 0xe2,
+	0x21, 0x59, 0x65, 0x29, 0x3d, 0x94, 0x1e, 0x4a, 0x2f, 0x2d, 0x4a, 0xe9, 0xe8, 0x0b, 0xc4, 0xcc,
+	0x1f, 0x4d, 0x75, 0x92, 0x69, 0x12, 0x2d, 0x3e, 0x48, 0x1f, 0xa5, 0xef, 0xd0, 0x63, 0x1f, 0xa1,
+	0xf8, 0x24, 0x25, 0x51, 0x54, 0x9c, 0x16, 0xa5, 0xd7, 0xdf, 0xcc, 0xf7, 0xf1, 0xfd, 0x83, 0xe8,
+	0xf4, 0xdc, 0x10, 0xa1, 0x28, 0xcb, 0x04, 0xe5, 0x4a, 0xe9, 0x44, 0x48, 0x66, 0x85, 0x92, 0x74,
+	0xd1, 0x19, 0x81, 0x65, 0x1d, 0x3a, 0x06, 0x09, 0x9a, 0x59, 0x48, 0x48, 0xa6, 0x95, 0x55, 0xf8,
+	0xef, 0x1a, 0x20, 0x2c, 0x13, 0x64, 0x1f, 0x20, 0x1b, 0xa0, 0xfa, 0x7f, 0x67, 0x4c, 0x19, 0x9f,
+	0x08, 0x09, 0x7a, 0x49, 0xb3, 0xe9, 0xd8, 0x0d, 0x86, 0xa6, 0x60, 0x19, 0x5d, 0xe4, 0xb4, 0x55,
+	0xfa, 0x15, 0xa5, 0xe7, 0xd2, 0x8a, 0x14, 0x72, 0xc0, 0xd9, 0x31, 0xc0, 0xf0, 0x09, 0xa4, 0xec,
+	0x90, 0x6b, 0x3c, 0x07, 0x28, 0xec, 0x01, 0x33, 0x80, 0x7b, 0xe8, 0x87, 0xab, 0x49, 0x98, 0x65,
+	0x51, 0x50, 0x0f, 0x5a, 0x95, 0xee, 0x3f, 0xb2, 0x3b, 0x6e, 0x2b, 0x25, 0xd9, 0x74, 0xec, 0x06,
+	0x43, 0xdc, 0xdf, 0x64, 0xd1, 0x21, 0x77, 0xa3, 0x07, 0xe0, 0xb6, 0x0f, 0x96, 0xc5, 0x5b, 0x03,
+	0xbe, 0x44, 0x25, 0x93, 0x01, 0x8f, 0x0a, 0xde, 0xd4, 0x26, 0x47, 0x9e, 0x89, 0xf8, 0x86, 0x41,
+	0x06, 0x3c, 0xf6, 0x9c, 0xeb, 0x2a, 0xfb, 0xad, 0x27, 0x8c, 0xc5, 0xb7, 0xb9, 0x36, 0x72, 0x5a,
+	0x9b, 0xa3, 0x0f, 0xca, 0x2e, 0x50, 0x28, 0x2c, 0xa4, 0x26, 0x2a, 0xd4, 0x8b, 0xad, 0x4a, 0xb7,
+	0x79, 0x5a, 0x5a, 0xbc, 0x86, 0x1a, 0x2f, 0x85, 0x4d, 0x97, 0x6b, 0xc5, 0x4d, 0xf4, 0x6b, 0xa2,
+	0x66, 0x09, 0xe8, 0x9b, 0x04, 0xa4, 0x15, 0x76, 0xe9, 0xeb, 0xca, 0xf1, 0xc1, 0x8a, 0xbb, 0xe8,
+	0xcf, 0xcc, 0x41, 0xd7, 0x73, 0xed, 0xdd, 0x03, 0xe0, 0x4a, 0x26, 0xc6, 0xbf, 0x4e, 0x18, 0x7f,
+	0xfa, 0x0d, 0xdf, 0xa3, 0x0a, 0xe3, 0x8f, 0x73, 0xa1, 0x61, 0x28, 0x52, 0x88, 0x8a, 0xfe, 0x6c,
+	0x7a, 0xda, 0xd9, 0x7d, 0xc1, 0xb5, 0x72, 0x58, 0xbc, 0xef, 0xc0, 0x7d, 0x54, 0xd6, 0x20, 0xe1,
+	0xc9, 0x0b, 0x4b, 0xdf, 0x13, 0xee, 0x0c, 0xb8, 0x8d, 0x7e, 0xfb, 0xf2, 0xa1, 0x66, 0xd2, 0x08,
+	0xd7, 0x6e, 0xa2, 0xd0, 0x5f, 0x94, 0xdb, 0xaf, 0x7e, 0xbe, 0xae, 0x6a, 0xc1, 0xdb, 0xaa, 0x16,
+	0xbc, 0xaf, 0x6a, 0xc1, 0x47, 0x00, 0x00, 0x00, 0xff, 0xff, 0xdb, 0x34, 0x71, 0xc5, 0x67, 0x03,
+	0x00, 0x00,
 }
 
-func (this *Lease) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*Lease)
-	if !ok {
-		that2, ok := that.(Lease)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if !this.Spec.Equal(that1.Spec) {
-		return false
-	}
-	return true
-}
-func (this *LeaseList) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*LeaseList)
-	if !ok {
-		that2, ok := that.(LeaseList)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if len(this.Items) != len(that1.Items) {
-		return false
-	}
-	for i := range this.Items {
-		if !this.Items[i].Equal(that1.Items[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *LeaseSpec) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*LeaseSpec)
-	if !ok {
-		that2, ok := that.(LeaseSpec)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.HolderIdentity != that1.HolderIdentity {
-		return false
-	}
-	if this.LeaseDurationSeconds != that1.LeaseDurationSeconds {
-		return false
-	}
-	if !this.AcquireTime.Equal(that1.AcquireTime) {
-		return false
-	}
-	if !this.RenewTime.Equal(that1.RenewTime) {
-		return false
-	}
-	if this.LeaseTransitions != that1.LeaseTransitions {
-		return false
-	}
-	return true
-}
-func (this *Lease) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_coordination_v1beta1.Lease{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Spec != nil {
-		s = append(s, "Spec: "+fmt.Sprintf("%#v", this.Spec)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *LeaseList) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_coordination_v1beta1.LeaseList{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Items != nil {
-		s = append(s, "Items: "+fmt.Sprintf("%#v", this.Items)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *LeaseSpec) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 9)
-	s = append(s, "&k8s_io_api_coordination_v1beta1.LeaseSpec{")
-	s = append(s, "HolderIdentity: "+fmt.Sprintf("%#v", this.HolderIdentity)+",\n")
-	s = append(s, "LeaseDurationSeconds: "+fmt.Sprintf("%#v", this.LeaseDurationSeconds)+",\n")
-	if this.AcquireTime != nil {
-		s = append(s, "AcquireTime: "+fmt.Sprintf("%#v", this.AcquireTime)+",\n")
-	}
-	if this.RenewTime != nil {
-		s = append(s, "RenewTime: "+fmt.Sprintf("%#v", this.RenewTime)+",\n")
-	}
-	s = append(s, "LeaseTransitions: "+fmt.Sprintf("%#v", this.LeaseTransitions)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func valueToGoStringGenerated(v interface{}, typ string) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("func(v %v) *%v { return &v } ( %#v )", typ, typ, pv)
-}
 func (m *Lease) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -443,6 +299,10 @@ func (m *Lease) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Spec != nil {
 		{
 			size, err := m.Spec.MarshalToSizedBuffer(dAtA[:i])
@@ -490,6 +350,10 @@ func (m *LeaseList) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Items) > 0 {
 		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -539,9 +403,15 @@ func (m *LeaseSpec) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	i = encodeVarintGenerated(dAtA, i, uint64(m.LeaseTransitions))
-	i--
-	dAtA[i] = 0x28
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.LeaseTransitions != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.LeaseTransitions))
+		i--
+		dAtA[i] = 0x28
+	}
 	if m.RenewTime != nil {
 		{
 			size, err := m.RenewTime.MarshalToSizedBuffer(dAtA[:i])
@@ -566,14 +436,18 @@ func (m *LeaseSpec) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x1a
 	}
-	i = encodeVarintGenerated(dAtA, i, uint64(m.LeaseDurationSeconds))
-	i--
-	dAtA[i] = 0x10
-	i -= len(m.HolderIdentity)
-	copy(dAtA[i:], m.HolderIdentity)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.HolderIdentity)))
-	i--
-	dAtA[i] = 0xa
+	if m.LeaseDurationSeconds != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.LeaseDurationSeconds))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.HolderIdentity != nil {
+		i -= len(*m.HolderIdentity)
+		copy(dAtA[i:], *m.HolderIdentity)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.HolderIdentity)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -602,6 +476,9 @@ func (m *Lease) Size() (n int) {
 		l = m.Spec.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -621,6 +498,9 @@ func (m *LeaseList) Size() (n int) {
 			n += 1 + l + sovGenerated(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -630,9 +510,13 @@ func (m *LeaseSpec) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.HolderIdentity)
-	n += 1 + l + sovGenerated(uint64(l))
-	n += 1 + sovGenerated(uint64(m.LeaseDurationSeconds))
+	if m.HolderIdentity != nil {
+		l = len(*m.HolderIdentity)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.LeaseDurationSeconds != nil {
+		n += 1 + sovGenerated(uint64(*m.LeaseDurationSeconds))
+	}
 	if m.AcquireTime != nil {
 		l = m.AcquireTime.Size()
 		n += 1 + l + sovGenerated(uint64(l))
@@ -641,7 +525,12 @@ func (m *LeaseSpec) Size() (n int) {
 		l = m.RenewTime.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
-	n += 1 + sovGenerated(uint64(m.LeaseTransitions))
+	if m.LeaseTransitions != nil {
+		n += 1 + sovGenerated(uint64(*m.LeaseTransitions))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -650,55 +539,6 @@ func sovGenerated(x uint64) (n int) {
 }
 func sozGenerated(x uint64) (n int) {
 	return sovGenerated(uint64((x << 1) ^ uint64((int64(x) >> 63))))
-}
-func (this *Lease) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&Lease{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ObjectMeta", "v1.ObjectMeta", 1) + `,`,
-		`Spec:` + strings.Replace(this.Spec.String(), "LeaseSpec", "LeaseSpec", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *LeaseList) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForItems := "[]*Lease{"
-	for _, f := range this.Items {
-		repeatedStringForItems += strings.Replace(f.String(), "Lease", "Lease", 1) + ","
-	}
-	repeatedStringForItems += "}"
-	s := strings.Join([]string{`&LeaseList{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ListMeta", "v1.ListMeta", 1) + `,`,
-		`Items:` + repeatedStringForItems + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *LeaseSpec) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&LeaseSpec{`,
-		`HolderIdentity:` + fmt.Sprintf("%v", this.HolderIdentity) + `,`,
-		`LeaseDurationSeconds:` + fmt.Sprintf("%v", this.LeaseDurationSeconds) + `,`,
-		`AcquireTime:` + strings.Replace(fmt.Sprintf("%v", this.AcquireTime), "MicroTime", "v1.MicroTime", 1) + `,`,
-		`RenewTime:` + strings.Replace(fmt.Sprintf("%v", this.RenewTime), "MicroTime", "v1.MicroTime", 1) + `,`,
-		`LeaseTransitions:` + fmt.Sprintf("%v", this.LeaseTransitions) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func valueToStringGenerated(v interface{}) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("*%v", pv)
 }
 func (m *Lease) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
@@ -813,6 +653,7 @@ func (m *Lease) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -933,6 +774,7 @@ func (m *LeaseList) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -1001,13 +843,14 @@ func (m *LeaseSpec) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.HolderIdentity = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.HolderIdentity = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field LeaseDurationSeconds", wireType)
 			}
-			m.LeaseDurationSeconds = 0
+			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -1017,11 +860,12 @@ func (m *LeaseSpec) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.LeaseDurationSeconds |= int32(b&0x7F) << shift
+				v |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.LeaseDurationSeconds = &v
 		case 3:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field AcquireTime", wireType)
@@ -1098,7 +942,7 @@ func (m *LeaseSpec) Unmarshal(dAtA []byte) error {
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field LeaseTransitions", wireType)
 			}
-			m.LeaseTransitions = 0
+			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -1108,11 +952,12 @@ func (m *LeaseSpec) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.LeaseTransitions |= int32(b&0x7F) << shift
+				v |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.LeaseTransitions = &v
 		default:
 			iNdEx = preIndex
 			skippy, err := skipGenerated(dAtA[iNdEx:])
@@ -1125,6 +970,7 @@ func (m *LeaseSpec) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}

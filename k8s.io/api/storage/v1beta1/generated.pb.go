@@ -6,7 +6,6 @@ package k8s_io_api_storage_v1beta1
 import (
 	fmt "fmt"
 	proto "github.com/gogo/protobuf/proto"
-	github_com_gogo_protobuf_sortkeys "github.com/gogo/protobuf/sortkeys"
 	io "io"
 	v11 "istio.io/gogo-genproto/k8s.io/api/core/v1"
 	v1 "istio.io/gogo-genproto/k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -14,8 +13,6 @@ import (
 	_ "istio.io/gogo-genproto/k8s.io/apimachinery/pkg/runtime/schema"
 	math "math"
 	math_bits "math/bits"
-	reflect "reflect"
-	strings "strings"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -48,11 +45,15 @@ type CSIDriver struct {
 	// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
 	Metadata *v1.ObjectMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// Specification of the CSI Driver.
-	Spec *CSIDriverSpec `protobuf:"bytes,2,opt,name=spec" json:"spec,omitempty"`
+	Spec                 *CSIDriverSpec `protobuf:"bytes,2,opt,name=spec" json:"spec,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
 }
 
-func (m *CSIDriver) Reset()      { *m = CSIDriver{} }
-func (*CSIDriver) ProtoMessage() {}
+func (m *CSIDriver) Reset()         { *m = CSIDriver{} }
+func (m *CSIDriver) String() string { return proto.CompactTextString(m) }
+func (*CSIDriver) ProtoMessage()    {}
 func (*CSIDriver) Descriptor() ([]byte, []int) {
 	return fileDescriptor_73e4f72503e71065, []int{0}
 }
@@ -104,11 +105,15 @@ type CSIDriverList struct {
 	// +optional
 	Metadata *v1.ListMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// items is the list of CSIDriver
-	Items []*CSIDriver `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	Items                []*CSIDriver `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}     `json:"-"`
+	XXX_unrecognized     []byte       `json:"-"`
+	XXX_sizecache        int32        `json:"-"`
 }
 
-func (m *CSIDriverList) Reset()      { *m = CSIDriverList{} }
-func (*CSIDriverList) ProtoMessage() {}
+func (m *CSIDriverList) Reset()         { *m = CSIDriverList{} }
+func (m *CSIDriverList) String() string { return proto.CompactTextString(m) }
+func (*CSIDriverList) ProtoMessage()    {}
 func (*CSIDriverList) Descriptor() ([]byte, []int) {
 	return fileDescriptor_73e4f72503e71065, []int{1}
 }
@@ -166,7 +171,7 @@ type CSIDriverSpec struct {
 	// specified to false, the attach operation will be skipped.
 	// Otherwise the attach operation will be called.
 	// +optional
-	AttachRequired bool `protobuf:"varint,1,opt,name=attachRequired" json:"attachRequired"`
+	AttachRequired *bool `protobuf:"varint,1,opt,name=attachRequired" json:"attachRequired,omitempty"`
 	// If set to true, podInfoOnMount indicates this CSI volume driver
 	// requires additional pod information (like podName, podUID, etc.) during
 	// mount operations.
@@ -192,7 +197,7 @@ type CSIDriverSpec struct {
 	// deployed on such a cluster and the deployment determines which mode that is, for example
 	// via a command line parameter of the driver.
 	// +optional
-	PodInfoOnMount bool `protobuf:"varint,2,opt,name=podInfoOnMount" json:"podInfoOnMount"`
+	PodInfoOnMount *bool `protobuf:"varint,2,opt,name=podInfoOnMount" json:"podInfoOnMount,omitempty"`
 	// VolumeLifecycleModes defines what kind of volumes this CSI volume driver supports.
 	// The default if the list is empty is "Persistent", which is the usage
 	// defined by the CSI specification and implemented in Kubernetes via the usual
@@ -207,10 +212,14 @@ type CSIDriverSpec struct {
 	// more modes may be added in the future.
 	// +optional
 	VolumeLifecycleModes []string `protobuf:"bytes,3,rep,name=volumeLifecycleModes" json:"volumeLifecycleModes,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *CSIDriverSpec) Reset()      { *m = CSIDriverSpec{} }
-func (*CSIDriverSpec) ProtoMessage() {}
+func (m *CSIDriverSpec) Reset()         { *m = CSIDriverSpec{} }
+func (m *CSIDriverSpec) String() string { return proto.CompactTextString(m) }
+func (*CSIDriverSpec) ProtoMessage()    {}
 func (*CSIDriverSpec) Descriptor() ([]byte, []int) {
 	return fileDescriptor_73e4f72503e71065, []int{2}
 }
@@ -242,15 +251,15 @@ func (m *CSIDriverSpec) XXX_DiscardUnknown() {
 var xxx_messageInfo_CSIDriverSpec proto.InternalMessageInfo
 
 func (m *CSIDriverSpec) GetAttachRequired() bool {
-	if m != nil {
-		return m.AttachRequired
+	if m != nil && m.AttachRequired != nil {
+		return *m.AttachRequired
 	}
 	return false
 }
 
 func (m *CSIDriverSpec) GetPodInfoOnMount() bool {
-	if m != nil {
-		return m.PodInfoOnMount
+	if m != nil && m.PodInfoOnMount != nil {
+		return *m.PodInfoOnMount
 	}
 	return false
 }
@@ -275,11 +284,15 @@ type CSINode struct {
 	// metadata.name must be the Kubernetes node name.
 	Metadata *v1.ObjectMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// spec is the specification of CSINode
-	Spec *CSINodeSpec `protobuf:"bytes,2,opt,name=spec" json:"spec,omitempty"`
+	Spec                 *CSINodeSpec `protobuf:"bytes,2,opt,name=spec" json:"spec,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}     `json:"-"`
+	XXX_unrecognized     []byte       `json:"-"`
+	XXX_sizecache        int32        `json:"-"`
 }
 
-func (m *CSINode) Reset()      { *m = CSINode{} }
-func (*CSINode) ProtoMessage() {}
+func (m *CSINode) Reset()         { *m = CSINode{} }
+func (m *CSINode) String() string { return proto.CompactTextString(m) }
+func (*CSINode) ProtoMessage()    {}
 func (*CSINode) Descriptor() ([]byte, []int) {
 	return fileDescriptor_73e4f72503e71065, []int{3}
 }
@@ -329,7 +342,7 @@ type CSINodeDriver struct {
 	// This is the name of the CSI driver that this object refers to.
 	// This MUST be the same name returned by the CSI GetPluginName() call for
 	// that driver.
-	Name string `protobuf:"bytes,1,opt,name=name" json:"name"`
+	Name *string `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
 	// nodeID of the node from the driver point of view.
 	// This field enables Kubernetes to communicate with storage systems that do
 	// not share the same nomenclature for nodes. For example, Kubernetes may
@@ -338,7 +351,7 @@ type CSINodeDriver struct {
 	// system to attach a volume to a specific node, it can use this field to
 	// refer to the node name using the ID that the storage system will
 	// understand, e.g. "nodeA" instead of "node1". This field is required.
-	NodeID string `protobuf:"bytes,2,opt,name=nodeID" json:"nodeID"`
+	NodeID *string `protobuf:"bytes,2,opt,name=nodeID" json:"nodeID,omitempty"`
 	// topologyKeys is the list of keys supported by the driver.
 	// When a driver is initialized on a cluster, it provides a set of topology
 	// keys that it understands (e.g. "company.com/zone", "company.com/region").
@@ -354,11 +367,15 @@ type CSINodeDriver struct {
 	TopologyKeys []string `protobuf:"bytes,3,rep,name=topologyKeys" json:"topologyKeys,omitempty"`
 	// allocatable represents the volume resources of a node that are available for scheduling.
 	// +optional
-	Allocatable *VolumeNodeResources `protobuf:"bytes,4,opt,name=allocatable" json:"allocatable,omitempty"`
+	Allocatable          *VolumeNodeResources `protobuf:"bytes,4,opt,name=allocatable" json:"allocatable,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
+	XXX_unrecognized     []byte               `json:"-"`
+	XXX_sizecache        int32                `json:"-"`
 }
 
-func (m *CSINodeDriver) Reset()      { *m = CSINodeDriver{} }
-func (*CSINodeDriver) ProtoMessage() {}
+func (m *CSINodeDriver) Reset()         { *m = CSINodeDriver{} }
+func (m *CSINodeDriver) String() string { return proto.CompactTextString(m) }
+func (*CSINodeDriver) ProtoMessage()    {}
 func (*CSINodeDriver) Descriptor() ([]byte, []int) {
 	return fileDescriptor_73e4f72503e71065, []int{4}
 }
@@ -390,15 +407,15 @@ func (m *CSINodeDriver) XXX_DiscardUnknown() {
 var xxx_messageInfo_CSINodeDriver proto.InternalMessageInfo
 
 func (m *CSINodeDriver) GetName() string {
-	if m != nil {
-		return m.Name
+	if m != nil && m.Name != nil {
+		return *m.Name
 	}
 	return ""
 }
 
 func (m *CSINodeDriver) GetNodeID() string {
-	if m != nil {
-		return m.NodeID
+	if m != nil && m.NodeID != nil {
+		return *m.NodeID
 	}
 	return ""
 }
@@ -424,11 +441,15 @@ type CSINodeList struct {
 	// +optional
 	Metadata *v1.ListMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// items is the list of CSINode
-	Items []*CSINode `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	Items                []*CSINode `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}   `json:"-"`
+	XXX_unrecognized     []byte     `json:"-"`
+	XXX_sizecache        int32      `json:"-"`
 }
 
-func (m *CSINodeList) Reset()      { *m = CSINodeList{} }
-func (*CSINodeList) ProtoMessage() {}
+func (m *CSINodeList) Reset()         { *m = CSINodeList{} }
+func (m *CSINodeList) String() string { return proto.CompactTextString(m) }
+func (*CSINodeList) ProtoMessage()    {}
 func (*CSINodeList) Descriptor() ([]byte, []int) {
 	return fileDescriptor_73e4f72503e71065, []int{5}
 }
@@ -479,11 +500,15 @@ type CSINodeSpec struct {
 	// If all drivers in the list are uninstalled, this can become empty.
 	// +patchMergeKey=name
 	// +patchStrategy=merge
-	Drivers []*CSINodeDriver `protobuf:"bytes,1,rep,name=drivers" json:"drivers,omitempty"`
+	Drivers              []*CSINodeDriver `protobuf:"bytes,1,rep,name=drivers" json:"drivers,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}         `json:"-"`
+	XXX_unrecognized     []byte           `json:"-"`
+	XXX_sizecache        int32            `json:"-"`
 }
 
-func (m *CSINodeSpec) Reset()      { *m = CSINodeSpec{} }
-func (*CSINodeSpec) ProtoMessage() {}
+func (m *CSINodeSpec) Reset()         { *m = CSINodeSpec{} }
+func (m *CSINodeSpec) String() string { return proto.CompactTextString(m) }
+func (*CSINodeSpec) ProtoMessage()    {}
 func (*CSINodeSpec) Descriptor() ([]byte, []int) {
 	return fileDescriptor_73e4f72503e71065, []int{6}
 }
@@ -532,7 +557,7 @@ type StorageClass struct {
 	// +optional
 	Metadata *v1.ObjectMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// Provisioner indicates the type of the provisioner.
-	Provisioner string `protobuf:"bytes,2,opt,name=provisioner" json:"provisioner"`
+	Provisioner *string `protobuf:"bytes,2,opt,name=provisioner" json:"provisioner,omitempty"`
 	// Parameters holds the parameters for the provisioner that should
 	// create volumes of this storage class.
 	// +optional
@@ -540,7 +565,7 @@ type StorageClass struct {
 	// Dynamically provisioned PersistentVolumes of this storage class are
 	// created with this reclaimPolicy. Defaults to Delete.
 	// +optional
-	ReclaimPolicy string `protobuf:"bytes,4,opt,name=reclaimPolicy" json:"reclaimPolicy"`
+	ReclaimPolicy *string `protobuf:"bytes,4,opt,name=reclaimPolicy" json:"reclaimPolicy,omitempty"`
 	// Dynamically provisioned PersistentVolumes of this storage class are
 	// created with these mountOptions, e.g. ["ro", "soft"]. Not validated -
 	// mount of the PVs will simply fail if one is invalid.
@@ -548,22 +573,26 @@ type StorageClass struct {
 	MountOptions []string `protobuf:"bytes,5,rep,name=mountOptions" json:"mountOptions,omitempty"`
 	// AllowVolumeExpansion shows whether the storage class allow volume expand
 	// +optional
-	AllowVolumeExpansion bool `protobuf:"varint,6,opt,name=allowVolumeExpansion" json:"allowVolumeExpansion"`
+	AllowVolumeExpansion *bool `protobuf:"varint,6,opt,name=allowVolumeExpansion" json:"allowVolumeExpansion,omitempty"`
 	// VolumeBindingMode indicates how PersistentVolumeClaims should be
 	// provisioned and bound.  When unset, VolumeBindingImmediate is used.
 	// This field is only honored by servers that enable the VolumeScheduling feature.
 	// +optional
-	VolumeBindingMode string `protobuf:"bytes,7,opt,name=volumeBindingMode" json:"volumeBindingMode"`
+	VolumeBindingMode *string `protobuf:"bytes,7,opt,name=volumeBindingMode" json:"volumeBindingMode,omitempty"`
 	// Restrict the node topologies where volumes can be dynamically provisioned.
 	// Each volume plugin defines its own supported topology specifications.
 	// An empty TopologySelectorTerm list means there is no topology restriction.
 	// This field is only honored by servers that enable the VolumeScheduling feature.
 	// +optional
-	AllowedTopologies []*v11.TopologySelectorTerm `protobuf:"bytes,8,rep,name=allowedTopologies" json:"allowedTopologies,omitempty"`
+	AllowedTopologies    []*v11.TopologySelectorTerm `protobuf:"bytes,8,rep,name=allowedTopologies" json:"allowedTopologies,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                    `json:"-"`
+	XXX_unrecognized     []byte                      `json:"-"`
+	XXX_sizecache        int32                       `json:"-"`
 }
 
-func (m *StorageClass) Reset()      { *m = StorageClass{} }
-func (*StorageClass) ProtoMessage() {}
+func (m *StorageClass) Reset()         { *m = StorageClass{} }
+func (m *StorageClass) String() string { return proto.CompactTextString(m) }
+func (*StorageClass) ProtoMessage()    {}
 func (*StorageClass) Descriptor() ([]byte, []int) {
 	return fileDescriptor_73e4f72503e71065, []int{7}
 }
@@ -602,8 +631,8 @@ func (m *StorageClass) GetMetadata() *v1.ObjectMeta {
 }
 
 func (m *StorageClass) GetProvisioner() string {
-	if m != nil {
-		return m.Provisioner
+	if m != nil && m.Provisioner != nil {
+		return *m.Provisioner
 	}
 	return ""
 }
@@ -616,8 +645,8 @@ func (m *StorageClass) GetParameters() map[string]string {
 }
 
 func (m *StorageClass) GetReclaimPolicy() string {
-	if m != nil {
-		return m.ReclaimPolicy
+	if m != nil && m.ReclaimPolicy != nil {
+		return *m.ReclaimPolicy
 	}
 	return ""
 }
@@ -630,15 +659,15 @@ func (m *StorageClass) GetMountOptions() []string {
 }
 
 func (m *StorageClass) GetAllowVolumeExpansion() bool {
-	if m != nil {
-		return m.AllowVolumeExpansion
+	if m != nil && m.AllowVolumeExpansion != nil {
+		return *m.AllowVolumeExpansion
 	}
 	return false
 }
 
 func (m *StorageClass) GetVolumeBindingMode() string {
-	if m != nil {
-		return m.VolumeBindingMode
+	if m != nil && m.VolumeBindingMode != nil {
+		return *m.VolumeBindingMode
 	}
 	return ""
 }
@@ -657,11 +686,15 @@ type StorageClassList struct {
 	// +optional
 	Metadata *v1.ListMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// Items is the list of StorageClasses
-	Items []*StorageClass `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	Items                []*StorageClass `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
 }
 
-func (m *StorageClassList) Reset()      { *m = StorageClassList{} }
-func (*StorageClassList) ProtoMessage() {}
+func (m *StorageClassList) Reset()         { *m = StorageClassList{} }
+func (m *StorageClassList) String() string { return proto.CompactTextString(m) }
+func (*StorageClassList) ProtoMessage()    {}
 func (*StorageClassList) Descriptor() ([]byte, []int) {
 	return fileDescriptor_73e4f72503e71065, []int{8}
 }
@@ -722,11 +755,15 @@ type VolumeAttachment struct {
 	// Populated by the entity completing the attach or detach
 	// operation, i.e. the external-attacher.
 	// +optional
-	Status *VolumeAttachmentStatus `protobuf:"bytes,3,opt,name=status" json:"status,omitempty"`
+	Status               *VolumeAttachmentStatus `protobuf:"bytes,3,opt,name=status" json:"status,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                `json:"-"`
+	XXX_unrecognized     []byte                  `json:"-"`
+	XXX_sizecache        int32                   `json:"-"`
 }
 
-func (m *VolumeAttachment) Reset()      { *m = VolumeAttachment{} }
-func (*VolumeAttachment) ProtoMessage() {}
+func (m *VolumeAttachment) Reset()         { *m = VolumeAttachment{} }
+func (m *VolumeAttachment) String() string { return proto.CompactTextString(m) }
+func (*VolumeAttachment) ProtoMessage()    {}
 func (*VolumeAttachment) Descriptor() ([]byte, []int) {
 	return fileDescriptor_73e4f72503e71065, []int{9}
 }
@@ -785,11 +822,15 @@ type VolumeAttachmentList struct {
 	// +optional
 	Metadata *v1.ListMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// Items is the list of VolumeAttachments
-	Items []*VolumeAttachment `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	Items                []*VolumeAttachment `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}            `json:"-"`
+	XXX_unrecognized     []byte              `json:"-"`
+	XXX_sizecache        int32               `json:"-"`
 }
 
-func (m *VolumeAttachmentList) Reset()      { *m = VolumeAttachmentList{} }
-func (*VolumeAttachmentList) ProtoMessage() {}
+func (m *VolumeAttachmentList) Reset()         { *m = VolumeAttachmentList{} }
+func (m *VolumeAttachmentList) String() string { return proto.CompactTextString(m) }
+func (*VolumeAttachmentList) ProtoMessage()    {}
 func (*VolumeAttachmentList) Descriptor() ([]byte, []int) {
 	return fileDescriptor_73e4f72503e71065, []int{10}
 }
@@ -841,7 +882,7 @@ func (m *VolumeAttachmentList) GetItems() []*VolumeAttachment {
 type VolumeAttachmentSource struct {
 	// Name of the persistent volume to attach.
 	// +optional
-	PersistentVolumeName string `protobuf:"bytes,1,opt,name=persistentVolumeName" json:"persistentVolumeName"`
+	PersistentVolumeName *string `protobuf:"bytes,1,opt,name=persistentVolumeName" json:"persistentVolumeName,omitempty"`
 	// inlineVolumeSpec contains all the information necessary to attach
 	// a persistent volume defined by a pod's inline VolumeSource. This field
 	// is populated only for the CSIMigration feature. It contains
@@ -849,11 +890,15 @@ type VolumeAttachmentSource struct {
 	// PersistentVolumeSpec. This field is alpha-level and is only
 	// honored by servers that enabled the CSIMigration feature.
 	// +optional
-	InlineVolumeSpec *v11.PersistentVolumeSpec `protobuf:"bytes,2,opt,name=inlineVolumeSpec" json:"inlineVolumeSpec,omitempty"`
+	InlineVolumeSpec     *v11.PersistentVolumeSpec `protobuf:"bytes,2,opt,name=inlineVolumeSpec" json:"inlineVolumeSpec,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                  `json:"-"`
+	XXX_unrecognized     []byte                    `json:"-"`
+	XXX_sizecache        int32                     `json:"-"`
 }
 
-func (m *VolumeAttachmentSource) Reset()      { *m = VolumeAttachmentSource{} }
-func (*VolumeAttachmentSource) ProtoMessage() {}
+func (m *VolumeAttachmentSource) Reset()         { *m = VolumeAttachmentSource{} }
+func (m *VolumeAttachmentSource) String() string { return proto.CompactTextString(m) }
+func (*VolumeAttachmentSource) ProtoMessage()    {}
 func (*VolumeAttachmentSource) Descriptor() ([]byte, []int) {
 	return fileDescriptor_73e4f72503e71065, []int{11}
 }
@@ -885,8 +930,8 @@ func (m *VolumeAttachmentSource) XXX_DiscardUnknown() {
 var xxx_messageInfo_VolumeAttachmentSource proto.InternalMessageInfo
 
 func (m *VolumeAttachmentSource) GetPersistentVolumeName() string {
-	if m != nil {
-		return m.PersistentVolumeName
+	if m != nil && m.PersistentVolumeName != nil {
+		return *m.PersistentVolumeName
 	}
 	return ""
 }
@@ -902,15 +947,19 @@ func (m *VolumeAttachmentSource) GetInlineVolumeSpec() *v11.PersistentVolumeSpec
 type VolumeAttachmentSpec struct {
 	// Attacher indicates the name of the volume driver that MUST handle this
 	// request. This is the name returned by GetPluginName().
-	Attacher string `protobuf:"bytes,1,opt,name=attacher" json:"attacher"`
+	Attacher *string `protobuf:"bytes,1,opt,name=attacher" json:"attacher,omitempty"`
 	// Source represents the volume that should be attached.
 	Source *VolumeAttachmentSource `protobuf:"bytes,2,opt,name=source" json:"source,omitempty"`
 	// The node that the volume should be attached to.
-	NodeName string `protobuf:"bytes,3,opt,name=nodeName" json:"nodeName"`
+	NodeName             *string  `protobuf:"bytes,3,opt,name=nodeName" json:"nodeName,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *VolumeAttachmentSpec) Reset()      { *m = VolumeAttachmentSpec{} }
-func (*VolumeAttachmentSpec) ProtoMessage() {}
+func (m *VolumeAttachmentSpec) Reset()         { *m = VolumeAttachmentSpec{} }
+func (m *VolumeAttachmentSpec) String() string { return proto.CompactTextString(m) }
+func (*VolumeAttachmentSpec) ProtoMessage()    {}
 func (*VolumeAttachmentSpec) Descriptor() ([]byte, []int) {
 	return fileDescriptor_73e4f72503e71065, []int{12}
 }
@@ -942,8 +991,8 @@ func (m *VolumeAttachmentSpec) XXX_DiscardUnknown() {
 var xxx_messageInfo_VolumeAttachmentSpec proto.InternalMessageInfo
 
 func (m *VolumeAttachmentSpec) GetAttacher() string {
-	if m != nil {
-		return m.Attacher
+	if m != nil && m.Attacher != nil {
+		return *m.Attacher
 	}
 	return ""
 }
@@ -956,8 +1005,8 @@ func (m *VolumeAttachmentSpec) GetSource() *VolumeAttachmentSource {
 }
 
 func (m *VolumeAttachmentSpec) GetNodeName() string {
-	if m != nil {
-		return m.NodeName
+	if m != nil && m.NodeName != nil {
+		return *m.NodeName
 	}
 	return ""
 }
@@ -967,7 +1016,7 @@ type VolumeAttachmentStatus struct {
 	// Indicates the volume is successfully attached.
 	// This field must only be set by the entity completing the attach
 	// operation, i.e. the external-attacher.
-	Attached bool `protobuf:"varint,1,opt,name=attached" json:"attached"`
+	Attached *bool `protobuf:"varint,1,opt,name=attached" json:"attached,omitempty"`
 	// Upon successful attach, this field is populated with any
 	// information returned by the attach operation that must be passed
 	// into subsequent WaitForAttach or Mount calls.
@@ -984,11 +1033,15 @@ type VolumeAttachmentStatus struct {
 	// This field must only be set by the entity completing the detach
 	// operation, i.e. the external-attacher.
 	// +optional
-	DetachError *VolumeError `protobuf:"bytes,4,opt,name=detachError" json:"detachError,omitempty"`
+	DetachError          *VolumeError `protobuf:"bytes,4,opt,name=detachError" json:"detachError,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}     `json:"-"`
+	XXX_unrecognized     []byte       `json:"-"`
+	XXX_sizecache        int32        `json:"-"`
 }
 
-func (m *VolumeAttachmentStatus) Reset()      { *m = VolumeAttachmentStatus{} }
-func (*VolumeAttachmentStatus) ProtoMessage() {}
+func (m *VolumeAttachmentStatus) Reset()         { *m = VolumeAttachmentStatus{} }
+func (m *VolumeAttachmentStatus) String() string { return proto.CompactTextString(m) }
+func (*VolumeAttachmentStatus) ProtoMessage()    {}
 func (*VolumeAttachmentStatus) Descriptor() ([]byte, []int) {
 	return fileDescriptor_73e4f72503e71065, []int{13}
 }
@@ -1020,8 +1073,8 @@ func (m *VolumeAttachmentStatus) XXX_DiscardUnknown() {
 var xxx_messageInfo_VolumeAttachmentStatus proto.InternalMessageInfo
 
 func (m *VolumeAttachmentStatus) GetAttached() bool {
-	if m != nil {
-		return m.Attached
+	if m != nil && m.Attached != nil {
+		return *m.Attached
 	}
 	return false
 }
@@ -1056,11 +1109,15 @@ type VolumeError struct {
 	// This string may be logged, so it should not contain sensitive
 	// information.
 	// +optional
-	Message string `protobuf:"bytes,2,opt,name=message" json:"message"`
+	Message              *string  `protobuf:"bytes,2,opt,name=message" json:"message,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *VolumeError) Reset()      { *m = VolumeError{} }
-func (*VolumeError) ProtoMessage() {}
+func (m *VolumeError) Reset()         { *m = VolumeError{} }
+func (m *VolumeError) String() string { return proto.CompactTextString(m) }
+func (*VolumeError) ProtoMessage()    {}
 func (*VolumeError) Descriptor() ([]byte, []int) {
 	return fileDescriptor_73e4f72503e71065, []int{14}
 }
@@ -1099,8 +1156,8 @@ func (m *VolumeError) GetTime() *v1.Time {
 }
 
 func (m *VolumeError) GetMessage() string {
-	if m != nil {
-		return m.Message
+	if m != nil && m.Message != nil {
+		return *m.Message
 	}
 	return ""
 }
@@ -1112,11 +1169,15 @@ type VolumeNodeResources struct {
 	// The same rule applies for a unique volume that is shared among multiple pods on the same node.
 	// If this field is nil, then the supported number of volumes on this node is unbounded.
 	// +optional
-	Count int32 `protobuf:"varint,1,opt,name=count" json:"count"`
+	Count                *int32   `protobuf:"varint,1,opt,name=count" json:"count,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *VolumeNodeResources) Reset()      { *m = VolumeNodeResources{} }
-func (*VolumeNodeResources) ProtoMessage() {}
+func (m *VolumeNodeResources) Reset()         { *m = VolumeNodeResources{} }
+func (m *VolumeNodeResources) String() string { return proto.CompactTextString(m) }
+func (*VolumeNodeResources) ProtoMessage()    {}
 func (*VolumeNodeResources) Descriptor() ([]byte, []int) {
 	return fileDescriptor_73e4f72503e71065, []int{15}
 }
@@ -1148,8 +1209,8 @@ func (m *VolumeNodeResources) XXX_DiscardUnknown() {
 var xxx_messageInfo_VolumeNodeResources proto.InternalMessageInfo
 
 func (m *VolumeNodeResources) GetCount() int32 {
-	if m != nil {
-		return m.Count
+	if m != nil && m.Count != nil {
+		return *m.Count
 	}
 	return 0
 }
@@ -1180,870 +1241,73 @@ func init() {
 }
 
 var fileDescriptor_73e4f72503e71065 = []byte{
-	// 1073 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x56, 0x4d, 0x6f, 0xdb, 0x46,
-	0x13, 0x16, 0x2d, 0xf9, 0x6b, 0x95, 0xbc, 0xaf, 0xb3, 0x35, 0x52, 0x42, 0x28, 0x58, 0x43, 0x45,
-	0x1b, 0xc7, 0x08, 0xa8, 0xd8, 0x08, 0x0a, 0xb7, 0x41, 0x03, 0xc4, 0x1f, 0x07, 0xb9, 0x76, 0xed,
-	0x50, 0x46, 0xd0, 0xeb, 0x9a, 0x9c, 0xc8, 0x5b, 0x93, 0x5c, 0x76, 0x77, 0xa5, 0x56, 0x3d, 0xf5,
-	0x27, 0xf4, 0xd0, 0x43, 0x4f, 0xcd, 0xad, 0xc8, 0xaf, 0x68, 0xaf, 0x39, 0xfa, 0x98, 0x53, 0x51,
-	0xcb, 0x97, 0x1e, 0x83, 0xfe, 0x82, 0x62, 0x97, 0x1f, 0x22, 0x25, 0x39, 0x96, 0x0b, 0x5d, 0x67,
-	0xe7, 0x79, 0xf6, 0xd9, 0x99, 0x67, 0x86, 0x44, 0x6b, 0x67, 0x9b, 0xc2, 0xa6, 0xac, 0x41, 0x22,
-	0xda, 0x10, 0x92, 0x71, 0xd2, 0x86, 0x46, 0x77, 0xfd, 0x04, 0x24, 0x59, 0x6f, 0xb4, 0x21, 0x04,
-	0x4e, 0x24, 0x78, 0x76, 0xc4, 0x99, 0x64, 0xb8, 0x16, 0xe7, 0xda, 0x24, 0xa2, 0x76, 0x92, 0x6b,
-	0x27, 0xb9, 0xb5, 0x7a, 0x8e, 0xc7, 0x65, 0x5c, 0x91, 0x0c, 0xe3, 0x6b, 0x8f, 0x06, 0x39, 0x01,
-	0x71, 0x4f, 0x69, 0x08, 0xbc, 0xd7, 0x88, 0xce, 0xda, 0x2a, 0x20, 0x1a, 0x01, 0x48, 0x32, 0x0e,
-	0xd5, 0xb8, 0x0a, 0xc5, 0x3b, 0xa1, 0xa4, 0x01, 0x8c, 0x00, 0x3e, 0xbd, 0x0e, 0x20, 0xdc, 0x53,
-	0x08, 0xc8, 0x30, 0xae, 0xfe, 0x8b, 0x81, 0x16, 0xb7, 0x5b, 0xcd, 0x1d, 0x4e, 0xbb, 0xc0, 0xf1,
-	0x3e, 0x5a, 0x50, 0x8a, 0x3c, 0x22, 0x89, 0x69, 0xac, 0x18, 0xab, 0xd5, 0x8d, 0x87, 0xf6, 0xe0,
-	0xfd, 0x19, 0xb1, 0x1d, 0x9d, 0xb5, 0x55, 0x40, 0xd8, 0x2a, 0xdb, 0xee, 0xae, 0xdb, 0x87, 0x27,
-	0xdf, 0x80, 0x2b, 0x0f, 0x40, 0x12, 0x27, 0x63, 0xc0, 0x5f, 0xa0, 0x8a, 0x88, 0xc0, 0x35, 0x67,
-	0x34, 0xd3, 0x7d, 0xfb, 0xea, 0x4a, 0xda, 0x99, 0x84, 0x56, 0x04, 0xae, 0xa3, 0x61, 0x4a, 0xda,
-	0xed, 0x2c, 0xbe, 0x4f, 0x85, 0xc4, 0x7b, 0x23, 0xf2, 0xec, 0xc9, 0xe4, 0x29, 0xf4, 0x90, 0xb8,
-	0xc7, 0x68, 0x96, 0x4a, 0x08, 0x84, 0x39, 0xb3, 0x52, 0x5e, 0xad, 0x6e, 0x7c, 0x3c, 0x91, 0x3a,
-	0x27, 0xc6, 0xd4, 0x5f, 0xe6, 0xa5, 0x29, 0xc9, 0xf8, 0x01, 0xfa, 0x1f, 0x91, 0x92, 0xb8, 0xa7,
-	0x0e, 0x7c, 0xdb, 0xa1, 0x1c, 0x3c, 0x2d, 0x70, 0x61, 0xab, 0xf2, 0xfa, 0xcf, 0x0f, 0x4b, 0xce,
-	0xd0, 0x99, 0xca, 0x8e, 0x98, 0xd7, 0x0c, 0x5f, 0xb0, 0xc3, 0xf0, 0x80, 0x75, 0x42, 0xa9, 0x6b,
-	0x94, 0x65, 0x17, 0xcf, 0xf0, 0x06, 0x5a, 0xee, 0x32, 0xbf, 0x13, 0xc0, 0x3e, 0x7d, 0x01, 0x6e,
-	0xcf, 0xf5, 0xe1, 0x80, 0x79, 0x20, 0xcc, 0xf2, 0x4a, 0x79, 0x75, 0xd1, 0x19, 0x7b, 0x56, 0xff,
-	0xd9, 0x40, 0xf3, 0xdb, 0xad, 0xe6, 0x57, 0xcc, 0x83, 0x29, 0x77, 0xf5, 0x71, 0xa1, 0xab, 0xf7,
-	0xae, 0xa9, 0x9b, 0x12, 0x90, 0xeb, 0xe9, 0xef, 0x71, 0xe1, 0x54, 0x34, 0xb1, 0x9c, 0x89, 0x2a,
-	0x21, 0x09, 0x40, 0x0b, 0x5b, 0x4c, 0x0a, 0xa0, 0x23, 0xf8, 0x03, 0x34, 0x17, 0x32, 0x0f, 0x9a,
-	0x3b, 0xfa, 0xaa, 0xf4, 0x2c, 0x89, 0xe1, 0x3a, 0xba, 0x25, 0x59, 0xc4, 0x7c, 0xd6, 0xee, 0x7d,
-	0x09, 0xbd, 0xb4, 0x18, 0x85, 0x18, 0x7e, 0x86, 0xaa, 0xc4, 0xf7, 0x99, 0x4b, 0x24, 0x39, 0xf1,
-	0xc1, 0xac, 0x68, 0xc5, 0x8d, 0x77, 0x29, 0x7e, 0xae, 0x6b, 0xa9, 0xe4, 0x39, 0x20, 0x58, 0x87,
-	0xbb, 0x20, 0x9c, 0x3c, 0x87, 0xaa, 0x6b, 0x35, 0x79, 0xc0, 0xd4, 0x2d, 0xf9, 0x59, 0xd1, 0x92,
-	0x1f, 0x4d, 0x50, 0xda, 0xd4, 0x90, 0x4e, 0xa6, 0x4a, 0xbb, 0x71, 0x1b, 0xcd, 0x7b, 0xba, 0xbc,
-	0xc2, 0x34, 0x34, 0xd7, 0xfd, 0x09, 0xb8, 0x12, 0x8b, 0xa7, 0xc8, 0xfa, 0x1f, 0x15, 0x74, 0xab,
-	0x15, 0xa7, 0x6e, 0xfb, 0x44, 0x88, 0x29, 0xfb, 0xe8, 0x13, 0x54, 0x8d, 0x38, 0xeb, 0x52, 0x41,
-	0x59, 0x08, 0xbc, 0xd0, 0xe3, 0xfc, 0x01, 0xfe, 0x1a, 0xa1, 0x88, 0x70, 0x12, 0x80, 0x54, 0xcf,
-	0x29, 0xeb, 0xe7, 0x6c, 0xbe, 0xeb, 0x39, 0x79, 0xcd, 0xf6, 0x51, 0x06, 0xdd, 0x0d, 0x25, 0xef,
-	0x39, 0x39, 0x2e, 0xbc, 0x86, 0x6e, 0x73, 0x70, 0x7d, 0x42, 0x83, 0x23, 0xe6, 0x53, 0xb7, 0xa7,
-	0x0d, 0x92, 0x6a, 0x28, 0x1e, 0x29, 0xbb, 0x05, 0x6a, 0x18, 0x0f, 0x23, 0x49, 0x59, 0x28, 0xcc,
-	0xd9, 0xd8, 0x6e, 0xf9, 0x18, 0xde, 0x44, 0xcb, 0xca, 0x2a, 0xdf, 0xc5, 0x26, 0xda, 0xfd, 0x3e,
-	0x22, 0xa1, 0x7a, 0x83, 0x39, 0x97, 0x9b, 0xed, 0xb1, 0x19, 0x78, 0x03, 0xdd, 0x89, 0xa7, 0x78,
-	0x8b, 0x86, 0x1e, 0x0d, 0xdb, 0x6a, 0x86, 0xcd, 0xf9, 0x9c, 0x9a, 0xd1, 0x63, 0xfc, 0x1c, 0xdd,
-	0xd1, 0x5c, 0xe0, 0x1d, 0xc7, 0x9e, 0xa7, 0x20, 0xcc, 0x05, 0x5d, 0x9e, 0xd5, 0x7c, 0x79, 0xd4,
-	0x87, 0x49, 0x35, 0x21, 0xc9, 0xea, 0xb5, 0xc0, 0x07, 0x57, 0x32, 0x7e, 0x0c, 0x3c, 0x70, 0x46,
-	0x29, 0x6a, 0x4d, 0xf4, 0xff, 0xa1, 0xa2, 0xe1, 0xbb, 0xa8, 0x7c, 0x06, 0xbd, 0xc2, 0x88, 0xaa,
-	0x00, 0xae, 0xa1, 0xd9, 0x2e, 0xf1, 0x3b, 0x50, 0x68, 0x5e, 0x1c, 0xfa, 0x7c, 0x66, 0xd3, 0xa8,
-	0xff, 0x6a, 0xa0, 0xa5, 0x7c, 0x37, 0xa6, 0x3e, 0x31, 0x4f, 0x8a, 0x13, 0xb3, 0x3a, 0xa9, 0x2d,
-	0xd2, 0xb1, 0xf9, 0xc7, 0x40, 0x4b, 0x71, 0x2f, 0x9e, 0xea, 0x05, 0x1d, 0x40, 0x28, 0xa7, 0x6c,
-	0xf3, 0x9d, 0xc2, 0xba, 0x7c, 0x78, 0xfd, 0xf2, 0x19, 0x28, 0x19, 0xec, 0x4d, 0xbc, 0x87, 0xe6,
-	0x84, 0x24, 0xb2, 0xa3, 0x06, 0x40, 0xf1, 0x6c, 0xdc, 0x88, 0x47, 0x23, 0x9d, 0x84, 0xa1, 0xfe,
-	0x9b, 0x81, 0x96, 0x87, 0x53, 0xa6, 0xde, 0x99, 0xad, 0x62, 0x67, 0x1e, 0xdc, 0x44, 0x6f, 0xda,
-	0x9d, 0x57, 0x06, 0xba, 0x3b, 0xf2, 0x16, 0xbd, 0x94, 0xd5, 0xa8, 0x45, 0xc0, 0x05, 0x15, 0x12,
-	0x42, 0x99, 0x2c, 0xed, 0xe1, 0xaf, 0xc8, 0xd8, 0x0c, 0x7c, 0x8c, 0x96, 0x68, 0xe8, 0xd3, 0x10,
-	0xe2, 0x58, 0x6b, 0xd0, 0x9b, 0xb1, 0x53, 0x73, 0x34, 0xc4, 0xa1, 0x7b, 0x32, 0xc2, 0x30, 0xb6,
-	0xa6, 0x7a, 0x13, 0xaf, 0xa0, 0x85, 0xf8, 0xdb, 0x0f, 0xbc, 0x20, 0x2e, 0x8b, 0xea, 0xd6, 0xea,
-	0x47, 0x25, 0x32, 0x6e, 0xd6, 0x5a, 0x8d, 0x74, 0x12, 0x06, 0x75, 0x9b, 0xfa, 0x3c, 0xea, 0x52,
-	0x94, 0xf3, 0xb7, 0xa5, 0xd1, 0xfa, 0xcb, 0xf2, 0x98, 0x9a, 0x6a, 0x5f, 0xe4, 0xa4, 0x16, 0x7f,
-	0x5e, 0xb2, 0x28, 0xfe, 0x01, 0x61, 0x92, 0xa1, 0x0e, 0x52, 0xab, 0xc4, 0x1d, 0xde, 0xbb, 0xb9,
-	0x23, 0xed, 0xa7, 0x23, 0x64, 0xf1, 0x92, 0x1e, 0x73, 0x0b, 0x6e, 0xa2, 0x6a, 0x1c, 0xdd, 0xe5,
-	0x9c, 0xf1, 0x64, 0x0c, 0xee, 0x5d, 0x7f, 0xa9, 0x4e, 0x77, 0xf2, 0x58, 0x45, 0xe5, 0xc1, 0x80,
-	0xaa, 0x72, 0x43, 0xaa, 0x1c, 0xb6, 0xf6, 0x0c, 0xbd, 0x7f, 0xc5, 0x23, 0xfe, 0xf3, 0xd2, 0x0c,
-	0x50, 0x35, 0x77, 0x1d, 0x7e, 0x82, 0x2a, 0xea, 0xff, 0x3d, 0x19, 0xc8, 0xb5, 0xc9, 0x06, 0xf2,
-	0x98, 0x06, 0xe0, 0x68, 0x1c, 0xb6, 0xd0, 0x7c, 0x00, 0x42, 0x90, 0x76, 0xf1, 0xc2, 0x34, 0x58,
-	0x5f, 0x47, 0xef, 0x8d, 0xf9, 0xe9, 0x51, 0x2a, 0x5d, 0xfd, 0x63, 0xaa, 0xee, 0x9d, 0x4d, 0x55,
-	0xea, 0xd0, 0xd6, 0xa3, 0xf3, 0x0b, 0xab, 0xf4, 0xe6, 0xc2, 0x2a, 0xbd, 0xbd, 0xb0, 0x8c, 0x1f,
-	0xfb, 0x96, 0xf1, 0xaa, 0x6f, 0x19, 0xaf, 0xfb, 0x96, 0x71, 0xde, 0xb7, 0x8c, 0xbf, 0xfa, 0x96,
-	0xf1, 0x77, 0xdf, 0x2a, 0xbd, 0xed, 0x5b, 0xc6, 0x4f, 0x97, 0x56, 0xe9, 0xfc, 0xd2, 0x2a, 0xbd,
-	0xb9, 0xb4, 0x4a, 0xff, 0x06, 0x00, 0x00, 0xff, 0xff, 0xc7, 0x0a, 0xc6, 0xa5, 0x75, 0x0d, 0x00,
-	0x00,
+	// 1019 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x56, 0xdd, 0x6e, 0xe3, 0x44,
+	0x14, 0x96, 0x9b, 0xf4, 0xef, 0xa4, 0x0b, 0xdd, 0xa1, 0x5a, 0xac, 0x5c, 0x54, 0x95, 0xf9, 0xd9,
+	0xee, 0xb2, 0x72, 0xb6, 0x15, 0x42, 0x85, 0xd5, 0xae, 0xb4, 0xfd, 0xb9, 0x48, 0x69, 0x69, 0x99,
+	0x54, 0x2b, 0x6e, 0xa7, 0xf6, 0xd9, 0x74, 0xa8, 0xed, 0x31, 0x33, 0x93, 0x40, 0x78, 0x07, 0xae,
+	0xe0, 0x02, 0x81, 0xc4, 0x05, 0x17, 0x3c, 0x00, 0x4f, 0xc1, 0x25, 0x8f, 0x80, 0xfa, 0x08, 0x3c,
+	0xc1, 0x6a, 0xc6, 0x76, 0xe2, 0xfc, 0x74, 0x9b, 0x48, 0xb9, 0xf3, 0x1c, 0x9f, 0xf3, 0xcd, 0x37,
+	0xdf, 0xf9, 0xce, 0xd8, 0xf0, 0xf8, 0x7a, 0x4f, 0xf9, 0x5c, 0x34, 0x58, 0xca, 0x1b, 0x4a, 0x0b,
+	0xc9, 0xda, 0xd8, 0xe8, 0xee, 0x5c, 0xa2, 0x66, 0x3b, 0x8d, 0x36, 0x26, 0x28, 0x99, 0xc6, 0xd0,
+	0x4f, 0xa5, 0xd0, 0x82, 0xd4, 0xb3, 0x5c, 0x9f, 0xa5, 0xdc, 0xcf, 0x73, 0xfd, 0x3c, 0xb7, 0xee,
+	0x95, 0x70, 0x02, 0x21, 0x0d, 0xc8, 0x68, 0x7d, 0xfd, 0xd3, 0x41, 0x4e, 0xcc, 0x82, 0x2b, 0x9e,
+	0xa0, 0xec, 0x35, 0xd2, 0xeb, 0xb6, 0x09, 0xa8, 0x46, 0x8c, 0x9a, 0x4d, 0xaa, 0x6a, 0xdc, 0x56,
+	0x25, 0x3b, 0x89, 0xe6, 0x31, 0x8e, 0x15, 0x7c, 0x76, 0x57, 0x81, 0x0a, 0xae, 0x30, 0x66, 0xa3,
+	0x75, 0xde, 0xaf, 0x0e, 0xac, 0x1e, 0xb4, 0x9a, 0x87, 0x92, 0x77, 0x51, 0x92, 0x13, 0x58, 0x31,
+	0x8c, 0x42, 0xa6, 0x99, 0xeb, 0x6c, 0x39, 0xdb, 0xb5, 0xdd, 0xa7, 0xfe, 0xe0, 0xfc, 0x7d, 0x60,
+	0x3f, 0xbd, 0x6e, 0x9b, 0x80, 0xf2, 0x4d, 0xb6, 0xdf, 0xdd, 0xf1, 0xcf, 0x2e, 0xbf, 0xc5, 0x40,
+	0x9f, 0xa2, 0x66, 0xb4, 0x8f, 0x40, 0x9e, 0x43, 0x55, 0xa5, 0x18, 0xb8, 0x0b, 0x16, 0xe9, 0x91,
+	0x7f, 0xbb, 0x92, 0x7e, 0x9f, 0x42, 0x2b, 0xc5, 0x80, 0xda, 0x32, 0x43, 0xed, 0x5e, 0x3f, 0x7e,
+	0xc2, 0x95, 0x26, 0xc7, 0x63, 0xf4, 0xfc, 0xe9, 0xe8, 0x99, 0xea, 0x11, 0x72, 0xcf, 0x60, 0x91,
+	0x6b, 0x8c, 0x95, 0xbb, 0xb0, 0x55, 0xd9, 0xae, 0xed, 0x7e, 0x34, 0x15, 0x3b, 0x9a, 0xd5, 0x78,
+	0x3f, 0x97, 0xa9, 0x19, 0xca, 0xe4, 0x63, 0x78, 0x87, 0x69, 0xcd, 0x82, 0x2b, 0x8a, 0xdf, 0x75,
+	0xb8, 0xc4, 0xd0, 0x12, 0x5c, 0xa1, 0x23, 0x51, 0x93, 0x97, 0x8a, 0xb0, 0x99, 0xbc, 0x16, 0x67,
+	0xc9, 0xa9, 0xe8, 0x24, 0xda, 0xaa, 0xb3, 0x42, 0x47, 0xa2, 0x64, 0x17, 0x36, 0xba, 0x22, 0xea,
+	0xc4, 0x78, 0xc2, 0x5f, 0x63, 0xd0, 0x0b, 0x22, 0x3c, 0x15, 0x21, 0x2a, 0xb7, 0xb2, 0x55, 0xd9,
+	0x5e, 0xa5, 0x13, 0xdf, 0x79, 0xbf, 0x38, 0xb0, 0x7c, 0xd0, 0x6a, 0x7e, 0x25, 0x42, 0x9c, 0x73,
+	0x27, 0x9f, 0x0d, 0x75, 0xf2, 0xe1, 0x1d, 0x5a, 0x19, 0x02, 0xa5, 0x3e, 0xfe, 0x9d, 0x89, 0x65,
+	0xa2, 0xb9, 0xcd, 0x08, 0x54, 0x13, 0x16, 0xa3, 0x25, 0xb6, 0x4a, 0xed, 0x33, 0x79, 0x00, 0x4b,
+	0x89, 0x08, 0xb1, 0x79, 0x68, 0x37, 0x59, 0xa5, 0xf9, 0x8a, 0x78, 0xb0, 0xa6, 0x45, 0x2a, 0x22,
+	0xd1, 0xee, 0x7d, 0x89, 0xbd, 0x42, 0x80, 0xa1, 0x18, 0xf9, 0x1a, 0x6a, 0x2c, 0x8a, 0x44, 0xc0,
+	0x34, 0xbb, 0x8c, 0xd0, 0xad, 0x5a, 0x96, 0x8d, 0xb7, 0xb1, 0x7c, 0x65, 0xf5, 0x33, 0x94, 0x28,
+	0x2a, 0xd1, 0x91, 0x01, 0x2a, 0x5a, 0xc6, 0x30, 0x5a, 0xd6, 0x72, 0xd2, 0x73, 0xb7, 0xde, 0xe7,
+	0xc3, 0xd6, 0xfb, 0x60, 0x0a, 0x39, 0x0b, 0xe3, 0xd1, 0x3e, 0x2b, 0xeb, 0xba, 0x03, 0x58, 0x0e,
+	0xad, 0xa4, 0xca, 0x75, 0x2c, 0xd6, 0xa3, 0x29, 0xb0, 0x72, 0x2b, 0x17, 0x95, 0xde, 0xef, 0x55,
+	0x58, 0x6b, 0x65, 0xa9, 0x07, 0x11, 0x53, 0x6a, 0xce, 0xde, 0xd9, 0x82, 0x5a, 0x2a, 0x45, 0x97,
+	0x2b, 0x2e, 0x12, 0x94, 0x79, 0x77, 0xcb, 0x21, 0xf2, 0x0d, 0x40, 0xca, 0x24, 0x8b, 0x51, 0x9b,
+	0x83, 0x54, 0xec, 0x41, 0xf6, 0xde, 0x76, 0x90, 0x32, 0x5b, 0xff, 0xbc, 0x5f, 0x7a, 0x94, 0x68,
+	0xd9, 0xa3, 0x25, 0x2c, 0xf2, 0x21, 0xdc, 0x93, 0x18, 0x44, 0x8c, 0xc7, 0xe7, 0x22, 0xe2, 0x41,
+	0xcf, 0x5a, 0x63, 0x95, 0x0e, 0x07, 0x8d, 0xc5, 0x62, 0x33, 0x74, 0x67, 0xa9, 0xe6, 0x22, 0x51,
+	0xee, 0x62, 0x66, 0xb1, 0x72, 0xcc, 0xcc, 0xa3, 0xb1, 0xc7, 0xf7, 0x99, 0x71, 0x8e, 0x7e, 0x48,
+	0x59, 0x62, 0xd8, 0xbb, 0x4b, 0x76, 0x7a, 0x27, 0xbe, 0x23, 0x4f, 0xe0, 0x7e, 0x36, 0xa7, 0xfb,
+	0x3c, 0x09, 0x79, 0xd2, 0x36, 0x53, 0xea, 0x2e, 0x5b, 0x06, 0xe3, 0x2f, 0xc8, 0x2b, 0xb8, 0x6f,
+	0x51, 0x30, 0xbc, 0xc8, 0xbc, 0xcd, 0x51, 0xb9, 0x2b, 0x56, 0x8c, 0xed, 0xb2, 0x18, 0xe6, 0x43,
+	0x63, 0xc4, 0xce, 0xb3, 0x7a, 0x2d, 0x8c, 0x30, 0xd0, 0x42, 0x5e, 0xa0, 0x8c, 0xe9, 0x38, 0x44,
+	0xfd, 0x39, 0xbc, 0x3b, 0x22, 0x11, 0x59, 0x87, 0xca, 0x35, 0xf6, 0xf2, 0xf1, 0x33, 0x8f, 0x64,
+	0x03, 0x16, 0xbb, 0x2c, 0xea, 0x60, 0xde, 0x9e, 0x6c, 0xf1, 0xc5, 0xc2, 0x9e, 0xe3, 0xfd, 0xe1,
+	0xc0, 0x7a, 0x59, 0xef, 0xb9, 0x4f, 0xc3, 0x8b, 0xe1, 0x69, 0xd8, 0x9e, 0xb6, 0xf1, 0xc5, 0x48,
+	0xfc, 0xef, 0xc0, 0x7a, 0xa6, 0xfc, 0x4b, 0x7b, 0xd5, 0xc6, 0x98, 0xe8, 0x39, 0x5b, 0xf8, 0x70,
+	0xe8, 0xfa, 0x7b, 0x7a, 0xf7, 0xc5, 0x32, 0x60, 0x32, 0xb8, 0x07, 0xc9, 0x31, 0x2c, 0x29, 0xcd,
+	0x74, 0xc7, 0x58, 0xdc, 0xe0, 0xec, 0xce, 0x84, 0x63, 0x2b, 0x69, 0x8e, 0xe0, 0xfd, 0xe5, 0xc0,
+	0xc6, 0x68, 0xca, 0xdc, 0x3b, 0xb3, 0x3f, 0xdc, 0x99, 0x27, 0xb3, 0xf0, 0x2d, 0xba, 0xf3, 0xa7,
+	0x03, 0x0f, 0xc6, 0xce, 0x62, 0x2f, 0x5c, 0x33, 0x52, 0x29, 0x4a, 0xc5, 0x95, 0xc6, 0x44, 0xe7,
+	0x17, 0xf2, 0xe0, 0xab, 0x30, 0xf1, 0x1d, 0xb9, 0x80, 0x75, 0x9e, 0x44, 0x3c, 0xc1, 0x2c, 0xd6,
+	0x1a, 0x74, 0x65, 0xe2, 0x8c, 0x9c, 0x8f, 0x60, 0xd8, 0x6e, 0x8c, 0x21, 0x78, 0xbf, 0x4d, 0x50,
+	0xd3, 0xde, 0xaf, 0x75, 0x58, 0xc9, 0xbe, 0xdf, 0x28, 0x73, 0x5a, 0xfd, 0xb5, 0x6d, 0xa7, 0x3d,
+	0x48, 0x4e, 0x60, 0xb6, 0x76, 0xda, 0x4a, 0x9a, 0x23, 0x98, 0x7d, 0xcc, 0xe7, 0xce, 0x1e, 0xbf,
+	0x92, 0xed, 0x53, 0xac, 0xbd, 0x9f, 0x2a, 0x13, 0x14, 0xb4, 0x2e, 0x28, 0xd1, 0x2b, 0x7e, 0x37,
+	0xfa, 0x6b, 0xf2, 0x23, 0x10, 0xd6, 0xcf, 0x3f, 0x2d, 0x2c, 0x91, 0x75, 0xf2, 0x78, 0x76, 0xe7,
+	0xf9, 0x2f, 0xc7, 0xc0, 0xb2, 0xeb, 0x76, 0xc2, 0x2e, 0xa4, 0x09, 0xb5, 0x2c, 0x7a, 0x24, 0xa5,
+	0x90, 0xb9, 0xdd, 0x1f, 0xde, 0xbd, 0xa9, 0x4d, 0xa7, 0xe5, 0x5a, 0x03, 0x15, 0xe2, 0x00, 0xaa,
+	0x3a, 0x23, 0x54, 0xa9, 0xb6, 0x7e, 0x04, 0xef, 0xdf, 0x72, 0x88, 0x99, 0x2e, 0xc4, 0x36, 0xd4,
+	0x4a, 0x5b, 0x90, 0x17, 0x50, 0x35, 0xff, 0xd7, 0xf9, 0xb0, 0x3d, 0x9e, 0x6e, 0xd8, 0x2e, 0x78,
+	0x8c, 0xd4, 0xd6, 0x11, 0x17, 0x96, 0x63, 0x54, 0x8a, 0xb5, 0x8b, 0xad, 0x8a, 0xa5, 0xf7, 0x09,
+	0xbc, 0x37, 0xe1, 0x37, 0xc5, 0x30, 0x0b, 0xec, 0x8f, 0xa3, 0xd9, 0x71, 0x91, 0x66, 0x8b, 0xfd,
+	0xb5, 0x7f, 0x6e, 0x36, 0x9d, 0x7f, 0x6f, 0x36, 0x9d, 0xff, 0x6e, 0x36, 0x9d, 0x37, 0x01, 0x00,
+	0x00, 0xff, 0xff, 0x7a, 0x2e, 0xf8, 0x41, 0xe1, 0x0c, 0x00, 0x00,
 }
 
-func (this *CSIDriver) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*CSIDriver)
-	if !ok {
-		that2, ok := that.(CSIDriver)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if !this.Spec.Equal(that1.Spec) {
-		return false
-	}
-	return true
-}
-func (this *CSIDriverList) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*CSIDriverList)
-	if !ok {
-		that2, ok := that.(CSIDriverList)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if len(this.Items) != len(that1.Items) {
-		return false
-	}
-	for i := range this.Items {
-		if !this.Items[i].Equal(that1.Items[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *CSIDriverSpec) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*CSIDriverSpec)
-	if !ok {
-		that2, ok := that.(CSIDriverSpec)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.AttachRequired != that1.AttachRequired {
-		return false
-	}
-	if this.PodInfoOnMount != that1.PodInfoOnMount {
-		return false
-	}
-	if len(this.VolumeLifecycleModes) != len(that1.VolumeLifecycleModes) {
-		return false
-	}
-	for i := range this.VolumeLifecycleModes {
-		if this.VolumeLifecycleModes[i] != that1.VolumeLifecycleModes[i] {
-			return false
-		}
-	}
-	return true
-}
-func (this *CSINode) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*CSINode)
-	if !ok {
-		that2, ok := that.(CSINode)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if !this.Spec.Equal(that1.Spec) {
-		return false
-	}
-	return true
-}
-func (this *CSINodeDriver) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*CSINodeDriver)
-	if !ok {
-		that2, ok := that.(CSINodeDriver)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Name != that1.Name {
-		return false
-	}
-	if this.NodeID != that1.NodeID {
-		return false
-	}
-	if len(this.TopologyKeys) != len(that1.TopologyKeys) {
-		return false
-	}
-	for i := range this.TopologyKeys {
-		if this.TopologyKeys[i] != that1.TopologyKeys[i] {
-			return false
-		}
-	}
-	if !this.Allocatable.Equal(that1.Allocatable) {
-		return false
-	}
-	return true
-}
-func (this *CSINodeList) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*CSINodeList)
-	if !ok {
-		that2, ok := that.(CSINodeList)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if len(this.Items) != len(that1.Items) {
-		return false
-	}
-	for i := range this.Items {
-		if !this.Items[i].Equal(that1.Items[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *CSINodeSpec) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*CSINodeSpec)
-	if !ok {
-		that2, ok := that.(CSINodeSpec)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if len(this.Drivers) != len(that1.Drivers) {
-		return false
-	}
-	for i := range this.Drivers {
-		if !this.Drivers[i].Equal(that1.Drivers[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *StorageClass) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*StorageClass)
-	if !ok {
-		that2, ok := that.(StorageClass)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if this.Provisioner != that1.Provisioner {
-		return false
-	}
-	if len(this.Parameters) != len(that1.Parameters) {
-		return false
-	}
-	for i := range this.Parameters {
-		if this.Parameters[i] != that1.Parameters[i] {
-			return false
-		}
-	}
-	if this.ReclaimPolicy != that1.ReclaimPolicy {
-		return false
-	}
-	if len(this.MountOptions) != len(that1.MountOptions) {
-		return false
-	}
-	for i := range this.MountOptions {
-		if this.MountOptions[i] != that1.MountOptions[i] {
-			return false
-		}
-	}
-	if this.AllowVolumeExpansion != that1.AllowVolumeExpansion {
-		return false
-	}
-	if this.VolumeBindingMode != that1.VolumeBindingMode {
-		return false
-	}
-	if len(this.AllowedTopologies) != len(that1.AllowedTopologies) {
-		return false
-	}
-	for i := range this.AllowedTopologies {
-		if !this.AllowedTopologies[i].Equal(that1.AllowedTopologies[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *StorageClassList) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*StorageClassList)
-	if !ok {
-		that2, ok := that.(StorageClassList)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if len(this.Items) != len(that1.Items) {
-		return false
-	}
-	for i := range this.Items {
-		if !this.Items[i].Equal(that1.Items[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *VolumeAttachment) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*VolumeAttachment)
-	if !ok {
-		that2, ok := that.(VolumeAttachment)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if !this.Spec.Equal(that1.Spec) {
-		return false
-	}
-	if !this.Status.Equal(that1.Status) {
-		return false
-	}
-	return true
-}
-func (this *VolumeAttachmentList) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*VolumeAttachmentList)
-	if !ok {
-		that2, ok := that.(VolumeAttachmentList)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if len(this.Items) != len(that1.Items) {
-		return false
-	}
-	for i := range this.Items {
-		if !this.Items[i].Equal(that1.Items[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *VolumeAttachmentSource) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*VolumeAttachmentSource)
-	if !ok {
-		that2, ok := that.(VolumeAttachmentSource)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.PersistentVolumeName != that1.PersistentVolumeName {
-		return false
-	}
-	if !this.InlineVolumeSpec.Equal(that1.InlineVolumeSpec) {
-		return false
-	}
-	return true
-}
-func (this *VolumeAttachmentSpec) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*VolumeAttachmentSpec)
-	if !ok {
-		that2, ok := that.(VolumeAttachmentSpec)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Attacher != that1.Attacher {
-		return false
-	}
-	if !this.Source.Equal(that1.Source) {
-		return false
-	}
-	if this.NodeName != that1.NodeName {
-		return false
-	}
-	return true
-}
-func (this *VolumeAttachmentStatus) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*VolumeAttachmentStatus)
-	if !ok {
-		that2, ok := that.(VolumeAttachmentStatus)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Attached != that1.Attached {
-		return false
-	}
-	if len(this.AttachmentMetadata) != len(that1.AttachmentMetadata) {
-		return false
-	}
-	for i := range this.AttachmentMetadata {
-		if this.AttachmentMetadata[i] != that1.AttachmentMetadata[i] {
-			return false
-		}
-	}
-	if !this.AttachError.Equal(that1.AttachError) {
-		return false
-	}
-	if !this.DetachError.Equal(that1.DetachError) {
-		return false
-	}
-	return true
-}
-func (this *VolumeError) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*VolumeError)
-	if !ok {
-		that2, ok := that.(VolumeError)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Time.Equal(that1.Time) {
-		return false
-	}
-	if this.Message != that1.Message {
-		return false
-	}
-	return true
-}
-func (this *VolumeNodeResources) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*VolumeNodeResources)
-	if !ok {
-		that2, ok := that.(VolumeNodeResources)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Count != that1.Count {
-		return false
-	}
-	return true
-}
-func (this *CSIDriver) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_storage_v1beta1.CSIDriver{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Spec != nil {
-		s = append(s, "Spec: "+fmt.Sprintf("%#v", this.Spec)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *CSIDriverList) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_storage_v1beta1.CSIDriverList{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Items != nil {
-		s = append(s, "Items: "+fmt.Sprintf("%#v", this.Items)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *CSIDriverSpec) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 7)
-	s = append(s, "&k8s_io_api_storage_v1beta1.CSIDriverSpec{")
-	s = append(s, "AttachRequired: "+fmt.Sprintf("%#v", this.AttachRequired)+",\n")
-	s = append(s, "PodInfoOnMount: "+fmt.Sprintf("%#v", this.PodInfoOnMount)+",\n")
-	if this.VolumeLifecycleModes != nil {
-		s = append(s, "VolumeLifecycleModes: "+fmt.Sprintf("%#v", this.VolumeLifecycleModes)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *CSINode) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_storage_v1beta1.CSINode{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Spec != nil {
-		s = append(s, "Spec: "+fmt.Sprintf("%#v", this.Spec)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *CSINodeDriver) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 8)
-	s = append(s, "&k8s_io_api_storage_v1beta1.CSINodeDriver{")
-	s = append(s, "Name: "+fmt.Sprintf("%#v", this.Name)+",\n")
-	s = append(s, "NodeID: "+fmt.Sprintf("%#v", this.NodeID)+",\n")
-	if this.TopologyKeys != nil {
-		s = append(s, "TopologyKeys: "+fmt.Sprintf("%#v", this.TopologyKeys)+",\n")
-	}
-	if this.Allocatable != nil {
-		s = append(s, "Allocatable: "+fmt.Sprintf("%#v", this.Allocatable)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *CSINodeList) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_storage_v1beta1.CSINodeList{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Items != nil {
-		s = append(s, "Items: "+fmt.Sprintf("%#v", this.Items)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *CSINodeSpec) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 5)
-	s = append(s, "&k8s_io_api_storage_v1beta1.CSINodeSpec{")
-	if this.Drivers != nil {
-		s = append(s, "Drivers: "+fmt.Sprintf("%#v", this.Drivers)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *StorageClass) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 12)
-	s = append(s, "&k8s_io_api_storage_v1beta1.StorageClass{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	s = append(s, "Provisioner: "+fmt.Sprintf("%#v", this.Provisioner)+",\n")
-	keysForParameters := make([]string, 0, len(this.Parameters))
-	for k, _ := range this.Parameters {
-		keysForParameters = append(keysForParameters, k)
-	}
-	github_com_gogo_protobuf_sortkeys.Strings(keysForParameters)
-	mapStringForParameters := "map[string]string{"
-	for _, k := range keysForParameters {
-		mapStringForParameters += fmt.Sprintf("%#v: %#v,", k, this.Parameters[k])
-	}
-	mapStringForParameters += "}"
-	if this.Parameters != nil {
-		s = append(s, "Parameters: "+mapStringForParameters+",\n")
-	}
-	s = append(s, "ReclaimPolicy: "+fmt.Sprintf("%#v", this.ReclaimPolicy)+",\n")
-	if this.MountOptions != nil {
-		s = append(s, "MountOptions: "+fmt.Sprintf("%#v", this.MountOptions)+",\n")
-	}
-	s = append(s, "AllowVolumeExpansion: "+fmt.Sprintf("%#v", this.AllowVolumeExpansion)+",\n")
-	s = append(s, "VolumeBindingMode: "+fmt.Sprintf("%#v", this.VolumeBindingMode)+",\n")
-	if this.AllowedTopologies != nil {
-		s = append(s, "AllowedTopologies: "+fmt.Sprintf("%#v", this.AllowedTopologies)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *StorageClassList) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_storage_v1beta1.StorageClassList{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Items != nil {
-		s = append(s, "Items: "+fmt.Sprintf("%#v", this.Items)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *VolumeAttachment) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 7)
-	s = append(s, "&k8s_io_api_storage_v1beta1.VolumeAttachment{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Spec != nil {
-		s = append(s, "Spec: "+fmt.Sprintf("%#v", this.Spec)+",\n")
-	}
-	if this.Status != nil {
-		s = append(s, "Status: "+fmt.Sprintf("%#v", this.Status)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *VolumeAttachmentList) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_storage_v1beta1.VolumeAttachmentList{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Items != nil {
-		s = append(s, "Items: "+fmt.Sprintf("%#v", this.Items)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *VolumeAttachmentSource) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_storage_v1beta1.VolumeAttachmentSource{")
-	s = append(s, "PersistentVolumeName: "+fmt.Sprintf("%#v", this.PersistentVolumeName)+",\n")
-	if this.InlineVolumeSpec != nil {
-		s = append(s, "InlineVolumeSpec: "+fmt.Sprintf("%#v", this.InlineVolumeSpec)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *VolumeAttachmentSpec) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 7)
-	s = append(s, "&k8s_io_api_storage_v1beta1.VolumeAttachmentSpec{")
-	s = append(s, "Attacher: "+fmt.Sprintf("%#v", this.Attacher)+",\n")
-	if this.Source != nil {
-		s = append(s, "Source: "+fmt.Sprintf("%#v", this.Source)+",\n")
-	}
-	s = append(s, "NodeName: "+fmt.Sprintf("%#v", this.NodeName)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *VolumeAttachmentStatus) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 8)
-	s = append(s, "&k8s_io_api_storage_v1beta1.VolumeAttachmentStatus{")
-	s = append(s, "Attached: "+fmt.Sprintf("%#v", this.Attached)+",\n")
-	keysForAttachmentMetadata := make([]string, 0, len(this.AttachmentMetadata))
-	for k, _ := range this.AttachmentMetadata {
-		keysForAttachmentMetadata = append(keysForAttachmentMetadata, k)
-	}
-	github_com_gogo_protobuf_sortkeys.Strings(keysForAttachmentMetadata)
-	mapStringForAttachmentMetadata := "map[string]string{"
-	for _, k := range keysForAttachmentMetadata {
-		mapStringForAttachmentMetadata += fmt.Sprintf("%#v: %#v,", k, this.AttachmentMetadata[k])
-	}
-	mapStringForAttachmentMetadata += "}"
-	if this.AttachmentMetadata != nil {
-		s = append(s, "AttachmentMetadata: "+mapStringForAttachmentMetadata+",\n")
-	}
-	if this.AttachError != nil {
-		s = append(s, "AttachError: "+fmt.Sprintf("%#v", this.AttachError)+",\n")
-	}
-	if this.DetachError != nil {
-		s = append(s, "DetachError: "+fmt.Sprintf("%#v", this.DetachError)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *VolumeError) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_storage_v1beta1.VolumeError{")
-	if this.Time != nil {
-		s = append(s, "Time: "+fmt.Sprintf("%#v", this.Time)+",\n")
-	}
-	s = append(s, "Message: "+fmt.Sprintf("%#v", this.Message)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *VolumeNodeResources) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 5)
-	s = append(s, "&k8s_io_api_storage_v1beta1.VolumeNodeResources{")
-	s = append(s, "Count: "+fmt.Sprintf("%#v", this.Count)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func valueToGoStringGenerated(v interface{}, typ string) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("func(v %v) *%v { return &v } ( %#v )", typ, typ, pv)
-}
 func (m *CSIDriver) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -2064,6 +1328,10 @@ func (m *CSIDriver) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Spec != nil {
 		{
 			size, err := m.Spec.MarshalToSizedBuffer(dAtA[:i])
@@ -2111,6 +1379,10 @@ func (m *CSIDriverList) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Items) > 0 {
 		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -2160,6 +1432,10 @@ func (m *CSIDriverSpec) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.VolumeLifecycleModes) > 0 {
 		for iNdEx := len(m.VolumeLifecycleModes) - 1; iNdEx >= 0; iNdEx-- {
 			i -= len(m.VolumeLifecycleModes[iNdEx])
@@ -2169,22 +1445,26 @@ func (m *CSIDriverSpec) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			dAtA[i] = 0x1a
 		}
 	}
-	i--
-	if m.PodInfoOnMount {
-		dAtA[i] = 1
-	} else {
-		dAtA[i] = 0
+	if m.PodInfoOnMount != nil {
+		i--
+		if *m.PodInfoOnMount {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x10
 	}
-	i--
-	dAtA[i] = 0x10
-	i--
-	if m.AttachRequired {
-		dAtA[i] = 1
-	} else {
-		dAtA[i] = 0
+	if m.AttachRequired != nil {
+		i--
+		if *m.AttachRequired {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x8
 	}
-	i--
-	dAtA[i] = 0x8
 	return len(dAtA) - i, nil
 }
 
@@ -2208,6 +1488,10 @@ func (m *CSINode) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Spec != nil {
 		{
 			size, err := m.Spec.MarshalToSizedBuffer(dAtA[:i])
@@ -2255,6 +1539,10 @@ func (m *CSINodeDriver) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Allocatable != nil {
 		{
 			size, err := m.Allocatable.MarshalToSizedBuffer(dAtA[:i])
@@ -2276,16 +1564,20 @@ func (m *CSINodeDriver) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			dAtA[i] = 0x1a
 		}
 	}
-	i -= len(m.NodeID)
-	copy(dAtA[i:], m.NodeID)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.NodeID)))
-	i--
-	dAtA[i] = 0x12
-	i -= len(m.Name)
-	copy(dAtA[i:], m.Name)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Name)))
-	i--
-	dAtA[i] = 0xa
+	if m.NodeID != nil {
+		i -= len(*m.NodeID)
+		copy(dAtA[i:], *m.NodeID)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.NodeID)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Name != nil {
+		i -= len(*m.Name)
+		copy(dAtA[i:], *m.Name)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Name)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -2309,6 +1601,10 @@ func (m *CSINodeList) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Items) > 0 {
 		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -2358,6 +1654,10 @@ func (m *CSINodeSpec) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Drivers) > 0 {
 		for iNdEx := len(m.Drivers) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -2395,6 +1695,10 @@ func (m *StorageClass) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.AllowedTopologies) > 0 {
 		for iNdEx := len(m.AllowedTopologies) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -2409,19 +1713,23 @@ func (m *StorageClass) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			dAtA[i] = 0x42
 		}
 	}
-	i -= len(m.VolumeBindingMode)
-	copy(dAtA[i:], m.VolumeBindingMode)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.VolumeBindingMode)))
-	i--
-	dAtA[i] = 0x3a
-	i--
-	if m.AllowVolumeExpansion {
-		dAtA[i] = 1
-	} else {
-		dAtA[i] = 0
+	if m.VolumeBindingMode != nil {
+		i -= len(*m.VolumeBindingMode)
+		copy(dAtA[i:], *m.VolumeBindingMode)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.VolumeBindingMode)))
+		i--
+		dAtA[i] = 0x3a
 	}
-	i--
-	dAtA[i] = 0x30
+	if m.AllowVolumeExpansion != nil {
+		i--
+		if *m.AllowVolumeExpansion {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x30
+	}
 	if len(m.MountOptions) > 0 {
 		for iNdEx := len(m.MountOptions) - 1; iNdEx >= 0; iNdEx-- {
 			i -= len(m.MountOptions[iNdEx])
@@ -2431,11 +1739,13 @@ func (m *StorageClass) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			dAtA[i] = 0x2a
 		}
 	}
-	i -= len(m.ReclaimPolicy)
-	copy(dAtA[i:], m.ReclaimPolicy)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.ReclaimPolicy)))
-	i--
-	dAtA[i] = 0x22
+	if m.ReclaimPolicy != nil {
+		i -= len(*m.ReclaimPolicy)
+		copy(dAtA[i:], *m.ReclaimPolicy)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.ReclaimPolicy)))
+		i--
+		dAtA[i] = 0x22
+	}
 	if len(m.Parameters) > 0 {
 		for k := range m.Parameters {
 			v := m.Parameters[k]
@@ -2455,11 +1765,13 @@ func (m *StorageClass) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			dAtA[i] = 0x1a
 		}
 	}
-	i -= len(m.Provisioner)
-	copy(dAtA[i:], m.Provisioner)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Provisioner)))
-	i--
-	dAtA[i] = 0x12
+	if m.Provisioner != nil {
+		i -= len(*m.Provisioner)
+		copy(dAtA[i:], *m.Provisioner)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Provisioner)))
+		i--
+		dAtA[i] = 0x12
+	}
 	if m.Metadata != nil {
 		{
 			size, err := m.Metadata.MarshalToSizedBuffer(dAtA[:i])
@@ -2495,6 +1807,10 @@ func (m *StorageClassList) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Items) > 0 {
 		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -2544,6 +1860,10 @@ func (m *VolumeAttachment) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Status != nil {
 		{
 			size, err := m.Status.MarshalToSizedBuffer(dAtA[:i])
@@ -2603,6 +1923,10 @@ func (m *VolumeAttachmentList) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Items) > 0 {
 		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -2652,6 +1976,10 @@ func (m *VolumeAttachmentSource) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.InlineVolumeSpec != nil {
 		{
 			size, err := m.InlineVolumeSpec.MarshalToSizedBuffer(dAtA[:i])
@@ -2664,11 +1992,13 @@ func (m *VolumeAttachmentSource) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 		i--
 		dAtA[i] = 0x12
 	}
-	i -= len(m.PersistentVolumeName)
-	copy(dAtA[i:], m.PersistentVolumeName)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.PersistentVolumeName)))
-	i--
-	dAtA[i] = 0xa
+	if m.PersistentVolumeName != nil {
+		i -= len(*m.PersistentVolumeName)
+		copy(dAtA[i:], *m.PersistentVolumeName)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.PersistentVolumeName)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -2692,11 +2022,17 @@ func (m *VolumeAttachmentSpec) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	i -= len(m.NodeName)
-	copy(dAtA[i:], m.NodeName)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.NodeName)))
-	i--
-	dAtA[i] = 0x1a
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.NodeName != nil {
+		i -= len(*m.NodeName)
+		copy(dAtA[i:], *m.NodeName)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.NodeName)))
+		i--
+		dAtA[i] = 0x1a
+	}
 	if m.Source != nil {
 		{
 			size, err := m.Source.MarshalToSizedBuffer(dAtA[:i])
@@ -2709,11 +2045,13 @@ func (m *VolumeAttachmentSpec) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x12
 	}
-	i -= len(m.Attacher)
-	copy(dAtA[i:], m.Attacher)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Attacher)))
-	i--
-	dAtA[i] = 0xa
+	if m.Attacher != nil {
+		i -= len(*m.Attacher)
+		copy(dAtA[i:], *m.Attacher)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Attacher)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -2737,6 +2075,10 @@ func (m *VolumeAttachmentStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.DetachError != nil {
 		{
 			size, err := m.DetachError.MarshalToSizedBuffer(dAtA[:i])
@@ -2780,14 +2122,16 @@ func (m *VolumeAttachmentStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 			dAtA[i] = 0x12
 		}
 	}
-	i--
-	if m.Attached {
-		dAtA[i] = 1
-	} else {
-		dAtA[i] = 0
+	if m.Attached != nil {
+		i--
+		if *m.Attached {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x8
 	}
-	i--
-	dAtA[i] = 0x8
 	return len(dAtA) - i, nil
 }
 
@@ -2811,11 +2155,17 @@ func (m *VolumeError) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	i -= len(m.Message)
-	copy(dAtA[i:], m.Message)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Message)))
-	i--
-	dAtA[i] = 0x12
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Message != nil {
+		i -= len(*m.Message)
+		copy(dAtA[i:], *m.Message)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Message)))
+		i--
+		dAtA[i] = 0x12
+	}
 	if m.Time != nil {
 		{
 			size, err := m.Time.MarshalToSizedBuffer(dAtA[:i])
@@ -2851,9 +2201,15 @@ func (m *VolumeNodeResources) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	i = encodeVarintGenerated(dAtA, i, uint64(m.Count))
-	i--
-	dAtA[i] = 0x8
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Count != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.Count))
+		i--
+		dAtA[i] = 0x8
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -2882,6 +2238,9 @@ func (m *CSIDriver) Size() (n int) {
 		l = m.Spec.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -2901,6 +2260,9 @@ func (m *CSIDriverList) Size() (n int) {
 			n += 1 + l + sovGenerated(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -2910,13 +2272,20 @@ func (m *CSIDriverSpec) Size() (n int) {
 	}
 	var l int
 	_ = l
-	n += 2
-	n += 2
+	if m.AttachRequired != nil {
+		n += 2
+	}
+	if m.PodInfoOnMount != nil {
+		n += 2
+	}
 	if len(m.VolumeLifecycleModes) > 0 {
 		for _, s := range m.VolumeLifecycleModes {
 			l = len(s)
 			n += 1 + l + sovGenerated(uint64(l))
 		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -2935,6 +2304,9 @@ func (m *CSINode) Size() (n int) {
 		l = m.Spec.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -2944,10 +2316,14 @@ func (m *CSINodeDriver) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Name)
-	n += 1 + l + sovGenerated(uint64(l))
-	l = len(m.NodeID)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.Name != nil {
+		l = len(*m.Name)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.NodeID != nil {
+		l = len(*m.NodeID)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if len(m.TopologyKeys) > 0 {
 		for _, s := range m.TopologyKeys {
 			l = len(s)
@@ -2957,6 +2333,9 @@ func (m *CSINodeDriver) Size() (n int) {
 	if m.Allocatable != nil {
 		l = m.Allocatable.Size()
 		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -2977,6 +2356,9 @@ func (m *CSINodeList) Size() (n int) {
 			n += 1 + l + sovGenerated(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -2992,6 +2374,9 @@ func (m *CSINodeSpec) Size() (n int) {
 			n += 1 + l + sovGenerated(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -3005,8 +2390,10 @@ func (m *StorageClass) Size() (n int) {
 		l = m.Metadata.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
-	l = len(m.Provisioner)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.Provisioner != nil {
+		l = len(*m.Provisioner)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if len(m.Parameters) > 0 {
 		for k, v := range m.Parameters {
 			_ = k
@@ -3015,22 +2402,31 @@ func (m *StorageClass) Size() (n int) {
 			n += mapEntrySize + 1 + sovGenerated(uint64(mapEntrySize))
 		}
 	}
-	l = len(m.ReclaimPolicy)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.ReclaimPolicy != nil {
+		l = len(*m.ReclaimPolicy)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if len(m.MountOptions) > 0 {
 		for _, s := range m.MountOptions {
 			l = len(s)
 			n += 1 + l + sovGenerated(uint64(l))
 		}
 	}
-	n += 2
-	l = len(m.VolumeBindingMode)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.AllowVolumeExpansion != nil {
+		n += 2
+	}
+	if m.VolumeBindingMode != nil {
+		l = len(*m.VolumeBindingMode)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if len(m.AllowedTopologies) > 0 {
 		for _, e := range m.AllowedTopologies {
 			l = e.Size()
 			n += 1 + l + sovGenerated(uint64(l))
 		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -3050,6 +2446,9 @@ func (m *StorageClassList) Size() (n int) {
 			l = e.Size()
 			n += 1 + l + sovGenerated(uint64(l))
 		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -3072,6 +2471,9 @@ func (m *VolumeAttachment) Size() (n int) {
 		l = m.Status.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -3091,6 +2493,9 @@ func (m *VolumeAttachmentList) Size() (n int) {
 			n += 1 + l + sovGenerated(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -3100,11 +2505,16 @@ func (m *VolumeAttachmentSource) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.PersistentVolumeName)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.PersistentVolumeName != nil {
+		l = len(*m.PersistentVolumeName)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if m.InlineVolumeSpec != nil {
 		l = m.InlineVolumeSpec.Size()
 		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -3115,14 +2525,21 @@ func (m *VolumeAttachmentSpec) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Attacher)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.Attacher != nil {
+		l = len(*m.Attacher)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if m.Source != nil {
 		l = m.Source.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
-	l = len(m.NodeName)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.NodeName != nil {
+		l = len(*m.NodeName)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -3132,7 +2549,9 @@ func (m *VolumeAttachmentStatus) Size() (n int) {
 	}
 	var l int
 	_ = l
-	n += 2
+	if m.Attached != nil {
+		n += 2
+	}
 	if len(m.AttachmentMetadata) > 0 {
 		for k, v := range m.AttachmentMetadata {
 			_ = k
@@ -3149,6 +2568,9 @@ func (m *VolumeAttachmentStatus) Size() (n int) {
 		l = m.DetachError.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -3162,8 +2584,13 @@ func (m *VolumeError) Size() (n int) {
 		l = m.Time.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
-	l = len(m.Message)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.Message != nil {
+		l = len(*m.Message)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -3173,7 +2600,12 @@ func (m *VolumeNodeResources) Size() (n int) {
 	}
 	var l int
 	_ = l
-	n += 1 + sovGenerated(uint64(m.Count))
+	if m.Count != nil {
+		n += 1 + sovGenerated(uint64(*m.Count))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -3182,251 +2614,6 @@ func sovGenerated(x uint64) (n int) {
 }
 func sozGenerated(x uint64) (n int) {
 	return sovGenerated(uint64((x << 1) ^ uint64((int64(x) >> 63))))
-}
-func (this *CSIDriver) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&CSIDriver{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ObjectMeta", "v1.ObjectMeta", 1) + `,`,
-		`Spec:` + strings.Replace(this.Spec.String(), "CSIDriverSpec", "CSIDriverSpec", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *CSIDriverList) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForItems := "[]*CSIDriver{"
-	for _, f := range this.Items {
-		repeatedStringForItems += strings.Replace(f.String(), "CSIDriver", "CSIDriver", 1) + ","
-	}
-	repeatedStringForItems += "}"
-	s := strings.Join([]string{`&CSIDriverList{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ListMeta", "v1.ListMeta", 1) + `,`,
-		`Items:` + repeatedStringForItems + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *CSIDriverSpec) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&CSIDriverSpec{`,
-		`AttachRequired:` + fmt.Sprintf("%v", this.AttachRequired) + `,`,
-		`PodInfoOnMount:` + fmt.Sprintf("%v", this.PodInfoOnMount) + `,`,
-		`VolumeLifecycleModes:` + fmt.Sprintf("%v", this.VolumeLifecycleModes) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *CSINode) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&CSINode{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ObjectMeta", "v1.ObjectMeta", 1) + `,`,
-		`Spec:` + strings.Replace(this.Spec.String(), "CSINodeSpec", "CSINodeSpec", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *CSINodeDriver) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&CSINodeDriver{`,
-		`Name:` + fmt.Sprintf("%v", this.Name) + `,`,
-		`NodeID:` + fmt.Sprintf("%v", this.NodeID) + `,`,
-		`TopologyKeys:` + fmt.Sprintf("%v", this.TopologyKeys) + `,`,
-		`Allocatable:` + strings.Replace(this.Allocatable.String(), "VolumeNodeResources", "VolumeNodeResources", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *CSINodeList) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForItems := "[]*CSINode{"
-	for _, f := range this.Items {
-		repeatedStringForItems += strings.Replace(f.String(), "CSINode", "CSINode", 1) + ","
-	}
-	repeatedStringForItems += "}"
-	s := strings.Join([]string{`&CSINodeList{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ListMeta", "v1.ListMeta", 1) + `,`,
-		`Items:` + repeatedStringForItems + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *CSINodeSpec) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForDrivers := "[]*CSINodeDriver{"
-	for _, f := range this.Drivers {
-		repeatedStringForDrivers += strings.Replace(f.String(), "CSINodeDriver", "CSINodeDriver", 1) + ","
-	}
-	repeatedStringForDrivers += "}"
-	s := strings.Join([]string{`&CSINodeSpec{`,
-		`Drivers:` + repeatedStringForDrivers + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *StorageClass) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForAllowedTopologies := "[]*TopologySelectorTerm{"
-	for _, f := range this.AllowedTopologies {
-		repeatedStringForAllowedTopologies += strings.Replace(fmt.Sprintf("%v", f), "TopologySelectorTerm", "v11.TopologySelectorTerm", 1) + ","
-	}
-	repeatedStringForAllowedTopologies += "}"
-	keysForParameters := make([]string, 0, len(this.Parameters))
-	for k, _ := range this.Parameters {
-		keysForParameters = append(keysForParameters, k)
-	}
-	github_com_gogo_protobuf_sortkeys.Strings(keysForParameters)
-	mapStringForParameters := "map[string]string{"
-	for _, k := range keysForParameters {
-		mapStringForParameters += fmt.Sprintf("%v: %v,", k, this.Parameters[k])
-	}
-	mapStringForParameters += "}"
-	s := strings.Join([]string{`&StorageClass{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ObjectMeta", "v1.ObjectMeta", 1) + `,`,
-		`Provisioner:` + fmt.Sprintf("%v", this.Provisioner) + `,`,
-		`Parameters:` + mapStringForParameters + `,`,
-		`ReclaimPolicy:` + fmt.Sprintf("%v", this.ReclaimPolicy) + `,`,
-		`MountOptions:` + fmt.Sprintf("%v", this.MountOptions) + `,`,
-		`AllowVolumeExpansion:` + fmt.Sprintf("%v", this.AllowVolumeExpansion) + `,`,
-		`VolumeBindingMode:` + fmt.Sprintf("%v", this.VolumeBindingMode) + `,`,
-		`AllowedTopologies:` + repeatedStringForAllowedTopologies + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *StorageClassList) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForItems := "[]*StorageClass{"
-	for _, f := range this.Items {
-		repeatedStringForItems += strings.Replace(f.String(), "StorageClass", "StorageClass", 1) + ","
-	}
-	repeatedStringForItems += "}"
-	s := strings.Join([]string{`&StorageClassList{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ListMeta", "v1.ListMeta", 1) + `,`,
-		`Items:` + repeatedStringForItems + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *VolumeAttachment) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&VolumeAttachment{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ObjectMeta", "v1.ObjectMeta", 1) + `,`,
-		`Spec:` + strings.Replace(this.Spec.String(), "VolumeAttachmentSpec", "VolumeAttachmentSpec", 1) + `,`,
-		`Status:` + strings.Replace(this.Status.String(), "VolumeAttachmentStatus", "VolumeAttachmentStatus", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *VolumeAttachmentList) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForItems := "[]*VolumeAttachment{"
-	for _, f := range this.Items {
-		repeatedStringForItems += strings.Replace(f.String(), "VolumeAttachment", "VolumeAttachment", 1) + ","
-	}
-	repeatedStringForItems += "}"
-	s := strings.Join([]string{`&VolumeAttachmentList{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ListMeta", "v1.ListMeta", 1) + `,`,
-		`Items:` + repeatedStringForItems + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *VolumeAttachmentSource) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&VolumeAttachmentSource{`,
-		`PersistentVolumeName:` + fmt.Sprintf("%v", this.PersistentVolumeName) + `,`,
-		`InlineVolumeSpec:` + strings.Replace(fmt.Sprintf("%v", this.InlineVolumeSpec), "PersistentVolumeSpec", "v11.PersistentVolumeSpec", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *VolumeAttachmentSpec) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&VolumeAttachmentSpec{`,
-		`Attacher:` + fmt.Sprintf("%v", this.Attacher) + `,`,
-		`Source:` + strings.Replace(this.Source.String(), "VolumeAttachmentSource", "VolumeAttachmentSource", 1) + `,`,
-		`NodeName:` + fmt.Sprintf("%v", this.NodeName) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *VolumeAttachmentStatus) String() string {
-	if this == nil {
-		return "nil"
-	}
-	keysForAttachmentMetadata := make([]string, 0, len(this.AttachmentMetadata))
-	for k, _ := range this.AttachmentMetadata {
-		keysForAttachmentMetadata = append(keysForAttachmentMetadata, k)
-	}
-	github_com_gogo_protobuf_sortkeys.Strings(keysForAttachmentMetadata)
-	mapStringForAttachmentMetadata := "map[string]string{"
-	for _, k := range keysForAttachmentMetadata {
-		mapStringForAttachmentMetadata += fmt.Sprintf("%v: %v,", k, this.AttachmentMetadata[k])
-	}
-	mapStringForAttachmentMetadata += "}"
-	s := strings.Join([]string{`&VolumeAttachmentStatus{`,
-		`Attached:` + fmt.Sprintf("%v", this.Attached) + `,`,
-		`AttachmentMetadata:` + mapStringForAttachmentMetadata + `,`,
-		`AttachError:` + strings.Replace(this.AttachError.String(), "VolumeError", "VolumeError", 1) + `,`,
-		`DetachError:` + strings.Replace(this.DetachError.String(), "VolumeError", "VolumeError", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *VolumeError) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&VolumeError{`,
-		`Time:` + strings.Replace(fmt.Sprintf("%v", this.Time), "Time", "v1.Time", 1) + `,`,
-		`Message:` + fmt.Sprintf("%v", this.Message) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *VolumeNodeResources) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&VolumeNodeResources{`,
-		`Count:` + fmt.Sprintf("%v", this.Count) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func valueToStringGenerated(v interface{}) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("*%v", pv)
 }
 func (m *CSIDriver) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
@@ -3541,6 +2728,7 @@ func (m *CSIDriver) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3661,6 +2849,7 @@ func (m *CSIDriverList) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3718,7 +2907,8 @@ func (m *CSIDriverSpec) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
-			m.AttachRequired = bool(v != 0)
+			b := bool(v != 0)
+			m.AttachRequired = &b
 		case 2:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field PodInfoOnMount", wireType)
@@ -3738,7 +2928,8 @@ func (m *CSIDriverSpec) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
-			m.PodInfoOnMount = bool(v != 0)
+			b := bool(v != 0)
+			m.PodInfoOnMount = &b
 		case 3:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field VolumeLifecycleModes", wireType)
@@ -3783,6 +2974,7 @@ func (m *CSIDriverSpec) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3905,6 +3097,7 @@ func (m *CSINode) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3973,7 +3166,8 @@ func (m *CSINodeDriver) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Name = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Name = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -4005,7 +3199,8 @@ func (m *CSINodeDriver) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.NodeID = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.NodeID = &s
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
@@ -4087,6 +3282,7 @@ func (m *CSINodeDriver) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4207,6 +3403,7 @@ func (m *CSINodeList) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4291,6 +3488,7 @@ func (m *CSINodeSpec) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4395,7 +3593,8 @@ func (m *StorageClass) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Provisioner = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Provisioner = &s
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
@@ -4554,7 +3753,8 @@ func (m *StorageClass) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.ReclaimPolicy = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.ReclaimPolicy = &s
 			iNdEx = postIndex
 		case 5:
 			if wireType != 2 {
@@ -4607,7 +3807,8 @@ func (m *StorageClass) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
-			m.AllowVolumeExpansion = bool(v != 0)
+			b := bool(v != 0)
+			m.AllowVolumeExpansion = &b
 		case 7:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field VolumeBindingMode", wireType)
@@ -4638,7 +3839,8 @@ func (m *StorageClass) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.VolumeBindingMode = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.VolumeBindingMode = &s
 			iNdEx = postIndex
 		case 8:
 			if wireType != 2 {
@@ -4686,6 +3888,7 @@ func (m *StorageClass) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4806,6 +4009,7 @@ func (m *StorageClassList) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4964,6 +4168,7 @@ func (m *VolumeAttachment) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5084,6 +4289,7 @@ func (m *VolumeAttachmentList) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5152,7 +4358,8 @@ func (m *VolumeAttachmentSource) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.PersistentVolumeName = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.PersistentVolumeName = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -5202,6 +4409,7 @@ func (m *VolumeAttachmentSource) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5270,7 +4478,8 @@ func (m *VolumeAttachmentSpec) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Attacher = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Attacher = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -5338,7 +4547,8 @@ func (m *VolumeAttachmentSpec) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.NodeName = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.NodeName = &s
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -5352,6 +4562,7 @@ func (m *VolumeAttachmentSpec) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5409,7 +4620,8 @@ func (m *VolumeAttachmentStatus) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
-			m.Attached = bool(v != 0)
+			b := bool(v != 0)
+			m.Attached = &b
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field AttachmentMetadata", wireType)
@@ -5621,6 +4833,7 @@ func (m *VolumeAttachmentStatus) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5725,7 +4938,8 @@ func (m *VolumeError) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Message = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Message = &s
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -5739,6 +4953,7 @@ func (m *VolumeError) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5781,7 +4996,7 @@ func (m *VolumeNodeResources) Unmarshal(dAtA []byte) error {
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Count", wireType)
 			}
-			m.Count = 0
+			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -5791,11 +5006,12 @@ func (m *VolumeNodeResources) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Count |= int32(b&0x7F) << shift
+				v |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.Count = &v
 		default:
 			iNdEx = preIndex
 			skippy, err := skipGenerated(dAtA[iNdEx:])
@@ -5808,6 +5024,7 @@ func (m *VolumeNodeResources) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}

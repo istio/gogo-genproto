@@ -14,8 +14,6 @@ import (
 	_ "istio.io/gogo-genproto/k8s.io/apimachinery/pkg/runtime/schema"
 	math "math"
 	math_bits "math/bits"
-	reflect "reflect"
-	strings "strings"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -42,11 +40,15 @@ type CronJob struct {
 	// Current status of a cron job.
 	// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status
 	// +optional
-	Status *CronJobStatus `protobuf:"bytes,3,opt,name=status" json:"status,omitempty"`
+	Status               *CronJobStatus `protobuf:"bytes,3,opt,name=status" json:"status,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
 }
 
-func (m *CronJob) Reset()      { *m = CronJob{} }
-func (*CronJob) ProtoMessage() {}
+func (m *CronJob) Reset()         { *m = CronJob{} }
+func (m *CronJob) String() string { return proto.CompactTextString(m) }
+func (*CronJob) ProtoMessage()    {}
 func (*CronJob) Descriptor() ([]byte, []int) {
 	return fileDescriptor_ed95843ae7b4086b, []int{0}
 }
@@ -105,11 +107,15 @@ type CronJobList struct {
 	// +optional
 	Metadata *v1.ListMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// items is the list of CronJobs.
-	Items []*CronJob `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	Items                []*CronJob `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}   `json:"-"`
+	XXX_unrecognized     []byte     `json:"-"`
+	XXX_sizecache        int32      `json:"-"`
 }
 
-func (m *CronJobList) Reset()      { *m = CronJobList{} }
-func (*CronJobList) ProtoMessage() {}
+func (m *CronJobList) Reset()         { *m = CronJobList{} }
+func (m *CronJobList) String() string { return proto.CompactTextString(m) }
+func (*CronJobList) ProtoMessage()    {}
 func (*CronJobList) Descriptor() ([]byte, []int) {
 	return fileDescriptor_ed95843ae7b4086b, []int{1}
 }
@@ -157,38 +163,42 @@ func (m *CronJobList) GetItems() []*CronJob {
 // CronJobSpec describes how the job execution will look like and when it will actually run.
 type CronJobSpec struct {
 	// The schedule in Cron format, see https://en.wikipedia.org/wiki/Cron.
-	Schedule string `protobuf:"bytes,1,opt,name=schedule" json:"schedule"`
+	Schedule *string `protobuf:"bytes,1,opt,name=schedule" json:"schedule,omitempty"`
 	// Optional deadline in seconds for starting the job if it misses scheduled
 	// time for any reason.  Missed jobs executions will be counted as failed ones.
 	// +optional
-	StartingDeadlineSeconds int64 `protobuf:"varint,2,opt,name=startingDeadlineSeconds" json:"startingDeadlineSeconds"`
+	StartingDeadlineSeconds *int64 `protobuf:"varint,2,opt,name=startingDeadlineSeconds" json:"startingDeadlineSeconds,omitempty"`
 	// Specifies how to treat concurrent executions of a Job.
 	// Valid values are:
 	// - "Allow" (default): allows CronJobs to run concurrently;
 	// - "Forbid": forbids concurrent runs, skipping next run if previous run hasn't finished yet;
 	// - "Replace": cancels currently running job and replaces it with a new one
 	// +optional
-	ConcurrencyPolicy string `protobuf:"bytes,3,opt,name=concurrencyPolicy" json:"concurrencyPolicy"`
+	ConcurrencyPolicy *string `protobuf:"bytes,3,opt,name=concurrencyPolicy" json:"concurrencyPolicy,omitempty"`
 	// This flag tells the controller to suspend subsequent executions, it does
 	// not apply to already started executions.  Defaults to false.
 	// +optional
-	Suspend bool `protobuf:"varint,4,opt,name=suspend" json:"suspend"`
+	Suspend *bool `protobuf:"varint,4,opt,name=suspend" json:"suspend,omitempty"`
 	// Specifies the job that will be created when executing a CronJob.
 	JobTemplate *JobTemplateSpec `protobuf:"bytes,5,opt,name=jobTemplate" json:"jobTemplate,omitempty"`
 	// The number of successful finished jobs to retain.
 	// This is a pointer to distinguish between explicit zero and not specified.
 	// Defaults to 3.
 	// +optional
-	SuccessfulJobsHistoryLimit int32 `protobuf:"varint,6,opt,name=successfulJobsHistoryLimit" json:"successfulJobsHistoryLimit"`
+	SuccessfulJobsHistoryLimit *int32 `protobuf:"varint,6,opt,name=successfulJobsHistoryLimit" json:"successfulJobsHistoryLimit,omitempty"`
 	// The number of failed finished jobs to retain.
 	// This is a pointer to distinguish between explicit zero and not specified.
 	// Defaults to 1.
 	// +optional
-	FailedJobsHistoryLimit int32 `protobuf:"varint,7,opt,name=failedJobsHistoryLimit" json:"failedJobsHistoryLimit"`
+	FailedJobsHistoryLimit *int32   `protobuf:"varint,7,opt,name=failedJobsHistoryLimit" json:"failedJobsHistoryLimit,omitempty"`
+	XXX_NoUnkeyedLiteral   struct{} `json:"-"`
+	XXX_unrecognized       []byte   `json:"-"`
+	XXX_sizecache          int32    `json:"-"`
 }
 
-func (m *CronJobSpec) Reset()      { *m = CronJobSpec{} }
-func (*CronJobSpec) ProtoMessage() {}
+func (m *CronJobSpec) Reset()         { *m = CronJobSpec{} }
+func (m *CronJobSpec) String() string { return proto.CompactTextString(m) }
+func (*CronJobSpec) ProtoMessage()    {}
 func (*CronJobSpec) Descriptor() ([]byte, []int) {
 	return fileDescriptor_ed95843ae7b4086b, []int{2}
 }
@@ -220,29 +230,29 @@ func (m *CronJobSpec) XXX_DiscardUnknown() {
 var xxx_messageInfo_CronJobSpec proto.InternalMessageInfo
 
 func (m *CronJobSpec) GetSchedule() string {
-	if m != nil {
-		return m.Schedule
+	if m != nil && m.Schedule != nil {
+		return *m.Schedule
 	}
 	return ""
 }
 
 func (m *CronJobSpec) GetStartingDeadlineSeconds() int64 {
-	if m != nil {
-		return m.StartingDeadlineSeconds
+	if m != nil && m.StartingDeadlineSeconds != nil {
+		return *m.StartingDeadlineSeconds
 	}
 	return 0
 }
 
 func (m *CronJobSpec) GetConcurrencyPolicy() string {
-	if m != nil {
-		return m.ConcurrencyPolicy
+	if m != nil && m.ConcurrencyPolicy != nil {
+		return *m.ConcurrencyPolicy
 	}
 	return ""
 }
 
 func (m *CronJobSpec) GetSuspend() bool {
-	if m != nil {
-		return m.Suspend
+	if m != nil && m.Suspend != nil {
+		return *m.Suspend
 	}
 	return false
 }
@@ -255,15 +265,15 @@ func (m *CronJobSpec) GetJobTemplate() *JobTemplateSpec {
 }
 
 func (m *CronJobSpec) GetSuccessfulJobsHistoryLimit() int32 {
-	if m != nil {
-		return m.SuccessfulJobsHistoryLimit
+	if m != nil && m.SuccessfulJobsHistoryLimit != nil {
+		return *m.SuccessfulJobsHistoryLimit
 	}
 	return 0
 }
 
 func (m *CronJobSpec) GetFailedJobsHistoryLimit() int32 {
-	if m != nil {
-		return m.FailedJobsHistoryLimit
+	if m != nil && m.FailedJobsHistoryLimit != nil {
+		return *m.FailedJobsHistoryLimit
 	}
 	return 0
 }
@@ -275,11 +285,15 @@ type CronJobStatus struct {
 	Active []*v11.ObjectReference `protobuf:"bytes,1,rep,name=active" json:"active,omitempty"`
 	// Information when was the last time the job was successfully scheduled.
 	// +optional
-	LastScheduleTime *v1.Time `protobuf:"bytes,4,opt,name=lastScheduleTime" json:"lastScheduleTime,omitempty"`
+	LastScheduleTime     *v1.Time `protobuf:"bytes,4,opt,name=lastScheduleTime" json:"lastScheduleTime,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *CronJobStatus) Reset()      { *m = CronJobStatus{} }
-func (*CronJobStatus) ProtoMessage() {}
+func (m *CronJobStatus) Reset()         { *m = CronJobStatus{} }
+func (m *CronJobStatus) String() string { return proto.CompactTextString(m) }
+func (*CronJobStatus) ProtoMessage()    {}
 func (*CronJobStatus) Descriptor() ([]byte, []int) {
 	return fileDescriptor_ed95843ae7b4086b, []int{3}
 }
@@ -333,11 +347,15 @@ type JobTemplate struct {
 	// Defines jobs that will be created from this template.
 	// https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status
 	// +optional
-	Template *JobTemplateSpec `protobuf:"bytes,2,opt,name=template" json:"template,omitempty"`
+	Template             *JobTemplateSpec `protobuf:"bytes,2,opt,name=template" json:"template,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}         `json:"-"`
+	XXX_unrecognized     []byte           `json:"-"`
+	XXX_sizecache        int32            `json:"-"`
 }
 
-func (m *JobTemplate) Reset()      { *m = JobTemplate{} }
-func (*JobTemplate) ProtoMessage() {}
+func (m *JobTemplate) Reset()         { *m = JobTemplate{} }
+func (m *JobTemplate) String() string { return proto.CompactTextString(m) }
+func (*JobTemplate) ProtoMessage()    {}
 func (*JobTemplate) Descriptor() ([]byte, []int) {
 	return fileDescriptor_ed95843ae7b4086b, []int{4}
 }
@@ -391,11 +409,15 @@ type JobTemplateSpec struct {
 	// Specification of the desired behavior of the job.
 	// More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status
 	// +optional
-	Spec *v12.JobSpec `protobuf:"bytes,2,opt,name=spec" json:"spec,omitempty"`
+	Spec                 *v12.JobSpec `protobuf:"bytes,2,opt,name=spec" json:"spec,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}     `json:"-"`
+	XXX_unrecognized     []byte       `json:"-"`
+	XXX_sizecache        int32        `json:"-"`
 }
 
-func (m *JobTemplateSpec) Reset()      { *m = JobTemplateSpec{} }
-func (*JobTemplateSpec) ProtoMessage() {}
+func (m *JobTemplateSpec) Reset()         { *m = JobTemplateSpec{} }
+func (m *JobTemplateSpec) String() string { return proto.CompactTextString(m) }
+func (*JobTemplateSpec) ProtoMessage()    {}
 func (*JobTemplateSpec) Descriptor() ([]byte, []int) {
 	return fileDescriptor_ed95843ae7b4086b, []int{5}
 }
@@ -454,343 +476,45 @@ func init() {
 }
 
 var fileDescriptor_ed95843ae7b4086b = []byte{
-	// 632 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x94, 0xcb, 0x6a, 0x14, 0x4f,
-	0x14, 0xc6, 0xbb, 0x32, 0xb9, 0xcc, 0xbf, 0x86, 0x3f, 0x6a, 0x2d, 0xb4, 0x09, 0x52, 0x8e, 0x1d,
-	0xc4, 0xd1, 0x45, 0x75, 0x32, 0x04, 0x2f, 0x28, 0x0a, 0x31, 0x82, 0x8c, 0x11, 0xa5, 0x13, 0xdc,
-	0xd7, 0x54, 0x9f, 0x4c, 0x2a, 0xe9, 0x1b, 0x5d, 0xd5, 0x81, 0xd9, 0xf9, 0x08, 0x2a, 0x3e, 0x81,
-	0xb8, 0xf0, 0x51, 0xb2, 0x0c, 0xb8, 0xc9, 0x4a, 0x4c, 0x67, 0xe3, 0x32, 0x8f, 0x20, 0xd5, 0xe9,
-	0xcc, 0x4c, 0xe6, 0x62, 0x22, 0x64, 0x7b, 0xea, 0xfb, 0x9d, 0x3a, 0xe7, 0xfb, 0xaa, 0x1b, 0x37,
-	0x76, 0x1e, 0x29, 0x26, 0x63, 0x97, 0x27, 0xd2, 0x6d, 0x73, 0x2d, 0xb6, 0xdc, 0xdd, 0xa5, 0x36,
-	0x68, 0xbe, 0xe4, 0x76, 0x20, 0x82, 0x94, 0x6b, 0xf0, 0x59, 0x92, 0xc6, 0x3a, 0x26, 0xf6, 0x89,
-	0x92, 0xf1, 0x44, 0xb2, 0x42, 0xc9, 0x4a, 0xe5, 0xfc, 0xc2, 0x98, 0x1e, 0xc3, 0xf8, 0xbc, 0x33,
-	0x20, 0x12, 0x71, 0x0a, 0xe3, 0x34, 0xcb, 0x7d, 0x4d, 0xc8, 0xc5, 0x96, 0x8c, 0x20, 0xed, 0xba,
-	0xc9, 0x4e, 0xc7, 0x14, 0x94, 0x1b, 0x82, 0xe6, 0xe3, 0x28, 0x77, 0x12, 0x95, 0x66, 0x91, 0x96,
-	0x21, 0x8c, 0x00, 0x0f, 0xce, 0x03, 0x94, 0xd8, 0x82, 0x90, 0x0f, 0x73, 0xce, 0x0f, 0x84, 0xe7,
-	0x5e, 0xa4, 0x71, 0xd4, 0x8a, 0xdb, 0x64, 0x0d, 0x57, 0xcd, 0x3c, 0x3e, 0xd7, 0xdc, 0x46, 0x75,
-	0xd4, 0xa8, 0x35, 0x17, 0x59, 0xdf, 0xa0, 0x5e, 0x5b, 0x96, 0xec, 0x74, 0x4c, 0x41, 0x31, 0xa3,
-	0x66, 0xbb, 0x4b, 0xec, 0x6d, 0x7b, 0x1b, 0x84, 0x7e, 0x03, 0x9a, 0x7b, 0xbd, 0x0e, 0xe4, 0x31,
-	0x9e, 0x56, 0x09, 0x08, 0x7b, 0xaa, 0xe8, 0x74, 0x87, 0x4d, 0xb2, 0x9a, 0x95, 0xd7, 0xaf, 0x27,
-	0x20, 0xbc, 0x02, 0x21, 0xcf, 0xf1, 0xac, 0xd2, 0x5c, 0x67, 0xca, 0xae, 0x14, 0xf0, 0xdd, 0xf3,
-	0xe1, 0x42, 0xee, 0x95, 0x98, 0xf3, 0x19, 0xe1, 0x5a, 0x79, 0xb2, 0x26, 0x95, 0x26, 0xad, 0x91,
-	0xcd, 0xd8, 0xc5, 0x36, 0x33, 0xf4, 0xd0, 0x5e, 0x0f, 0xf1, 0x8c, 0xd4, 0x10, 0x2a, 0x7b, 0xaa,
-	0x5e, 0x69, 0xd4, 0x9a, 0xb7, 0xcf, 0x9d, 0xcd, 0x3b, 0xd1, 0x3b, 0x5f, 0x2a, 0xbd, 0xa1, 0xcc,
-	0xae, 0xa4, 0x8e, 0xab, 0x26, 0x14, 0x3f, 0x0b, 0xa0, 0x18, 0xea, 0xbf, 0x95, 0xe9, 0xbd, 0x9f,
-	0xb7, 0x2c, 0xaf, 0x57, 0x25, 0xcf, 0xf0, 0x0d, 0xa5, 0x79, 0xaa, 0x65, 0xd4, 0x59, 0x05, 0xee,
-	0x07, 0x32, 0x82, 0x75, 0x10, 0x71, 0xe4, 0xab, 0xc2, 0xd5, 0x4a, 0x09, 0x4c, 0x12, 0x91, 0x26,
-	0xbe, 0x26, 0xe2, 0x48, 0x64, 0x69, 0x0a, 0x91, 0xe8, 0xbe, 0x8b, 0x03, 0x29, 0xba, 0x85, 0xa5,
-	0xa7, 0x57, 0x8d, 0x1e, 0x13, 0x8a, 0xe7, 0x54, 0xa6, 0x12, 0x88, 0x7c, 0x7b, 0xba, 0x8e, 0x1a,
-	0xd5, 0x52, 0x79, 0x5a, 0x24, 0xaf, 0x71, 0x6d, 0x3b, 0x6e, 0x6f, 0x40, 0x98, 0x04, 0x5c, 0x83,
-	0x3d, 0x53, 0xb8, 0x79, 0x6f, 0xb2, 0x09, 0xad, 0xbe, 0xb8, 0x48, 0x78, 0x90, 0x26, 0xab, 0x78,
-	0x5e, 0x65, 0x42, 0x80, 0x52, 0x9b, 0x59, 0xd0, 0x8a, 0xdb, 0xea, 0x95, 0x54, 0x3a, 0x4e, 0xbb,
-	0x6b, 0x32, 0x94, 0xda, 0x9e, 0xad, 0xa3, 0xc6, 0x4c, 0x79, 0xff, 0x5f, 0x74, 0xe4, 0x29, 0xbe,
-	0xbe, 0xc9, 0x65, 0x00, 0xfe, 0x48, 0x87, 0xb9, 0x81, 0x0e, 0x13, 0x34, 0xce, 0x37, 0x84, 0xff,
-	0x3f, 0xf3, 0x8a, 0xc8, 0x13, 0x3c, 0xcb, 0x85, 0x96, 0xbb, 0x26, 0x16, 0x13, 0xf1, 0xc2, 0xe0,
-	0x76, 0xe6, 0x3b, 0xef, 0xbf, 0x79, 0x0f, 0x36, 0xc1, 0xb8, 0x07, 0x5e, 0x89, 0x90, 0xf7, 0xf8,
-	0x6a, 0xc0, 0x95, 0x5e, 0x2f, 0x33, 0xdc, 0x90, 0x21, 0x14, 0x46, 0xd6, 0x9a, 0xf7, 0x2f, 0xf6,
-	0xe4, 0x0c, 0xe1, 0x8d, 0xf4, 0x70, 0xbe, 0x22, 0x5c, 0x1b, 0xf0, 0xf2, 0x92, 0x3f, 0xd6, 0x97,
-	0xb8, 0xaa, 0x4f, 0x23, 0x9d, 0xfa, 0xd7, 0x48, 0x7b, 0xa8, 0xf3, 0x09, 0xe1, 0x2b, 0x43, 0xa7,
-	0x97, 0x3c, 0xe8, 0xe2, 0x99, 0xbf, 0xca, 0xcd, 0x71, 0x43, 0xb2, 0x33, 0x3f, 0x93, 0x95, 0xe5,
-	0xfd, 0x43, 0x6a, 0x1d, 0x1c, 0x52, 0xeb, 0xf8, 0x90, 0xa2, 0x0f, 0x39, 0x45, 0xdf, 0x73, 0x8a,
-	0xf6, 0x72, 0x8a, 0xf6, 0x73, 0x8a, 0x7e, 0xe5, 0x14, 0xfd, 0xce, 0xa9, 0x75, 0x9c, 0x53, 0xf4,
-	0xf1, 0x88, 0x5a, 0xfb, 0x47, 0xd4, 0x3a, 0x38, 0xa2, 0xd6, 0x9f, 0x00, 0x00, 0x00, 0xff, 0xff,
-	0xb3, 0xf4, 0x39, 0x8d, 0x44, 0x06, 0x00, 0x00,
+	// 575 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x94, 0xdd, 0x6a, 0x14, 0x31,
+	0x14, 0xc7, 0xc9, 0xf6, 0x6b, 0x9b, 0x51, 0xd4, 0x5c, 0xe8, 0xb0, 0x48, 0x59, 0xa7, 0x88, 0xab,
+	0x48, 0xa6, 0x2d, 0x52, 0x2b, 0x82, 0x82, 0x1f, 0x20, 0x6b, 0x45, 0x49, 0x8b, 0xf7, 0x99, 0xcc,
+	0xe9, 0x36, 0xdd, 0x99, 0xc9, 0x30, 0xc9, 0x2c, 0xec, 0x63, 0xe8, 0x23, 0x88, 0x0f, 0xe3, 0xa5,
+	0xe0, 0x0b, 0xc8, 0x3e, 0x81, 0x8f, 0x20, 0x49, 0xa7, 0xfb, 0xbd, 0x6e, 0x85, 0x5e, 0x4e, 0xce,
+	0xff, 0x77, 0xe6, 0x9c, 0xff, 0x39, 0x09, 0x6e, 0x75, 0x0f, 0x34, 0x95, 0x2a, 0xe4, 0xb9, 0x0c,
+	0x23, 0x6e, 0xc4, 0x69, 0xd8, 0xdb, 0x8d, 0xc0, 0xf0, 0xdd, 0xb0, 0x03, 0x19, 0x14, 0xdc, 0x40,
+	0x4c, 0xf3, 0x42, 0x19, 0x45, 0xfc, 0x73, 0x25, 0xe5, 0xb9, 0xa4, 0x4e, 0x49, 0x2b, 0x65, 0x63,
+	0x7b, 0x4e, 0x8e, 0x69, 0xbc, 0x11, 0x8c, 0x89, 0x84, 0x2a, 0x60, 0x9e, 0xe6, 0xc9, 0x48, 0x93,
+	0x72, 0x71, 0x2a, 0x33, 0x28, 0xfa, 0x61, 0xde, 0xed, 0xd8, 0x03, 0x1d, 0xa6, 0x60, 0xf8, 0x3c,
+	0x2a, 0x5c, 0x44, 0x15, 0x65, 0x66, 0x64, 0x0a, 0x33, 0xc0, 0xfe, 0x32, 0x40, 0x8b, 0x53, 0x48,
+	0xf9, 0x34, 0x17, 0xfc, 0x42, 0x78, 0xe3, 0x75, 0xa1, 0xb2, 0xb6, 0x8a, 0xc8, 0x21, 0xae, 0xdb,
+	0x7a, 0x62, 0x6e, 0xb8, 0x8f, 0x9a, 0xa8, 0xe5, 0xed, 0xed, 0xd0, 0x91, 0x41, 0xc3, 0xb4, 0x34,
+	0xef, 0x76, 0xec, 0x81, 0xa6, 0x56, 0x4d, 0x7b, 0xbb, 0xf4, 0x63, 0x74, 0x06, 0xc2, 0x7c, 0x00,
+	0xc3, 0xd9, 0x30, 0x03, 0x79, 0x86, 0x57, 0x75, 0x0e, 0xc2, 0xaf, 0xb9, 0x4c, 0xf7, 0xe9, 0x22,
+	0xab, 0x69, 0xf5, 0xfb, 0xa3, 0x1c, 0x04, 0x73, 0x08, 0x79, 0x89, 0xd7, 0xb5, 0xe1, 0xa6, 0xd4,
+	0xfe, 0x8a, 0x83, 0x1f, 0x2c, 0x87, 0x9d, 0x9c, 0x55, 0x58, 0xf0, 0x15, 0x61, 0xaf, 0x8a, 0x1c,
+	0x4a, 0x6d, 0x48, 0x7b, 0xa6, 0x33, 0x7a, 0xb9, 0xce, 0x2c, 0x3d, 0xd5, 0xd7, 0x53, 0xbc, 0x26,
+	0x0d, 0xa4, 0xda, 0xaf, 0x35, 0x57, 0x5a, 0xde, 0xde, 0xbd, 0xa5, 0xb5, 0xb1, 0x73, 0x7d, 0xf0,
+	0xa7, 0x36, 0x2c, 0xca, 0xf6, 0x4a, 0x1a, 0xb8, 0x6e, 0x87, 0x12, 0x97, 0x09, 0xb8, 0xa2, 0x36,
+	0xd9, 0xf0, 0x9b, 0x1c, 0xe0, 0x3b, 0xda, 0xf0, 0xc2, 0xc8, 0xac, 0xf3, 0x06, 0x78, 0x9c, 0xc8,
+	0x0c, 0x8e, 0x40, 0xa8, 0x2c, 0xd6, 0xce, 0xcf, 0x15, 0xb6, 0x28, 0x4c, 0x1e, 0xe3, 0x5b, 0x42,
+	0x65, 0xa2, 0x2c, 0x0a, 0xc8, 0x44, 0xff, 0x93, 0x4a, 0xa4, 0xe8, 0x3b, 0x1b, 0x37, 0xd9, 0x6c,
+	0x80, 0xf8, 0x78, 0x43, 0x97, 0x3a, 0x87, 0x2c, 0xf6, 0x57, 0x9b, 0xa8, 0x55, 0x67, 0x17, 0x9f,
+	0xe4, 0x3d, 0xf6, 0xce, 0x54, 0x74, 0x0c, 0x69, 0x9e, 0x70, 0x03, 0xfe, 0x9a, 0x73, 0xed, 0xe1,
+	0xe2, 0x66, 0xdb, 0x23, 0xb1, 0x9b, 0xe4, 0x38, 0x4d, 0x5e, 0xe0, 0x86, 0x2e, 0x85, 0x00, 0xad,
+	0x4f, 0xca, 0xa4, 0xad, 0x22, 0xfd, 0x4e, 0x6a, 0xa3, 0x8a, 0xfe, 0xa1, 0x4c, 0xa5, 0xf1, 0xd7,
+	0x9b, 0xa8, 0xb5, 0xc6, 0xfe, 0xa1, 0x20, 0xfb, 0xf8, 0xf6, 0x09, 0x97, 0x09, 0xc4, 0x33, 0xec,
+	0x86, 0x63, 0x17, 0x44, 0x83, 0xef, 0x08, 0x5f, 0x9f, 0xd8, 0x10, 0xf2, 0x1c, 0xaf, 0x73, 0x61,
+	0x64, 0xcf, 0x5a, 0x6e, 0xc7, 0xb7, 0x3d, 0xde, 0x91, 0xbd, 0xc3, 0xa3, 0x7d, 0x66, 0x70, 0x02,
+	0xd6, 0x2b, 0x60, 0x15, 0x42, 0x3e, 0xe3, 0x9b, 0x09, 0xd7, 0xe6, 0xa8, 0x9a, 0xd2, 0xb1, 0x4c,
+	0xc1, 0xd9, 0xe6, 0xed, 0x3d, 0xba, 0xdc, 0x3a, 0x59, 0x82, 0xcd, 0xe4, 0x08, 0xbe, 0x21, 0xec,
+	0x8d, 0xf9, 0x77, 0xc5, 0x17, 0xf1, 0x2d, 0xae, 0x9b, 0x8b, 0x31, 0xd6, 0xfe, 0x77, 0x8c, 0x43,
+	0x34, 0xf8, 0x82, 0xf0, 0x8d, 0xa9, 0xe8, 0x15, 0x17, 0xba, 0x33, 0xf1, 0x62, 0xdc, 0x9d, 0x57,
+	0x24, 0x9d, 0x78, 0x28, 0x5e, 0x5d, 0xfb, 0x31, 0xd8, 0x42, 0x3f, 0x07, 0x5b, 0xe8, 0xf7, 0x60,
+	0x0b, 0xfd, 0x0d, 0x00, 0x00, 0xff, 0xff, 0xde, 0x7c, 0xb1, 0x60, 0xf8, 0x05, 0x00, 0x00,
 }
 
-func (this *CronJob) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*CronJob)
-	if !ok {
-		that2, ok := that.(CronJob)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if !this.Spec.Equal(that1.Spec) {
-		return false
-	}
-	if !this.Status.Equal(that1.Status) {
-		return false
-	}
-	return true
-}
-func (this *CronJobList) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*CronJobList)
-	if !ok {
-		that2, ok := that.(CronJobList)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if len(this.Items) != len(that1.Items) {
-		return false
-	}
-	for i := range this.Items {
-		if !this.Items[i].Equal(that1.Items[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *CronJobSpec) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*CronJobSpec)
-	if !ok {
-		that2, ok := that.(CronJobSpec)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Schedule != that1.Schedule {
-		return false
-	}
-	if this.StartingDeadlineSeconds != that1.StartingDeadlineSeconds {
-		return false
-	}
-	if this.ConcurrencyPolicy != that1.ConcurrencyPolicy {
-		return false
-	}
-	if this.Suspend != that1.Suspend {
-		return false
-	}
-	if !this.JobTemplate.Equal(that1.JobTemplate) {
-		return false
-	}
-	if this.SuccessfulJobsHistoryLimit != that1.SuccessfulJobsHistoryLimit {
-		return false
-	}
-	if this.FailedJobsHistoryLimit != that1.FailedJobsHistoryLimit {
-		return false
-	}
-	return true
-}
-func (this *CronJobStatus) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*CronJobStatus)
-	if !ok {
-		that2, ok := that.(CronJobStatus)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if len(this.Active) != len(that1.Active) {
-		return false
-	}
-	for i := range this.Active {
-		if !this.Active[i].Equal(that1.Active[i]) {
-			return false
-		}
-	}
-	if !this.LastScheduleTime.Equal(that1.LastScheduleTime) {
-		return false
-	}
-	return true
-}
-func (this *JobTemplate) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*JobTemplate)
-	if !ok {
-		that2, ok := that.(JobTemplate)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if !this.Template.Equal(that1.Template) {
-		return false
-	}
-	return true
-}
-func (this *JobTemplateSpec) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*JobTemplateSpec)
-	if !ok {
-		that2, ok := that.(JobTemplateSpec)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if !this.Spec.Equal(that1.Spec) {
-		return false
-	}
-	return true
-}
-func (this *CronJob) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 7)
-	s = append(s, "&k8s_io_api_batch_v1beta1.CronJob{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Spec != nil {
-		s = append(s, "Spec: "+fmt.Sprintf("%#v", this.Spec)+",\n")
-	}
-	if this.Status != nil {
-		s = append(s, "Status: "+fmt.Sprintf("%#v", this.Status)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *CronJobList) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_batch_v1beta1.CronJobList{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Items != nil {
-		s = append(s, "Items: "+fmt.Sprintf("%#v", this.Items)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *CronJobSpec) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 11)
-	s = append(s, "&k8s_io_api_batch_v1beta1.CronJobSpec{")
-	s = append(s, "Schedule: "+fmt.Sprintf("%#v", this.Schedule)+",\n")
-	s = append(s, "StartingDeadlineSeconds: "+fmt.Sprintf("%#v", this.StartingDeadlineSeconds)+",\n")
-	s = append(s, "ConcurrencyPolicy: "+fmt.Sprintf("%#v", this.ConcurrencyPolicy)+",\n")
-	s = append(s, "Suspend: "+fmt.Sprintf("%#v", this.Suspend)+",\n")
-	if this.JobTemplate != nil {
-		s = append(s, "JobTemplate: "+fmt.Sprintf("%#v", this.JobTemplate)+",\n")
-	}
-	s = append(s, "SuccessfulJobsHistoryLimit: "+fmt.Sprintf("%#v", this.SuccessfulJobsHistoryLimit)+",\n")
-	s = append(s, "FailedJobsHistoryLimit: "+fmt.Sprintf("%#v", this.FailedJobsHistoryLimit)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *CronJobStatus) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_batch_v1beta1.CronJobStatus{")
-	if this.Active != nil {
-		s = append(s, "Active: "+fmt.Sprintf("%#v", this.Active)+",\n")
-	}
-	if this.LastScheduleTime != nil {
-		s = append(s, "LastScheduleTime: "+fmt.Sprintf("%#v", this.LastScheduleTime)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *JobTemplate) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_batch_v1beta1.JobTemplate{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Template != nil {
-		s = append(s, "Template: "+fmt.Sprintf("%#v", this.Template)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *JobTemplateSpec) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_batch_v1beta1.JobTemplateSpec{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Spec != nil {
-		s = append(s, "Spec: "+fmt.Sprintf("%#v", this.Spec)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func valueToGoStringGenerated(v interface{}, typ string) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("func(v %v) *%v { return &v } ( %#v )", typ, typ, pv)
-}
 func (m *CronJob) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -811,6 +535,10 @@ func (m *CronJob) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Status != nil {
 		{
 			size, err := m.Status.MarshalToSizedBuffer(dAtA[:i])
@@ -870,6 +598,10 @@ func (m *CronJobList) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Items) > 0 {
 		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -919,12 +651,20 @@ func (m *CronJobSpec) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	i = encodeVarintGenerated(dAtA, i, uint64(m.FailedJobsHistoryLimit))
-	i--
-	dAtA[i] = 0x38
-	i = encodeVarintGenerated(dAtA, i, uint64(m.SuccessfulJobsHistoryLimit))
-	i--
-	dAtA[i] = 0x30
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.FailedJobsHistoryLimit != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.FailedJobsHistoryLimit))
+		i--
+		dAtA[i] = 0x38
+	}
+	if m.SuccessfulJobsHistoryLimit != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.SuccessfulJobsHistoryLimit))
+		i--
+		dAtA[i] = 0x30
+	}
 	if m.JobTemplate != nil {
 		{
 			size, err := m.JobTemplate.MarshalToSizedBuffer(dAtA[:i])
@@ -937,27 +677,35 @@ func (m *CronJobSpec) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x2a
 	}
-	i--
-	if m.Suspend {
-		dAtA[i] = 1
-	} else {
-		dAtA[i] = 0
+	if m.Suspend != nil {
+		i--
+		if *m.Suspend {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x20
 	}
-	i--
-	dAtA[i] = 0x20
-	i -= len(m.ConcurrencyPolicy)
-	copy(dAtA[i:], m.ConcurrencyPolicy)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.ConcurrencyPolicy)))
-	i--
-	dAtA[i] = 0x1a
-	i = encodeVarintGenerated(dAtA, i, uint64(m.StartingDeadlineSeconds))
-	i--
-	dAtA[i] = 0x10
-	i -= len(m.Schedule)
-	copy(dAtA[i:], m.Schedule)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Schedule)))
-	i--
-	dAtA[i] = 0xa
+	if m.ConcurrencyPolicy != nil {
+		i -= len(*m.ConcurrencyPolicy)
+		copy(dAtA[i:], *m.ConcurrencyPolicy)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.ConcurrencyPolicy)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if m.StartingDeadlineSeconds != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.StartingDeadlineSeconds))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.Schedule != nil {
+		i -= len(*m.Schedule)
+		copy(dAtA[i:], *m.Schedule)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Schedule)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -981,6 +729,10 @@ func (m *CronJobStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.LastScheduleTime != nil {
 		{
 			size, err := m.LastScheduleTime.MarshalToSizedBuffer(dAtA[:i])
@@ -1030,6 +782,10 @@ func (m *JobTemplate) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Template != nil {
 		{
 			size, err := m.Template.MarshalToSizedBuffer(dAtA[:i])
@@ -1077,6 +833,10 @@ func (m *JobTemplateSpec) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Spec != nil {
 		{
 			size, err := m.Spec.MarshalToSizedBuffer(dAtA[:i])
@@ -1133,6 +893,9 @@ func (m *CronJob) Size() (n int) {
 		l = m.Status.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -1152,6 +915,9 @@ func (m *CronJobList) Size() (n int) {
 			n += 1 + l + sovGenerated(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -1161,18 +927,33 @@ func (m *CronJobSpec) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Schedule)
-	n += 1 + l + sovGenerated(uint64(l))
-	n += 1 + sovGenerated(uint64(m.StartingDeadlineSeconds))
-	l = len(m.ConcurrencyPolicy)
-	n += 1 + l + sovGenerated(uint64(l))
-	n += 2
+	if m.Schedule != nil {
+		l = len(*m.Schedule)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.StartingDeadlineSeconds != nil {
+		n += 1 + sovGenerated(uint64(*m.StartingDeadlineSeconds))
+	}
+	if m.ConcurrencyPolicy != nil {
+		l = len(*m.ConcurrencyPolicy)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.Suspend != nil {
+		n += 2
+	}
 	if m.JobTemplate != nil {
 		l = m.JobTemplate.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
-	n += 1 + sovGenerated(uint64(m.SuccessfulJobsHistoryLimit))
-	n += 1 + sovGenerated(uint64(m.FailedJobsHistoryLimit))
+	if m.SuccessfulJobsHistoryLimit != nil {
+		n += 1 + sovGenerated(uint64(*m.SuccessfulJobsHistoryLimit))
+	}
+	if m.FailedJobsHistoryLimit != nil {
+		n += 1 + sovGenerated(uint64(*m.FailedJobsHistoryLimit))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -1192,6 +973,9 @@ func (m *CronJobStatus) Size() (n int) {
 		l = m.LastScheduleTime.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -1208,6 +992,9 @@ func (m *JobTemplate) Size() (n int) {
 	if m.Template != nil {
 		l = m.Template.Size()
 		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -1226,6 +1013,9 @@ func (m *JobTemplateSpec) Size() (n int) {
 		l = m.Spec.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -1234,96 +1024,6 @@ func sovGenerated(x uint64) (n int) {
 }
 func sozGenerated(x uint64) (n int) {
 	return sovGenerated(uint64((x << 1) ^ uint64((int64(x) >> 63))))
-}
-func (this *CronJob) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&CronJob{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ObjectMeta", "v1.ObjectMeta", 1) + `,`,
-		`Spec:` + strings.Replace(this.Spec.String(), "CronJobSpec", "CronJobSpec", 1) + `,`,
-		`Status:` + strings.Replace(this.Status.String(), "CronJobStatus", "CronJobStatus", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *CronJobList) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForItems := "[]*CronJob{"
-	for _, f := range this.Items {
-		repeatedStringForItems += strings.Replace(f.String(), "CronJob", "CronJob", 1) + ","
-	}
-	repeatedStringForItems += "}"
-	s := strings.Join([]string{`&CronJobList{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ListMeta", "v1.ListMeta", 1) + `,`,
-		`Items:` + repeatedStringForItems + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *CronJobSpec) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&CronJobSpec{`,
-		`Schedule:` + fmt.Sprintf("%v", this.Schedule) + `,`,
-		`StartingDeadlineSeconds:` + fmt.Sprintf("%v", this.StartingDeadlineSeconds) + `,`,
-		`ConcurrencyPolicy:` + fmt.Sprintf("%v", this.ConcurrencyPolicy) + `,`,
-		`Suspend:` + fmt.Sprintf("%v", this.Suspend) + `,`,
-		`JobTemplate:` + strings.Replace(this.JobTemplate.String(), "JobTemplateSpec", "JobTemplateSpec", 1) + `,`,
-		`SuccessfulJobsHistoryLimit:` + fmt.Sprintf("%v", this.SuccessfulJobsHistoryLimit) + `,`,
-		`FailedJobsHistoryLimit:` + fmt.Sprintf("%v", this.FailedJobsHistoryLimit) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *CronJobStatus) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForActive := "[]*ObjectReference{"
-	for _, f := range this.Active {
-		repeatedStringForActive += strings.Replace(fmt.Sprintf("%v", f), "ObjectReference", "v11.ObjectReference", 1) + ","
-	}
-	repeatedStringForActive += "}"
-	s := strings.Join([]string{`&CronJobStatus{`,
-		`Active:` + repeatedStringForActive + `,`,
-		`LastScheduleTime:` + strings.Replace(fmt.Sprintf("%v", this.LastScheduleTime), "Time", "v1.Time", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *JobTemplate) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&JobTemplate{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ObjectMeta", "v1.ObjectMeta", 1) + `,`,
-		`Template:` + strings.Replace(this.Template.String(), "JobTemplateSpec", "JobTemplateSpec", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *JobTemplateSpec) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&JobTemplateSpec{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ObjectMeta", "v1.ObjectMeta", 1) + `,`,
-		`Spec:` + strings.Replace(fmt.Sprintf("%v", this.Spec), "JobSpec", "v12.JobSpec", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func valueToStringGenerated(v interface{}) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("*%v", pv)
 }
 func (m *CronJob) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
@@ -1474,6 +1174,7 @@ func (m *CronJob) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -1594,6 +1295,7 @@ func (m *CronJobList) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -1662,13 +1364,14 @@ func (m *CronJobSpec) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Schedule = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Schedule = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field StartingDeadlineSeconds", wireType)
 			}
-			m.StartingDeadlineSeconds = 0
+			var v int64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -1678,11 +1381,12 @@ func (m *CronJobSpec) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.StartingDeadlineSeconds |= int64(b&0x7F) << shift
+				v |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.StartingDeadlineSeconds = &v
 		case 3:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ConcurrencyPolicy", wireType)
@@ -1713,7 +1417,8 @@ func (m *CronJobSpec) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.ConcurrencyPolicy = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.ConcurrencyPolicy = &s
 			iNdEx = postIndex
 		case 4:
 			if wireType != 0 {
@@ -1734,7 +1439,8 @@ func (m *CronJobSpec) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
-			m.Suspend = bool(v != 0)
+			b := bool(v != 0)
+			m.Suspend = &b
 		case 5:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field JobTemplate", wireType)
@@ -1775,7 +1481,7 @@ func (m *CronJobSpec) Unmarshal(dAtA []byte) error {
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field SuccessfulJobsHistoryLimit", wireType)
 			}
-			m.SuccessfulJobsHistoryLimit = 0
+			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -1785,16 +1491,17 @@ func (m *CronJobSpec) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.SuccessfulJobsHistoryLimit |= int32(b&0x7F) << shift
+				v |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.SuccessfulJobsHistoryLimit = &v
 		case 7:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field FailedJobsHistoryLimit", wireType)
 			}
-			m.FailedJobsHistoryLimit = 0
+			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -1804,11 +1511,12 @@ func (m *CronJobSpec) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.FailedJobsHistoryLimit |= int32(b&0x7F) << shift
+				v |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.FailedJobsHistoryLimit = &v
 		default:
 			iNdEx = preIndex
 			skippy, err := skipGenerated(dAtA[iNdEx:])
@@ -1821,6 +1529,7 @@ func (m *CronJobSpec) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -1941,6 +1650,7 @@ func (m *CronJobStatus) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -2063,6 +1773,7 @@ func (m *JobTemplate) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -2185,6 +1896,7 @@ func (m *JobTemplateSpec) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}

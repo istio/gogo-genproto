@@ -4,14 +4,11 @@
 package k8s_io_apimachinery_pkg_runtime
 
 import (
-	bytes "bytes"
 	fmt "fmt"
 	proto "github.com/gogo/protobuf/proto"
 	io "io"
 	math "math"
 	math_bits "math/bits"
-	reflect "reflect"
-	strings "strings"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -74,11 +71,15 @@ type RawExtension struct {
 	// Raw is the underlying serialization of this object.
 	//
 	// TODO: Determine how to detect ContentType and ContentEncoding of 'Raw' data.
-	Raw []byte `protobuf:"bytes,1,opt,name=raw" json:"raw"`
+	Raw                  []byte   `protobuf:"bytes,1,opt,name=raw" json:"raw,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *RawExtension) Reset()      { *m = RawExtension{} }
-func (*RawExtension) ProtoMessage() {}
+func (m *RawExtension) Reset()         { *m = RawExtension{} }
+func (m *RawExtension) String() string { return proto.CompactTextString(m) }
+func (*RawExtension) ProtoMessage()    {}
 func (*RawExtension) Descriptor() ([]byte, []int) {
 	return fileDescriptor_2e0e4b920403a48c, []int{0}
 }
@@ -132,13 +133,17 @@ func (m *RawExtension) GetRaw() []byte {
 // +k8s:openapi-gen=true
 type TypeMeta struct {
 	// +optional
-	ApiVersion string `protobuf:"bytes,1,opt,name=apiVersion" json:"apiVersion"`
+	ApiVersion *string `protobuf:"bytes,1,opt,name=apiVersion" json:"apiVersion,omitempty"`
 	// +optional
-	Kind string `protobuf:"bytes,2,opt,name=kind" json:"kind"`
+	Kind                 *string  `protobuf:"bytes,2,opt,name=kind" json:"kind,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *TypeMeta) Reset()      { *m = TypeMeta{} }
-func (*TypeMeta) ProtoMessage() {}
+func (m *TypeMeta) Reset()         { *m = TypeMeta{} }
+func (m *TypeMeta) String() string { return proto.CompactTextString(m) }
+func (*TypeMeta) ProtoMessage()    {}
 func (*TypeMeta) Descriptor() ([]byte, []int) {
 	return fileDescriptor_2e0e4b920403a48c, []int{1}
 }
@@ -170,15 +175,15 @@ func (m *TypeMeta) XXX_DiscardUnknown() {
 var xxx_messageInfo_TypeMeta proto.InternalMessageInfo
 
 func (m *TypeMeta) GetApiVersion() string {
-	if m != nil {
-		return m.ApiVersion
+	if m != nil && m.ApiVersion != nil {
+		return *m.ApiVersion
 	}
 	return ""
 }
 
 func (m *TypeMeta) GetKind() string {
-	if m != nil {
-		return m.Kind
+	if m != nil && m.Kind != nil {
+		return *m.Kind
 	}
 	return ""
 }
@@ -198,17 +203,21 @@ type Unknown struct {
 	// Raw will hold the complete serialized object which couldn't be matched
 	// with a registered type. Most likely, nothing should be done with this
 	// except for passing it through the system.
-	Raw []byte `protobuf:"bytes,2,opt,name=raw" json:"raw"`
+	Raw []byte `protobuf:"bytes,2,opt,name=raw" json:"raw,omitempty"`
 	// ContentEncoding is encoding used to encode 'Raw' data.
 	// Unspecified means no encoding.
-	ContentEncoding string `protobuf:"bytes,3,opt,name=contentEncoding" json:"contentEncoding"`
+	ContentEncoding *string `protobuf:"bytes,3,opt,name=contentEncoding" json:"contentEncoding,omitempty"`
 	// ContentType  is serialization method used to serialize 'Raw'.
 	// Unspecified means ContentTypeJSON.
-	ContentType string `protobuf:"bytes,4,opt,name=contentType" json:"contentType"`
+	ContentType          *string  `protobuf:"bytes,4,opt,name=contentType" json:"contentType,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *Unknown) Reset()      { *m = Unknown{} }
-func (*Unknown) ProtoMessage() {}
+func (m *Unknown) Reset()         { *m = Unknown{} }
+func (m *Unknown) String() string { return proto.CompactTextString(m) }
+func (*Unknown) ProtoMessage()    {}
 func (*Unknown) Descriptor() ([]byte, []int) {
 	return fileDescriptor_2e0e4b920403a48c, []int{2}
 }
@@ -254,15 +263,15 @@ func (m *Unknown) GetRaw() []byte {
 }
 
 func (m *Unknown) GetContentEncoding() string {
-	if m != nil {
-		return m.ContentEncoding
+	if m != nil && m.ContentEncoding != nil {
+		return *m.ContentEncoding
 	}
 	return ""
 }
 
 func (m *Unknown) GetContentType() string {
-	if m != nil {
-		return m.ContentType
+	if m != nil && m.ContentType != nil {
+		return *m.ContentType
 	}
 	return ""
 }
@@ -278,156 +287,25 @@ func init() {
 }
 
 var fileDescriptor_2e0e4b920403a48c = []byte{
-	// 298 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x8e, 0x31, 0x4b, 0x03, 0x31,
-	0x18, 0x86, 0x93, 0xb6, 0x60, 0x4d, 0x0b, 0x42, 0x06, 0xb9, 0xe9, 0xab, 0x14, 0x29, 0xba, 0xe4,
-	0x40, 0x1c, 0x9c, 0x0b, 0x5d, 0x04, 0x97, 0xa2, 0xee, 0xa1, 0x0d, 0x67, 0x38, 0xfa, 0x25, 0xa4,
-	0x91, 0xda, 0xcd, 0x9f, 0xe0, 0xcf, 0xf0, 0x67, 0x38, 0x76, 0xec, 0xd8, 0x49, 0x6c, 0x6e, 0x71,
-	0xec, 0x4f, 0x90, 0x3b, 0xaf, 0x12, 0xba, 0xb8, 0xbe, 0xef, 0xfb, 0x7c, 0xdf, 0xc3, 0xd2, 0xfc,
-	0x66, 0x2e, 0xb4, 0x49, 0xa5, 0xd5, 0x33, 0x39, 0x79, 0xd2, 0xa8, 0xdc, 0x32, 0xb5, 0x79, 0x96,
-	0xba, 0x67, 0xf4, 0x7a, 0xa6, 0xd2, 0x4c, 0xa1, 0x72, 0xd2, 0xab, 0xa9, 0xb0, 0xce, 0x78, 0xc3,
-	0x7b, 0xbf, 0x80, 0x88, 0x01, 0x61, 0xf3, 0x4c, 0xd4, 0x40, 0x7f, 0xc0, 0xba, 0x63, 0xb9, 0x18,
-	0xbd, 0x78, 0x85, 0x73, 0x6d, 0x90, 0x9f, 0xb2, 0xa6, 0x93, 0x8b, 0x84, 0x9e, 0xd1, 0x8b, 0xee,
-	0xb0, 0xb5, 0xfa, 0xec, 0x91, 0x71, 0x19, 0xf4, 0x6f, 0x59, 0xfb, 0x7e, 0x69, 0xd5, 0x9d, 0xf2,
-	0x92, 0x9f, 0x33, 0x26, 0xad, 0x7e, 0x54, 0xae, 0x24, 0xaa, 0xe9, 0x71, 0x3d, 0x8d, 0x72, 0x9e,
-	0xb0, 0x56, 0xae, 0x71, 0x9a, 0x34, 0xa2, 0xbe, 0x4a, 0xfa, 0x1f, 0x94, 0x1d, 0x3d, 0x60, 0x8e,
-	0x66, 0x81, 0x7c, 0xc4, 0xda, 0xbe, 0xbe, 0x5b, 0x5d, 0xea, 0x5c, 0x5d, 0x8a, 0x7f, 0x9c, 0xc5,
-	0x5e, 0x64, 0xfc, 0x87, 0xee, 0xb5, 0x1b, 0x07, 0xda, 0x5c, 0xb0, 0x93, 0x89, 0x41, 0xaf, 0xd0,
-	0x8f, 0x70, 0x62, 0xa6, 0x1a, 0xb3, 0xa4, 0x19, 0xf9, 0x1c, 0x96, 0x7c, 0xc0, 0x3a, 0x75, 0x54,
-	0x3e, 0x49, 0x5a, 0xd1, 0x36, 0x2e, 0x86, 0xd7, 0xeb, 0x2d, 0x90, 0xcd, 0x16, 0xc8, 0x6e, 0x0b,
-	0xf4, 0x35, 0x00, 0x7d, 0x0f, 0x40, 0x57, 0x01, 0xe8, 0x3a, 0x00, 0xfd, 0x0a, 0x40, 0xbf, 0x03,
-	0x90, 0x5d, 0x00, 0xfa, 0x56, 0x00, 0x59, 0x17, 0x40, 0x36, 0x05, 0x90, 0x9f, 0x00, 0x00, 0x00,
-	0xff, 0xff, 0xa2, 0x66, 0xfd, 0x20, 0xbf, 0x01, 0x00, 0x00,
+	// 249 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x8e, 0xb1, 0x4e, 0xc3, 0x30,
+	0x14, 0x45, 0xe5, 0xb6, 0x12, 0xe5, 0x35, 0x12, 0xc8, 0x53, 0xa6, 0x10, 0x65, 0x2a, 0x8b, 0x2d,
+	0x31, 0x31, 0x31, 0x20, 0x65, 0x64, 0x89, 0x80, 0xdd, 0x4a, 0x9e, 0x8c, 0x65, 0xf5, 0xd9, 0x72,
+	0x8d, 0x42, 0x7f, 0x8a, 0xef, 0x60, 0xe4, 0x13, 0x50, 0xbe, 0x04, 0xc5, 0xa4, 0x55, 0xc4, 0xd2,
+	0xed, 0xe9, 0xfa, 0x9e, 0xeb, 0x03, 0xd2, 0xde, 0xef, 0x85, 0x71, 0x52, 0x79, 0xb3, 0x53, 0xed,
+	0x9b, 0x21, 0x0c, 0x07, 0xe9, 0xad, 0x96, 0xe1, 0x9d, 0xa2, 0xd9, 0xa1, 0xd4, 0x48, 0x18, 0x54,
+	0xc4, 0x4e, 0xf8, 0xe0, 0xa2, 0xe3, 0x37, 0x7f, 0x80, 0x98, 0x03, 0xc2, 0x5b, 0x2d, 0x26, 0xa0,
+	0x2a, 0x21, 0x6b, 0x54, 0x5f, 0x7f, 0x44, 0xa4, 0xbd, 0x71, 0xc4, 0xaf, 0x61, 0x19, 0x54, 0x9f,
+	0xb3, 0x92, 0x6d, 0xb3, 0x66, 0x3c, 0xab, 0x07, 0x58, 0x3f, 0x1f, 0x3c, 0x3e, 0x61, 0x54, 0xbc,
+	0x00, 0x50, 0xde, 0xbc, 0x62, 0x18, 0xbb, 0xa9, 0x74, 0xd9, 0xcc, 0x12, 0xce, 0x61, 0x65, 0x0d,
+	0x75, 0xf9, 0x22, 0xbd, 0xa4, 0xbb, 0xfa, 0x64, 0x70, 0xf1, 0x42, 0x96, 0x5c, 0x4f, 0xbc, 0x86,
+	0x75, 0x9c, 0xb6, 0x12, 0xbd, 0xb9, 0xbb, 0x15, 0x67, 0x0c, 0xc5, 0xf1, 0xf3, 0xe6, 0x84, 0x1e,
+	0x25, 0x17, 0x27, 0x49, 0xbe, 0x85, 0xab, 0xd6, 0x51, 0x44, 0x8a, 0x35, 0xb5, 0xae, 0x33, 0xa4,
+	0xf3, 0x65, 0x72, 0xf8, 0x1f, 0xf3, 0x12, 0x36, 0x53, 0x34, 0x0e, 0xe7, 0xab, 0xd4, 0x9a, 0x47,
+	0x8f, 0xd9, 0xd7, 0x50, 0xb0, 0xef, 0xa1, 0x60, 0x3f, 0x43, 0xc1, 0x7e, 0x03, 0x00, 0x00, 0xff,
+	0xff, 0x15, 0x3c, 0xbe, 0x3a, 0x73, 0x01, 0x00, 0x00,
 }
 
-func (this *RawExtension) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*RawExtension)
-	if !ok {
-		that2, ok := that.(RawExtension)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !bytes.Equal(this.Raw, that1.Raw) {
-		return false
-	}
-	return true
-}
-func (this *TypeMeta) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*TypeMeta)
-	if !ok {
-		that2, ok := that.(TypeMeta)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.ApiVersion != that1.ApiVersion {
-		return false
-	}
-	if this.Kind != that1.Kind {
-		return false
-	}
-	return true
-}
-func (this *Unknown) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*Unknown)
-	if !ok {
-		that2, ok := that.(Unknown)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.TypeMeta.Equal(that1.TypeMeta) {
-		return false
-	}
-	if !bytes.Equal(this.Raw, that1.Raw) {
-		return false
-	}
-	if this.ContentEncoding != that1.ContentEncoding {
-		return false
-	}
-	if this.ContentType != that1.ContentType {
-		return false
-	}
-	return true
-}
-func (this *RawExtension) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 5)
-	s = append(s, "&k8s_io_apimachinery_pkg_runtime.RawExtension{")
-	s = append(s, "Raw: "+fmt.Sprintf("%#v", this.Raw)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *TypeMeta) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_apimachinery_pkg_runtime.TypeMeta{")
-	s = append(s, "ApiVersion: "+fmt.Sprintf("%#v", this.ApiVersion)+",\n")
-	s = append(s, "Kind: "+fmt.Sprintf("%#v", this.Kind)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *Unknown) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 8)
-	s = append(s, "&k8s_io_apimachinery_pkg_runtime.Unknown{")
-	if this.TypeMeta != nil {
-		s = append(s, "TypeMeta: "+fmt.Sprintf("%#v", this.TypeMeta)+",\n")
-	}
-	s = append(s, "Raw: "+fmt.Sprintf("%#v", this.Raw)+",\n")
-	s = append(s, "ContentEncoding: "+fmt.Sprintf("%#v", this.ContentEncoding)+",\n")
-	s = append(s, "ContentType: "+fmt.Sprintf("%#v", this.ContentType)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func valueToGoStringGenerated(v interface{}, typ string) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("func(v %v) *%v { return &v } ( %#v )", typ, typ, pv)
-}
 func (m *RawExtension) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -448,6 +326,10 @@ func (m *RawExtension) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Raw != nil {
 		i -= len(m.Raw)
 		copy(dAtA[i:], m.Raw)
@@ -478,16 +360,24 @@ func (m *TypeMeta) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	i -= len(m.Kind)
-	copy(dAtA[i:], m.Kind)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Kind)))
-	i--
-	dAtA[i] = 0x12
-	i -= len(m.ApiVersion)
-	copy(dAtA[i:], m.ApiVersion)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.ApiVersion)))
-	i--
-	dAtA[i] = 0xa
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Kind != nil {
+		i -= len(*m.Kind)
+		copy(dAtA[i:], *m.Kind)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Kind)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.ApiVersion != nil {
+		i -= len(*m.ApiVersion)
+		copy(dAtA[i:], *m.ApiVersion)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.ApiVersion)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -511,16 +401,24 @@ func (m *Unknown) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	i -= len(m.ContentType)
-	copy(dAtA[i:], m.ContentType)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.ContentType)))
-	i--
-	dAtA[i] = 0x22
-	i -= len(m.ContentEncoding)
-	copy(dAtA[i:], m.ContentEncoding)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.ContentEncoding)))
-	i--
-	dAtA[i] = 0x1a
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.ContentType != nil {
+		i -= len(*m.ContentType)
+		copy(dAtA[i:], *m.ContentType)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.ContentType)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if m.ContentEncoding != nil {
+		i -= len(*m.ContentEncoding)
+		copy(dAtA[i:], *m.ContentEncoding)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.ContentEncoding)))
+		i--
+		dAtA[i] = 0x1a
+	}
 	if m.Raw != nil {
 		i -= len(m.Raw)
 		copy(dAtA[i:], m.Raw)
@@ -564,6 +462,9 @@ func (m *RawExtension) Size() (n int) {
 		l = len(m.Raw)
 		n += 1 + l + sovGenerated(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -573,10 +474,17 @@ func (m *TypeMeta) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.ApiVersion)
-	n += 1 + l + sovGenerated(uint64(l))
-	l = len(m.Kind)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.ApiVersion != nil {
+		l = len(*m.ApiVersion)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.Kind != nil {
+		l = len(*m.Kind)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -594,10 +502,17 @@ func (m *Unknown) Size() (n int) {
 		l = len(m.Raw)
 		n += 1 + l + sovGenerated(uint64(l))
 	}
-	l = len(m.ContentEncoding)
-	n += 1 + l + sovGenerated(uint64(l))
-	l = len(m.ContentType)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.ContentEncoding != nil {
+		l = len(*m.ContentEncoding)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.ContentType != nil {
+		l = len(*m.ContentType)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -606,48 +521,6 @@ func sovGenerated(x uint64) (n int) {
 }
 func sozGenerated(x uint64) (n int) {
 	return sovGenerated(uint64((x << 1) ^ uint64((int64(x) >> 63))))
-}
-func (this *RawExtension) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&RawExtension{`,
-		`Raw:` + fmt.Sprintf("%v", this.Raw) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *TypeMeta) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&TypeMeta{`,
-		`ApiVersion:` + fmt.Sprintf("%v", this.ApiVersion) + `,`,
-		`Kind:` + fmt.Sprintf("%v", this.Kind) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *Unknown) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&Unknown{`,
-		`TypeMeta:` + strings.Replace(this.TypeMeta.String(), "TypeMeta", "TypeMeta", 1) + `,`,
-		`Raw:` + fmt.Sprintf("%v", this.Raw) + `,`,
-		`ContentEncoding:` + fmt.Sprintf("%v", this.ContentEncoding) + `,`,
-		`ContentType:` + fmt.Sprintf("%v", this.ContentType) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func valueToStringGenerated(v interface{}) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("*%v", pv)
 }
 func (m *RawExtension) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
@@ -724,6 +597,7 @@ func (m *RawExtension) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -792,7 +666,8 @@ func (m *TypeMeta) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.ApiVersion = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.ApiVersion = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -824,7 +699,8 @@ func (m *TypeMeta) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Kind = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Kind = &s
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -838,6 +714,7 @@ func (m *TypeMeta) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -976,7 +853,8 @@ func (m *Unknown) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.ContentEncoding = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.ContentEncoding = &s
 			iNdEx = postIndex
 		case 4:
 			if wireType != 2 {
@@ -1008,7 +886,8 @@ func (m *Unknown) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.ContentType = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.ContentType = &s
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -1022,6 +901,7 @@ func (m *Unknown) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}

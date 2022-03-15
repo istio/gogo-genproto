@@ -6,7 +6,6 @@ package k8s_io_api_node_v1beta1
 import (
 	fmt "fmt"
 	proto "github.com/gogo/protobuf/proto"
-	github_com_gogo_protobuf_sortkeys "github.com/gogo/protobuf/sortkeys"
 	io "io"
 	v11 "istio.io/gogo-genproto/k8s.io/api/core/v1"
 	resource "istio.io/gogo-genproto/k8s.io/apimachinery/pkg/api/resource"
@@ -15,8 +14,6 @@ import (
 	_ "istio.io/gogo-genproto/k8s.io/apimachinery/pkg/runtime/schema"
 	math "math"
 	math_bits "math/bits"
-	reflect "reflect"
-	strings "strings"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -34,11 +31,15 @@ const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 type Overhead struct {
 	// PodFixed represents the fixed resource overhead associated with running a pod.
 	// +optional
-	PodFixed map[string]*resource.Quantity `protobuf:"bytes,1,rep,name=podFixed" json:"podFixed,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	PodFixed             map[string]*resource.Quantity `protobuf:"bytes,1,rep,name=podFixed" json:"podFixed,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	XXX_NoUnkeyedLiteral struct{}                      `json:"-"`
+	XXX_unrecognized     []byte                        `json:"-"`
+	XXX_sizecache        int32                         `json:"-"`
 }
 
-func (m *Overhead) Reset()      { *m = Overhead{} }
-func (*Overhead) ProtoMessage() {}
+func (m *Overhead) Reset()         { *m = Overhead{} }
+func (m *Overhead) String() string { return proto.CompactTextString(m) }
+func (*Overhead) ProtoMessage()    {}
 func (*Overhead) Descriptor() ([]byte, []int) {
 	return fileDescriptor_73bb62abe8438af4, []int{0}
 }
@@ -97,7 +98,7 @@ type RuntimeClass struct {
 	// in a pod.
 	// The Handler must conform to the DNS Label (RFC 1123) requirements, and is
 	// immutable.
-	Handler string `protobuf:"bytes,2,opt,name=handler" json:"handler"`
+	Handler *string `protobuf:"bytes,2,opt,name=handler" json:"handler,omitempty"`
 	// Overhead represents the resource overhead associated with running a pod for a
 	// given RuntimeClass. For more details, see
 	// https://git.k8s.io/enhancements/keps/sig-node/20190226-pod-overhead.md
@@ -109,11 +110,15 @@ type RuntimeClass struct {
 	// If scheduling is nil, this RuntimeClass is assumed to be supported by all
 	// nodes.
 	// +optional
-	Scheduling *Scheduling `protobuf:"bytes,4,opt,name=scheduling" json:"scheduling,omitempty"`
+	Scheduling           *Scheduling `protobuf:"bytes,4,opt,name=scheduling" json:"scheduling,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}    `json:"-"`
+	XXX_unrecognized     []byte      `json:"-"`
+	XXX_sizecache        int32       `json:"-"`
 }
 
-func (m *RuntimeClass) Reset()      { *m = RuntimeClass{} }
-func (*RuntimeClass) ProtoMessage() {}
+func (m *RuntimeClass) Reset()         { *m = RuntimeClass{} }
+func (m *RuntimeClass) String() string { return proto.CompactTextString(m) }
+func (*RuntimeClass) ProtoMessage()    {}
 func (*RuntimeClass) Descriptor() ([]byte, []int) {
 	return fileDescriptor_73bb62abe8438af4, []int{1}
 }
@@ -152,8 +157,8 @@ func (m *RuntimeClass) GetMetadata() *v1.ObjectMeta {
 }
 
 func (m *RuntimeClass) GetHandler() string {
-	if m != nil {
-		return m.Handler
+	if m != nil && m.Handler != nil {
+		return *m.Handler
 	}
 	return ""
 }
@@ -179,11 +184,15 @@ type RuntimeClassList struct {
 	// +optional
 	Metadata *v1.ListMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// Items is a list of schema objects.
-	Items []*RuntimeClass `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	Items                []*RuntimeClass `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
 }
 
-func (m *RuntimeClassList) Reset()      { *m = RuntimeClassList{} }
-func (*RuntimeClassList) ProtoMessage() {}
+func (m *RuntimeClassList) Reset()         { *m = RuntimeClassList{} }
+func (m *RuntimeClassList) String() string { return proto.CompactTextString(m) }
+func (*RuntimeClassList) ProtoMessage()    {}
 func (*RuntimeClassList) Descriptor() ([]byte, []int) {
 	return fileDescriptor_73bb62abe8438af4, []int{2}
 }
@@ -243,11 +252,15 @@ type Scheduling struct {
 	// tolerated by the pod and the RuntimeClass.
 	// +optional
 	// +listType=atomic
-	Tolerations []*v11.Toleration `protobuf:"bytes,2,rep,name=tolerations" json:"tolerations,omitempty"`
+	Tolerations          []*v11.Toleration `protobuf:"bytes,2,rep,name=tolerations" json:"tolerations,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
+	XXX_unrecognized     []byte            `json:"-"`
+	XXX_sizecache        int32             `json:"-"`
 }
 
-func (m *Scheduling) Reset()      { *m = Scheduling{} }
-func (*Scheduling) ProtoMessage() {}
+func (m *Scheduling) Reset()         { *m = Scheduling{} }
+func (m *Scheduling) String() string { return proto.CompactTextString(m) }
+func (*Scheduling) ProtoMessage()    {}
 func (*Scheduling) Descriptor() ([]byte, []int) {
 	return fileDescriptor_73bb62abe8438af4, []int{3}
 }
@@ -306,263 +319,41 @@ func init() {
 }
 
 var fileDescriptor_73bb62abe8438af4 = []byte{
-	// 544 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x93, 0xb1, 0x6f, 0xd3, 0x40,
-	0x14, 0xc6, 0x7d, 0x69, 0x2b, 0xc2, 0xa5, 0x48, 0x70, 0x03, 0x58, 0x19, 0x8e, 0x10, 0x84, 0xc8,
-	0x74, 0x26, 0x51, 0x41, 0x15, 0x08, 0x09, 0xb5, 0xc0, 0x40, 0x0b, 0x05, 0x97, 0x85, 0xf1, 0x6a,
-	0x3f, 0x25, 0x47, 0x1c, 0x9f, 0x39, 0x5f, 0x22, 0xb2, 0xf5, 0x4f, 0x60, 0xe7, 0x1f, 0xe0, 0x4f,
-	0xa9, 0x98, 0x32, 0x76, 0x42, 0xc4, 0x59, 0x18, 0x3b, 0x31, 0xa3, 0x73, 0x62, 0xc7, 0x4d, 0x08,
-	0x2d, 0xab, 0xef, 0xfb, 0x7d, 0xef, 0xbd, 0x2f, 0x5f, 0xf0, 0xfd, 0xee, 0x76, 0xcc, 0x84, 0x74,
-	0x78, 0x24, 0x9c, 0x50, 0xfa, 0xe0, 0x0c, 0x9a, 0x47, 0xa0, 0x79, 0xd3, 0x69, 0x43, 0x08, 0x8a,
-	0x6b, 0xf0, 0x59, 0xa4, 0xa4, 0x96, 0xe4, 0xd6, 0x54, 0xc8, 0x78, 0x24, 0x98, 0x11, 0xb2, 0x99,
-	0xb0, 0x5a, 0x2f, 0x38, 0x78, 0x52, 0x19, 0x87, 0x45, 0xb8, 0xba, 0x35, 0xd7, 0xf4, 0xb8, 0xd7,
-	0x11, 0x21, 0xa8, 0xa1, 0x13, 0x75, 0xdb, 0x29, 0xa4, 0x20, 0x96, 0x7d, 0xe5, 0xc1, 0x7f, 0x51,
-	0xb1, 0xd3, 0x03, 0xcd, 0xff, 0x36, 0xcb, 0x59, 0x45, 0xa9, 0x7e, 0xa8, 0x45, 0x6f, 0x79, 0xcc,
-	0xa3, 0x8b, 0x80, 0xd8, 0xeb, 0x40, 0x8f, 0x2f, 0x72, 0xf5, 0xef, 0x08, 0x97, 0x0f, 0x06, 0xa0,
-	0x3a, 0xc0, 0x7d, 0xb2, 0x87, 0xcb, 0x91, 0xf4, 0x5f, 0x8a, 0xcf, 0xe0, 0xdb, 0xa8, 0xb6, 0xd6,
-	0xa8, 0xb4, 0x1c, 0xb6, 0x22, 0x31, 0x96, 0x41, 0xec, 0xed, 0x8c, 0x78, 0x11, 0x6a, 0x35, 0x74,
-	0x73, 0x83, 0xea, 0x27, 0x7c, 0xed, 0xdc, 0x13, 0xb9, 0x89, 0xd7, 0xba, 0x30, 0xb4, 0x51, 0x0d,
-	0x35, 0xae, 0xee, 0xac, 0x9f, 0xfc, 0xb8, 0x6d, 0xb9, 0xe6, 0x03, 0x79, 0x8e, 0x37, 0x06, 0x3c,
-	0xe8, 0x83, 0x5d, 0xaa, 0xa1, 0x46, 0xa5, 0xc5, 0x0a, 0x23, 0xf3, 0x53, 0x58, 0xd4, 0x6d, 0xa7,
-	0x3b, 0x64, 0x39, 0xb3, 0x77, 0x7d, 0x1e, 0x6a, 0xa1, 0x87, 0xee, 0x14, 0x7e, 0x5c, 0xda, 0x46,
-	0xf5, 0xe3, 0x12, 0xde, 0x74, 0xa7, 0xf7, 0xee, 0x06, 0x3c, 0x8e, 0xc9, 0x3e, 0x2e, 0x9b, 0x84,
-	0x7d, 0xae, 0x79, 0x3a, 0xb7, 0xd2, 0x7a, 0xf0, 0x2f, 0xf7, 0x98, 0x19, 0x35, 0x1b, 0x34, 0xd9,
-	0xc1, 0xd1, 0x47, 0xf0, 0xf4, 0x6b, 0xd0, 0xdc, 0xcd, 0x1d, 0x08, 0xc5, 0x57, 0x3a, 0x3c, 0xf4,
-	0x03, 0x50, 0xe9, 0xaa, 0xd9, 0x11, 0xd9, 0x47, 0xf2, 0x14, 0x97, 0xe5, 0x2c, 0x15, 0x7b, 0x2d,
-	0x9d, 0x76, 0xe7, 0xc2, 0xf8, 0xdc, 0x1c, 0x21, 0xbb, 0x18, 0x9b, 0x1f, 0xc9, 0xef, 0x07, 0x22,
-	0x6c, 0xdb, 0xeb, 0xa9, 0xc1, 0xdd, 0x95, 0x06, 0x87, 0xb9, 0xd4, 0x2d, 0x60, 0xf5, 0xaf, 0x08,
-	0x5f, 0x2f, 0x46, 0xb0, 0x2f, 0x62, 0x4d, 0x5e, 0x2d, 0xc5, 0xc0, 0x2e, 0x17, 0x83, 0xa1, 0x17,
-	0x42, 0x78, 0x82, 0x37, 0x84, 0x86, 0x5e, 0x6c, 0x97, 0xd2, 0x82, 0xdc, 0x5b, 0xb9, 0x60, 0x71,
-	0x0b, 0x77, 0xca, 0xd4, 0x7f, 0x23, 0x8c, 0xe7, 0x8b, 0x93, 0x0f, 0x78, 0xd3, 0x20, 0x87, 0x10,
-	0x80, 0xa7, 0xa5, 0x9a, 0x75, 0xee, 0xe1, 0x25, 0x6e, 0x66, 0x6f, 0x0a, 0xdc, 0xb4, 0x79, 0xe7,
-	0xac, 0xc8, 0x33, 0x5c, 0xd1, 0x32, 0x30, 0x55, 0x17, 0x32, 0xcc, 0x96, 0xa5, 0x45, 0x67, 0xf3,
-	0x37, 0x37, 0x37, 0xbe, 0xcf, 0x65, 0x6e, 0x11, 0xa9, 0xee, 0xe1, 0x1b, 0x4b, 0x43, 0x56, 0x76,
-	0xb8, 0x5a, 0xec, 0x70, 0xf6, 0x32, 0x6f, 0xe6, 0xce, 0xd6, 0x68, 0x4c, 0xad, 0xd3, 0x31, 0xb5,
-	0xce, 0xc6, 0x14, 0x1d, 0x27, 0x14, 0x7d, 0x4b, 0x28, 0x3a, 0x49, 0x28, 0x1a, 0x25, 0x14, 0xfd,
-	0x4c, 0x28, 0xfa, 0x95, 0x50, 0xeb, 0x2c, 0xa1, 0xe8, 0xcb, 0x84, 0x5a, 0xa3, 0x09, 0xb5, 0x4e,
-	0x27, 0xd4, 0xfa, 0x13, 0x00, 0x00, 0xff, 0xff, 0x05, 0x4e, 0x9b, 0x75, 0xd8, 0x04, 0x00, 0x00,
+	// 497 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x93, 0xcf, 0x6e, 0xd3, 0x4c,
+	0x14, 0xc5, 0x35, 0xc9, 0x57, 0x7d, 0xc9, 0x4d, 0x90, 0xca, 0x08, 0x09, 0x2b, 0x8b, 0x28, 0x04,
+	0x21, 0xb2, 0x1a, 0x93, 0x08, 0x50, 0x05, 0x42, 0x20, 0x0a, 0x2c, 0xa0, 0x50, 0x98, 0xb2, 0x61,
+	0x39, 0xb5, 0xaf, 0x92, 0xc1, 0x7f, 0xc6, 0x1a, 0x8f, 0x23, 0xf2, 0x2c, 0xbc, 0x0e, 0x0b, 0x96,
+	0x3c, 0x02, 0xca, 0x92, 0x47, 0x60, 0x85, 0xc6, 0x4e, 0xdc, 0x69, 0xd2, 0xd0, 0xb2, 0x4b, 0xe4,
+	0xfb, 0x3b, 0xe7, 0xde, 0xe3, 0x63, 0xb8, 0x1b, 0x1d, 0xe4, 0x4c, 0x2a, 0x5f, 0x64, 0xd2, 0x4f,
+	0x55, 0x88, 0xfe, 0x7c, 0x7c, 0x8a, 0x46, 0x8c, 0xfd, 0x29, 0xa6, 0xa8, 0x85, 0xc1, 0x90, 0x65,
+	0x5a, 0x19, 0x45, 0x6f, 0x56, 0x83, 0x4c, 0x64, 0x92, 0xd9, 0x41, 0xb6, 0x1a, 0xec, 0x0d, 0x1d,
+	0x85, 0x40, 0x69, 0xab, 0xb0, 0x09, 0xf7, 0xee, 0x9f, 0xcd, 0x24, 0x22, 0x98, 0xc9, 0x14, 0xf5,
+	0xc2, 0xcf, 0xa2, 0x69, 0x09, 0x69, 0xcc, 0x55, 0xa1, 0x03, 0xfc, 0x27, 0x2a, 0xf7, 0x13, 0x34,
+	0xe2, 0x22, 0x2f, 0x7f, 0x17, 0xa5, 0x8b, 0xd4, 0xc8, 0x64, 0xdb, 0xe6, 0xe1, 0x65, 0x40, 0x1e,
+	0xcc, 0x30, 0x11, 0x9b, 0xdc, 0xf0, 0x1b, 0x81, 0xd6, 0xf1, 0x1c, 0xf5, 0x0c, 0x45, 0x48, 0xdf,
+	0x40, 0x2b, 0x53, 0xe1, 0x2b, 0xf9, 0x05, 0x43, 0x8f, 0x0c, 0x9a, 0xa3, 0xce, 0xc4, 0x67, 0x3b,
+	0x12, 0x63, 0x6b, 0x88, 0xbd, 0x5f, 0x11, 0x2f, 0x53, 0xa3, 0x17, 0xbc, 0x16, 0xe8, 0x45, 0x70,
+	0xed, 0xdc, 0x23, 0xba, 0x0f, 0xcd, 0x08, 0x17, 0x1e, 0x19, 0x90, 0x51, 0x9b, 0xdb, 0x9f, 0xf4,
+	0x05, 0xec, 0xcd, 0x45, 0x5c, 0xa0, 0xd7, 0x18, 0x90, 0x51, 0x67, 0xc2, 0x1c, 0xb3, 0xfa, 0x08,
+	0x96, 0x45, 0xd3, 0xd2, 0x7d, 0x9d, 0x30, 0xfb, 0x50, 0x88, 0xd4, 0x48, 0xb3, 0xe0, 0x15, 0xfc,
+	0xa8, 0x71, 0x40, 0x86, 0xbf, 0x09, 0x74, 0x79, 0x75, 0xe9, 0x61, 0x2c, 0xf2, 0x9c, 0x1e, 0x41,
+	0xcb, 0x66, 0x1b, 0x0a, 0x23, 0x4a, 0xc7, 0xce, 0xe4, 0xde, 0xdf, 0xd4, 0x73, 0x66, 0xa7, 0xd9,
+	0x7c, 0xcc, 0x8e, 0x4f, 0x3f, 0x63, 0x60, 0xde, 0xa2, 0x11, 0xbc, 0x56, 0xa0, 0x1e, 0xfc, 0x3f,
+	0x13, 0x69, 0x18, 0xa3, 0x2e, 0x57, 0x6d, 0xf3, 0xf5, 0x5f, 0xfa, 0x04, 0x5a, 0x6a, 0x95, 0x84,
+	0xd7, 0x2c, 0x7d, 0x6e, 0x5d, 0x1a, 0x19, 0xaf, 0x11, 0x7a, 0x08, 0x60, 0x5f, 0x4c, 0x58, 0xc4,
+	0x32, 0x9d, 0x7a, 0xff, 0x95, 0x02, 0xb7, 0x77, 0x0a, 0x9c, 0xd4, 0xa3, 0xdc, 0xc1, 0x86, 0x5f,
+	0x09, 0xec, 0xbb, 0xc7, 0x1f, 0xc9, 0xdc, 0xd0, 0xd7, 0x5b, 0x01, 0xb0, 0xab, 0x05, 0x60, 0xe9,
+	0x8d, 0xf3, 0x1f, 0xc3, 0x9e, 0x34, 0x98, 0xe4, 0x5e, 0xa3, 0x2c, 0xc5, 0x9d, 0x9d, 0x0b, 0xba,
+	0x5b, 0xf0, 0x8a, 0x19, 0xfe, 0x22, 0x00, 0x67, 0x8b, 0xd3, 0x4f, 0xd0, 0xb5, 0xc8, 0x09, 0xc6,
+	0x18, 0x18, 0xa5, 0x57, 0x3d, 0x7b, 0x70, 0x85, 0x9b, 0xd9, 0x3b, 0x87, 0xab, 0xda, 0x76, 0x4e,
+	0x8a, 0x3e, 0x83, 0x8e, 0x51, 0xb1, 0xad, 0xb7, 0x54, 0xe9, 0x7a, 0xd9, 0xbe, 0xab, 0x6c, 0x3f,
+	0x6d, 0x7b, 0xe3, 0xc7, 0x7a, 0x8c, 0xbb, 0x48, 0xef, 0x29, 0x5c, 0xdf, 0x32, 0xb9, 0xa0, 0xb7,
+	0x37, 0xdc, 0xde, 0xb6, 0x9d, 0x1e, 0x3e, 0xef, 0x7e, 0x5f, 0xf6, 0xc9, 0x8f, 0x65, 0x9f, 0xfc,
+	0x5c, 0xf6, 0xc9, 0x9f, 0x00, 0x00, 0x00, 0xff, 0xff, 0x9d, 0xf5, 0x63, 0xa2, 0x98, 0x04, 0x00,
+	0x00,
 }
 
-func (this *Overhead) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*Overhead)
-	if !ok {
-		that2, ok := that.(Overhead)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if len(this.PodFixed) != len(that1.PodFixed) {
-		return false
-	}
-	for i := range this.PodFixed {
-		if !this.PodFixed[i].Equal(that1.PodFixed[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *RuntimeClass) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*RuntimeClass)
-	if !ok {
-		that2, ok := that.(RuntimeClass)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if this.Handler != that1.Handler {
-		return false
-	}
-	if !this.Overhead.Equal(that1.Overhead) {
-		return false
-	}
-	if !this.Scheduling.Equal(that1.Scheduling) {
-		return false
-	}
-	return true
-}
-func (this *RuntimeClassList) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*RuntimeClassList)
-	if !ok {
-		that2, ok := that.(RuntimeClassList)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if len(this.Items) != len(that1.Items) {
-		return false
-	}
-	for i := range this.Items {
-		if !this.Items[i].Equal(that1.Items[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *Scheduling) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*Scheduling)
-	if !ok {
-		that2, ok := that.(Scheduling)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if len(this.NodeSelector) != len(that1.NodeSelector) {
-		return false
-	}
-	for i := range this.NodeSelector {
-		if this.NodeSelector[i] != that1.NodeSelector[i] {
-			return false
-		}
-	}
-	if len(this.Tolerations) != len(that1.Tolerations) {
-		return false
-	}
-	for i := range this.Tolerations {
-		if !this.Tolerations[i].Equal(that1.Tolerations[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *Overhead) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 5)
-	s = append(s, "&k8s_io_api_node_v1beta1.Overhead{")
-	keysForPodFixed := make([]string, 0, len(this.PodFixed))
-	for k, _ := range this.PodFixed {
-		keysForPodFixed = append(keysForPodFixed, k)
-	}
-	github_com_gogo_protobuf_sortkeys.Strings(keysForPodFixed)
-	mapStringForPodFixed := "map[string]*resource.Quantity{"
-	for _, k := range keysForPodFixed {
-		mapStringForPodFixed += fmt.Sprintf("%#v: %#v,", k, this.PodFixed[k])
-	}
-	mapStringForPodFixed += "}"
-	if this.PodFixed != nil {
-		s = append(s, "PodFixed: "+mapStringForPodFixed+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *RuntimeClass) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 8)
-	s = append(s, "&k8s_io_api_node_v1beta1.RuntimeClass{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	s = append(s, "Handler: "+fmt.Sprintf("%#v", this.Handler)+",\n")
-	if this.Overhead != nil {
-		s = append(s, "Overhead: "+fmt.Sprintf("%#v", this.Overhead)+",\n")
-	}
-	if this.Scheduling != nil {
-		s = append(s, "Scheduling: "+fmt.Sprintf("%#v", this.Scheduling)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *RuntimeClassList) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_node_v1beta1.RuntimeClassList{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Items != nil {
-		s = append(s, "Items: "+fmt.Sprintf("%#v", this.Items)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *Scheduling) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_node_v1beta1.Scheduling{")
-	keysForNodeSelector := make([]string, 0, len(this.NodeSelector))
-	for k, _ := range this.NodeSelector {
-		keysForNodeSelector = append(keysForNodeSelector, k)
-	}
-	github_com_gogo_protobuf_sortkeys.Strings(keysForNodeSelector)
-	mapStringForNodeSelector := "map[string]string{"
-	for _, k := range keysForNodeSelector {
-		mapStringForNodeSelector += fmt.Sprintf("%#v: %#v,", k, this.NodeSelector[k])
-	}
-	mapStringForNodeSelector += "}"
-	if this.NodeSelector != nil {
-		s = append(s, "NodeSelector: "+mapStringForNodeSelector+",\n")
-	}
-	if this.Tolerations != nil {
-		s = append(s, "Tolerations: "+fmt.Sprintf("%#v", this.Tolerations)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func valueToGoStringGenerated(v interface{}, typ string) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("func(v %v) *%v { return &v } ( %#v )", typ, typ, pv)
-}
 func (m *Overhead) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -583,6 +374,10 @@ func (m *Overhead) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.PodFixed) > 0 {
 		for k := range m.PodFixed {
 			v := m.PodFixed[k]
@@ -632,6 +427,10 @@ func (m *RuntimeClass) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Scheduling != nil {
 		{
 			size, err := m.Scheduling.MarshalToSizedBuffer(dAtA[:i])
@@ -656,11 +455,13 @@ func (m *RuntimeClass) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x1a
 	}
-	i -= len(m.Handler)
-	copy(dAtA[i:], m.Handler)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Handler)))
-	i--
-	dAtA[i] = 0x12
+	if m.Handler != nil {
+		i -= len(*m.Handler)
+		copy(dAtA[i:], *m.Handler)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Handler)))
+		i--
+		dAtA[i] = 0x12
+	}
 	if m.Metadata != nil {
 		{
 			size, err := m.Metadata.MarshalToSizedBuffer(dAtA[:i])
@@ -696,6 +497,10 @@ func (m *RuntimeClassList) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Items) > 0 {
 		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -745,6 +550,10 @@ func (m *Scheduling) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Tolerations) > 0 {
 		for iNdEx := len(m.Tolerations) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -811,6 +620,9 @@ func (m *Overhead) Size() (n int) {
 			n += mapEntrySize + 1 + sovGenerated(uint64(mapEntrySize))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -824,8 +636,10 @@ func (m *RuntimeClass) Size() (n int) {
 		l = m.Metadata.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
-	l = len(m.Handler)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.Handler != nil {
+		l = len(*m.Handler)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if m.Overhead != nil {
 		l = m.Overhead.Size()
 		n += 1 + l + sovGenerated(uint64(l))
@@ -833,6 +647,9 @@ func (m *RuntimeClass) Size() (n int) {
 	if m.Scheduling != nil {
 		l = m.Scheduling.Size()
 		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -852,6 +669,9 @@ func (m *RuntimeClassList) Size() (n int) {
 			l = e.Size()
 			n += 1 + l + sovGenerated(uint64(l))
 		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -876,6 +696,9 @@ func (m *Scheduling) Size() (n int) {
 			n += 1 + l + sovGenerated(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -884,89 +707,6 @@ func sovGenerated(x uint64) (n int) {
 }
 func sozGenerated(x uint64) (n int) {
 	return sovGenerated(uint64((x << 1) ^ uint64((int64(x) >> 63))))
-}
-func (this *Overhead) String() string {
-	if this == nil {
-		return "nil"
-	}
-	keysForPodFixed := make([]string, 0, len(this.PodFixed))
-	for k, _ := range this.PodFixed {
-		keysForPodFixed = append(keysForPodFixed, k)
-	}
-	github_com_gogo_protobuf_sortkeys.Strings(keysForPodFixed)
-	mapStringForPodFixed := "map[string]*resource.Quantity{"
-	for _, k := range keysForPodFixed {
-		mapStringForPodFixed += fmt.Sprintf("%v: %v,", k, this.PodFixed[k])
-	}
-	mapStringForPodFixed += "}"
-	s := strings.Join([]string{`&Overhead{`,
-		`PodFixed:` + mapStringForPodFixed + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *RuntimeClass) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&RuntimeClass{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ObjectMeta", "v1.ObjectMeta", 1) + `,`,
-		`Handler:` + fmt.Sprintf("%v", this.Handler) + `,`,
-		`Overhead:` + strings.Replace(this.Overhead.String(), "Overhead", "Overhead", 1) + `,`,
-		`Scheduling:` + strings.Replace(this.Scheduling.String(), "Scheduling", "Scheduling", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *RuntimeClassList) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForItems := "[]*RuntimeClass{"
-	for _, f := range this.Items {
-		repeatedStringForItems += strings.Replace(f.String(), "RuntimeClass", "RuntimeClass", 1) + ","
-	}
-	repeatedStringForItems += "}"
-	s := strings.Join([]string{`&RuntimeClassList{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ListMeta", "v1.ListMeta", 1) + `,`,
-		`Items:` + repeatedStringForItems + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *Scheduling) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForTolerations := "[]*Toleration{"
-	for _, f := range this.Tolerations {
-		repeatedStringForTolerations += strings.Replace(fmt.Sprintf("%v", f), "Toleration", "v11.Toleration", 1) + ","
-	}
-	repeatedStringForTolerations += "}"
-	keysForNodeSelector := make([]string, 0, len(this.NodeSelector))
-	for k, _ := range this.NodeSelector {
-		keysForNodeSelector = append(keysForNodeSelector, k)
-	}
-	github_com_gogo_protobuf_sortkeys.Strings(keysForNodeSelector)
-	mapStringForNodeSelector := "map[string]string{"
-	for _, k := range keysForNodeSelector {
-		mapStringForNodeSelector += fmt.Sprintf("%v: %v,", k, this.NodeSelector[k])
-	}
-	mapStringForNodeSelector += "}"
-	s := strings.Join([]string{`&Scheduling{`,
-		`NodeSelector:` + mapStringForNodeSelector + `,`,
-		`Tolerations:` + repeatedStringForTolerations + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func valueToStringGenerated(v interface{}) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("*%v", pv)
 }
 func (m *Overhead) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
@@ -1138,6 +878,7 @@ func (m *Overhead) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -1242,7 +983,8 @@ func (m *RuntimeClass) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Handler = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Handler = &s
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
@@ -1328,6 +1070,7 @@ func (m *RuntimeClass) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -1448,6 +1191,7 @@ func (m *RuntimeClassList) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -1659,6 +1403,7 @@ func (m *Scheduling) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}

@@ -6,7 +6,6 @@ package k8s_io_api_policy_v1beta1
 import (
 	fmt "fmt"
 	proto "github.com/gogo/protobuf/proto"
-	github_com_gogo_protobuf_sortkeys "github.com/gogo/protobuf/sortkeys"
 	io "io"
 	v11 "istio.io/gogo-genproto/k8s.io/api/core/v1"
 	v1 "istio.io/gogo-genproto/k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -15,8 +14,6 @@ import (
 	intstr "istio.io/gogo-genproto/k8s.io/apimachinery/pkg/util/intstr"
 	math "math"
 	math_bits "math/bits"
-	reflect "reflect"
-	strings "strings"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -33,11 +30,15 @@ const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 // AllowedCSIDriver represents a single inline CSI Driver that is allowed to be used.
 type AllowedCSIDriver struct {
 	// Name is the registered name of the CSI driver
-	Name string `protobuf:"bytes,1,opt,name=name" json:"name"`
+	Name                 *string  `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *AllowedCSIDriver) Reset()      { *m = AllowedCSIDriver{} }
-func (*AllowedCSIDriver) ProtoMessage() {}
+func (m *AllowedCSIDriver) Reset()         { *m = AllowedCSIDriver{} }
+func (m *AllowedCSIDriver) String() string { return proto.CompactTextString(m) }
+func (*AllowedCSIDriver) ProtoMessage()    {}
 func (*AllowedCSIDriver) Descriptor() ([]byte, []int) {
 	return fileDescriptor_68b366237812cc96, []int{0}
 }
@@ -69,8 +70,8 @@ func (m *AllowedCSIDriver) XXX_DiscardUnknown() {
 var xxx_messageInfo_AllowedCSIDriver proto.InternalMessageInfo
 
 func (m *AllowedCSIDriver) GetName() string {
-	if m != nil {
-		return m.Name
+	if m != nil && m.Name != nil {
+		return *m.Name
 	}
 	return ""
 }
@@ -78,11 +79,15 @@ func (m *AllowedCSIDriver) GetName() string {
 // AllowedFlexVolume represents a single Flexvolume that is allowed to be used.
 type AllowedFlexVolume struct {
 	// driver is the name of the Flexvolume driver.
-	Driver string `protobuf:"bytes,1,opt,name=driver" json:"driver"`
+	Driver               *string  `protobuf:"bytes,1,opt,name=driver" json:"driver,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *AllowedFlexVolume) Reset()      { *m = AllowedFlexVolume{} }
-func (*AllowedFlexVolume) ProtoMessage() {}
+func (m *AllowedFlexVolume) Reset()         { *m = AllowedFlexVolume{} }
+func (m *AllowedFlexVolume) String() string { return proto.CompactTextString(m) }
+func (*AllowedFlexVolume) ProtoMessage()    {}
 func (*AllowedFlexVolume) Descriptor() ([]byte, []int) {
 	return fileDescriptor_68b366237812cc96, []int{1}
 }
@@ -114,8 +119,8 @@ func (m *AllowedFlexVolume) XXX_DiscardUnknown() {
 var xxx_messageInfo_AllowedFlexVolume proto.InternalMessageInfo
 
 func (m *AllowedFlexVolume) GetDriver() string {
-	if m != nil {
-		return m.Driver
+	if m != nil && m.Driver != nil {
+		return *m.Driver
 	}
 	return ""
 }
@@ -130,14 +135,18 @@ type AllowedHostPath struct {
 	// Examples:
 	// `/foo` would allow `/foo`, `/foo/` and `/foo/bar`
 	// `/foo` would not allow `/food` or `/etc/foo`
-	PathPrefix string `protobuf:"bytes,1,opt,name=pathPrefix" json:"pathPrefix"`
+	PathPrefix *string `protobuf:"bytes,1,opt,name=pathPrefix" json:"pathPrefix,omitempty"`
 	// when set to true, will allow host volumes matching the pathPrefix only if all volume mounts are readOnly.
 	// +optional
-	ReadOnly bool `protobuf:"varint,2,opt,name=readOnly" json:"readOnly"`
+	ReadOnly             *bool    `protobuf:"varint,2,opt,name=readOnly" json:"readOnly,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *AllowedHostPath) Reset()      { *m = AllowedHostPath{} }
-func (*AllowedHostPath) ProtoMessage() {}
+func (m *AllowedHostPath) Reset()         { *m = AllowedHostPath{} }
+func (m *AllowedHostPath) String() string { return proto.CompactTextString(m) }
+func (*AllowedHostPath) ProtoMessage()    {}
 func (*AllowedHostPath) Descriptor() ([]byte, []int) {
 	return fileDescriptor_68b366237812cc96, []int{2}
 }
@@ -169,15 +178,15 @@ func (m *AllowedHostPath) XXX_DiscardUnknown() {
 var xxx_messageInfo_AllowedHostPath proto.InternalMessageInfo
 
 func (m *AllowedHostPath) GetPathPrefix() string {
-	if m != nil {
-		return m.PathPrefix
+	if m != nil && m.PathPrefix != nil {
+		return *m.PathPrefix
 	}
 	return ""
 }
 
 func (m *AllowedHostPath) GetReadOnly() bool {
-	if m != nil {
-		return m.ReadOnly
+	if m != nil && m.ReadOnly != nil {
+		return *m.ReadOnly
 	}
 	return false
 }
@@ -191,11 +200,15 @@ type Eviction struct {
 	Metadata *v1.ObjectMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// DeleteOptions may be provided
 	// +optional
-	DeleteOptions *v1.DeleteOptions `protobuf:"bytes,2,opt,name=deleteOptions" json:"deleteOptions,omitempty"`
+	DeleteOptions        *v1.DeleteOptions `protobuf:"bytes,2,opt,name=deleteOptions" json:"deleteOptions,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
+	XXX_unrecognized     []byte            `json:"-"`
+	XXX_sizecache        int32             `json:"-"`
 }
 
-func (m *Eviction) Reset()      { *m = Eviction{} }
-func (*Eviction) ProtoMessage() {}
+func (m *Eviction) Reset()         { *m = Eviction{} }
+func (m *Eviction) String() string { return proto.CompactTextString(m) }
+func (*Eviction) ProtoMessage()    {}
 func (*Eviction) Descriptor() ([]byte, []int) {
 	return fileDescriptor_68b366237812cc96, []int{3}
 }
@@ -244,15 +257,19 @@ func (m *Eviction) GetDeleteOptions() *v1.DeleteOptions {
 type FSGroupStrategyOptions struct {
 	// rule is the strategy that will dictate what FSGroup is used in the SecurityContext.
 	// +optional
-	Rule string `protobuf:"bytes,1,opt,name=rule" json:"rule"`
+	Rule *string `protobuf:"bytes,1,opt,name=rule" json:"rule,omitempty"`
 	// ranges are the allowed ranges of fs groups.  If you would like to force a single
 	// fs group then supply a single range with the same start and end. Required for MustRunAs.
 	// +optional
-	Ranges []*IDRange `protobuf:"bytes,2,rep,name=ranges" json:"ranges,omitempty"`
+	Ranges               []*IDRange `protobuf:"bytes,2,rep,name=ranges" json:"ranges,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}   `json:"-"`
+	XXX_unrecognized     []byte     `json:"-"`
+	XXX_sizecache        int32      `json:"-"`
 }
 
-func (m *FSGroupStrategyOptions) Reset()      { *m = FSGroupStrategyOptions{} }
-func (*FSGroupStrategyOptions) ProtoMessage() {}
+func (m *FSGroupStrategyOptions) Reset()         { *m = FSGroupStrategyOptions{} }
+func (m *FSGroupStrategyOptions) String() string { return proto.CompactTextString(m) }
+func (*FSGroupStrategyOptions) ProtoMessage()    {}
 func (*FSGroupStrategyOptions) Descriptor() ([]byte, []int) {
 	return fileDescriptor_68b366237812cc96, []int{4}
 }
@@ -284,8 +301,8 @@ func (m *FSGroupStrategyOptions) XXX_DiscardUnknown() {
 var xxx_messageInfo_FSGroupStrategyOptions proto.InternalMessageInfo
 
 func (m *FSGroupStrategyOptions) GetRule() string {
-	if m != nil {
-		return m.Rule
+	if m != nil && m.Rule != nil {
+		return *m.Rule
 	}
 	return ""
 }
@@ -301,13 +318,17 @@ func (m *FSGroupStrategyOptions) GetRanges() []*IDRange {
 // for pods to use.  It requires both the start and end to be defined.
 type HostPortRange struct {
 	// min is the start of the range, inclusive.
-	Min int32 `protobuf:"varint,1,opt,name=min" json:"min"`
+	Min *int32 `protobuf:"varint,1,opt,name=min" json:"min,omitempty"`
 	// max is the end of the range, inclusive.
-	Max int32 `protobuf:"varint,2,opt,name=max" json:"max"`
+	Max                  *int32   `protobuf:"varint,2,opt,name=max" json:"max,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *HostPortRange) Reset()      { *m = HostPortRange{} }
-func (*HostPortRange) ProtoMessage() {}
+func (m *HostPortRange) Reset()         { *m = HostPortRange{} }
+func (m *HostPortRange) String() string { return proto.CompactTextString(m) }
+func (*HostPortRange) ProtoMessage()    {}
 func (*HostPortRange) Descriptor() ([]byte, []int) {
 	return fileDescriptor_68b366237812cc96, []int{5}
 }
@@ -339,15 +360,15 @@ func (m *HostPortRange) XXX_DiscardUnknown() {
 var xxx_messageInfo_HostPortRange proto.InternalMessageInfo
 
 func (m *HostPortRange) GetMin() int32 {
-	if m != nil {
-		return m.Min
+	if m != nil && m.Min != nil {
+		return *m.Min
 	}
 	return 0
 }
 
 func (m *HostPortRange) GetMax() int32 {
-	if m != nil {
-		return m.Max
+	if m != nil && m.Max != nil {
+		return *m.Max
 	}
 	return 0
 }
@@ -355,13 +376,17 @@ func (m *HostPortRange) GetMax() int32 {
 // IDRange provides a min/max of an allowed range of IDs.
 type IDRange struct {
 	// min is the start of the range, inclusive.
-	Min int64 `protobuf:"varint,1,opt,name=min" json:"min"`
+	Min *int64 `protobuf:"varint,1,opt,name=min" json:"min,omitempty"`
 	// max is the end of the range, inclusive.
-	Max int64 `protobuf:"varint,2,opt,name=max" json:"max"`
+	Max                  *int64   `protobuf:"varint,2,opt,name=max" json:"max,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *IDRange) Reset()      { *m = IDRange{} }
-func (*IDRange) ProtoMessage() {}
+func (m *IDRange) Reset()         { *m = IDRange{} }
+func (m *IDRange) String() string { return proto.CompactTextString(m) }
+func (*IDRange) ProtoMessage()    {}
 func (*IDRange) Descriptor() ([]byte, []int) {
 	return fileDescriptor_68b366237812cc96, []int{6}
 }
@@ -393,15 +418,15 @@ func (m *IDRange) XXX_DiscardUnknown() {
 var xxx_messageInfo_IDRange proto.InternalMessageInfo
 
 func (m *IDRange) GetMin() int64 {
-	if m != nil {
-		return m.Min
+	if m != nil && m.Min != nil {
+		return *m.Min
 	}
 	return 0
 }
 
 func (m *IDRange) GetMax() int64 {
-	if m != nil {
-		return m.Max
+	if m != nil && m.Max != nil {
+		return *m.Max
 	}
 	return 0
 }
@@ -415,11 +440,15 @@ type PodDisruptionBudget struct {
 	Spec *PodDisruptionBudgetSpec `protobuf:"bytes,2,opt,name=spec" json:"spec,omitempty"`
 	// Most recently observed status of the PodDisruptionBudget.
 	// +optional
-	Status *PodDisruptionBudgetStatus `protobuf:"bytes,3,opt,name=status" json:"status,omitempty"`
+	Status               *PodDisruptionBudgetStatus `protobuf:"bytes,3,opt,name=status" json:"status,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                   `json:"-"`
+	XXX_unrecognized     []byte                     `json:"-"`
+	XXX_sizecache        int32                      `json:"-"`
 }
 
-func (m *PodDisruptionBudget) Reset()      { *m = PodDisruptionBudget{} }
-func (*PodDisruptionBudget) ProtoMessage() {}
+func (m *PodDisruptionBudget) Reset()         { *m = PodDisruptionBudget{} }
+func (m *PodDisruptionBudget) String() string { return proto.CompactTextString(m) }
+func (*PodDisruptionBudget) ProtoMessage()    {}
 func (*PodDisruptionBudget) Descriptor() ([]byte, []int) {
 	return fileDescriptor_68b366237812cc96, []int{7}
 }
@@ -474,12 +503,16 @@ func (m *PodDisruptionBudget) GetStatus() *PodDisruptionBudgetStatus {
 // PodDisruptionBudgetList is a collection of PodDisruptionBudgets.
 type PodDisruptionBudgetList struct {
 	// +optional
-	Metadata *v1.ListMeta           `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
-	Items    []*PodDisruptionBudget `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	Metadata             *v1.ListMeta           `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
+	Items                []*PodDisruptionBudget `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}               `json:"-"`
+	XXX_unrecognized     []byte                 `json:"-"`
+	XXX_sizecache        int32                  `json:"-"`
 }
 
-func (m *PodDisruptionBudgetList) Reset()      { *m = PodDisruptionBudgetList{} }
-func (*PodDisruptionBudgetList) ProtoMessage() {}
+func (m *PodDisruptionBudgetList) Reset()         { *m = PodDisruptionBudgetList{} }
+func (m *PodDisruptionBudgetList) String() string { return proto.CompactTextString(m) }
+func (*PodDisruptionBudgetList) ProtoMessage()    {}
 func (*PodDisruptionBudgetList) Descriptor() ([]byte, []int) {
 	return fileDescriptor_68b366237812cc96, []int{8}
 }
@@ -541,11 +574,15 @@ type PodDisruptionBudgetSpec struct {
 	// the evicted pod. For example, one can prevent all voluntary evictions
 	// by specifying 0. This is a mutually exclusive setting with "minAvailable".
 	// +optional
-	MaxUnavailable *intstr.IntOrString `protobuf:"bytes,3,opt,name=maxUnavailable" json:"maxUnavailable,omitempty"`
+	MaxUnavailable       *intstr.IntOrString `protobuf:"bytes,3,opt,name=maxUnavailable" json:"maxUnavailable,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}            `json:"-"`
+	XXX_unrecognized     []byte              `json:"-"`
+	XXX_sizecache        int32               `json:"-"`
 }
 
-func (m *PodDisruptionBudgetSpec) Reset()      { *m = PodDisruptionBudgetSpec{} }
-func (*PodDisruptionBudgetSpec) ProtoMessage() {}
+func (m *PodDisruptionBudgetSpec) Reset()         { *m = PodDisruptionBudgetSpec{} }
+func (m *PodDisruptionBudgetSpec) String() string { return proto.CompactTextString(m) }
+func (*PodDisruptionBudgetSpec) ProtoMessage()    {}
 func (*PodDisruptionBudgetSpec) Descriptor() ([]byte, []int) {
 	return fileDescriptor_68b366237812cc96, []int{9}
 }
@@ -603,7 +640,7 @@ type PodDisruptionBudgetStatus struct {
 	// Most recent generation observed when updating this PDB status. PodDisruptionsAllowed and other
 	// status informatio is valid only if observedGeneration equals to PDB's object generation.
 	// +optional
-	ObservedGeneration int64 `protobuf:"varint,1,opt,name=observedGeneration" json:"observedGeneration"`
+	ObservedGeneration *int64 `protobuf:"varint,1,opt,name=observedGeneration" json:"observedGeneration,omitempty"`
 	// DisruptedPods contains information about pods whose eviction was
 	// processed by the API server eviction subresource handler but has not
 	// yet been observed by the PodDisruptionBudget controller.
@@ -618,17 +655,21 @@ type PodDisruptionBudgetStatus struct {
 	// +optional
 	DisruptedPods map[string]*v1.Time `protobuf:"bytes,2,rep,name=disruptedPods" json:"disruptedPods,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	// Number of pod disruptions that are currently allowed.
-	DisruptionsAllowed int32 `protobuf:"varint,3,opt,name=disruptionsAllowed" json:"disruptionsAllowed"`
+	DisruptionsAllowed *int32 `protobuf:"varint,3,opt,name=disruptionsAllowed" json:"disruptionsAllowed,omitempty"`
 	// current number of healthy pods
-	CurrentHealthy int32 `protobuf:"varint,4,opt,name=currentHealthy" json:"currentHealthy"`
+	CurrentHealthy *int32 `protobuf:"varint,4,opt,name=currentHealthy" json:"currentHealthy,omitempty"`
 	// minimum desired number of healthy pods
-	DesiredHealthy int32 `protobuf:"varint,5,opt,name=desiredHealthy" json:"desiredHealthy"`
+	DesiredHealthy *int32 `protobuf:"varint,5,opt,name=desiredHealthy" json:"desiredHealthy,omitempty"`
 	// total number of pods counted by this disruption budget
-	ExpectedPods int32 `protobuf:"varint,6,opt,name=expectedPods" json:"expectedPods"`
+	ExpectedPods         *int32   `protobuf:"varint,6,opt,name=expectedPods" json:"expectedPods,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *PodDisruptionBudgetStatus) Reset()      { *m = PodDisruptionBudgetStatus{} }
-func (*PodDisruptionBudgetStatus) ProtoMessage() {}
+func (m *PodDisruptionBudgetStatus) Reset()         { *m = PodDisruptionBudgetStatus{} }
+func (m *PodDisruptionBudgetStatus) String() string { return proto.CompactTextString(m) }
+func (*PodDisruptionBudgetStatus) ProtoMessage()    {}
 func (*PodDisruptionBudgetStatus) Descriptor() ([]byte, []int) {
 	return fileDescriptor_68b366237812cc96, []int{10}
 }
@@ -660,8 +701,8 @@ func (m *PodDisruptionBudgetStatus) XXX_DiscardUnknown() {
 var xxx_messageInfo_PodDisruptionBudgetStatus proto.InternalMessageInfo
 
 func (m *PodDisruptionBudgetStatus) GetObservedGeneration() int64 {
-	if m != nil {
-		return m.ObservedGeneration
+	if m != nil && m.ObservedGeneration != nil {
+		return *m.ObservedGeneration
 	}
 	return 0
 }
@@ -674,29 +715,29 @@ func (m *PodDisruptionBudgetStatus) GetDisruptedPods() map[string]*v1.Time {
 }
 
 func (m *PodDisruptionBudgetStatus) GetDisruptionsAllowed() int32 {
-	if m != nil {
-		return m.DisruptionsAllowed
+	if m != nil && m.DisruptionsAllowed != nil {
+		return *m.DisruptionsAllowed
 	}
 	return 0
 }
 
 func (m *PodDisruptionBudgetStatus) GetCurrentHealthy() int32 {
-	if m != nil {
-		return m.CurrentHealthy
+	if m != nil && m.CurrentHealthy != nil {
+		return *m.CurrentHealthy
 	}
 	return 0
 }
 
 func (m *PodDisruptionBudgetStatus) GetDesiredHealthy() int32 {
-	if m != nil {
-		return m.DesiredHealthy
+	if m != nil && m.DesiredHealthy != nil {
+		return *m.DesiredHealthy
 	}
 	return 0
 }
 
 func (m *PodDisruptionBudgetStatus) GetExpectedPods() int32 {
-	if m != nil {
-		return m.ExpectedPods
+	if m != nil && m.ExpectedPods != nil {
+		return *m.ExpectedPods
 	}
 	return 0
 }
@@ -710,11 +751,15 @@ type PodSecurityPolicy struct {
 	Metadata *v1.ObjectMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// spec defines the policy enforced.
 	// +optional
-	Spec *PodSecurityPolicySpec `protobuf:"bytes,2,opt,name=spec" json:"spec,omitempty"`
+	Spec                 *PodSecurityPolicySpec `protobuf:"bytes,2,opt,name=spec" json:"spec,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}               `json:"-"`
+	XXX_unrecognized     []byte                 `json:"-"`
+	XXX_sizecache        int32                  `json:"-"`
 }
 
-func (m *PodSecurityPolicy) Reset()      { *m = PodSecurityPolicy{} }
-func (*PodSecurityPolicy) ProtoMessage() {}
+func (m *PodSecurityPolicy) Reset()         { *m = PodSecurityPolicy{} }
+func (m *PodSecurityPolicy) String() string { return proto.CompactTextString(m) }
+func (*PodSecurityPolicy) ProtoMessage()    {}
 func (*PodSecurityPolicy) Descriptor() ([]byte, []int) {
 	return fileDescriptor_68b366237812cc96, []int{11}
 }
@@ -766,11 +811,15 @@ type PodSecurityPolicyList struct {
 	// +optional
 	Metadata *v1.ListMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// items is a list of schema objects.
-	Items []*PodSecurityPolicy `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	Items                []*PodSecurityPolicy `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
+	XXX_unrecognized     []byte               `json:"-"`
+	XXX_sizecache        int32                `json:"-"`
 }
 
-func (m *PodSecurityPolicyList) Reset()      { *m = PodSecurityPolicyList{} }
-func (*PodSecurityPolicyList) ProtoMessage() {}
+func (m *PodSecurityPolicyList) Reset()         { *m = PodSecurityPolicyList{} }
+func (m *PodSecurityPolicyList) String() string { return proto.CompactTextString(m) }
+func (*PodSecurityPolicyList) ProtoMessage()    {}
 func (*PodSecurityPolicyList) Descriptor() ([]byte, []int) {
 	return fileDescriptor_68b366237812cc96, []int{12}
 }
@@ -819,7 +868,7 @@ func (m *PodSecurityPolicyList) GetItems() []*PodSecurityPolicy {
 type PodSecurityPolicySpec struct {
 	// privileged determines if a pod can request to be run as privileged.
 	// +optional
-	Privileged bool `protobuf:"varint,1,opt,name=privileged" json:"privileged"`
+	Privileged *bool `protobuf:"varint,1,opt,name=privileged" json:"privileged,omitempty"`
 	// defaultAddCapabilities is the default set of capabilities that will be added to the container
 	// unless the pod spec specifically drops the capability.  You may not list a capability in both
 	// defaultAddCapabilities and requiredDropCapabilities. Capabilities added here are implicitly
@@ -841,16 +890,16 @@ type PodSecurityPolicySpec struct {
 	Volumes []string `protobuf:"bytes,5,rep,name=volumes" json:"volumes,omitempty"`
 	// hostNetwork determines if the policy allows the use of HostNetwork in the pod spec.
 	// +optional
-	HostNetwork bool `protobuf:"varint,6,opt,name=hostNetwork" json:"hostNetwork"`
+	HostNetwork *bool `protobuf:"varint,6,opt,name=hostNetwork" json:"hostNetwork,omitempty"`
 	// hostPorts determines which host port ranges are allowed to be exposed.
 	// +optional
 	HostPorts []*HostPortRange `protobuf:"bytes,7,rep,name=hostPorts" json:"hostPorts,omitempty"`
 	// hostPID determines if the policy allows the use of HostPID in the pod spec.
 	// +optional
-	HostPID bool `protobuf:"varint,8,opt,name=hostPID" json:"hostPID"`
+	HostPID *bool `protobuf:"varint,8,opt,name=hostPID" json:"hostPID,omitempty"`
 	// hostIPC determines if the policy allows the use of HostIPC in the pod spec.
 	// +optional
-	HostIPC bool `protobuf:"varint,9,opt,name=hostIPC" json:"hostIPC"`
+	HostIPC *bool `protobuf:"varint,9,opt,name=hostIPC" json:"hostIPC,omitempty"`
 	// seLinux is the strategy that will dictate the allowable labels that may be set.
 	SeLinux *SELinuxStrategyOptions `protobuf:"bytes,10,opt,name=seLinux" json:"seLinux,omitempty"`
 	// runAsUser is the strategy that will dictate the allowable RunAsUser values that may be set.
@@ -870,15 +919,15 @@ type PodSecurityPolicySpec struct {
 	// If set to false the container may run with a read only root file system if it wishes but it
 	// will not be forced to.
 	// +optional
-	ReadOnlyRootFilesystem bool `protobuf:"varint,14,opt,name=readOnlyRootFilesystem" json:"readOnlyRootFilesystem"`
+	ReadOnlyRootFilesystem *bool `protobuf:"varint,14,opt,name=readOnlyRootFilesystem" json:"readOnlyRootFilesystem,omitempty"`
 	// defaultAllowPrivilegeEscalation controls the default setting for whether a
 	// process can gain more privileges than its parent process.
 	// +optional
-	DefaultAllowPrivilegeEscalation bool `protobuf:"varint,15,opt,name=defaultAllowPrivilegeEscalation" json:"defaultAllowPrivilegeEscalation"`
+	DefaultAllowPrivilegeEscalation *bool `protobuf:"varint,15,opt,name=defaultAllowPrivilegeEscalation" json:"defaultAllowPrivilegeEscalation,omitempty"`
 	// allowPrivilegeEscalation determines if a pod can request to allow
 	// privilege escalation. If unspecified, defaults to true.
 	// +optional
-	AllowPrivilegeEscalation bool `protobuf:"varint,16,opt,name=allowPrivilegeEscalation" json:"allowPrivilegeEscalation"`
+	AllowPrivilegeEscalation *bool `protobuf:"varint,16,opt,name=allowPrivilegeEscalation" json:"allowPrivilegeEscalation,omitempty"`
 	// allowedHostPaths is a white list of allowed host paths. Empty indicates
 	// that all host paths may be used.
 	// +optional
@@ -921,11 +970,15 @@ type PodSecurityPolicySpec struct {
 	// If this field is omitted, the pod's runtimeClassName field is unrestricted.
 	// Enforcement of this field depends on the RuntimeClass feature gate being enabled.
 	// +optional
-	RuntimeClass *RuntimeClassStrategyOptions `protobuf:"bytes,24,opt,name=runtimeClass" json:"runtimeClass,omitempty"`
+	RuntimeClass         *RuntimeClassStrategyOptions `protobuf:"bytes,24,opt,name=runtimeClass" json:"runtimeClass,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                     `json:"-"`
+	XXX_unrecognized     []byte                       `json:"-"`
+	XXX_sizecache        int32                        `json:"-"`
 }
 
-func (m *PodSecurityPolicySpec) Reset()      { *m = PodSecurityPolicySpec{} }
-func (*PodSecurityPolicySpec) ProtoMessage() {}
+func (m *PodSecurityPolicySpec) Reset()         { *m = PodSecurityPolicySpec{} }
+func (m *PodSecurityPolicySpec) String() string { return proto.CompactTextString(m) }
+func (*PodSecurityPolicySpec) ProtoMessage()    {}
 func (*PodSecurityPolicySpec) Descriptor() ([]byte, []int) {
 	return fileDescriptor_68b366237812cc96, []int{13}
 }
@@ -957,8 +1010,8 @@ func (m *PodSecurityPolicySpec) XXX_DiscardUnknown() {
 var xxx_messageInfo_PodSecurityPolicySpec proto.InternalMessageInfo
 
 func (m *PodSecurityPolicySpec) GetPrivileged() bool {
-	if m != nil {
-		return m.Privileged
+	if m != nil && m.Privileged != nil {
+		return *m.Privileged
 	}
 	return false
 }
@@ -992,8 +1045,8 @@ func (m *PodSecurityPolicySpec) GetVolumes() []string {
 }
 
 func (m *PodSecurityPolicySpec) GetHostNetwork() bool {
-	if m != nil {
-		return m.HostNetwork
+	if m != nil && m.HostNetwork != nil {
+		return *m.HostNetwork
 	}
 	return false
 }
@@ -1006,15 +1059,15 @@ func (m *PodSecurityPolicySpec) GetHostPorts() []*HostPortRange {
 }
 
 func (m *PodSecurityPolicySpec) GetHostPID() bool {
-	if m != nil {
-		return m.HostPID
+	if m != nil && m.HostPID != nil {
+		return *m.HostPID
 	}
 	return false
 }
 
 func (m *PodSecurityPolicySpec) GetHostIPC() bool {
-	if m != nil {
-		return m.HostIPC
+	if m != nil && m.HostIPC != nil {
+		return *m.HostIPC
 	}
 	return false
 }
@@ -1055,22 +1108,22 @@ func (m *PodSecurityPolicySpec) GetFsGroup() *FSGroupStrategyOptions {
 }
 
 func (m *PodSecurityPolicySpec) GetReadOnlyRootFilesystem() bool {
-	if m != nil {
-		return m.ReadOnlyRootFilesystem
+	if m != nil && m.ReadOnlyRootFilesystem != nil {
+		return *m.ReadOnlyRootFilesystem
 	}
 	return false
 }
 
 func (m *PodSecurityPolicySpec) GetDefaultAllowPrivilegeEscalation() bool {
-	if m != nil {
-		return m.DefaultAllowPrivilegeEscalation
+	if m != nil && m.DefaultAllowPrivilegeEscalation != nil {
+		return *m.DefaultAllowPrivilegeEscalation
 	}
 	return false
 }
 
 func (m *PodSecurityPolicySpec) GetAllowPrivilegeEscalation() bool {
-	if m != nil {
-		return m.AllowPrivilegeEscalation
+	if m != nil && m.AllowPrivilegeEscalation != nil {
+		return *m.AllowPrivilegeEscalation
 	}
 	return false
 }
@@ -1127,15 +1180,19 @@ func (m *PodSecurityPolicySpec) GetRuntimeClass() *RuntimeClassStrategyOptions {
 // RunAsGroupStrategyOptions defines the strategy type and any options used to create the strategy.
 type RunAsGroupStrategyOptions struct {
 	// rule is the strategy that will dictate the allowable RunAsGroup values that may be set.
-	Rule string `protobuf:"bytes,1,opt,name=rule" json:"rule"`
+	Rule *string `protobuf:"bytes,1,opt,name=rule" json:"rule,omitempty"`
 	// ranges are the allowed ranges of gids that may be used. If you would like to force a single gid
 	// then supply a single range with the same start and end. Required for MustRunAs.
 	// +optional
-	Ranges []*IDRange `protobuf:"bytes,2,rep,name=ranges" json:"ranges,omitempty"`
+	Ranges               []*IDRange `protobuf:"bytes,2,rep,name=ranges" json:"ranges,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}   `json:"-"`
+	XXX_unrecognized     []byte     `json:"-"`
+	XXX_sizecache        int32      `json:"-"`
 }
 
-func (m *RunAsGroupStrategyOptions) Reset()      { *m = RunAsGroupStrategyOptions{} }
-func (*RunAsGroupStrategyOptions) ProtoMessage() {}
+func (m *RunAsGroupStrategyOptions) Reset()         { *m = RunAsGroupStrategyOptions{} }
+func (m *RunAsGroupStrategyOptions) String() string { return proto.CompactTextString(m) }
+func (*RunAsGroupStrategyOptions) ProtoMessage()    {}
 func (*RunAsGroupStrategyOptions) Descriptor() ([]byte, []int) {
 	return fileDescriptor_68b366237812cc96, []int{14}
 }
@@ -1167,8 +1224,8 @@ func (m *RunAsGroupStrategyOptions) XXX_DiscardUnknown() {
 var xxx_messageInfo_RunAsGroupStrategyOptions proto.InternalMessageInfo
 
 func (m *RunAsGroupStrategyOptions) GetRule() string {
-	if m != nil {
-		return m.Rule
+	if m != nil && m.Rule != nil {
+		return *m.Rule
 	}
 	return ""
 }
@@ -1183,15 +1240,19 @@ func (m *RunAsGroupStrategyOptions) GetRanges() []*IDRange {
 // RunAsUserStrategyOptions defines the strategy type and any options used to create the strategy.
 type RunAsUserStrategyOptions struct {
 	// rule is the strategy that will dictate the allowable RunAsUser values that may be set.
-	Rule string `protobuf:"bytes,1,opt,name=rule" json:"rule"`
+	Rule *string `protobuf:"bytes,1,opt,name=rule" json:"rule,omitempty"`
 	// ranges are the allowed ranges of uids that may be used. If you would like to force a single uid
 	// then supply a single range with the same start and end. Required for MustRunAs.
 	// +optional
-	Ranges []*IDRange `protobuf:"bytes,2,rep,name=ranges" json:"ranges,omitempty"`
+	Ranges               []*IDRange `protobuf:"bytes,2,rep,name=ranges" json:"ranges,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}   `json:"-"`
+	XXX_unrecognized     []byte     `json:"-"`
+	XXX_sizecache        int32      `json:"-"`
 }
 
-func (m *RunAsUserStrategyOptions) Reset()      { *m = RunAsUserStrategyOptions{} }
-func (*RunAsUserStrategyOptions) ProtoMessage() {}
+func (m *RunAsUserStrategyOptions) Reset()         { *m = RunAsUserStrategyOptions{} }
+func (m *RunAsUserStrategyOptions) String() string { return proto.CompactTextString(m) }
+func (*RunAsUserStrategyOptions) ProtoMessage()    {}
 func (*RunAsUserStrategyOptions) Descriptor() ([]byte, []int) {
 	return fileDescriptor_68b366237812cc96, []int{15}
 }
@@ -1223,8 +1284,8 @@ func (m *RunAsUserStrategyOptions) XXX_DiscardUnknown() {
 var xxx_messageInfo_RunAsUserStrategyOptions proto.InternalMessageInfo
 
 func (m *RunAsUserStrategyOptions) GetRule() string {
-	if m != nil {
-		return m.Rule
+	if m != nil && m.Rule != nil {
+		return *m.Rule
 	}
 	return ""
 }
@@ -1247,11 +1308,15 @@ type RuntimeClassStrategyOptions struct {
 	// The default MUST be allowed by the allowedRuntimeClassNames list.
 	// A value of nil does not mutate the Pod.
 	// +optional
-	DefaultRuntimeClassName string `protobuf:"bytes,2,opt,name=defaultRuntimeClassName" json:"defaultRuntimeClassName"`
+	DefaultRuntimeClassName *string  `protobuf:"bytes,2,opt,name=defaultRuntimeClassName" json:"defaultRuntimeClassName,omitempty"`
+	XXX_NoUnkeyedLiteral    struct{} `json:"-"`
+	XXX_unrecognized        []byte   `json:"-"`
+	XXX_sizecache           int32    `json:"-"`
 }
 
-func (m *RuntimeClassStrategyOptions) Reset()      { *m = RuntimeClassStrategyOptions{} }
-func (*RuntimeClassStrategyOptions) ProtoMessage() {}
+func (m *RuntimeClassStrategyOptions) Reset()         { *m = RuntimeClassStrategyOptions{} }
+func (m *RuntimeClassStrategyOptions) String() string { return proto.CompactTextString(m) }
+func (*RuntimeClassStrategyOptions) ProtoMessage()    {}
 func (*RuntimeClassStrategyOptions) Descriptor() ([]byte, []int) {
 	return fileDescriptor_68b366237812cc96, []int{16}
 }
@@ -1290,8 +1355,8 @@ func (m *RuntimeClassStrategyOptions) GetAllowedRuntimeClassNames() []string {
 }
 
 func (m *RuntimeClassStrategyOptions) GetDefaultRuntimeClassName() string {
-	if m != nil {
-		return m.DefaultRuntimeClassName
+	if m != nil && m.DefaultRuntimeClassName != nil {
+		return *m.DefaultRuntimeClassName
 	}
 	return ""
 }
@@ -1299,15 +1364,19 @@ func (m *RuntimeClassStrategyOptions) GetDefaultRuntimeClassName() string {
 // SELinuxStrategyOptions defines the strategy type and any options used to create the strategy.
 type SELinuxStrategyOptions struct {
 	// rule is the strategy that will dictate the allowable labels that may be set.
-	Rule string `protobuf:"bytes,1,opt,name=rule" json:"rule"`
+	Rule *string `protobuf:"bytes,1,opt,name=rule" json:"rule,omitempty"`
 	// seLinuxOptions required to run as; required for MustRunAs
 	// More info: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 	// +optional
-	SeLinuxOptions *v11.SELinuxOptions `protobuf:"bytes,2,opt,name=seLinuxOptions" json:"seLinuxOptions,omitempty"`
+	SeLinuxOptions       *v11.SELinuxOptions `protobuf:"bytes,2,opt,name=seLinuxOptions" json:"seLinuxOptions,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}            `json:"-"`
+	XXX_unrecognized     []byte              `json:"-"`
+	XXX_sizecache        int32               `json:"-"`
 }
 
-func (m *SELinuxStrategyOptions) Reset()      { *m = SELinuxStrategyOptions{} }
-func (*SELinuxStrategyOptions) ProtoMessage() {}
+func (m *SELinuxStrategyOptions) Reset()         { *m = SELinuxStrategyOptions{} }
+func (m *SELinuxStrategyOptions) String() string { return proto.CompactTextString(m) }
+func (*SELinuxStrategyOptions) ProtoMessage()    {}
 func (*SELinuxStrategyOptions) Descriptor() ([]byte, []int) {
 	return fileDescriptor_68b366237812cc96, []int{17}
 }
@@ -1339,8 +1408,8 @@ func (m *SELinuxStrategyOptions) XXX_DiscardUnknown() {
 var xxx_messageInfo_SELinuxStrategyOptions proto.InternalMessageInfo
 
 func (m *SELinuxStrategyOptions) GetRule() string {
-	if m != nil {
-		return m.Rule
+	if m != nil && m.Rule != nil {
+		return *m.Rule
 	}
 	return ""
 }
@@ -1356,15 +1425,19 @@ func (m *SELinuxStrategyOptions) GetSeLinuxOptions() *v11.SELinuxOptions {
 type SupplementalGroupsStrategyOptions struct {
 	// rule is the strategy that will dictate what supplemental groups is used in the SecurityContext.
 	// +optional
-	Rule string `protobuf:"bytes,1,opt,name=rule" json:"rule"`
+	Rule *string `protobuf:"bytes,1,opt,name=rule" json:"rule,omitempty"`
 	// ranges are the allowed ranges of supplemental groups.  If you would like to force a single
 	// supplemental group then supply a single range with the same start and end. Required for MustRunAs.
 	// +optional
-	Ranges []*IDRange `protobuf:"bytes,2,rep,name=ranges" json:"ranges,omitempty"`
+	Ranges               []*IDRange `protobuf:"bytes,2,rep,name=ranges" json:"ranges,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}   `json:"-"`
+	XXX_unrecognized     []byte     `json:"-"`
+	XXX_sizecache        int32      `json:"-"`
 }
 
-func (m *SupplementalGroupsStrategyOptions) Reset()      { *m = SupplementalGroupsStrategyOptions{} }
-func (*SupplementalGroupsStrategyOptions) ProtoMessage() {}
+func (m *SupplementalGroupsStrategyOptions) Reset()         { *m = SupplementalGroupsStrategyOptions{} }
+func (m *SupplementalGroupsStrategyOptions) String() string { return proto.CompactTextString(m) }
+func (*SupplementalGroupsStrategyOptions) ProtoMessage()    {}
 func (*SupplementalGroupsStrategyOptions) Descriptor() ([]byte, []int) {
 	return fileDescriptor_68b366237812cc96, []int{18}
 }
@@ -1396,8 +1469,8 @@ func (m *SupplementalGroupsStrategyOptions) XXX_DiscardUnknown() {
 var xxx_messageInfo_SupplementalGroupsStrategyOptions proto.InternalMessageInfo
 
 func (m *SupplementalGroupsStrategyOptions) GetRule() string {
-	if m != nil {
-		return m.Rule
+	if m != nil && m.Rule != nil {
+		return *m.Rule
 	}
 	return ""
 }
@@ -1437,1115 +1510,95 @@ func init() {
 }
 
 var fileDescriptor_68b366237812cc96 = []byte{
-	// 1442 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x57, 0x4d, 0x73, 0xd4, 0x46,
-	0x13, 0xb6, 0x58, 0x7f, 0xb6, 0x3f, 0xb0, 0x07, 0x30, 0x82, 0xf7, 0xad, 0x85, 0xa8, 0x52, 0x29,
-	0x87, 0x50, 0x5a, 0x6c, 0x5c, 0x14, 0xa1, 0xa8, 0x04, 0xdb, 0x6b, 0x83, 0x89, 0xc1, 0x1b, 0xad,
-	0xa1, 0x42, 0x2a, 0x97, 0xb1, 0xd4, 0x5e, 0x4f, 0xac, 0x95, 0xc4, 0xcc, 0x68, 0xf1, 0x5e, 0x52,
-	0xf9, 0x09, 0xb9, 0x26, 0x7f, 0x20, 0xa9, 0xca, 0x29, 0x95, 0x3f, 0xc1, 0x91, 0x23, 0xa7, 0x54,
-	0x30, 0x97, 0x1c, 0xb9, 0xe6, 0x96, 0xd2, 0xac, 0xb4, 0x96, 0xb4, 0x5f, 0x98, 0x82, 0xa3, 0xba,
-	0x9f, 0xe7, 0x51, 0x4f, 0x77, 0x4f, 0xcf, 0x0c, 0x7c, 0x7a, 0x70, 0x53, 0x98, 0xcc, 0x2f, 0xd1,
-	0x80, 0x95, 0x02, 0xdf, 0x65, 0x76, 0xb3, 0xd4, 0x58, 0xdc, 0x45, 0x49, 0x17, 0x4b, 0x35, 0xf4,
-	0x90, 0x53, 0x89, 0x8e, 0x19, 0x70, 0x5f, 0xfa, 0xe4, 0x42, 0x0b, 0x6a, 0xd2, 0x80, 0x99, 0x2d,
-	0xa8, 0x19, 0x43, 0x2f, 0x1a, 0x29, 0x15, 0xdb, 0xe7, 0x58, 0x6a, 0x74, 0xd0, 0x2f, 0x2e, 0x1f,
-	0x63, 0xea, 0xd4, 0xde, 0x67, 0x1e, 0xf2, 0x66, 0x29, 0x38, 0xa8, 0x45, 0x06, 0x51, 0xaa, 0xa3,
-	0xa4, 0xdd, 0x58, 0xa5, 0x5e, 0x2c, 0x1e, 0x7a, 0x92, 0xd5, 0xb1, 0x83, 0x70, 0x63, 0x10, 0x41,
-	0xd8, 0xfb, 0x58, 0xa7, 0x1d, 0xbc, 0xeb, 0xbd, 0x78, 0xa1, 0x64, 0x6e, 0x89, 0x79, 0x52, 0x48,
-	0x9e, 0x27, 0x19, 0x57, 0x61, 0x76, 0xc5, 0x75, 0xfd, 0x67, 0xe8, 0xac, 0x55, 0x37, 0xcb, 0x9c,
-	0x35, 0x90, 0x13, 0x1d, 0x86, 0x3d, 0x5a, 0x47, 0x5d, 0xbb, 0xac, 0x2d, 0x4c, 0xac, 0x0e, 0x3f,
-	0xff, 0xeb, 0xd2, 0x90, 0xa5, 0x2c, 0xc6, 0x22, 0xcc, 0xc5, 0xe8, 0x0d, 0x17, 0x0f, 0x1f, 0xfb,
-	0x6e, 0x58, 0x47, 0xf2, 0x7f, 0x18, 0x75, 0x14, 0x31, 0x43, 0x88, 0x6d, 0xc6, 0x13, 0x38, 0x1d,
-	0x53, 0xee, 0xf9, 0x42, 0x56, 0xa8, 0xdc, 0x27, 0x1f, 0x03, 0x04, 0x54, 0xee, 0x57, 0x38, 0xee,
-	0xb1, 0xc3, 0x0c, 0x29, 0x65, 0x27, 0x97, 0x61, 0x9c, 0x23, 0x75, 0xb6, 0x3d, 0xb7, 0xa9, 0x9f,
-	0xba, 0xac, 0x2d, 0x8c, 0xc7, 0x98, 0xb6, 0xd5, 0xf8, 0x53, 0x83, 0xf1, 0xf5, 0x06, 0xb3, 0x25,
-	0xf3, 0x3d, 0xb2, 0x05, 0xe3, 0x51, 0x05, 0x1c, 0x2a, 0xa9, 0x92, 0x9c, 0x5c, 0xba, 0x66, 0x1e,
-	0x97, 0xbb, 0x9d, 0x10, 0x33, 0x38, 0xa8, 0x45, 0x06, 0x61, 0x46, 0x68, 0xb3, 0xb1, 0x68, 0x6e,
-	0xef, 0x7e, 0x8f, 0xb6, 0x7c, 0x80, 0x92, 0x5a, 0x6d, 0x05, 0xf2, 0x04, 0xa6, 0x1d, 0x74, 0x51,
-	0xe2, 0x76, 0x10, 0xa9, 0x0b, 0x15, 0xc1, 0xe4, 0xd2, 0xf5, 0xb7, 0x93, 0x2c, 0xa7, 0xa9, 0x56,
-	0x56, 0xc9, 0xf0, 0x60, 0x7e, 0xa3, 0x7a, 0x97, 0xfb, 0x61, 0x50, 0x95, 0x51, 0x25, 0x6a, 0xcd,
-	0xd8, 0x13, 0xe5, 0x9d, 0x87, 0x6e, 0x2e, 0xef, 0x91, 0x85, 0xdc, 0x82, 0x51, 0x4e, 0xbd, 0x1a,
-	0x46, 0x71, 0x14, 0x16, 0x26, 0x97, 0x0c, 0xb3, 0x67, 0x27, 0x9b, 0x9b, 0x65, 0x2b, 0x82, 0x5a,
-	0x31, 0xc3, 0xf8, 0x12, 0xa6, 0x55, 0xe6, 0x7d, 0x2e, 0x95, 0x83, 0xcc, 0x43, 0xa1, 0xce, 0x3c,
-	0xf5, 0x97, 0x91, 0xf8, 0x2f, 0x91, 0x41, 0xd9, 0xe9, 0xa1, 0x5a, 0xe9, 0xb1, 0x9d, 0x1e, 0x1a,
-	0x9f, 0xc3, 0x58, 0xac, 0x99, 0xa6, 0x16, 0x7a, 0x50, 0x0b, 0x69, 0xea, 0xbf, 0x1a, 0x9c, 0xa9,
-	0xf8, 0x4e, 0x99, 0x09, 0x1e, 0xaa, 0x45, 0xae, 0x86, 0x4e, 0x0d, 0xe5, 0x7b, 0x2e, 0xd6, 0x06,
-	0x0c, 0x8b, 0x00, 0xed, 0xb8, 0x46, 0x4b, 0x7d, 0x72, 0xd3, 0x25, 0x96, 0x6a, 0x80, 0xb6, 0xa5,
-	0xf8, 0x64, 0x0b, 0x46, 0x85, 0xa4, 0x32, 0x14, 0x7a, 0x41, 0x29, 0x2d, 0x9f, 0x50, 0x49, 0x71,
-	0xad, 0x58, 0xc3, 0xf8, 0x5d, 0x83, 0xf3, 0x5d, 0x50, 0x5b, 0x4c, 0x48, 0x72, 0xbf, 0x63, 0xfd,
-	0xe6, 0xdb, 0xad, 0x3f, 0x62, 0xe7, 0x56, 0x5f, 0x86, 0x11, 0x26, 0xb1, 0x9e, 0xb4, 0x86, 0x79,
-	0xb2, 0xa0, 0xad, 0x16, 0xd9, 0xf8, 0xe5, 0x54, 0xd7, 0x68, 0xa3, 0xec, 0x90, 0x1d, 0x98, 0xaa,
-	0x33, 0x6f, 0xa5, 0x41, 0x99, 0x4b, 0x77, 0xe3, 0xfe, 0xec, 0x57, 0xb1, 0x68, 0xde, 0x98, 0xad,
-	0x79, 0x63, 0x6e, 0x7a, 0x72, 0x9b, 0x57, 0x25, 0x67, 0x5e, 0xcd, 0xca, 0xa8, 0x90, 0x6d, 0x18,
-	0x17, 0xe8, 0xa2, 0x2d, 0x7d, 0x7e, 0xb2, 0xdd, 0xb5, 0x45, 0x77, 0xd1, 0xad, 0xc6, 0x54, 0xab,
-	0x2d, 0x42, 0xbe, 0x81, 0x99, 0x3a, 0x3d, 0x7c, 0xe4, 0xd1, 0x76, 0xa0, 0x85, 0x77, 0x0c, 0x34,
-	0xa7, 0x63, 0xbc, 0x29, 0xc0, 0x85, 0x9e, 0x05, 0x27, 0xcb, 0x40, 0xfc, 0x5d, 0x81, 0xbc, 0x81,
-	0xce, 0xdd, 0xd6, 0x74, 0x65, 0x7e, 0x76, 0x8f, 0x74, 0xf1, 0x93, 0x3a, 0x4c, 0x3b, 0x2d, 0x3d,
-	0x74, 0x2a, 0xbe, 0x93, 0x94, 0xef, 0xee, 0xbb, 0xf4, 0x9c, 0x59, 0x4e, 0x2b, 0xad, 0x7b, 0x92,
-	0x37, 0xad, 0xac, 0x7a, 0x14, 0xa4, 0xd3, 0xe6, 0x8a, 0x78, 0x22, 0xab, 0x04, 0x25, 0x7b, 0xbd,
-	0x8b, 0x9f, 0x5c, 0x85, 0x19, 0x3b, 0xe4, 0x1c, 0x3d, 0x79, 0x0f, 0xa9, 0x2b, 0xf7, 0x9b, 0xfa,
-	0x70, 0x8a, 0x91, 0xf3, 0x45, 0x68, 0x07, 0x05, 0xe3, 0xe8, 0x24, 0xe8, 0x91, 0x34, 0x3a, 0xeb,
-	0x23, 0x0b, 0x30, 0x85, 0x87, 0x01, 0xda, 0xc9, 0xfa, 0x47, 0x53, 0xd8, 0x8c, 0xe7, 0x22, 0x07,
-	0xd2, 0xb9, 0xc0, 0x68, 0xe6, 0x1c, 0x60, 0x33, 0x33, 0x2c, 0x23, 0x03, 0xb9, 0x03, 0x23, 0x0d,
-	0xea, 0x86, 0x18, 0x37, 0xd5, 0x95, 0xb7, 0x6b, 0xaa, 0x1d, 0x56, 0x47, 0xab, 0x45, 0xbc, 0x75,
-	0xea, 0xa6, 0x66, 0xfc, 0xaa, 0xc1, 0x5c, 0xc5, 0x77, 0xaa, 0x68, 0x87, 0x9c, 0xc9, 0x66, 0x45,
-	0x55, 0xe2, 0x3d, 0xcf, 0xad, 0x72, 0x66, 0x6e, 0x5d, 0xeb, 0x5f, 0xf9, 0x6c, 0x24, 0xc7, 0x53,
-	0x2b, 0x8a, 0xf4, 0x5c, 0x87, 0xff, 0xbd, 0x4f, 0x99, 0xd5, 0xec, 0x94, 0xb9, 0x7a, 0x92, 0x60,
-	0x93, 0x19, 0xf3, 0xc7, 0x54, 0x97, 0x48, 0xd5, 0x84, 0x89, 0x6e, 0x04, 0x9c, 0x35, 0x98, 0x8b,
-	0x35, 0x74, 0x54, 0xac, 0xe3, 0xed, 0x1b, 0x41, 0xdb, 0x4e, 0x6e, 0xc0, 0xbc, 0x83, 0x7b, 0x34,
-	0x74, 0xe5, 0x8a, 0xe3, 0xac, 0xd1, 0x80, 0xee, 0x32, 0x97, 0x49, 0x16, 0x9f, 0x8a, 0x13, 0x56,
-	0x0f, 0x2f, 0xb9, 0x05, 0x3a, 0xc7, 0xa7, 0x61, 0xd4, 0x7c, 0x65, 0xee, 0x07, 0x19, 0x66, 0x41,
-	0x31, 0x7b, 0xfa, 0xc9, 0x35, 0x38, 0x43, 0xe3, 0xfb, 0x51, 0x9a, 0x36, 0xac, 0x68, 0xdd, 0x5c,
-	0x44, 0x87, 0xb1, 0x86, 0xba, 0x18, 0x09, 0x7d, 0x44, 0xa1, 0x92, 0x4f, 0xf2, 0x09, 0x4c, 0xee,
-	0xfb, 0x42, 0x3e, 0x44, 0xf9, 0xcc, 0xe7, 0x07, 0xaa, 0xe1, 0x93, 0x65, 0xa6, 0x1d, 0x64, 0x03,
-	0x26, 0xf6, 0xe3, 0x13, 0x5b, 0xe8, 0x63, 0x2a, 0xdf, 0x0b, 0x7d, 0xf2, 0x9d, 0x39, 0xdd, 0xad,
-	0x63, 0x2a, 0x29, 0xc2, 0x98, 0xfa, 0xd8, 0x2c, 0xeb, 0xe3, 0xa9, 0x7f, 0x25, 0xc6, 0xc4, 0xbf,
-	0x59, 0x59, 0xd3, 0x27, 0xf2, 0xfe, 0xcd, 0xca, 0x1a, 0xf9, 0x0a, 0xc6, 0x04, 0x6e, 0x31, 0x2f,
-	0x3c, 0xd4, 0x41, 0xb5, 0xcf, 0x62, 0x9f, 0x28, 0xaa, 0xeb, 0x0a, 0x99, 0xbb, 0xd3, 0x58, 0x89,
-	0x02, 0xf9, 0x1a, 0x26, 0x78, 0xe8, 0xad, 0x88, 0x47, 0x02, 0xb9, 0x3e, 0xd9, 0x31, 0xef, 0xf3,
-	0x72, 0x56, 0x82, 0xcd, 0x0b, 0x1e, 0xab, 0x90, 0x1d, 0x00, 0xf5, 0xa1, 0x2e, 0x53, 0xfa, 0xfc,
-	0xc0, 0x33, 0xdb, 0x6a, 0x83, 0xf3, 0xa2, 0x29, 0x1d, 0xe2, 0x02, 0x11, 0x61, 0x10, 0xb8, 0x58,
-	0x47, 0x4f, 0x52, 0x57, 0x19, 0x85, 0x3e, 0xa5, 0xd4, 0x6f, 0xf7, 0x4b, 0x40, 0x07, 0x29, 0xff,
-	0x97, 0x2e, 0xba, 0x51, 0x8e, 0xf7, 0xe2, 0x05, 0x4c, 0x0f, 0xcc, 0x71, 0xf7, 0x7b, 0xa3, 0x95,
-	0x28, 0x90, 0xdb, 0x30, 0x9f, 0x5c, 0x8e, 0x2d, 0xdf, 0x97, 0x1b, 0xcc, 0x45, 0xd1, 0x14, 0x12,
-	0xeb, 0xfa, 0x4c, 0xaa, 0xbe, 0x3d, 0x30, 0xe4, 0x21, 0x5c, 0x4a, 0x36, 0x50, 0xd4, 0xd6, 0x95,
-	0x64, 0xe3, 0xad, 0x0b, 0x9b, 0xba, 0xad, 0x43, 0xed, 0x74, 0x4a, 0x66, 0x10, 0x98, 0xdc, 0x01,
-	0x9d, 0xf6, 0x12, 0x9a, 0x4d, 0x09, 0xf5, 0x44, 0x91, 0xc7, 0x30, 0x4b, 0xb3, 0x6f, 0x07, 0xa1,
-	0xcf, 0xa9, 0xfd, 0x70, 0xa5, 0x4f, 0x96, 0x72, 0xcf, 0x0d, 0xab, 0x43, 0x83, 0x7c, 0x07, 0x84,
-	0xe6, 0x9f, 0x31, 0x42, 0x27, 0x03, 0x27, 0x5b, 0xc7, 0xdb, 0xc7, 0xea, 0xa2, 0x43, 0x9e, 0xc0,
-	0x1c, 0xcd, 0x3d, 0xa9, 0x84, 0x7e, 0x5e, 0x89, 0x7f, 0x36, 0x58, 0xbc, 0xcd, 0xb1, 0x3a, 0x55,
-	0xc8, 0x12, 0x9c, 0x8d, 0x8d, 0x8f, 0x3c, 0x41, 0xf7, 0xb0, 0xda, 0x14, 0xb6, 0x74, 0x85, 0x7e,
-	0x46, 0x0d, 0x9a, 0xae, 0x3e, 0x72, 0x05, 0x66, 0xf7, 0x7c, 0xbe, 0xcb, 0x1c, 0x07, 0xbd, 0x04,
-	0x7f, 0x56, 0xe1, 0x3b, 0xec, 0x64, 0x19, 0xce, 0xc5, 0x1a, 0x15, 0xee, 0xdb, 0x0f, 0xfc, 0xd0,
-	0x93, 0x3b, 0xcd, 0x00, 0x85, 0x7e, 0x4e, 0x11, 0xba, 0x3b, 0xc9, 0xb7, 0x30, 0x15, 0x3f, 0x4d,
-	0xd7, 0x5c, 0x2a, 0x84, 0xae, 0xab, 0x46, 0xbe, 0xd1, 0x7f, 0x27, 0xb6, 0xe1, 0xf9, 0x6e, 0xce,
-	0x68, 0x19, 0x4f, 0xe1, 0x42, 0xcf, 0x6d, 0xfb, 0x81, 0x1e, 0x4c, 0x01, 0xe8, 0xbd, 0xa6, 0xcf,
-	0x07, 0xfa, 0xe3, 0xcf, 0x1a, 0xfc, 0xaf, 0x4f, 0x4a, 0xa2, 0x03, 0x2c, 0xce, 0x7c, 0x1a, 0xf5,
-	0x90, 0x46, 0x5d, 0xab, 0xb5, 0x0e, 0xb0, 0x5e, 0x7e, 0xf2, 0x05, 0x9c, 0x8f, 0x37, 0x6a, 0xde,
-	0xa7, 0xee, 0x1d, 0xc9, 0x22, 0x7a, 0x81, 0x8c, 0x1f, 0x60, 0xbe, 0xfb, 0x68, 0xef, 0x93, 0x8b,
-	0xfb, 0x30, 0x13, 0x8f, 0xfd, 0xec, 0xf3, 0x39, 0x93, 0x13, 0xdb, 0xe7, 0x18, 0x5d, 0x36, 0x62,
-	0xf5, 0xa4, 0xfc, 0x39, 0xa6, 0xd1, 0x84, 0x8f, 0x06, 0x4e, 0xd6, 0x0f, 0x53, 0x96, 0xd5, 0xe5,
-	0x17, 0xaf, 0x8a, 0x43, 0x2f, 0x5f, 0x15, 0x87, 0xde, 0xbc, 0x2a, 0x6a, 0x3f, 0x1e, 0x15, 0xb5,
-	0xdf, 0x8e, 0x8a, 0xda, 0xf3, 0xa3, 0xa2, 0xf6, 0xe2, 0xa8, 0xa8, 0xfd, 0x7d, 0x54, 0xd4, 0xfe,
-	0x39, 0x2a, 0x0e, 0xbd, 0x39, 0x2a, 0x6a, 0x3f, 0xbd, 0x2e, 0x0e, 0xbd, 0x78, 0x5d, 0x1c, 0x7a,
-	0xf9, 0xba, 0x38, 0xf4, 0x5f, 0x00, 0x00, 0x00, 0xff, 0xff, 0xc8, 0x0c, 0xb6, 0x1a, 0x90, 0x12,
-	0x00, 0x00,
+	// 1373 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x57, 0xcd, 0x72, 0xdb, 0x36,
+	0x10, 0x1e, 0x45, 0xfe, 0x91, 0xd7, 0x3f, 0xb1, 0x91, 0xc4, 0x61, 0xdc, 0x19, 0x37, 0xe5, 0x21,
+	0xe3, 0x26, 0x2d, 0x15, 0x3b, 0x99, 0x4c, 0x26, 0xd3, 0x43, 0x1d, 0xcb, 0x4e, 0x9c, 0x3a, 0xb1,
+	0x0a, 0x39, 0x99, 0xa6, 0xd3, 0x0b, 0x4c, 0xae, 0x25, 0xc4, 0x14, 0xc9, 0x02, 0xa0, 0x22, 0x3d,
+	0x41, 0x1f, 0xa0, 0xb7, 0xbe, 0x40, 0x0f, 0x3d, 0xf6, 0x25, 0x7a, 0xe8, 0xa1, 0x8f, 0xd0, 0xc9,
+	0x5b, 0xf4, 0xd6, 0x01, 0x44, 0xca, 0x22, 0x45, 0xc9, 0x71, 0xc6, 0x37, 0x62, 0xf7, 0xfb, 0x3e,
+	0x2e, 0x16, 0x8b, 0x05, 0x00, 0x5f, 0x9e, 0x3e, 0x96, 0x0e, 0x0f, 0xab, 0x2c, 0xe2, 0xd5, 0x28,
+	0xf4, 0xb9, 0xdb, 0xab, 0x76, 0x36, 0x8f, 0x51, 0xb1, 0xcd, 0x6a, 0x13, 0x03, 0x14, 0x4c, 0xa1,
+	0xe7, 0x44, 0x22, 0x54, 0x21, 0xb9, 0xd5, 0x87, 0x3a, 0x2c, 0xe2, 0x4e, 0x1f, 0xea, 0x24, 0xd0,
+	0x35, 0x7b, 0x48, 0xc5, 0x0d, 0x05, 0x56, 0x3b, 0x23, 0xf4, 0xb5, 0x87, 0x67, 0x98, 0x36, 0x73,
+	0x5b, 0x3c, 0x40, 0xd1, 0xab, 0x46, 0xa7, 0x4d, 0x6d, 0x90, 0xd5, 0x36, 0x2a, 0x56, 0xc4, 0xaa,
+	0x8e, 0x63, 0x89, 0x38, 0x50, 0xbc, 0x8d, 0x23, 0x84, 0x47, 0xe7, 0x11, 0xa4, 0xdb, 0xc2, 0x36,
+	0x1b, 0xe1, 0x3d, 0x18, 0xc7, 0x8b, 0x15, 0xf7, 0xab, 0x3c, 0x50, 0x52, 0x89, 0x3c, 0xc9, 0xbe,
+	0x03, 0xcb, 0xdb, 0xbe, 0x1f, 0xbe, 0x47, 0x6f, 0xa7, 0xb1, 0x5f, 0x13, 0xbc, 0x83, 0x82, 0x10,
+	0x98, 0x0a, 0x58, 0x1b, 0xad, 0xd2, 0xed, 0xd2, 0xc6, 0x1c, 0x35, 0xdf, 0xf6, 0x3d, 0x58, 0x49,
+	0x70, 0x7b, 0x3e, 0x76, 0xdf, 0x84, 0x7e, 0xdc, 0x46, 0xb2, 0x0a, 0x33, 0x9e, 0xa1, 0x24, 0xd0,
+	0x64, 0x64, 0xbf, 0x84, 0xab, 0x09, 0xf8, 0x79, 0x28, 0x55, 0x9d, 0xa9, 0x16, 0x59, 0x07, 0x88,
+	0x98, 0x6a, 0xd5, 0x05, 0x9e, 0xf0, 0x6e, 0x02, 0x1f, 0xb2, 0x90, 0x35, 0xa8, 0x08, 0x64, 0xde,
+	0x61, 0xe0, 0xf7, 0xac, 0x2b, 0xb7, 0x4b, 0x1b, 0x15, 0x3a, 0x18, 0xdb, 0x7f, 0x96, 0xa0, 0xb2,
+	0xdb, 0xe1, 0xae, 0xe2, 0x61, 0x40, 0x0e, 0xa0, 0xa2, 0x33, 0xed, 0x31, 0xc5, 0x8c, 0xcc, 0xfc,
+	0xd6, 0x7d, 0xe7, 0x6c, 0x59, 0x07, 0x13, 0x77, 0xa2, 0xd3, 0xa6, 0x36, 0x48, 0x47, 0xa3, 0x9d,
+	0xce, 0xa6, 0x73, 0x78, 0xfc, 0x0e, 0x5d, 0xf5, 0x12, 0x15, 0xa3, 0x03, 0x05, 0xf2, 0x16, 0x16,
+	0x3d, 0xf4, 0x51, 0xe1, 0x61, 0xa4, 0xd5, 0xa5, 0xf9, 0xf7, 0xfc, 0xd6, 0x83, 0x8f, 0x93, 0xac,
+	0x0d, 0x53, 0x69, 0x56, 0xc9, 0x6e, 0xc1, 0xea, 0x5e, 0xe3, 0x99, 0x08, 0xe3, 0xa8, 0xa1, 0x74,
+	0xc6, 0x9b, 0xbd, 0xc4, 0xa3, 0xf3, 0x2b, 0x62, 0x7f, 0x90, 0x5f, 0xfd, 0x4d, 0x9e, 0xc0, 0x8c,
+	0x60, 0x41, 0x13, 0x75, 0x04, 0xe5, 0x8d, 0xf9, 0x2d, 0xdb, 0x19, 0x5b, 0xab, 0xce, 0x7e, 0x8d,
+	0x6a, 0x28, 0x4d, 0x18, 0xf6, 0x03, 0x58, 0x34, 0x79, 0x0e, 0x85, 0x32, 0x0e, 0xb2, 0x0c, 0xe5,
+	0x36, 0x0f, 0x8c, 0xfe, 0x34, 0xd5, 0x9f, 0xc6, 0xc2, 0xba, 0x66, 0x76, 0xda, 0xc2, 0xba, 0xf6,
+	0xd7, 0x30, 0x9b, 0xe8, 0x0c, 0xc3, 0xcb, 0x23, 0xf0, 0x72, 0x1f, 0xfe, 0x5f, 0x09, 0xae, 0xd5,
+	0x43, 0xaf, 0xc6, 0xa5, 0x88, 0xcd, 0x34, 0x9e, 0xc6, 0x5e, 0x13, 0xd5, 0x25, 0x2f, 0xc7, 0x1e,
+	0x4c, 0xc9, 0x08, 0xdd, 0x64, 0x15, 0xb6, 0x26, 0xe4, 0xa0, 0x20, 0x96, 0x46, 0x84, 0x2e, 0x35,
+	0x7c, 0x72, 0x00, 0x33, 0x52, 0x31, 0x15, 0x4b, 0xab, 0x6c, 0x94, 0x1e, 0x5e, 0x50, 0xc9, 0x70,
+	0x69, 0xa2, 0x61, 0xff, 0x51, 0x82, 0x9b, 0x05, 0xa8, 0x03, 0x2e, 0x15, 0x79, 0x31, 0x32, 0x7f,
+	0xe7, 0xe3, 0xe6, 0xaf, 0xd9, 0xb9, 0xd9, 0xd7, 0x60, 0x9a, 0x2b, 0x6c, 0xa7, 0x25, 0xe0, 0x5c,
+	0x2c, 0x68, 0xda, 0x27, 0xdb, 0xbf, 0x5d, 0x29, 0x8c, 0x56, 0x67, 0x87, 0x1c, 0xc1, 0x42, 0x9b,
+	0x07, 0xdb, 0x1d, 0xc6, 0x7d, 0x76, 0x9c, 0x54, 0xe0, 0xa4, 0x15, 0xd3, 0x9d, 0xc3, 0xe9, 0x77,
+	0x0e, 0x67, 0x3f, 0x50, 0x87, 0xa2, 0xa1, 0x04, 0x0f, 0x9a, 0x34, 0xa3, 0x42, 0x0e, 0xa1, 0x22,
+	0xd1, 0x47, 0x57, 0x85, 0xe2, 0x62, 0xfb, 0xe7, 0x80, 0x1d, 0xa3, 0xdf, 0x48, 0xa8, 0x74, 0x20,
+	0x42, 0x7e, 0x80, 0xa5, 0x36, 0xeb, 0xbe, 0x0e, 0xd8, 0x20, 0xd0, 0xf2, 0x27, 0x06, 0x9a, 0xd3,
+	0xb1, 0xff, 0x2e, 0xc3, 0xad, 0xb1, 0x0b, 0x4e, 0x1c, 0x20, 0xe1, 0xb1, 0x44, 0xd1, 0x41, 0xef,
+	0x59, 0xbf, 0x4f, 0xf2, 0x30, 0xdd, 0x17, 0x05, 0x1e, 0xd2, 0x86, 0x45, 0xaf, 0xaf, 0x84, 0x5e,
+	0x3d, 0xf4, 0xd2, 0x85, 0x7b, 0xf6, 0x29, 0xd5, 0xe6, 0xd4, 0x86, 0x95, 0x76, 0x03, 0x25, 0x7a,
+	0x34, 0xab, 0xae, 0xc3, 0xf3, 0x06, 0x5c, 0x99, 0x74, 0x58, 0x93, 0x9a, 0x69, 0x5a, 0xe0, 0x21,
+	0x77, 0x60, 0xc9, 0x8d, 0x85, 0xc0, 0x40, 0x3d, 0x47, 0xe6, 0xab, 0x56, 0xcf, 0x9a, 0x32, 0xd8,
+	0x9c, 0x55, 0xe3, 0x3c, 0x94, 0x5c, 0xa0, 0x97, 0xe2, 0xa6, 0xfb, 0xb8, 0xac, 0x95, 0xd8, 0xb0,
+	0x80, 0xdd, 0x08, 0xdd, 0x74, 0xb6, 0x33, 0x06, 0x95, 0xb1, 0xad, 0xf9, 0x40, 0x46, 0x27, 0xa2,
+	0xfb, 0xc9, 0x29, 0xf6, 0x92, 0x86, 0xa7, 0x3f, 0xc9, 0xb7, 0x30, 0xdd, 0x61, 0x7e, 0x8c, 0x49,
+	0xc1, 0xdc, 0xfd, 0xb8, 0x82, 0x39, 0xe2, 0x6d, 0xa4, 0x7d, 0xe2, 0x93, 0x2b, 0x8f, 0x4b, 0xf6,
+	0xef, 0x25, 0x58, 0xa9, 0x87, 0x5e, 0x03, 0xdd, 0x58, 0x70, 0xd5, 0xab, 0x9b, 0x5c, 0x5f, 0x72,
+	0x4f, 0xaa, 0x65, 0x7a, 0xd2, 0xfd, 0xc9, 0x6b, 0x9b, 0x8d, 0xe4, 0xac, 0x23, 0xe9, 0x48, 0x6f,
+	0x8c, 0xf8, 0x2f, 0xbd, 0x83, 0x3c, 0xcd, 0x76, 0x90, 0xaf, 0x2e, 0x12, 0x6c, 0xda, 0x3f, 0x7e,
+	0x59, 0x28, 0x88, 0xd4, 0x74, 0x0f, 0x7d, 0x86, 0x0b, 0xde, 0xe1, 0x3e, 0x36, 0xd1, 0x33, 0xb1,
+	0x56, 0xe8, 0x90, 0x85, 0x3c, 0x82, 0x55, 0x0f, 0x4f, 0x58, 0xec, 0xab, 0x6d, 0xcf, 0xdb, 0x61,
+	0x11, 0x3b, 0xe6, 0x3e, 0x57, 0x3c, 0x39, 0xd3, 0xe6, 0xe8, 0x18, 0x2f, 0x79, 0x02, 0x96, 0xc0,
+	0x9f, 0x63, 0x5d, 0x6a, 0x35, 0x11, 0x46, 0x19, 0x66, 0xd9, 0x30, 0xc7, 0xfa, 0xc9, 0x7d, 0xb8,
+	0xc6, 0x92, 0xfb, 0xcb, 0x30, 0x6d, 0xca, 0xd0, 0x8a, 0x5c, 0xc4, 0x82, 0xd9, 0x8e, 0xb9, 0xbe,
+	0x48, 0x6b, 0xda, 0xa0, 0xd2, 0x21, 0xb9, 0x0d, 0xf3, 0xad, 0x50, 0xaa, 0x57, 0xa8, 0xde, 0x87,
+	0xe2, 0xd4, 0x94, 0x77, 0x85, 0x0e, 0x9b, 0xc8, 0x1e, 0xcc, 0xb5, 0x92, 0x93, 0x56, 0x5a, 0xb3,
+	0x26, 0xc7, 0x1b, 0x13, 0x72, 0x9c, 0x39, 0x95, 0xe9, 0x19, 0x55, 0xc7, 0x60, 0x06, 0xfb, 0x35,
+	0xab, 0x62, 0xfe, 0x92, 0x0e, 0x53, 0xcf, 0x7e, 0x7d, 0xc7, 0x9a, 0x3b, 0xf3, 0xec, 0xd7, 0x77,
+	0xc8, 0x77, 0x30, 0x2b, 0xf1, 0x80, 0x07, 0x71, 0xd7, 0x02, 0x53, 0x26, 0x9b, 0x13, 0xfe, 0xdc,
+	0xd8, 0x35, 0xc8, 0xdc, 0xcd, 0x83, 0xa6, 0x0a, 0xe4, 0x7b, 0x98, 0x13, 0x71, 0xb0, 0x2d, 0x5f,
+	0x4b, 0x14, 0xd6, 0xfc, 0x48, 0xcf, 0xce, 0xcb, 0xd1, 0x14, 0x9b, 0x17, 0x3c, 0x53, 0x21, 0x47,
+	0x00, 0x66, 0x60, 0xae, 0x3c, 0xd6, 0xea, 0xb9, 0xe7, 0x2e, 0x1d, 0x80, 0xf3, 0xa2, 0x43, 0x3a,
+	0xc4, 0x07, 0x22, 0xe3, 0x28, 0xf2, 0xb1, 0x8d, 0x81, 0x62, 0xbe, 0x31, 0x4a, 0x6b, 0xc1, 0xa8,
+	0x7f, 0x33, 0x29, 0x01, 0x23, 0xa4, 0xfc, 0x5f, 0x0a, 0x74, 0x75, 0x8e, 0x4f, 0x92, 0x09, 0x2c,
+	0x9e, 0x9b, 0xe3, 0xe2, 0xdb, 0x1d, 0x4d, 0x15, 0xf4, 0x76, 0x48, 0xaf, 0xb0, 0x34, 0x0c, 0xd5,
+	0x1e, 0xf7, 0x51, 0xf6, 0xa4, 0xc2, 0xb6, 0xb5, 0x64, 0x56, 0x76, 0x8c, 0x97, 0x3c, 0x87, 0xcf,
+	0xd3, 0x8d, 0xa2, 0xcb, 0xb7, 0x9e, 0x6e, 0xb0, 0x5d, 0xe9, 0x32, 0xbf, 0x7f, 0x24, 0x5d, 0x35,
+	0x02, 0xe7, 0xc1, 0xf4, 0xc6, 0x62, 0xe3, 0x24, 0x96, 0x8d, 0xc4, 0x58, 0x3f, 0x79, 0x03, 0xcb,
+	0x2c, 0x7b, 0x87, 0x97, 0xd6, 0x8a, 0xa9, 0xf8, 0xbb, 0x13, 0x72, 0x92, 0xbb, 0xf6, 0xd3, 0x11,
+	0x0d, 0xf2, 0x13, 0x10, 0x96, 0x7f, 0x48, 0x48, 0x8b, 0x9c, 0xdb, 0xaf, 0x46, 0x5e, 0x1f, 0xb4,
+	0x40, 0x87, 0xbc, 0x85, 0x15, 0x96, 0x7b, 0xce, 0x48, 0xeb, 0xa6, 0x11, 0xbf, 0x77, 0xbe, 0xf8,
+	0x80, 0x43, 0x47, 0x55, 0xc8, 0x16, 0x5c, 0x4f, 0x8c, 0xaf, 0x03, 0xc9, 0x4e, 0xb0, 0xd1, 0x93,
+	0xae, 0xf2, 0xa5, 0x75, 0xcd, 0x34, 0x91, 0x42, 0x1f, 0xb9, 0x0b, 0xcb, 0x27, 0xa1, 0x38, 0xe6,
+	0x9e, 0x87, 0x41, 0x8a, 0xbf, 0x6e, 0xf0, 0x23, 0x76, 0xf2, 0x10, 0x6e, 0x24, 0x1a, 0x75, 0x11,
+	0xba, 0x2f, 0xc3, 0x38, 0x50, 0x47, 0xbd, 0x08, 0xa5, 0x75, 0xc3, 0x10, 0x8a, 0x9d, 0xe4, 0x47,
+	0x58, 0x48, 0x9e, 0x85, 0x3b, 0x3e, 0x93, 0xd2, 0xb2, 0x4c, 0xd9, 0x3e, 0x9a, 0xbc, 0xef, 0x06,
+	0xf0, 0x7c, 0xed, 0x66, 0xb4, 0xec, 0x53, 0xb8, 0x35, 0x76, 0x93, 0x5e, 0xfa, 0x23, 0xe6, 0x1d,
+	0x58, 0xe3, 0xba, 0xcc, 0xa5, 0xff, 0xeb, 0xd7, 0x12, 0x7c, 0x36, 0x21, 0x0d, 0x83, 0x7d, 0x83,
+	0xde, 0x30, 0xea, 0x15, 0xd3, 0x95, 0x5a, 0xea, 0x1f, 0x48, 0xe3, 0xfc, 0xe4, 0x31, 0xdc, 0x4c,
+	0xb6, 0x65, 0xde, 0x67, 0x6e, 0x10, 0x73, 0x74, 0x9c, 0xdb, 0xee, 0xc2, 0x6a, 0x71, 0xdb, 0x2e,
+	0x9c, 0xff, 0x0b, 0x58, 0x4a, 0x9a, 0x79, 0xf6, 0xe9, 0x9a, 0xc9, 0x83, 0x1b, 0x0a, 0xd4, 0x57,
+	0x85, 0x44, 0x37, 0x5d, 0xe6, 0x1c, 0xd3, 0x96, 0xf0, 0xc5, 0xb9, 0xfd, 0xf2, 0xb2, 0x17, 0xe1,
+	0xe9, 0xc2, 0x5f, 0x1f, 0xd6, 0x4b, 0xff, 0x7c, 0x58, 0x2f, 0xfd, 0xfb, 0x61, 0xbd, 0xf4, 0x7f,
+	0x00, 0x00, 0x00, 0xff, 0xff, 0xd3, 0x0e, 0xda, 0xe1, 0xc6, 0x11, 0x00, 0x00,
 }
 
-func (this *AllowedCSIDriver) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*AllowedCSIDriver)
-	if !ok {
-		that2, ok := that.(AllowedCSIDriver)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Name != that1.Name {
-		return false
-	}
-	return true
-}
-func (this *AllowedFlexVolume) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*AllowedFlexVolume)
-	if !ok {
-		that2, ok := that.(AllowedFlexVolume)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Driver != that1.Driver {
-		return false
-	}
-	return true
-}
-func (this *AllowedHostPath) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*AllowedHostPath)
-	if !ok {
-		that2, ok := that.(AllowedHostPath)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.PathPrefix != that1.PathPrefix {
-		return false
-	}
-	if this.ReadOnly != that1.ReadOnly {
-		return false
-	}
-	return true
-}
-func (this *Eviction) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*Eviction)
-	if !ok {
-		that2, ok := that.(Eviction)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if !this.DeleteOptions.Equal(that1.DeleteOptions) {
-		return false
-	}
-	return true
-}
-func (this *FSGroupStrategyOptions) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*FSGroupStrategyOptions)
-	if !ok {
-		that2, ok := that.(FSGroupStrategyOptions)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Rule != that1.Rule {
-		return false
-	}
-	if len(this.Ranges) != len(that1.Ranges) {
-		return false
-	}
-	for i := range this.Ranges {
-		if !this.Ranges[i].Equal(that1.Ranges[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *HostPortRange) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*HostPortRange)
-	if !ok {
-		that2, ok := that.(HostPortRange)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Min != that1.Min {
-		return false
-	}
-	if this.Max != that1.Max {
-		return false
-	}
-	return true
-}
-func (this *IDRange) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*IDRange)
-	if !ok {
-		that2, ok := that.(IDRange)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Min != that1.Min {
-		return false
-	}
-	if this.Max != that1.Max {
-		return false
-	}
-	return true
-}
-func (this *PodDisruptionBudget) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*PodDisruptionBudget)
-	if !ok {
-		that2, ok := that.(PodDisruptionBudget)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if !this.Spec.Equal(that1.Spec) {
-		return false
-	}
-	if !this.Status.Equal(that1.Status) {
-		return false
-	}
-	return true
-}
-func (this *PodDisruptionBudgetList) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*PodDisruptionBudgetList)
-	if !ok {
-		that2, ok := that.(PodDisruptionBudgetList)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if len(this.Items) != len(that1.Items) {
-		return false
-	}
-	for i := range this.Items {
-		if !this.Items[i].Equal(that1.Items[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *PodDisruptionBudgetSpec) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*PodDisruptionBudgetSpec)
-	if !ok {
-		that2, ok := that.(PodDisruptionBudgetSpec)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.MinAvailable.Equal(that1.MinAvailable) {
-		return false
-	}
-	if !this.Selector.Equal(that1.Selector) {
-		return false
-	}
-	if !this.MaxUnavailable.Equal(that1.MaxUnavailable) {
-		return false
-	}
-	return true
-}
-func (this *PodDisruptionBudgetStatus) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*PodDisruptionBudgetStatus)
-	if !ok {
-		that2, ok := that.(PodDisruptionBudgetStatus)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.ObservedGeneration != that1.ObservedGeneration {
-		return false
-	}
-	if len(this.DisruptedPods) != len(that1.DisruptedPods) {
-		return false
-	}
-	for i := range this.DisruptedPods {
-		if !this.DisruptedPods[i].Equal(that1.DisruptedPods[i]) {
-			return false
-		}
-	}
-	if this.DisruptionsAllowed != that1.DisruptionsAllowed {
-		return false
-	}
-	if this.CurrentHealthy != that1.CurrentHealthy {
-		return false
-	}
-	if this.DesiredHealthy != that1.DesiredHealthy {
-		return false
-	}
-	if this.ExpectedPods != that1.ExpectedPods {
-		return false
-	}
-	return true
-}
-func (this *PodSecurityPolicy) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*PodSecurityPolicy)
-	if !ok {
-		that2, ok := that.(PodSecurityPolicy)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if !this.Spec.Equal(that1.Spec) {
-		return false
-	}
-	return true
-}
-func (this *PodSecurityPolicyList) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*PodSecurityPolicyList)
-	if !ok {
-		that2, ok := that.(PodSecurityPolicyList)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if len(this.Items) != len(that1.Items) {
-		return false
-	}
-	for i := range this.Items {
-		if !this.Items[i].Equal(that1.Items[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *PodSecurityPolicySpec) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*PodSecurityPolicySpec)
-	if !ok {
-		that2, ok := that.(PodSecurityPolicySpec)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Privileged != that1.Privileged {
-		return false
-	}
-	if len(this.DefaultAddCapabilities) != len(that1.DefaultAddCapabilities) {
-		return false
-	}
-	for i := range this.DefaultAddCapabilities {
-		if this.DefaultAddCapabilities[i] != that1.DefaultAddCapabilities[i] {
-			return false
-		}
-	}
-	if len(this.RequiredDropCapabilities) != len(that1.RequiredDropCapabilities) {
-		return false
-	}
-	for i := range this.RequiredDropCapabilities {
-		if this.RequiredDropCapabilities[i] != that1.RequiredDropCapabilities[i] {
-			return false
-		}
-	}
-	if len(this.AllowedCapabilities) != len(that1.AllowedCapabilities) {
-		return false
-	}
-	for i := range this.AllowedCapabilities {
-		if this.AllowedCapabilities[i] != that1.AllowedCapabilities[i] {
-			return false
-		}
-	}
-	if len(this.Volumes) != len(that1.Volumes) {
-		return false
-	}
-	for i := range this.Volumes {
-		if this.Volumes[i] != that1.Volumes[i] {
-			return false
-		}
-	}
-	if this.HostNetwork != that1.HostNetwork {
-		return false
-	}
-	if len(this.HostPorts) != len(that1.HostPorts) {
-		return false
-	}
-	for i := range this.HostPorts {
-		if !this.HostPorts[i].Equal(that1.HostPorts[i]) {
-			return false
-		}
-	}
-	if this.HostPID != that1.HostPID {
-		return false
-	}
-	if this.HostIPC != that1.HostIPC {
-		return false
-	}
-	if !this.SeLinux.Equal(that1.SeLinux) {
-		return false
-	}
-	if !this.RunAsUser.Equal(that1.RunAsUser) {
-		return false
-	}
-	if !this.RunAsGroup.Equal(that1.RunAsGroup) {
-		return false
-	}
-	if !this.SupplementalGroups.Equal(that1.SupplementalGroups) {
-		return false
-	}
-	if !this.FsGroup.Equal(that1.FsGroup) {
-		return false
-	}
-	if this.ReadOnlyRootFilesystem != that1.ReadOnlyRootFilesystem {
-		return false
-	}
-	if this.DefaultAllowPrivilegeEscalation != that1.DefaultAllowPrivilegeEscalation {
-		return false
-	}
-	if this.AllowPrivilegeEscalation != that1.AllowPrivilegeEscalation {
-		return false
-	}
-	if len(this.AllowedHostPaths) != len(that1.AllowedHostPaths) {
-		return false
-	}
-	for i := range this.AllowedHostPaths {
-		if !this.AllowedHostPaths[i].Equal(that1.AllowedHostPaths[i]) {
-			return false
-		}
-	}
-	if len(this.AllowedFlexVolumes) != len(that1.AllowedFlexVolumes) {
-		return false
-	}
-	for i := range this.AllowedFlexVolumes {
-		if !this.AllowedFlexVolumes[i].Equal(that1.AllowedFlexVolumes[i]) {
-			return false
-		}
-	}
-	if len(this.AllowedCSIDrivers) != len(that1.AllowedCSIDrivers) {
-		return false
-	}
-	for i := range this.AllowedCSIDrivers {
-		if !this.AllowedCSIDrivers[i].Equal(that1.AllowedCSIDrivers[i]) {
-			return false
-		}
-	}
-	if len(this.AllowedUnsafeSysctls) != len(that1.AllowedUnsafeSysctls) {
-		return false
-	}
-	for i := range this.AllowedUnsafeSysctls {
-		if this.AllowedUnsafeSysctls[i] != that1.AllowedUnsafeSysctls[i] {
-			return false
-		}
-	}
-	if len(this.ForbiddenSysctls) != len(that1.ForbiddenSysctls) {
-		return false
-	}
-	for i := range this.ForbiddenSysctls {
-		if this.ForbiddenSysctls[i] != that1.ForbiddenSysctls[i] {
-			return false
-		}
-	}
-	if len(this.AllowedProcMountTypes) != len(that1.AllowedProcMountTypes) {
-		return false
-	}
-	for i := range this.AllowedProcMountTypes {
-		if this.AllowedProcMountTypes[i] != that1.AllowedProcMountTypes[i] {
-			return false
-		}
-	}
-	if !this.RuntimeClass.Equal(that1.RuntimeClass) {
-		return false
-	}
-	return true
-}
-func (this *RunAsGroupStrategyOptions) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*RunAsGroupStrategyOptions)
-	if !ok {
-		that2, ok := that.(RunAsGroupStrategyOptions)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Rule != that1.Rule {
-		return false
-	}
-	if len(this.Ranges) != len(that1.Ranges) {
-		return false
-	}
-	for i := range this.Ranges {
-		if !this.Ranges[i].Equal(that1.Ranges[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *RunAsUserStrategyOptions) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*RunAsUserStrategyOptions)
-	if !ok {
-		that2, ok := that.(RunAsUserStrategyOptions)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Rule != that1.Rule {
-		return false
-	}
-	if len(this.Ranges) != len(that1.Ranges) {
-		return false
-	}
-	for i := range this.Ranges {
-		if !this.Ranges[i].Equal(that1.Ranges[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *RuntimeClassStrategyOptions) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*RuntimeClassStrategyOptions)
-	if !ok {
-		that2, ok := that.(RuntimeClassStrategyOptions)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if len(this.AllowedRuntimeClassNames) != len(that1.AllowedRuntimeClassNames) {
-		return false
-	}
-	for i := range this.AllowedRuntimeClassNames {
-		if this.AllowedRuntimeClassNames[i] != that1.AllowedRuntimeClassNames[i] {
-			return false
-		}
-	}
-	if this.DefaultRuntimeClassName != that1.DefaultRuntimeClassName {
-		return false
-	}
-	return true
-}
-func (this *SELinuxStrategyOptions) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*SELinuxStrategyOptions)
-	if !ok {
-		that2, ok := that.(SELinuxStrategyOptions)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Rule != that1.Rule {
-		return false
-	}
-	if !this.SeLinuxOptions.Equal(that1.SeLinuxOptions) {
-		return false
-	}
-	return true
-}
-func (this *SupplementalGroupsStrategyOptions) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*SupplementalGroupsStrategyOptions)
-	if !ok {
-		that2, ok := that.(SupplementalGroupsStrategyOptions)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Rule != that1.Rule {
-		return false
-	}
-	if len(this.Ranges) != len(that1.Ranges) {
-		return false
-	}
-	for i := range this.Ranges {
-		if !this.Ranges[i].Equal(that1.Ranges[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *AllowedCSIDriver) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 5)
-	s = append(s, "&k8s_io_api_policy_v1beta1.AllowedCSIDriver{")
-	s = append(s, "Name: "+fmt.Sprintf("%#v", this.Name)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *AllowedFlexVolume) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 5)
-	s = append(s, "&k8s_io_api_policy_v1beta1.AllowedFlexVolume{")
-	s = append(s, "Driver: "+fmt.Sprintf("%#v", this.Driver)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *AllowedHostPath) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_policy_v1beta1.AllowedHostPath{")
-	s = append(s, "PathPrefix: "+fmt.Sprintf("%#v", this.PathPrefix)+",\n")
-	s = append(s, "ReadOnly: "+fmt.Sprintf("%#v", this.ReadOnly)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *Eviction) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_policy_v1beta1.Eviction{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.DeleteOptions != nil {
-		s = append(s, "DeleteOptions: "+fmt.Sprintf("%#v", this.DeleteOptions)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *FSGroupStrategyOptions) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_policy_v1beta1.FSGroupStrategyOptions{")
-	s = append(s, "Rule: "+fmt.Sprintf("%#v", this.Rule)+",\n")
-	if this.Ranges != nil {
-		s = append(s, "Ranges: "+fmt.Sprintf("%#v", this.Ranges)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *HostPortRange) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_policy_v1beta1.HostPortRange{")
-	s = append(s, "Min: "+fmt.Sprintf("%#v", this.Min)+",\n")
-	s = append(s, "Max: "+fmt.Sprintf("%#v", this.Max)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *IDRange) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_policy_v1beta1.IDRange{")
-	s = append(s, "Min: "+fmt.Sprintf("%#v", this.Min)+",\n")
-	s = append(s, "Max: "+fmt.Sprintf("%#v", this.Max)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *PodDisruptionBudget) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 7)
-	s = append(s, "&k8s_io_api_policy_v1beta1.PodDisruptionBudget{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Spec != nil {
-		s = append(s, "Spec: "+fmt.Sprintf("%#v", this.Spec)+",\n")
-	}
-	if this.Status != nil {
-		s = append(s, "Status: "+fmt.Sprintf("%#v", this.Status)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *PodDisruptionBudgetList) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_policy_v1beta1.PodDisruptionBudgetList{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Items != nil {
-		s = append(s, "Items: "+fmt.Sprintf("%#v", this.Items)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *PodDisruptionBudgetSpec) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 7)
-	s = append(s, "&k8s_io_api_policy_v1beta1.PodDisruptionBudgetSpec{")
-	if this.MinAvailable != nil {
-		s = append(s, "MinAvailable: "+fmt.Sprintf("%#v", this.MinAvailable)+",\n")
-	}
-	if this.Selector != nil {
-		s = append(s, "Selector: "+fmt.Sprintf("%#v", this.Selector)+",\n")
-	}
-	if this.MaxUnavailable != nil {
-		s = append(s, "MaxUnavailable: "+fmt.Sprintf("%#v", this.MaxUnavailable)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *PodDisruptionBudgetStatus) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 10)
-	s = append(s, "&k8s_io_api_policy_v1beta1.PodDisruptionBudgetStatus{")
-	s = append(s, "ObservedGeneration: "+fmt.Sprintf("%#v", this.ObservedGeneration)+",\n")
-	keysForDisruptedPods := make([]string, 0, len(this.DisruptedPods))
-	for k, _ := range this.DisruptedPods {
-		keysForDisruptedPods = append(keysForDisruptedPods, k)
-	}
-	github_com_gogo_protobuf_sortkeys.Strings(keysForDisruptedPods)
-	mapStringForDisruptedPods := "map[string]*v1.Time{"
-	for _, k := range keysForDisruptedPods {
-		mapStringForDisruptedPods += fmt.Sprintf("%#v: %#v,", k, this.DisruptedPods[k])
-	}
-	mapStringForDisruptedPods += "}"
-	if this.DisruptedPods != nil {
-		s = append(s, "DisruptedPods: "+mapStringForDisruptedPods+",\n")
-	}
-	s = append(s, "DisruptionsAllowed: "+fmt.Sprintf("%#v", this.DisruptionsAllowed)+",\n")
-	s = append(s, "CurrentHealthy: "+fmt.Sprintf("%#v", this.CurrentHealthy)+",\n")
-	s = append(s, "DesiredHealthy: "+fmt.Sprintf("%#v", this.DesiredHealthy)+",\n")
-	s = append(s, "ExpectedPods: "+fmt.Sprintf("%#v", this.ExpectedPods)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *PodSecurityPolicy) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_policy_v1beta1.PodSecurityPolicy{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Spec != nil {
-		s = append(s, "Spec: "+fmt.Sprintf("%#v", this.Spec)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *PodSecurityPolicyList) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_policy_v1beta1.PodSecurityPolicyList{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Items != nil {
-		s = append(s, "Items: "+fmt.Sprintf("%#v", this.Items)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *PodSecurityPolicySpec) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 28)
-	s = append(s, "&k8s_io_api_policy_v1beta1.PodSecurityPolicySpec{")
-	s = append(s, "Privileged: "+fmt.Sprintf("%#v", this.Privileged)+",\n")
-	if this.DefaultAddCapabilities != nil {
-		s = append(s, "DefaultAddCapabilities: "+fmt.Sprintf("%#v", this.DefaultAddCapabilities)+",\n")
-	}
-	if this.RequiredDropCapabilities != nil {
-		s = append(s, "RequiredDropCapabilities: "+fmt.Sprintf("%#v", this.RequiredDropCapabilities)+",\n")
-	}
-	if this.AllowedCapabilities != nil {
-		s = append(s, "AllowedCapabilities: "+fmt.Sprintf("%#v", this.AllowedCapabilities)+",\n")
-	}
-	if this.Volumes != nil {
-		s = append(s, "Volumes: "+fmt.Sprintf("%#v", this.Volumes)+",\n")
-	}
-	s = append(s, "HostNetwork: "+fmt.Sprintf("%#v", this.HostNetwork)+",\n")
-	if this.HostPorts != nil {
-		s = append(s, "HostPorts: "+fmt.Sprintf("%#v", this.HostPorts)+",\n")
-	}
-	s = append(s, "HostPID: "+fmt.Sprintf("%#v", this.HostPID)+",\n")
-	s = append(s, "HostIPC: "+fmt.Sprintf("%#v", this.HostIPC)+",\n")
-	if this.SeLinux != nil {
-		s = append(s, "SeLinux: "+fmt.Sprintf("%#v", this.SeLinux)+",\n")
-	}
-	if this.RunAsUser != nil {
-		s = append(s, "RunAsUser: "+fmt.Sprintf("%#v", this.RunAsUser)+",\n")
-	}
-	if this.RunAsGroup != nil {
-		s = append(s, "RunAsGroup: "+fmt.Sprintf("%#v", this.RunAsGroup)+",\n")
-	}
-	if this.SupplementalGroups != nil {
-		s = append(s, "SupplementalGroups: "+fmt.Sprintf("%#v", this.SupplementalGroups)+",\n")
-	}
-	if this.FsGroup != nil {
-		s = append(s, "FsGroup: "+fmt.Sprintf("%#v", this.FsGroup)+",\n")
-	}
-	s = append(s, "ReadOnlyRootFilesystem: "+fmt.Sprintf("%#v", this.ReadOnlyRootFilesystem)+",\n")
-	s = append(s, "DefaultAllowPrivilegeEscalation: "+fmt.Sprintf("%#v", this.DefaultAllowPrivilegeEscalation)+",\n")
-	s = append(s, "AllowPrivilegeEscalation: "+fmt.Sprintf("%#v", this.AllowPrivilegeEscalation)+",\n")
-	if this.AllowedHostPaths != nil {
-		s = append(s, "AllowedHostPaths: "+fmt.Sprintf("%#v", this.AllowedHostPaths)+",\n")
-	}
-	if this.AllowedFlexVolumes != nil {
-		s = append(s, "AllowedFlexVolumes: "+fmt.Sprintf("%#v", this.AllowedFlexVolumes)+",\n")
-	}
-	if this.AllowedCSIDrivers != nil {
-		s = append(s, "AllowedCSIDrivers: "+fmt.Sprintf("%#v", this.AllowedCSIDrivers)+",\n")
-	}
-	if this.AllowedUnsafeSysctls != nil {
-		s = append(s, "AllowedUnsafeSysctls: "+fmt.Sprintf("%#v", this.AllowedUnsafeSysctls)+",\n")
-	}
-	if this.ForbiddenSysctls != nil {
-		s = append(s, "ForbiddenSysctls: "+fmt.Sprintf("%#v", this.ForbiddenSysctls)+",\n")
-	}
-	if this.AllowedProcMountTypes != nil {
-		s = append(s, "AllowedProcMountTypes: "+fmt.Sprintf("%#v", this.AllowedProcMountTypes)+",\n")
-	}
-	if this.RuntimeClass != nil {
-		s = append(s, "RuntimeClass: "+fmt.Sprintf("%#v", this.RuntimeClass)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *RunAsGroupStrategyOptions) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_policy_v1beta1.RunAsGroupStrategyOptions{")
-	s = append(s, "Rule: "+fmt.Sprintf("%#v", this.Rule)+",\n")
-	if this.Ranges != nil {
-		s = append(s, "Ranges: "+fmt.Sprintf("%#v", this.Ranges)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *RunAsUserStrategyOptions) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_policy_v1beta1.RunAsUserStrategyOptions{")
-	s = append(s, "Rule: "+fmt.Sprintf("%#v", this.Rule)+",\n")
-	if this.Ranges != nil {
-		s = append(s, "Ranges: "+fmt.Sprintf("%#v", this.Ranges)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *RuntimeClassStrategyOptions) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_policy_v1beta1.RuntimeClassStrategyOptions{")
-	if this.AllowedRuntimeClassNames != nil {
-		s = append(s, "AllowedRuntimeClassNames: "+fmt.Sprintf("%#v", this.AllowedRuntimeClassNames)+",\n")
-	}
-	s = append(s, "DefaultRuntimeClassName: "+fmt.Sprintf("%#v", this.DefaultRuntimeClassName)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *SELinuxStrategyOptions) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_policy_v1beta1.SELinuxStrategyOptions{")
-	s = append(s, "Rule: "+fmt.Sprintf("%#v", this.Rule)+",\n")
-	if this.SeLinuxOptions != nil {
-		s = append(s, "SeLinuxOptions: "+fmt.Sprintf("%#v", this.SeLinuxOptions)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *SupplementalGroupsStrategyOptions) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_policy_v1beta1.SupplementalGroupsStrategyOptions{")
-	s = append(s, "Rule: "+fmt.Sprintf("%#v", this.Rule)+",\n")
-	if this.Ranges != nil {
-		s = append(s, "Ranges: "+fmt.Sprintf("%#v", this.Ranges)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func valueToGoStringGenerated(v interface{}, typ string) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("func(v %v) *%v { return &v } ( %#v )", typ, typ, pv)
-}
 func (m *AllowedCSIDriver) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -2566,11 +1619,17 @@ func (m *AllowedCSIDriver) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	i -= len(m.Name)
-	copy(dAtA[i:], m.Name)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Name)))
-	i--
-	dAtA[i] = 0xa
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Name != nil {
+		i -= len(*m.Name)
+		copy(dAtA[i:], *m.Name)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Name)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -2594,11 +1653,17 @@ func (m *AllowedFlexVolume) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	i -= len(m.Driver)
-	copy(dAtA[i:], m.Driver)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Driver)))
-	i--
-	dAtA[i] = 0xa
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Driver != nil {
+		i -= len(*m.Driver)
+		copy(dAtA[i:], *m.Driver)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Driver)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -2622,19 +1687,27 @@ func (m *AllowedHostPath) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	i--
-	if m.ReadOnly {
-		dAtA[i] = 1
-	} else {
-		dAtA[i] = 0
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	i--
-	dAtA[i] = 0x10
-	i -= len(m.PathPrefix)
-	copy(dAtA[i:], m.PathPrefix)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.PathPrefix)))
-	i--
-	dAtA[i] = 0xa
+	if m.ReadOnly != nil {
+		i--
+		if *m.ReadOnly {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.PathPrefix != nil {
+		i -= len(*m.PathPrefix)
+		copy(dAtA[i:], *m.PathPrefix)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.PathPrefix)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -2658,6 +1731,10 @@ func (m *Eviction) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.DeleteOptions != nil {
 		{
 			size, err := m.DeleteOptions.MarshalToSizedBuffer(dAtA[:i])
@@ -2705,6 +1782,10 @@ func (m *FSGroupStrategyOptions) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Ranges) > 0 {
 		for iNdEx := len(m.Ranges) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -2719,11 +1800,13 @@ func (m *FSGroupStrategyOptions) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 			dAtA[i] = 0x12
 		}
 	}
-	i -= len(m.Rule)
-	copy(dAtA[i:], m.Rule)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Rule)))
-	i--
-	dAtA[i] = 0xa
+	if m.Rule != nil {
+		i -= len(*m.Rule)
+		copy(dAtA[i:], *m.Rule)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Rule)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -2747,12 +1830,20 @@ func (m *HostPortRange) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	i = encodeVarintGenerated(dAtA, i, uint64(m.Max))
-	i--
-	dAtA[i] = 0x10
-	i = encodeVarintGenerated(dAtA, i, uint64(m.Min))
-	i--
-	dAtA[i] = 0x8
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Max != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.Max))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.Min != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.Min))
+		i--
+		dAtA[i] = 0x8
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -2776,12 +1867,20 @@ func (m *IDRange) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	i = encodeVarintGenerated(dAtA, i, uint64(m.Max))
-	i--
-	dAtA[i] = 0x10
-	i = encodeVarintGenerated(dAtA, i, uint64(m.Min))
-	i--
-	dAtA[i] = 0x8
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Max != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.Max))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.Min != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.Min))
+		i--
+		dAtA[i] = 0x8
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -2805,6 +1904,10 @@ func (m *PodDisruptionBudget) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Status != nil {
 		{
 			size, err := m.Status.MarshalToSizedBuffer(dAtA[:i])
@@ -2864,6 +1967,10 @@ func (m *PodDisruptionBudgetList) MarshalToSizedBuffer(dAtA []byte) (int, error)
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Items) > 0 {
 		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -2913,6 +2020,10 @@ func (m *PodDisruptionBudgetSpec) MarshalToSizedBuffer(dAtA []byte) (int, error)
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.MaxUnavailable != nil {
 		{
 			size, err := m.MaxUnavailable.MarshalToSizedBuffer(dAtA[:i])
@@ -2972,18 +2083,30 @@ func (m *PodDisruptionBudgetStatus) MarshalToSizedBuffer(dAtA []byte) (int, erro
 	_ = i
 	var l int
 	_ = l
-	i = encodeVarintGenerated(dAtA, i, uint64(m.ExpectedPods))
-	i--
-	dAtA[i] = 0x30
-	i = encodeVarintGenerated(dAtA, i, uint64(m.DesiredHealthy))
-	i--
-	dAtA[i] = 0x28
-	i = encodeVarintGenerated(dAtA, i, uint64(m.CurrentHealthy))
-	i--
-	dAtA[i] = 0x20
-	i = encodeVarintGenerated(dAtA, i, uint64(m.DisruptionsAllowed))
-	i--
-	dAtA[i] = 0x18
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.ExpectedPods != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.ExpectedPods))
+		i--
+		dAtA[i] = 0x30
+	}
+	if m.DesiredHealthy != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.DesiredHealthy))
+		i--
+		dAtA[i] = 0x28
+	}
+	if m.CurrentHealthy != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.CurrentHealthy))
+		i--
+		dAtA[i] = 0x20
+	}
+	if m.DisruptionsAllowed != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.DisruptionsAllowed))
+		i--
+		dAtA[i] = 0x18
+	}
 	if len(m.DisruptedPods) > 0 {
 		for k := range m.DisruptedPods {
 			v := m.DisruptedPods[k]
@@ -3010,9 +2133,11 @@ func (m *PodDisruptionBudgetStatus) MarshalToSizedBuffer(dAtA []byte) (int, erro
 			dAtA[i] = 0x12
 		}
 	}
-	i = encodeVarintGenerated(dAtA, i, uint64(m.ObservedGeneration))
-	i--
-	dAtA[i] = 0x8
+	if m.ObservedGeneration != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.ObservedGeneration))
+		i--
+		dAtA[i] = 0x8
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -3036,6 +2161,10 @@ func (m *PodSecurityPolicy) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Spec != nil {
 		{
 			size, err := m.Spec.MarshalToSizedBuffer(dAtA[:i])
@@ -3083,6 +2212,10 @@ func (m *PodSecurityPolicyList) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Items) > 0 {
 		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -3132,6 +2265,10 @@ func (m *PodSecurityPolicySpec) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.RuntimeClass != nil {
 		{
 			size, err := m.RuntimeClass.MarshalToSizedBuffer(dAtA[:i])
@@ -3241,32 +2378,38 @@ func (m *PodSecurityPolicySpec) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			dAtA[i] = 0x8a
 		}
 	}
-	i--
-	if m.AllowPrivilegeEscalation {
-		dAtA[i] = 1
-	} else {
-		dAtA[i] = 0
+	if m.AllowPrivilegeEscalation != nil {
+		i--
+		if *m.AllowPrivilegeEscalation {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0x80
 	}
-	i--
-	dAtA[i] = 0x1
-	i--
-	dAtA[i] = 0x80
-	i--
-	if m.DefaultAllowPrivilegeEscalation {
-		dAtA[i] = 1
-	} else {
-		dAtA[i] = 0
+	if m.DefaultAllowPrivilegeEscalation != nil {
+		i--
+		if *m.DefaultAllowPrivilegeEscalation {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x78
 	}
-	i--
-	dAtA[i] = 0x78
-	i--
-	if m.ReadOnlyRootFilesystem {
-		dAtA[i] = 1
-	} else {
-		dAtA[i] = 0
+	if m.ReadOnlyRootFilesystem != nil {
+		i--
+		if *m.ReadOnlyRootFilesystem {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x70
 	}
-	i--
-	dAtA[i] = 0x70
 	if m.FsGroup != nil {
 		{
 			size, err := m.FsGroup.MarshalToSizedBuffer(dAtA[:i])
@@ -3315,22 +2458,26 @@ func (m *PodSecurityPolicySpec) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x52
 	}
-	i--
-	if m.HostIPC {
-		dAtA[i] = 1
-	} else {
-		dAtA[i] = 0
+	if m.HostIPC != nil {
+		i--
+		if *m.HostIPC {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x48
 	}
-	i--
-	dAtA[i] = 0x48
-	i--
-	if m.HostPID {
-		dAtA[i] = 1
-	} else {
-		dAtA[i] = 0
+	if m.HostPID != nil {
+		i--
+		if *m.HostPID {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x40
 	}
-	i--
-	dAtA[i] = 0x40
 	if len(m.HostPorts) > 0 {
 		for iNdEx := len(m.HostPorts) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -3345,14 +2492,16 @@ func (m *PodSecurityPolicySpec) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			dAtA[i] = 0x3a
 		}
 	}
-	i--
-	if m.HostNetwork {
-		dAtA[i] = 1
-	} else {
-		dAtA[i] = 0
+	if m.HostNetwork != nil {
+		i--
+		if *m.HostNetwork {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x30
 	}
-	i--
-	dAtA[i] = 0x30
 	if len(m.Volumes) > 0 {
 		for iNdEx := len(m.Volumes) - 1; iNdEx >= 0; iNdEx-- {
 			i -= len(m.Volumes[iNdEx])
@@ -3389,14 +2538,16 @@ func (m *PodSecurityPolicySpec) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			dAtA[i] = 0x12
 		}
 	}
-	i--
-	if m.Privileged {
-		dAtA[i] = 1
-	} else {
-		dAtA[i] = 0
+	if m.Privileged != nil {
+		i--
+		if *m.Privileged {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x8
 	}
-	i--
-	dAtA[i] = 0x8
 	return len(dAtA) - i, nil
 }
 
@@ -3420,6 +2571,10 @@ func (m *RunAsGroupStrategyOptions) MarshalToSizedBuffer(dAtA []byte) (int, erro
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Ranges) > 0 {
 		for iNdEx := len(m.Ranges) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -3434,11 +2589,13 @@ func (m *RunAsGroupStrategyOptions) MarshalToSizedBuffer(dAtA []byte) (int, erro
 			dAtA[i] = 0x12
 		}
 	}
-	i -= len(m.Rule)
-	copy(dAtA[i:], m.Rule)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Rule)))
-	i--
-	dAtA[i] = 0xa
+	if m.Rule != nil {
+		i -= len(*m.Rule)
+		copy(dAtA[i:], *m.Rule)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Rule)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -3462,6 +2619,10 @@ func (m *RunAsUserStrategyOptions) MarshalToSizedBuffer(dAtA []byte) (int, error
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Ranges) > 0 {
 		for iNdEx := len(m.Ranges) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -3476,11 +2637,13 @@ func (m *RunAsUserStrategyOptions) MarshalToSizedBuffer(dAtA []byte) (int, error
 			dAtA[i] = 0x12
 		}
 	}
-	i -= len(m.Rule)
-	copy(dAtA[i:], m.Rule)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Rule)))
-	i--
-	dAtA[i] = 0xa
+	if m.Rule != nil {
+		i -= len(*m.Rule)
+		copy(dAtA[i:], *m.Rule)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Rule)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -3504,11 +2667,17 @@ func (m *RuntimeClassStrategyOptions) MarshalToSizedBuffer(dAtA []byte) (int, er
 	_ = i
 	var l int
 	_ = l
-	i -= len(m.DefaultRuntimeClassName)
-	copy(dAtA[i:], m.DefaultRuntimeClassName)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.DefaultRuntimeClassName)))
-	i--
-	dAtA[i] = 0x12
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.DefaultRuntimeClassName != nil {
+		i -= len(*m.DefaultRuntimeClassName)
+		copy(dAtA[i:], *m.DefaultRuntimeClassName)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.DefaultRuntimeClassName)))
+		i--
+		dAtA[i] = 0x12
+	}
 	if len(m.AllowedRuntimeClassNames) > 0 {
 		for iNdEx := len(m.AllowedRuntimeClassNames) - 1; iNdEx >= 0; iNdEx-- {
 			i -= len(m.AllowedRuntimeClassNames[iNdEx])
@@ -3541,6 +2710,10 @@ func (m *SELinuxStrategyOptions) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.SeLinuxOptions != nil {
 		{
 			size, err := m.SeLinuxOptions.MarshalToSizedBuffer(dAtA[:i])
@@ -3553,11 +2726,13 @@ func (m *SELinuxStrategyOptions) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 		i--
 		dAtA[i] = 0x12
 	}
-	i -= len(m.Rule)
-	copy(dAtA[i:], m.Rule)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Rule)))
-	i--
-	dAtA[i] = 0xa
+	if m.Rule != nil {
+		i -= len(*m.Rule)
+		copy(dAtA[i:], *m.Rule)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Rule)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -3581,6 +2756,10 @@ func (m *SupplementalGroupsStrategyOptions) MarshalToSizedBuffer(dAtA []byte) (i
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Ranges) > 0 {
 		for iNdEx := len(m.Ranges) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -3595,11 +2774,13 @@ func (m *SupplementalGroupsStrategyOptions) MarshalToSizedBuffer(dAtA []byte) (i
 			dAtA[i] = 0x12
 		}
 	}
-	i -= len(m.Rule)
-	copy(dAtA[i:], m.Rule)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Rule)))
-	i--
-	dAtA[i] = 0xa
+	if m.Rule != nil {
+		i -= len(*m.Rule)
+		copy(dAtA[i:], *m.Rule)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Rule)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -3620,8 +2801,13 @@ func (m *AllowedCSIDriver) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Name)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.Name != nil {
+		l = len(*m.Name)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -3631,8 +2817,13 @@ func (m *AllowedFlexVolume) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Driver)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.Driver != nil {
+		l = len(*m.Driver)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -3642,9 +2833,16 @@ func (m *AllowedHostPath) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.PathPrefix)
-	n += 1 + l + sovGenerated(uint64(l))
-	n += 2
+	if m.PathPrefix != nil {
+		l = len(*m.PathPrefix)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.ReadOnly != nil {
+		n += 2
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -3662,6 +2860,9 @@ func (m *Eviction) Size() (n int) {
 		l = m.DeleteOptions.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -3671,13 +2872,18 @@ func (m *FSGroupStrategyOptions) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Rule)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.Rule != nil {
+		l = len(*m.Rule)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if len(m.Ranges) > 0 {
 		for _, e := range m.Ranges {
 			l = e.Size()
 			n += 1 + l + sovGenerated(uint64(l))
 		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -3688,8 +2894,15 @@ func (m *HostPortRange) Size() (n int) {
 	}
 	var l int
 	_ = l
-	n += 1 + sovGenerated(uint64(m.Min))
-	n += 1 + sovGenerated(uint64(m.Max))
+	if m.Min != nil {
+		n += 1 + sovGenerated(uint64(*m.Min))
+	}
+	if m.Max != nil {
+		n += 1 + sovGenerated(uint64(*m.Max))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -3699,8 +2912,15 @@ func (m *IDRange) Size() (n int) {
 	}
 	var l int
 	_ = l
-	n += 1 + sovGenerated(uint64(m.Min))
-	n += 1 + sovGenerated(uint64(m.Max))
+	if m.Min != nil {
+		n += 1 + sovGenerated(uint64(*m.Min))
+	}
+	if m.Max != nil {
+		n += 1 + sovGenerated(uint64(*m.Max))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -3722,6 +2942,9 @@ func (m *PodDisruptionBudget) Size() (n int) {
 		l = m.Status.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -3740,6 +2963,9 @@ func (m *PodDisruptionBudgetList) Size() (n int) {
 			l = e.Size()
 			n += 1 + l + sovGenerated(uint64(l))
 		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -3762,6 +2988,9 @@ func (m *PodDisruptionBudgetSpec) Size() (n int) {
 		l = m.MaxUnavailable.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -3771,7 +3000,9 @@ func (m *PodDisruptionBudgetStatus) Size() (n int) {
 	}
 	var l int
 	_ = l
-	n += 1 + sovGenerated(uint64(m.ObservedGeneration))
+	if m.ObservedGeneration != nil {
+		n += 1 + sovGenerated(uint64(*m.ObservedGeneration))
+	}
 	if len(m.DisruptedPods) > 0 {
 		for k, v := range m.DisruptedPods {
 			_ = k
@@ -3785,10 +3016,21 @@ func (m *PodDisruptionBudgetStatus) Size() (n int) {
 			n += mapEntrySize + 1 + sovGenerated(uint64(mapEntrySize))
 		}
 	}
-	n += 1 + sovGenerated(uint64(m.DisruptionsAllowed))
-	n += 1 + sovGenerated(uint64(m.CurrentHealthy))
-	n += 1 + sovGenerated(uint64(m.DesiredHealthy))
-	n += 1 + sovGenerated(uint64(m.ExpectedPods))
+	if m.DisruptionsAllowed != nil {
+		n += 1 + sovGenerated(uint64(*m.DisruptionsAllowed))
+	}
+	if m.CurrentHealthy != nil {
+		n += 1 + sovGenerated(uint64(*m.CurrentHealthy))
+	}
+	if m.DesiredHealthy != nil {
+		n += 1 + sovGenerated(uint64(*m.DesiredHealthy))
+	}
+	if m.ExpectedPods != nil {
+		n += 1 + sovGenerated(uint64(*m.ExpectedPods))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -3805,6 +3047,9 @@ func (m *PodSecurityPolicy) Size() (n int) {
 	if m.Spec != nil {
 		l = m.Spec.Size()
 		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -3825,6 +3070,9 @@ func (m *PodSecurityPolicyList) Size() (n int) {
 			n += 1 + l + sovGenerated(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -3834,7 +3082,9 @@ func (m *PodSecurityPolicySpec) Size() (n int) {
 	}
 	var l int
 	_ = l
-	n += 2
+	if m.Privileged != nil {
+		n += 2
+	}
 	if len(m.DefaultAddCapabilities) > 0 {
 		for _, s := range m.DefaultAddCapabilities {
 			l = len(s)
@@ -3859,15 +3109,21 @@ func (m *PodSecurityPolicySpec) Size() (n int) {
 			n += 1 + l + sovGenerated(uint64(l))
 		}
 	}
-	n += 2
+	if m.HostNetwork != nil {
+		n += 2
+	}
 	if len(m.HostPorts) > 0 {
 		for _, e := range m.HostPorts {
 			l = e.Size()
 			n += 1 + l + sovGenerated(uint64(l))
 		}
 	}
-	n += 2
-	n += 2
+	if m.HostPID != nil {
+		n += 2
+	}
+	if m.HostIPC != nil {
+		n += 2
+	}
 	if m.SeLinux != nil {
 		l = m.SeLinux.Size()
 		n += 1 + l + sovGenerated(uint64(l))
@@ -3884,9 +3140,15 @@ func (m *PodSecurityPolicySpec) Size() (n int) {
 		l = m.FsGroup.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
-	n += 2
-	n += 2
-	n += 3
+	if m.ReadOnlyRootFilesystem != nil {
+		n += 2
+	}
+	if m.DefaultAllowPrivilegeEscalation != nil {
+		n += 2
+	}
+	if m.AllowPrivilegeEscalation != nil {
+		n += 3
+	}
 	if len(m.AllowedHostPaths) > 0 {
 		for _, e := range m.AllowedHostPaths {
 			l = e.Size()
@@ -3931,6 +3193,9 @@ func (m *PodSecurityPolicySpec) Size() (n int) {
 		l = m.RuntimeClass.Size()
 		n += 2 + l + sovGenerated(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -3940,13 +3205,18 @@ func (m *RunAsGroupStrategyOptions) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Rule)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.Rule != nil {
+		l = len(*m.Rule)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if len(m.Ranges) > 0 {
 		for _, e := range m.Ranges {
 			l = e.Size()
 			n += 1 + l + sovGenerated(uint64(l))
 		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -3957,13 +3227,18 @@ func (m *RunAsUserStrategyOptions) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Rule)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.Rule != nil {
+		l = len(*m.Rule)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if len(m.Ranges) > 0 {
 		for _, e := range m.Ranges {
 			l = e.Size()
 			n += 1 + l + sovGenerated(uint64(l))
 		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -3980,8 +3255,13 @@ func (m *RuntimeClassStrategyOptions) Size() (n int) {
 			n += 1 + l + sovGenerated(uint64(l))
 		}
 	}
-	l = len(m.DefaultRuntimeClassName)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.DefaultRuntimeClassName != nil {
+		l = len(*m.DefaultRuntimeClassName)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -3991,11 +3271,16 @@ func (m *SELinuxStrategyOptions) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Rule)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.Rule != nil {
+		l = len(*m.Rule)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if m.SeLinuxOptions != nil {
 		l = m.SeLinuxOptions.Size()
 		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -4006,13 +3291,18 @@ func (m *SupplementalGroupsStrategyOptions) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Rule)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.Rule != nil {
+		l = len(*m.Rule)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if len(m.Ranges) > 0 {
 		for _, e := range m.Ranges {
 			l = e.Size()
 			n += 1 + l + sovGenerated(uint64(l))
 		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -4022,309 +3312,6 @@ func sovGenerated(x uint64) (n int) {
 }
 func sozGenerated(x uint64) (n int) {
 	return sovGenerated(uint64((x << 1) ^ uint64((int64(x) >> 63))))
-}
-func (this *AllowedCSIDriver) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&AllowedCSIDriver{`,
-		`Name:` + fmt.Sprintf("%v", this.Name) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *AllowedFlexVolume) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&AllowedFlexVolume{`,
-		`Driver:` + fmt.Sprintf("%v", this.Driver) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *AllowedHostPath) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&AllowedHostPath{`,
-		`PathPrefix:` + fmt.Sprintf("%v", this.PathPrefix) + `,`,
-		`ReadOnly:` + fmt.Sprintf("%v", this.ReadOnly) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *Eviction) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&Eviction{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ObjectMeta", "v1.ObjectMeta", 1) + `,`,
-		`DeleteOptions:` + strings.Replace(fmt.Sprintf("%v", this.DeleteOptions), "DeleteOptions", "v1.DeleteOptions", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *FSGroupStrategyOptions) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForRanges := "[]*IDRange{"
-	for _, f := range this.Ranges {
-		repeatedStringForRanges += strings.Replace(f.String(), "IDRange", "IDRange", 1) + ","
-	}
-	repeatedStringForRanges += "}"
-	s := strings.Join([]string{`&FSGroupStrategyOptions{`,
-		`Rule:` + fmt.Sprintf("%v", this.Rule) + `,`,
-		`Ranges:` + repeatedStringForRanges + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *HostPortRange) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&HostPortRange{`,
-		`Min:` + fmt.Sprintf("%v", this.Min) + `,`,
-		`Max:` + fmt.Sprintf("%v", this.Max) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *IDRange) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&IDRange{`,
-		`Min:` + fmt.Sprintf("%v", this.Min) + `,`,
-		`Max:` + fmt.Sprintf("%v", this.Max) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *PodDisruptionBudget) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&PodDisruptionBudget{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ObjectMeta", "v1.ObjectMeta", 1) + `,`,
-		`Spec:` + strings.Replace(this.Spec.String(), "PodDisruptionBudgetSpec", "PodDisruptionBudgetSpec", 1) + `,`,
-		`Status:` + strings.Replace(this.Status.String(), "PodDisruptionBudgetStatus", "PodDisruptionBudgetStatus", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *PodDisruptionBudgetList) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForItems := "[]*PodDisruptionBudget{"
-	for _, f := range this.Items {
-		repeatedStringForItems += strings.Replace(f.String(), "PodDisruptionBudget", "PodDisruptionBudget", 1) + ","
-	}
-	repeatedStringForItems += "}"
-	s := strings.Join([]string{`&PodDisruptionBudgetList{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ListMeta", "v1.ListMeta", 1) + `,`,
-		`Items:` + repeatedStringForItems + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *PodDisruptionBudgetSpec) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&PodDisruptionBudgetSpec{`,
-		`MinAvailable:` + strings.Replace(fmt.Sprintf("%v", this.MinAvailable), "IntOrString", "intstr.IntOrString", 1) + `,`,
-		`Selector:` + strings.Replace(fmt.Sprintf("%v", this.Selector), "LabelSelector", "v1.LabelSelector", 1) + `,`,
-		`MaxUnavailable:` + strings.Replace(fmt.Sprintf("%v", this.MaxUnavailable), "IntOrString", "intstr.IntOrString", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *PodDisruptionBudgetStatus) String() string {
-	if this == nil {
-		return "nil"
-	}
-	keysForDisruptedPods := make([]string, 0, len(this.DisruptedPods))
-	for k, _ := range this.DisruptedPods {
-		keysForDisruptedPods = append(keysForDisruptedPods, k)
-	}
-	github_com_gogo_protobuf_sortkeys.Strings(keysForDisruptedPods)
-	mapStringForDisruptedPods := "map[string]*v1.Time{"
-	for _, k := range keysForDisruptedPods {
-		mapStringForDisruptedPods += fmt.Sprintf("%v: %v,", k, this.DisruptedPods[k])
-	}
-	mapStringForDisruptedPods += "}"
-	s := strings.Join([]string{`&PodDisruptionBudgetStatus{`,
-		`ObservedGeneration:` + fmt.Sprintf("%v", this.ObservedGeneration) + `,`,
-		`DisruptedPods:` + mapStringForDisruptedPods + `,`,
-		`DisruptionsAllowed:` + fmt.Sprintf("%v", this.DisruptionsAllowed) + `,`,
-		`CurrentHealthy:` + fmt.Sprintf("%v", this.CurrentHealthy) + `,`,
-		`DesiredHealthy:` + fmt.Sprintf("%v", this.DesiredHealthy) + `,`,
-		`ExpectedPods:` + fmt.Sprintf("%v", this.ExpectedPods) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *PodSecurityPolicy) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&PodSecurityPolicy{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ObjectMeta", "v1.ObjectMeta", 1) + `,`,
-		`Spec:` + strings.Replace(this.Spec.String(), "PodSecurityPolicySpec", "PodSecurityPolicySpec", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *PodSecurityPolicyList) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForItems := "[]*PodSecurityPolicy{"
-	for _, f := range this.Items {
-		repeatedStringForItems += strings.Replace(f.String(), "PodSecurityPolicy", "PodSecurityPolicy", 1) + ","
-	}
-	repeatedStringForItems += "}"
-	s := strings.Join([]string{`&PodSecurityPolicyList{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ListMeta", "v1.ListMeta", 1) + `,`,
-		`Items:` + repeatedStringForItems + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *PodSecurityPolicySpec) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForHostPorts := "[]*HostPortRange{"
-	for _, f := range this.HostPorts {
-		repeatedStringForHostPorts += strings.Replace(f.String(), "HostPortRange", "HostPortRange", 1) + ","
-	}
-	repeatedStringForHostPorts += "}"
-	repeatedStringForAllowedHostPaths := "[]*AllowedHostPath{"
-	for _, f := range this.AllowedHostPaths {
-		repeatedStringForAllowedHostPaths += strings.Replace(f.String(), "AllowedHostPath", "AllowedHostPath", 1) + ","
-	}
-	repeatedStringForAllowedHostPaths += "}"
-	repeatedStringForAllowedFlexVolumes := "[]*AllowedFlexVolume{"
-	for _, f := range this.AllowedFlexVolumes {
-		repeatedStringForAllowedFlexVolumes += strings.Replace(f.String(), "AllowedFlexVolume", "AllowedFlexVolume", 1) + ","
-	}
-	repeatedStringForAllowedFlexVolumes += "}"
-	repeatedStringForAllowedCSIDrivers := "[]*AllowedCSIDriver{"
-	for _, f := range this.AllowedCSIDrivers {
-		repeatedStringForAllowedCSIDrivers += strings.Replace(f.String(), "AllowedCSIDriver", "AllowedCSIDriver", 1) + ","
-	}
-	repeatedStringForAllowedCSIDrivers += "}"
-	s := strings.Join([]string{`&PodSecurityPolicySpec{`,
-		`Privileged:` + fmt.Sprintf("%v", this.Privileged) + `,`,
-		`DefaultAddCapabilities:` + fmt.Sprintf("%v", this.DefaultAddCapabilities) + `,`,
-		`RequiredDropCapabilities:` + fmt.Sprintf("%v", this.RequiredDropCapabilities) + `,`,
-		`AllowedCapabilities:` + fmt.Sprintf("%v", this.AllowedCapabilities) + `,`,
-		`Volumes:` + fmt.Sprintf("%v", this.Volumes) + `,`,
-		`HostNetwork:` + fmt.Sprintf("%v", this.HostNetwork) + `,`,
-		`HostPorts:` + repeatedStringForHostPorts + `,`,
-		`HostPID:` + fmt.Sprintf("%v", this.HostPID) + `,`,
-		`HostIPC:` + fmt.Sprintf("%v", this.HostIPC) + `,`,
-		`SeLinux:` + strings.Replace(this.SeLinux.String(), "SELinuxStrategyOptions", "SELinuxStrategyOptions", 1) + `,`,
-		`RunAsUser:` + strings.Replace(this.RunAsUser.String(), "RunAsUserStrategyOptions", "RunAsUserStrategyOptions", 1) + `,`,
-		`SupplementalGroups:` + strings.Replace(this.SupplementalGroups.String(), "SupplementalGroupsStrategyOptions", "SupplementalGroupsStrategyOptions", 1) + `,`,
-		`FsGroup:` + strings.Replace(this.FsGroup.String(), "FSGroupStrategyOptions", "FSGroupStrategyOptions", 1) + `,`,
-		`ReadOnlyRootFilesystem:` + fmt.Sprintf("%v", this.ReadOnlyRootFilesystem) + `,`,
-		`DefaultAllowPrivilegeEscalation:` + fmt.Sprintf("%v", this.DefaultAllowPrivilegeEscalation) + `,`,
-		`AllowPrivilegeEscalation:` + fmt.Sprintf("%v", this.AllowPrivilegeEscalation) + `,`,
-		`AllowedHostPaths:` + repeatedStringForAllowedHostPaths + `,`,
-		`AllowedFlexVolumes:` + repeatedStringForAllowedFlexVolumes + `,`,
-		`AllowedUnsafeSysctls:` + fmt.Sprintf("%v", this.AllowedUnsafeSysctls) + `,`,
-		`ForbiddenSysctls:` + fmt.Sprintf("%v", this.ForbiddenSysctls) + `,`,
-		`AllowedProcMountTypes:` + fmt.Sprintf("%v", this.AllowedProcMountTypes) + `,`,
-		`RunAsGroup:` + strings.Replace(this.RunAsGroup.String(), "RunAsGroupStrategyOptions", "RunAsGroupStrategyOptions", 1) + `,`,
-		`AllowedCSIDrivers:` + repeatedStringForAllowedCSIDrivers + `,`,
-		`RuntimeClass:` + strings.Replace(this.RuntimeClass.String(), "RuntimeClassStrategyOptions", "RuntimeClassStrategyOptions", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *RunAsGroupStrategyOptions) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForRanges := "[]*IDRange{"
-	for _, f := range this.Ranges {
-		repeatedStringForRanges += strings.Replace(f.String(), "IDRange", "IDRange", 1) + ","
-	}
-	repeatedStringForRanges += "}"
-	s := strings.Join([]string{`&RunAsGroupStrategyOptions{`,
-		`Rule:` + fmt.Sprintf("%v", this.Rule) + `,`,
-		`Ranges:` + repeatedStringForRanges + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *RunAsUserStrategyOptions) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForRanges := "[]*IDRange{"
-	for _, f := range this.Ranges {
-		repeatedStringForRanges += strings.Replace(f.String(), "IDRange", "IDRange", 1) + ","
-	}
-	repeatedStringForRanges += "}"
-	s := strings.Join([]string{`&RunAsUserStrategyOptions{`,
-		`Rule:` + fmt.Sprintf("%v", this.Rule) + `,`,
-		`Ranges:` + repeatedStringForRanges + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *RuntimeClassStrategyOptions) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&RuntimeClassStrategyOptions{`,
-		`AllowedRuntimeClassNames:` + fmt.Sprintf("%v", this.AllowedRuntimeClassNames) + `,`,
-		`DefaultRuntimeClassName:` + fmt.Sprintf("%v", this.DefaultRuntimeClassName) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *SELinuxStrategyOptions) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&SELinuxStrategyOptions{`,
-		`Rule:` + fmt.Sprintf("%v", this.Rule) + `,`,
-		`SeLinuxOptions:` + strings.Replace(fmt.Sprintf("%v", this.SeLinuxOptions), "SELinuxOptions", "v11.SELinuxOptions", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *SupplementalGroupsStrategyOptions) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForRanges := "[]*IDRange{"
-	for _, f := range this.Ranges {
-		repeatedStringForRanges += strings.Replace(f.String(), "IDRange", "IDRange", 1) + ","
-	}
-	repeatedStringForRanges += "}"
-	s := strings.Join([]string{`&SupplementalGroupsStrategyOptions{`,
-		`Rule:` + fmt.Sprintf("%v", this.Rule) + `,`,
-		`Ranges:` + repeatedStringForRanges + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func valueToStringGenerated(v interface{}) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("*%v", pv)
 }
 func (m *AllowedCSIDriver) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
@@ -4385,7 +3372,8 @@ func (m *AllowedCSIDriver) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Name = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Name = &s
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -4399,6 +3387,7 @@ func (m *AllowedCSIDriver) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4467,7 +3456,8 @@ func (m *AllowedFlexVolume) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Driver = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Driver = &s
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -4481,6 +3471,7 @@ func (m *AllowedFlexVolume) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4549,7 +3540,8 @@ func (m *AllowedHostPath) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.PathPrefix = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.PathPrefix = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 0 {
@@ -4570,7 +3562,8 @@ func (m *AllowedHostPath) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
-			m.ReadOnly = bool(v != 0)
+			b := bool(v != 0)
+			m.ReadOnly = &b
 		default:
 			iNdEx = preIndex
 			skippy, err := skipGenerated(dAtA[iNdEx:])
@@ -4583,6 +3576,7 @@ func (m *AllowedHostPath) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4705,6 +3699,7 @@ func (m *Eviction) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4773,7 +3768,8 @@ func (m *FSGroupStrategyOptions) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Rule = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Rule = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -4821,6 +3817,7 @@ func (m *FSGroupStrategyOptions) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4863,7 +3860,7 @@ func (m *HostPortRange) Unmarshal(dAtA []byte) error {
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Min", wireType)
 			}
-			m.Min = 0
+			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -4873,16 +3870,17 @@ func (m *HostPortRange) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Min |= int32(b&0x7F) << shift
+				v |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.Min = &v
 		case 2:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Max", wireType)
 			}
-			m.Max = 0
+			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -4892,11 +3890,12 @@ func (m *HostPortRange) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Max |= int32(b&0x7F) << shift
+				v |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.Max = &v
 		default:
 			iNdEx = preIndex
 			skippy, err := skipGenerated(dAtA[iNdEx:])
@@ -4909,6 +3908,7 @@ func (m *HostPortRange) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4951,7 +3951,7 @@ func (m *IDRange) Unmarshal(dAtA []byte) error {
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Min", wireType)
 			}
-			m.Min = 0
+			var v int64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -4961,16 +3961,17 @@ func (m *IDRange) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Min |= int64(b&0x7F) << shift
+				v |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.Min = &v
 		case 2:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Max", wireType)
 			}
-			m.Max = 0
+			var v int64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -4980,11 +3981,12 @@ func (m *IDRange) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Max |= int64(b&0x7F) << shift
+				v |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.Max = &v
 		default:
 			iNdEx = preIndex
 			skippy, err := skipGenerated(dAtA[iNdEx:])
@@ -4997,6 +3999,7 @@ func (m *IDRange) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5155,6 +4158,7 @@ func (m *PodDisruptionBudget) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5275,6 +4279,7 @@ func (m *PodDisruptionBudgetList) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5433,6 +4438,7 @@ func (m *PodDisruptionBudgetSpec) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5475,7 +4481,7 @@ func (m *PodDisruptionBudgetStatus) Unmarshal(dAtA []byte) error {
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ObservedGeneration", wireType)
 			}
-			m.ObservedGeneration = 0
+			var v int64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -5485,11 +4491,12 @@ func (m *PodDisruptionBudgetStatus) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.ObservedGeneration |= int64(b&0x7F) << shift
+				v |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.ObservedGeneration = &v
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field DisruptedPods", wireType)
@@ -5623,7 +4630,7 @@ func (m *PodDisruptionBudgetStatus) Unmarshal(dAtA []byte) error {
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field DisruptionsAllowed", wireType)
 			}
-			m.DisruptionsAllowed = 0
+			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -5633,16 +4640,17 @@ func (m *PodDisruptionBudgetStatus) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.DisruptionsAllowed |= int32(b&0x7F) << shift
+				v |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.DisruptionsAllowed = &v
 		case 4:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field CurrentHealthy", wireType)
 			}
-			m.CurrentHealthy = 0
+			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -5652,16 +4660,17 @@ func (m *PodDisruptionBudgetStatus) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.CurrentHealthy |= int32(b&0x7F) << shift
+				v |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.CurrentHealthy = &v
 		case 5:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field DesiredHealthy", wireType)
 			}
-			m.DesiredHealthy = 0
+			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -5671,16 +4680,17 @@ func (m *PodDisruptionBudgetStatus) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.DesiredHealthy |= int32(b&0x7F) << shift
+				v |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.DesiredHealthy = &v
 		case 6:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ExpectedPods", wireType)
 			}
-			m.ExpectedPods = 0
+			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -5690,11 +4700,12 @@ func (m *PodDisruptionBudgetStatus) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.ExpectedPods |= int32(b&0x7F) << shift
+				v |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.ExpectedPods = &v
 		default:
 			iNdEx = preIndex
 			skippy, err := skipGenerated(dAtA[iNdEx:])
@@ -5707,6 +4718,7 @@ func (m *PodDisruptionBudgetStatus) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5829,6 +4841,7 @@ func (m *PodSecurityPolicy) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5949,6 +4962,7 @@ func (m *PodSecurityPolicyList) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -6006,7 +5020,8 @@ func (m *PodSecurityPolicySpec) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
-			m.Privileged = bool(v != 0)
+			b := bool(v != 0)
+			m.Privileged = &b
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field DefaultAddCapabilities", wireType)
@@ -6154,7 +5169,8 @@ func (m *PodSecurityPolicySpec) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
-			m.HostNetwork = bool(v != 0)
+			b := bool(v != 0)
+			m.HostNetwork = &b
 		case 7:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field HostPorts", wireType)
@@ -6208,7 +5224,8 @@ func (m *PodSecurityPolicySpec) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
-			m.HostPID = bool(v != 0)
+			b := bool(v != 0)
+			m.HostPID = &b
 		case 9:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field HostIPC", wireType)
@@ -6228,7 +5245,8 @@ func (m *PodSecurityPolicySpec) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
-			m.HostIPC = bool(v != 0)
+			b := bool(v != 0)
+			m.HostIPC = &b
 		case 10:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field SeLinux", wireType)
@@ -6392,7 +5410,8 @@ func (m *PodSecurityPolicySpec) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
-			m.ReadOnlyRootFilesystem = bool(v != 0)
+			b := bool(v != 0)
+			m.ReadOnlyRootFilesystem = &b
 		case 15:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field DefaultAllowPrivilegeEscalation", wireType)
@@ -6412,7 +5431,8 @@ func (m *PodSecurityPolicySpec) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
-			m.DefaultAllowPrivilegeEscalation = bool(v != 0)
+			b := bool(v != 0)
+			m.DefaultAllowPrivilegeEscalation = &b
 		case 16:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field AllowPrivilegeEscalation", wireType)
@@ -6432,7 +5452,8 @@ func (m *PodSecurityPolicySpec) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
-			m.AllowPrivilegeEscalation = bool(v != 0)
+			b := bool(v != 0)
+			m.AllowPrivilegeEscalation = &b
 		case 17:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field AllowedHostPaths", wireType)
@@ -6715,6 +5736,7 @@ func (m *PodSecurityPolicySpec) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -6783,7 +5805,8 @@ func (m *RunAsGroupStrategyOptions) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Rule = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Rule = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -6831,6 +5854,7 @@ func (m *RunAsGroupStrategyOptions) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -6899,7 +5923,8 @@ func (m *RunAsUserStrategyOptions) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Rule = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Rule = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -6947,6 +5972,7 @@ func (m *RunAsUserStrategyOptions) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -7047,7 +6073,8 @@ func (m *RuntimeClassStrategyOptions) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.DefaultRuntimeClassName = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.DefaultRuntimeClassName = &s
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -7061,6 +6088,7 @@ func (m *RuntimeClassStrategyOptions) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -7129,7 +6157,8 @@ func (m *SELinuxStrategyOptions) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Rule = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Rule = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -7179,6 +6208,7 @@ func (m *SELinuxStrategyOptions) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -7247,7 +6277,8 @@ func (m *SupplementalGroupsStrategyOptions) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Rule = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Rule = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -7295,6 +6326,7 @@ func (m *SupplementalGroupsStrategyOptions) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}

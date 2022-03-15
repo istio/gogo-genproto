@@ -13,8 +13,6 @@ import (
 	_ "istio.io/gogo-genproto/k8s.io/apimachinery/pkg/runtime/schema"
 	math "math"
 	math_bits "math/bits"
-	reflect "reflect"
-	strings "strings"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -34,11 +32,15 @@ type PodPreset struct {
 	// +optional
 	Metadata *v1.ObjectMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// +optional
-	Spec *PodPresetSpec `protobuf:"bytes,2,opt,name=spec" json:"spec,omitempty"`
+	Spec                 *PodPresetSpec `protobuf:"bytes,2,opt,name=spec" json:"spec,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
 }
 
-func (m *PodPreset) Reset()      { *m = PodPreset{} }
-func (*PodPreset) ProtoMessage() {}
+func (m *PodPreset) Reset()         { *m = PodPreset{} }
+func (m *PodPreset) String() string { return proto.CompactTextString(m) }
+func (*PodPreset) ProtoMessage()    {}
 func (*PodPreset) Descriptor() ([]byte, []int) {
 	return fileDescriptor_8229fcbd37f583b1, []int{0}
 }
@@ -90,11 +92,15 @@ type PodPresetList struct {
 	// +optional
 	Metadata *v1.ListMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// Items is a list of schema objects.
-	Items []*PodPreset `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	Items                []*PodPreset `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}     `json:"-"`
+	XXX_unrecognized     []byte       `json:"-"`
+	XXX_sizecache        int32        `json:"-"`
 }
 
-func (m *PodPresetList) Reset()      { *m = PodPresetList{} }
-func (*PodPresetList) ProtoMessage() {}
+func (m *PodPresetList) Reset()         { *m = PodPresetList{} }
+func (m *PodPresetList) String() string { return proto.CompactTextString(m) }
+func (*PodPresetList) ProtoMessage()    {}
 func (*PodPresetList) Descriptor() ([]byte, []int) {
 	return fileDescriptor_8229fcbd37f583b1, []int{1}
 }
@@ -155,11 +161,15 @@ type PodPresetSpec struct {
 	Volumes []*v11.Volume `protobuf:"bytes,4,rep,name=volumes" json:"volumes,omitempty"`
 	// VolumeMounts defines the collection of VolumeMount to inject into containers.
 	// +optional
-	VolumeMounts []*v11.VolumeMount `protobuf:"bytes,5,rep,name=volumeMounts" json:"volumeMounts,omitempty"`
+	VolumeMounts         []*v11.VolumeMount `protobuf:"bytes,5,rep,name=volumeMounts" json:"volumeMounts,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}           `json:"-"`
+	XXX_unrecognized     []byte             `json:"-"`
+	XXX_sizecache        int32              `json:"-"`
 }
 
-func (m *PodPresetSpec) Reset()      { *m = PodPresetSpec{} }
-func (*PodPresetSpec) ProtoMessage() {}
+func (m *PodPresetSpec) Reset()         { *m = PodPresetSpec{} }
+func (m *PodPresetSpec) String() string { return proto.CompactTextString(m) }
+func (*PodPresetSpec) ProtoMessage()    {}
 func (*PodPresetSpec) Descriptor() ([]byte, []int) {
 	return fileDescriptor_8229fcbd37f583b1, []int{2}
 }
@@ -236,215 +246,35 @@ func init() {
 }
 
 var fileDescriptor_8229fcbd37f583b1 = []byte{
-	// 449 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x92, 0xc1, 0x6a, 0x13, 0x41,
-	0x1c, 0x87, 0x77, 0x92, 0x96, 0xd6, 0xa9, 0x5e, 0xe6, 0xb4, 0x04, 0x19, 0x6b, 0x2e, 0x16, 0x2c,
-	0xb3, 0xa6, 0x06, 0x11, 0x44, 0x04, 0x45, 0x0f, 0xd2, 0xd2, 0xb2, 0x81, 0xde, 0xa7, 0x93, 0x3f,
-	0xc9, 0x98, 0xec, 0xcc, 0x30, 0x33, 0x59, 0xf0, 0xe6, 0x23, 0x78, 0xf6, 0x09, 0x7c, 0x12, 0xf1,
-	0x98, 0x63, 0x8f, 0x66, 0x73, 0xf1, 0xd8, 0x47, 0x90, 0xd9, 0x24, 0xdb, 0x98, 0x18, 0x9b, 0x5b,
-	0xf8, 0xf3, 0x7d, 0xbf, 0x7c, 0x0c, 0x8b, 0x8f, 0x07, 0x2f, 0x1d, 0x93, 0x3a, 0xe1, 0x46, 0x26,
-	0x0e, 0xbc, 0x97, 0xaa, 0xe7, 0x92, 0xbc, 0xc5, 0x87, 0xa6, 0xcf, 0x5b, 0x49, 0x0f, 0x14, 0x58,
-	0xee, 0xa1, 0xcb, 0x8c, 0xd5, 0x5e, 0x93, 0x87, 0x33, 0x9a, 0x71, 0x23, 0xd9, 0x82, 0x66, 0x0b,
-	0xba, 0xd1, 0x5c, 0xda, 0x12, 0xda, 0x42, 0x92, 0xaf, 0x2d, 0x34, 0xda, 0xb7, 0x4c, 0xc6, 0x45,
-	0x5f, 0x2a, 0xb0, 0x9f, 0x13, 0x33, 0xe8, 0x85, 0x83, 0x4b, 0x32, 0xf0, 0xfc, 0x5f, 0x56, 0xb2,
-	0xc9, 0xb2, 0x23, 0xe5, 0x65, 0x06, 0x6b, 0xc2, 0x8b, 0xbb, 0x04, 0x27, 0xfa, 0x90, 0xf1, 0x55,
-	0xaf, 0xf9, 0x0d, 0xe1, 0x7b, 0x17, 0xba, 0x7b, 0x61, 0xc1, 0x81, 0x27, 0xa7, 0x78, 0x3f, 0x14,
-	0x75, 0xb9, 0xe7, 0x31, 0x3a, 0x44, 0x47, 0x07, 0x27, 0xcf, 0xd8, 0xed, 0x0b, 0x54, 0xc3, 0xcc,
-	0x0c, 0x7a, 0xe1, 0xe0, 0x58, 0xa0, 0x59, 0xde, 0x62, 0xe7, 0x57, 0x9f, 0x40, 0xf8, 0x33, 0xf0,
-	0x3c, 0xad, 0x16, 0xc8, 0x1b, 0xbc, 0xe3, 0x0c, 0x88, 0xb8, 0x56, 0x2e, 0x3d, 0x65, 0xff, 0x7b,
-	0x4b, 0x56, 0x45, 0x74, 0x0c, 0x88, 0xb4, 0x14, 0x43, 0xdc, 0x83, 0xea, 0x7e, 0x2a, 0x9d, 0x27,
-	0x1f, 0xd7, 0x02, 0xd9, 0x76, 0x81, 0xc1, 0x5e, 0xc9, 0x7b, 0x8d, 0x77, 0xa5, 0x87, 0xcc, 0xc5,
-	0xb5, 0xc3, 0xfa, 0xd1, 0xc1, 0xc9, 0x93, 0x2d, 0xfb, 0xd2, 0x99, 0xd5, 0xfc, 0x51, 0x5b, 0x8a,
-	0x0b, 0xd1, 0xe4, 0x1c, 0xef, 0x3b, 0x18, 0x82, 0xf0, 0xda, 0xce, 0xe3, 0x9e, 0x6f, 0x19, 0xc7,
-	0xaf, 0x60, 0xd8, 0x99, 0xab, 0x69, 0x35, 0x42, 0x8e, 0x71, 0x1d, 0x54, 0x3e, 0xef, 0x6b, 0x2c,
-	0xf7, 0x85, 0xaf, 0x2d, 0x98, 0xef, 0x55, 0x7e, 0xc9, 0x6d, 0x1a, 0x30, 0xf2, 0x0a, 0xef, 0x81,
-	0xca, 0x3f, 0x58, 0x9d, 0xc5, 0xf5, 0xd2, 0x78, 0xbc, 0xc1, 0x08, 0x48, 0x47, 0x8f, 0xac, 0x80,
-	0x74, 0x61, 0x90, 0x36, 0xde, 0xcb, 0xf5, 0x70, 0x94, 0x81, 0x8b, 0x77, 0x36, 0xff, 0xdd, 0x65,
-	0x89, 0xa4, 0x0b, 0x94, 0xbc, 0xc3, 0xf7, 0x67, 0x3f, 0xcf, 0xf4, 0x48, 0x79, 0x17, 0xef, 0x96,
-	0xea, 0xa3, 0xcd, 0x6a, 0xc9, 0xa5, 0x7f, 0x49, 0x6f, 0xdb, 0xe3, 0x09, 0x8d, 0xae, 0x27, 0x34,
-	0xba, 0x99, 0x50, 0xf4, 0xa5, 0xa0, 0xe8, 0x7b, 0x41, 0xd1, 0xcf, 0x82, 0xa2, 0x71, 0x41, 0xd1,
-	0xaf, 0x82, 0xa2, 0xdf, 0x05, 0x8d, 0x6e, 0x0a, 0x8a, 0xbe, 0x4e, 0x69, 0x34, 0x9e, 0xd2, 0xe8,
-	0x7a, 0x4a, 0xa3, 0x3f, 0x01, 0x00, 0x00, 0xff, 0xff, 0x0e, 0x10, 0x27, 0xe7, 0xc8, 0x03, 0x00,
-	0x00,
+	// 405 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x92, 0xc1, 0x8a, 0x13, 0x31,
+	0x1c, 0x87, 0x99, 0x76, 0x97, 0x5d, 0xb3, 0xeb, 0x25, 0xa7, 0xa1, 0x48, 0x5d, 0x7b, 0x71, 0xc1,
+	0x25, 0xb1, 0x6b, 0x11, 0x41, 0x44, 0x50, 0xf4, 0x20, 0x2d, 0x2d, 0x29, 0xf4, 0x9e, 0xa6, 0x7f,
+	0xa6, 0xb1, 0x33, 0x49, 0x48, 0x32, 0x03, 0xbe, 0x8a, 0x0f, 0x24, 0x1e, 0x7d, 0x04, 0xe9, 0x93,
+	0x48, 0xa6, 0x9d, 0x69, 0x6d, 0x1d, 0xb7, 0xb7, 0xf2, 0xe7, 0xfb, 0x7e, 0xfd, 0x08, 0x83, 0xee,
+	0x56, 0x6f, 0x1c, 0x91, 0x9a, 0x72, 0x23, 0xa9, 0x03, 0xef, 0xa5, 0x4a, 0x1c, 0x2d, 0xfa, 0x3c,
+	0x35, 0x4b, 0xde, 0xa7, 0x09, 0x28, 0xb0, 0xdc, 0xc3, 0x82, 0x18, 0xab, 0xbd, 0xc6, 0x4f, 0x36,
+	0x34, 0xe1, 0x46, 0x92, 0x8a, 0x26, 0x15, 0xdd, 0xe9, 0xed, 0x6d, 0x09, 0x6d, 0x81, 0x16, 0x47,
+	0x0b, 0x9d, 0xc1, 0x8e, 0xc9, 0xb8, 0x58, 0x4a, 0x05, 0xf6, 0x1b, 0x35, 0xab, 0x24, 0x1c, 0x1c,
+	0xcd, 0xc0, 0xf3, 0x7f, 0x59, 0xb4, 0xc9, 0xb2, 0xb9, 0xf2, 0x32, 0x83, 0x23, 0xe1, 0xf5, 0x43,
+	0x82, 0x13, 0x4b, 0xc8, 0xf8, 0xa1, 0xd7, 0xfb, 0x1e, 0xa1, 0x47, 0x13, 0xbd, 0x98, 0x58, 0x70,
+	0xe0, 0xf1, 0x10, 0x5d, 0x86, 0xa2, 0x05, 0xf7, 0x3c, 0x8e, 0x6e, 0xa2, 0xdb, 0xab, 0xfb, 0x97,
+	0x64, 0xf7, 0x02, 0xf5, 0x30, 0x31, 0xab, 0x24, 0x1c, 0x1c, 0x09, 0x34, 0x29, 0xfa, 0x64, 0x3c,
+	0xff, 0x0a, 0xc2, 0x8f, 0xc0, 0x73, 0x56, 0x2f, 0xe0, 0xf7, 0xe8, 0xcc, 0x19, 0x10, 0x71, 0xab,
+	0x5c, 0x7a, 0x41, 0xfe, 0xf7, 0x96, 0xa4, 0x8e, 0x98, 0x1a, 0x10, 0xac, 0x14, 0x43, 0xdc, 0xe3,
+	0xfa, 0x3e, 0x94, 0xce, 0xe3, 0x2f, 0x47, 0x81, 0xe4, 0xb4, 0xc0, 0x60, 0x1f, 0xe4, 0xbd, 0x43,
+	0xe7, 0xd2, 0x43, 0xe6, 0xe2, 0xd6, 0x4d, 0xfb, 0xf6, 0xea, 0xfe, 0xf9, 0x89, 0x7d, 0x6c, 0x63,
+	0xf5, 0x7e, 0xb4, 0xf6, 0xe2, 0x42, 0x34, 0x1e, 0xa3, 0x4b, 0x07, 0x29, 0x08, 0xaf, 0xed, 0x36,
+	0xee, 0xd5, 0x89, 0x71, 0x7c, 0x0e, 0xe9, 0x74, 0xab, 0xb2, 0x7a, 0x04, 0xdf, 0xa1, 0x36, 0xa8,
+	0x62, 0xdb, 0xd7, 0xd9, 0xef, 0x0b, 0x5f, 0x5b, 0x30, 0x3f, 0xa9, 0x62, 0xc6, 0x2d, 0x0b, 0x18,
+	0x7e, 0x8b, 0x2e, 0x40, 0x15, 0x9f, 0xad, 0xce, 0xe2, 0x76, 0x69, 0x3c, 0x6b, 0x30, 0x02, 0x32,
+	0xd5, 0xb9, 0x15, 0xc0, 0x2a, 0x03, 0x0f, 0xd0, 0x45, 0xa1, 0xd3, 0x3c, 0x03, 0x17, 0x9f, 0x35,
+	0xff, 0xdd, 0xac, 0x44, 0x58, 0x85, 0xe2, 0x8f, 0xe8, 0x7a, 0xf3, 0x73, 0xa4, 0x73, 0xe5, 0x5d,
+	0x7c, 0x5e, 0xaa, 0x4f, 0x9b, 0xd5, 0x92, 0x63, 0x7f, 0x49, 0x1f, 0xae, 0x7f, 0xae, 0xbb, 0xd1,
+	0xaf, 0x75, 0x37, 0xfa, 0xbd, 0xee, 0x46, 0x7f, 0x02, 0x00, 0x00, 0xff, 0xff, 0xc0, 0x90, 0xb5,
+	0x38, 0xa0, 0x03, 0x00, 0x00,
 }
 
-func (this *PodPreset) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*PodPreset)
-	if !ok {
-		that2, ok := that.(PodPreset)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if !this.Spec.Equal(that1.Spec) {
-		return false
-	}
-	return true
-}
-func (this *PodPresetList) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*PodPresetList)
-	if !ok {
-		that2, ok := that.(PodPresetList)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if len(this.Items) != len(that1.Items) {
-		return false
-	}
-	for i := range this.Items {
-		if !this.Items[i].Equal(that1.Items[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *PodPresetSpec) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*PodPresetSpec)
-	if !ok {
-		that2, ok := that.(PodPresetSpec)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Selector.Equal(that1.Selector) {
-		return false
-	}
-	if len(this.Env) != len(that1.Env) {
-		return false
-	}
-	for i := range this.Env {
-		if !this.Env[i].Equal(that1.Env[i]) {
-			return false
-		}
-	}
-	if len(this.EnvFrom) != len(that1.EnvFrom) {
-		return false
-	}
-	for i := range this.EnvFrom {
-		if !this.EnvFrom[i].Equal(that1.EnvFrom[i]) {
-			return false
-		}
-	}
-	if len(this.Volumes) != len(that1.Volumes) {
-		return false
-	}
-	for i := range this.Volumes {
-		if !this.Volumes[i].Equal(that1.Volumes[i]) {
-			return false
-		}
-	}
-	if len(this.VolumeMounts) != len(that1.VolumeMounts) {
-		return false
-	}
-	for i := range this.VolumeMounts {
-		if !this.VolumeMounts[i].Equal(that1.VolumeMounts[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *PodPreset) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_settings_v1alpha1.PodPreset{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Spec != nil {
-		s = append(s, "Spec: "+fmt.Sprintf("%#v", this.Spec)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *PodPresetList) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_settings_v1alpha1.PodPresetList{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Items != nil {
-		s = append(s, "Items: "+fmt.Sprintf("%#v", this.Items)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *PodPresetSpec) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 9)
-	s = append(s, "&k8s_io_api_settings_v1alpha1.PodPresetSpec{")
-	if this.Selector != nil {
-		s = append(s, "Selector: "+fmt.Sprintf("%#v", this.Selector)+",\n")
-	}
-	if this.Env != nil {
-		s = append(s, "Env: "+fmt.Sprintf("%#v", this.Env)+",\n")
-	}
-	if this.EnvFrom != nil {
-		s = append(s, "EnvFrom: "+fmt.Sprintf("%#v", this.EnvFrom)+",\n")
-	}
-	if this.Volumes != nil {
-		s = append(s, "Volumes: "+fmt.Sprintf("%#v", this.Volumes)+",\n")
-	}
-	if this.VolumeMounts != nil {
-		s = append(s, "VolumeMounts: "+fmt.Sprintf("%#v", this.VolumeMounts)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func valueToGoStringGenerated(v interface{}, typ string) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("func(v %v) *%v { return &v } ( %#v )", typ, typ, pv)
-}
 func (m *PodPreset) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -465,6 +295,10 @@ func (m *PodPreset) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Spec != nil {
 		{
 			size, err := m.Spec.MarshalToSizedBuffer(dAtA[:i])
@@ -512,6 +346,10 @@ func (m *PodPresetList) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Items) > 0 {
 		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -561,6 +399,10 @@ func (m *PodPresetSpec) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.VolumeMounts) > 0 {
 		for iNdEx := len(m.VolumeMounts) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -657,6 +499,9 @@ func (m *PodPreset) Size() (n int) {
 		l = m.Spec.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -675,6 +520,9 @@ func (m *PodPresetList) Size() (n int) {
 			l = e.Size()
 			n += 1 + l + sovGenerated(uint64(l))
 		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -713,6 +561,9 @@ func (m *PodPresetSpec) Size() (n int) {
 			n += 1 + l + sovGenerated(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -721,75 +572,6 @@ func sovGenerated(x uint64) (n int) {
 }
 func sozGenerated(x uint64) (n int) {
 	return sovGenerated(uint64((x << 1) ^ uint64((int64(x) >> 63))))
-}
-func (this *PodPreset) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&PodPreset{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ObjectMeta", "v1.ObjectMeta", 1) + `,`,
-		`Spec:` + strings.Replace(this.Spec.String(), "PodPresetSpec", "PodPresetSpec", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *PodPresetList) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForItems := "[]*PodPreset{"
-	for _, f := range this.Items {
-		repeatedStringForItems += strings.Replace(f.String(), "PodPreset", "PodPreset", 1) + ","
-	}
-	repeatedStringForItems += "}"
-	s := strings.Join([]string{`&PodPresetList{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ListMeta", "v1.ListMeta", 1) + `,`,
-		`Items:` + repeatedStringForItems + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *PodPresetSpec) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForEnv := "[]*EnvVar{"
-	for _, f := range this.Env {
-		repeatedStringForEnv += strings.Replace(fmt.Sprintf("%v", f), "EnvVar", "v11.EnvVar", 1) + ","
-	}
-	repeatedStringForEnv += "}"
-	repeatedStringForEnvFrom := "[]*EnvFromSource{"
-	for _, f := range this.EnvFrom {
-		repeatedStringForEnvFrom += strings.Replace(fmt.Sprintf("%v", f), "EnvFromSource", "v11.EnvFromSource", 1) + ","
-	}
-	repeatedStringForEnvFrom += "}"
-	repeatedStringForVolumes := "[]*Volume{"
-	for _, f := range this.Volumes {
-		repeatedStringForVolumes += strings.Replace(fmt.Sprintf("%v", f), "Volume", "v11.Volume", 1) + ","
-	}
-	repeatedStringForVolumes += "}"
-	repeatedStringForVolumeMounts := "[]*VolumeMount{"
-	for _, f := range this.VolumeMounts {
-		repeatedStringForVolumeMounts += strings.Replace(fmt.Sprintf("%v", f), "VolumeMount", "v11.VolumeMount", 1) + ","
-	}
-	repeatedStringForVolumeMounts += "}"
-	s := strings.Join([]string{`&PodPresetSpec{`,
-		`Selector:` + strings.Replace(fmt.Sprintf("%v", this.Selector), "LabelSelector", "v1.LabelSelector", 1) + `,`,
-		`Env:` + repeatedStringForEnv + `,`,
-		`EnvFrom:` + repeatedStringForEnvFrom + `,`,
-		`Volumes:` + repeatedStringForVolumes + `,`,
-		`VolumeMounts:` + repeatedStringForVolumeMounts + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func valueToStringGenerated(v interface{}) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("*%v", pv)
 }
 func (m *PodPreset) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
@@ -904,6 +686,7 @@ func (m *PodPreset) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -1024,6 +807,7 @@ func (m *PodPresetList) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -1246,6 +1030,7 @@ func (m *PodPresetSpec) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}

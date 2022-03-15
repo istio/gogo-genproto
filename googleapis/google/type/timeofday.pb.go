@@ -9,8 +9,6 @@ import (
 	io "io"
 	math "math"
 	math_bits "math/bits"
-	reflect "reflect"
-	strings "strings"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -37,11 +35,15 @@ type TimeOfDay struct {
 	// allow the value 60 if it allows leap-seconds.
 	Seconds int32 `protobuf:"varint,3,opt,name=seconds,proto3" json:"seconds,omitempty"`
 	// Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999.
-	Nanos int32 `protobuf:"varint,4,opt,name=nanos,proto3" json:"nanos,omitempty"`
+	Nanos                int32    `protobuf:"varint,4,opt,name=nanos,proto3" json:"nanos,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *TimeOfDay) Reset()      { *m = TimeOfDay{} }
-func (*TimeOfDay) ProtoMessage() {}
+func (m *TimeOfDay) Reset()         { *m = TimeOfDay{} }
+func (m *TimeOfDay) String() string { return proto.CompactTextString(m) }
+func (*TimeOfDay) ProtoMessage()    {}
 func (*TimeOfDay) Descriptor() ([]byte, []int) {
 	return fileDescriptor_6c354ab94588cebb, []int{0}
 }
@@ -107,7 +109,7 @@ func init() {
 func init() { proto.RegisterFile("google/type/timeofday.proto", fileDescriptor_6c354ab94588cebb) }
 
 var fileDescriptor_6c354ab94588cebb = []byte{
-	// 224 bytes of a gzipped FileDescriptorProto
+	// 182 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x92, 0x4e, 0xcf, 0xcf, 0x4f,
 	0xcf, 0x49, 0xd5, 0x2f, 0xa9, 0x2c, 0x48, 0xd5, 0x2f, 0xc9, 0xcc, 0x4d, 0xcd, 0x4f, 0x4b, 0x49,
 	0xac, 0xd4, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0xe2, 0x86, 0x48, 0xea, 0x81, 0x24, 0x95, 0xb2,
@@ -115,69 +117,13 @@ var fileDescriptor_6c354ab94588cebb = []byte{
 	0xf2, 0x4b, 0x8b, 0x8a, 0x25, 0x18, 0x15, 0x18, 0x35, 0x58, 0x83, 0x20, 0x1c, 0x21, 0x09, 0x2e,
 	0xf6, 0xdc, 0xcc, 0xbc, 0xd2, 0x92, 0xd4, 0x62, 0x09, 0x26, 0xb0, 0x38, 0x8c, 0x0b, 0x92, 0x29,
 	0x4e, 0x4d, 0xce, 0xcf, 0x4b, 0x29, 0x96, 0x60, 0x86, 0xc8, 0x40, 0xb9, 0x20, 0x93, 0xf2, 0x12,
-	0xf3, 0xf2, 0x8b, 0x25, 0x58, 0x20, 0x26, 0x81, 0x39, 0x4e, 0x09, 0x17, 0x1e, 0xca, 0x31, 0xdc,
-	0x78, 0x28, 0xc7, 0xf0, 0xe1, 0xa1, 0x1c, 0x63, 0xc3, 0x23, 0x39, 0xc6, 0x15, 0x8f, 0xe4, 0x18,
-	0x4f, 0x3c, 0x92, 0x63, 0xbc, 0xf0, 0x48, 0x8e, 0xf1, 0xc1, 0x23, 0x39, 0xc6, 0x17, 0x8f, 0xe4,
-	0x18, 0x3e, 0x3c, 0x92, 0x63, 0x9c, 0xf0, 0x58, 0x8e, 0xe1, 0xc2, 0x63, 0x39, 0x86, 0x1b, 0x8f,
-	0xe5, 0x18, 0xb8, 0xf8, 0x93, 0xf3, 0x73, 0xf5, 0x90, 0xdc, 0xec, 0xc4, 0x07, 0x77, 0x71, 0x00,
-	0xc8, 0x43, 0x01, 0x8c, 0x3f, 0x18, 0x19, 0x17, 0x31, 0x31, 0xbb, 0x87, 0x04, 0x24, 0xb1, 0x81,
-	0xbd, 0x68, 0x0c, 0x08, 0x00, 0x00, 0xff, 0xff, 0x85, 0xe9, 0xb8, 0x71, 0x01, 0x01, 0x00, 0x00,
+	0xf3, 0xf2, 0x8b, 0x25, 0x58, 0x20, 0x26, 0x81, 0x39, 0x4e, 0x16, 0x27, 0x1e, 0xc9, 0x31, 0x5e,
+	0x78, 0x24, 0xc7, 0xf8, 0xe0, 0x91, 0x1c, 0x23, 0x17, 0x7f, 0x72, 0x7e, 0xae, 0x1e, 0x92, 0x5b,
+	0x9c, 0xf8, 0xe0, 0x2e, 0x09, 0x00, 0x39, 0x34, 0x80, 0xf1, 0x07, 0x23, 0xe3, 0x22, 0x26, 0x66,
+	0xf7, 0x90, 0x80, 0x24, 0x36, 0xb0, 0xd3, 0x8d, 0x01, 0x01, 0x00, 0x00, 0xff, 0xff, 0x69, 0x80,
+	0xd4, 0xc1, 0xd9, 0x00, 0x00, 0x00,
 }
 
-func (this *TimeOfDay) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*TimeOfDay)
-	if !ok {
-		that2, ok := that.(TimeOfDay)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Hours != that1.Hours {
-		return false
-	}
-	if this.Minutes != that1.Minutes {
-		return false
-	}
-	if this.Seconds != that1.Seconds {
-		return false
-	}
-	if this.Nanos != that1.Nanos {
-		return false
-	}
-	return true
-}
-func (this *TimeOfDay) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 8)
-	s = append(s, "&google_type.TimeOfDay{")
-	s = append(s, "Hours: "+fmt.Sprintf("%#v", this.Hours)+",\n")
-	s = append(s, "Minutes: "+fmt.Sprintf("%#v", this.Minutes)+",\n")
-	s = append(s, "Seconds: "+fmt.Sprintf("%#v", this.Seconds)+",\n")
-	s = append(s, "Nanos: "+fmt.Sprintf("%#v", this.Nanos)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func valueToGoStringTimeofday(v interface{}, typ string) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("func(v %v) *%v { return &v } ( %#v )", typ, typ, pv)
-}
 func (m *TimeOfDay) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -198,6 +144,10 @@ func (m *TimeOfDay) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Nanos != 0 {
 		i = encodeVarintTimeofday(dAtA, i, uint64(m.Nanos))
 		i--
@@ -250,6 +200,9 @@ func (m *TimeOfDay) Size() (n int) {
 	if m.Nanos != 0 {
 		n += 1 + sovTimeofday(uint64(m.Nanos))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -258,27 +211,6 @@ func sovTimeofday(x uint64) (n int) {
 }
 func sozTimeofday(x uint64) (n int) {
 	return sovTimeofday(uint64((x << 1) ^ uint64((int64(x) >> 63))))
-}
-func (this *TimeOfDay) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&TimeOfDay{`,
-		`Hours:` + fmt.Sprintf("%v", this.Hours) + `,`,
-		`Minutes:` + fmt.Sprintf("%v", this.Minutes) + `,`,
-		`Seconds:` + fmt.Sprintf("%v", this.Seconds) + `,`,
-		`Nanos:` + fmt.Sprintf("%v", this.Nanos) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func valueToStringTimeofday(v interface{}) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("*%v", pv)
 }
 func (m *TimeOfDay) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
@@ -397,6 +329,7 @@ func (m *TimeOfDay) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}

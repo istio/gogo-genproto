@@ -6,7 +6,6 @@ package k8s_io_api_apps_v1beta1
 import (
 	fmt "fmt"
 	proto "github.com/gogo/protobuf/proto"
-	github_com_gogo_protobuf_sortkeys "github.com/gogo/protobuf/sortkeys"
 	io "io"
 	v11 "istio.io/gogo-genproto/k8s.io/api/core/v1"
 	v1 "istio.io/gogo-genproto/k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -15,8 +14,6 @@ import (
 	intstr "istio.io/gogo-genproto/k8s.io/apimachinery/pkg/util/intstr"
 	math "math"
 	math_bits "math/bits"
-	reflect "reflect"
-	strings "strings"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -49,11 +46,15 @@ type ControllerRevision struct {
 	// Data is the serialized representation of the state.
 	Data *runtime.RawExtension `protobuf:"bytes,2,opt,name=data" json:"data,omitempty"`
 	// Revision indicates the revision of the state represented by Data.
-	Revision int64 `protobuf:"varint,3,opt,name=revision" json:"revision"`
+	Revision             *int64   `protobuf:"varint,3,opt,name=revision" json:"revision,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *ControllerRevision) Reset()      { *m = ControllerRevision{} }
-func (*ControllerRevision) ProtoMessage() {}
+func (m *ControllerRevision) Reset()         { *m = ControllerRevision{} }
+func (m *ControllerRevision) String() string { return proto.CompactTextString(m) }
+func (*ControllerRevision) ProtoMessage()    {}
 func (*ControllerRevision) Descriptor() ([]byte, []int) {
 	return fileDescriptor_2747f709ac7c95e7, []int{0}
 }
@@ -99,8 +100,8 @@ func (m *ControllerRevision) GetData() *runtime.RawExtension {
 }
 
 func (m *ControllerRevision) GetRevision() int64 {
-	if m != nil {
-		return m.Revision
+	if m != nil && m.Revision != nil {
+		return *m.Revision
 	}
 	return 0
 }
@@ -111,11 +112,15 @@ type ControllerRevisionList struct {
 	// +optional
 	Metadata *v1.ListMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// Items is the list of ControllerRevisions
-	Items []*ControllerRevision `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	Items                []*ControllerRevision `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}              `json:"-"`
+	XXX_unrecognized     []byte                `json:"-"`
+	XXX_sizecache        int32                 `json:"-"`
 }
 
-func (m *ControllerRevisionList) Reset()      { *m = ControllerRevisionList{} }
-func (*ControllerRevisionList) ProtoMessage() {}
+func (m *ControllerRevisionList) Reset()         { *m = ControllerRevisionList{} }
+func (m *ControllerRevisionList) String() string { return proto.CompactTextString(m) }
+func (*ControllerRevisionList) ProtoMessage()    {}
 func (*ControllerRevisionList) Descriptor() ([]byte, []int) {
 	return fileDescriptor_2747f709ac7c95e7, []int{1}
 }
@@ -172,11 +177,15 @@ type Deployment struct {
 	Spec *DeploymentSpec `protobuf:"bytes,2,opt,name=spec" json:"spec,omitempty"`
 	// Most recently observed status of the Deployment.
 	// +optional
-	Status *DeploymentStatus `protobuf:"bytes,3,opt,name=status" json:"status,omitempty"`
+	Status               *DeploymentStatus `protobuf:"bytes,3,opt,name=status" json:"status,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
+	XXX_unrecognized     []byte            `json:"-"`
+	XXX_sizecache        int32             `json:"-"`
 }
 
-func (m *Deployment) Reset()      { *m = Deployment{} }
-func (*Deployment) ProtoMessage() {}
+func (m *Deployment) Reset()         { *m = Deployment{} }
+func (m *Deployment) String() string { return proto.CompactTextString(m) }
+func (*Deployment) ProtoMessage()    {}
 func (*Deployment) Descriptor() ([]byte, []int) {
 	return fileDescriptor_2747f709ac7c95e7, []int{2}
 }
@@ -231,21 +240,25 @@ func (m *Deployment) GetStatus() *DeploymentStatus {
 // DeploymentCondition describes the state of a deployment at a certain point.
 type DeploymentCondition struct {
 	// Type of deployment condition.
-	Type string `protobuf:"bytes,1,opt,name=type" json:"type"`
+	Type *string `protobuf:"bytes,1,opt,name=type" json:"type,omitempty"`
 	// Status of the condition, one of True, False, Unknown.
-	Status string `protobuf:"bytes,2,opt,name=status" json:"status"`
+	Status *string `protobuf:"bytes,2,opt,name=status" json:"status,omitempty"`
 	// The last time this condition was updated.
 	LastUpdateTime *v1.Time `protobuf:"bytes,6,opt,name=lastUpdateTime" json:"lastUpdateTime,omitempty"`
 	// Last time the condition transitioned from one status to another.
 	LastTransitionTime *v1.Time `protobuf:"bytes,7,opt,name=lastTransitionTime" json:"lastTransitionTime,omitempty"`
 	// The reason for the condition's last transition.
-	Reason string `protobuf:"bytes,4,opt,name=reason" json:"reason"`
+	Reason *string `protobuf:"bytes,4,opt,name=reason" json:"reason,omitempty"`
 	// A human readable message indicating details about the transition.
-	Message string `protobuf:"bytes,5,opt,name=message" json:"message"`
+	Message              *string  `protobuf:"bytes,5,opt,name=message" json:"message,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *DeploymentCondition) Reset()      { *m = DeploymentCondition{} }
-func (*DeploymentCondition) ProtoMessage() {}
+func (m *DeploymentCondition) Reset()         { *m = DeploymentCondition{} }
+func (m *DeploymentCondition) String() string { return proto.CompactTextString(m) }
+func (*DeploymentCondition) ProtoMessage()    {}
 func (*DeploymentCondition) Descriptor() ([]byte, []int) {
 	return fileDescriptor_2747f709ac7c95e7, []int{3}
 }
@@ -277,15 +290,15 @@ func (m *DeploymentCondition) XXX_DiscardUnknown() {
 var xxx_messageInfo_DeploymentCondition proto.InternalMessageInfo
 
 func (m *DeploymentCondition) GetType() string {
-	if m != nil {
-		return m.Type
+	if m != nil && m.Type != nil {
+		return *m.Type
 	}
 	return ""
 }
 
 func (m *DeploymentCondition) GetStatus() string {
-	if m != nil {
-		return m.Status
+	if m != nil && m.Status != nil {
+		return *m.Status
 	}
 	return ""
 }
@@ -305,15 +318,15 @@ func (m *DeploymentCondition) GetLastTransitionTime() *v1.Time {
 }
 
 func (m *DeploymentCondition) GetReason() string {
-	if m != nil {
-		return m.Reason
+	if m != nil && m.Reason != nil {
+		return *m.Reason
 	}
 	return ""
 }
 
 func (m *DeploymentCondition) GetMessage() string {
-	if m != nil {
-		return m.Message
+	if m != nil && m.Message != nil {
+		return *m.Message
 	}
 	return ""
 }
@@ -324,11 +337,15 @@ type DeploymentList struct {
 	// +optional
 	Metadata *v1.ListMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// Items is the list of Deployments.
-	Items []*Deployment `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	Items                []*Deployment `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
+	XXX_unrecognized     []byte        `json:"-"`
+	XXX_sizecache        int32         `json:"-"`
 }
 
-func (m *DeploymentList) Reset()      { *m = DeploymentList{} }
-func (*DeploymentList) ProtoMessage() {}
+func (m *DeploymentList) Reset()         { *m = DeploymentList{} }
+func (m *DeploymentList) String() string { return proto.CompactTextString(m) }
+func (*DeploymentList) ProtoMessage()    {}
 func (*DeploymentList) Descriptor() ([]byte, []int) {
 	return fileDescriptor_2747f709ac7c95e7, []int{4}
 }
@@ -377,16 +394,20 @@ func (m *DeploymentList) GetItems() []*Deployment {
 // DeploymentRollback stores the information required to rollback a deployment.
 type DeploymentRollback struct {
 	// Required: This must match the Name of a deployment.
-	Name string `protobuf:"bytes,1,opt,name=name" json:"name"`
+	Name *string `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
 	// The annotations to be updated to a deployment
 	// +optional
 	UpdatedAnnotations map[string]string `protobuf:"bytes,2,rep,name=updatedAnnotations" json:"updatedAnnotations,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	// The config of this deployment rollback.
-	RollbackTo *RollbackConfig `protobuf:"bytes,3,opt,name=rollbackTo" json:"rollbackTo,omitempty"`
+	RollbackTo           *RollbackConfig `protobuf:"bytes,3,opt,name=rollbackTo" json:"rollbackTo,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
 }
 
-func (m *DeploymentRollback) Reset()      { *m = DeploymentRollback{} }
-func (*DeploymentRollback) ProtoMessage() {}
+func (m *DeploymentRollback) Reset()         { *m = DeploymentRollback{} }
+func (m *DeploymentRollback) String() string { return proto.CompactTextString(m) }
+func (*DeploymentRollback) ProtoMessage()    {}
 func (*DeploymentRollback) Descriptor() ([]byte, []int) {
 	return fileDescriptor_2747f709ac7c95e7, []int{5}
 }
@@ -418,8 +439,8 @@ func (m *DeploymentRollback) XXX_DiscardUnknown() {
 var xxx_messageInfo_DeploymentRollback proto.InternalMessageInfo
 
 func (m *DeploymentRollback) GetName() string {
-	if m != nil {
-		return m.Name
+	if m != nil && m.Name != nil {
+		return *m.Name
 	}
 	return ""
 }
@@ -443,7 +464,7 @@ type DeploymentSpec struct {
 	// Number of desired pods. This is a pointer to distinguish between explicit
 	// zero and not specified. Defaults to 1.
 	// +optional
-	Replicas int32 `protobuf:"varint,1,opt,name=replicas" json:"replicas"`
+	Replicas *int32 `protobuf:"varint,1,opt,name=replicas" json:"replicas,omitempty"`
 	// Label selector for pods. Existing ReplicaSets whose pods are
 	// selected by this will be the ones affected by this deployment.
 	// +optional
@@ -458,15 +479,15 @@ type DeploymentSpec struct {
 	// without any of its container crashing, for it to be considered available.
 	// Defaults to 0 (pod will be considered available as soon as it is ready)
 	// +optional
-	MinReadySeconds int32 `protobuf:"varint,5,opt,name=minReadySeconds" json:"minReadySeconds"`
+	MinReadySeconds *int32 `protobuf:"varint,5,opt,name=minReadySeconds" json:"minReadySeconds,omitempty"`
 	// The number of old ReplicaSets to retain to allow rollback.
 	// This is a pointer to distinguish between explicit zero and not specified.
 	// Defaults to 2.
 	// +optional
-	RevisionHistoryLimit int32 `protobuf:"varint,6,opt,name=revisionHistoryLimit" json:"revisionHistoryLimit"`
+	RevisionHistoryLimit *int32 `protobuf:"varint,6,opt,name=revisionHistoryLimit" json:"revisionHistoryLimit,omitempty"`
 	// Indicates that the deployment is paused.
 	// +optional
-	Paused bool `protobuf:"varint,7,opt,name=paused" json:"paused"`
+	Paused *bool `protobuf:"varint,7,opt,name=paused" json:"paused,omitempty"`
 	// DEPRECATED.
 	// The config this deployment is rolling back to. Will be cleared after rollback is done.
 	// +optional
@@ -477,11 +498,15 @@ type DeploymentSpec struct {
 	// reason will be surfaced in the deployment status. Note that progress will
 	// not be estimated during the time a deployment is paused. Defaults to 600s.
 	// +optional
-	ProgressDeadlineSeconds int32 `protobuf:"varint,9,opt,name=progressDeadlineSeconds" json:"progressDeadlineSeconds"`
+	ProgressDeadlineSeconds *int32   `protobuf:"varint,9,opt,name=progressDeadlineSeconds" json:"progressDeadlineSeconds,omitempty"`
+	XXX_NoUnkeyedLiteral    struct{} `json:"-"`
+	XXX_unrecognized        []byte   `json:"-"`
+	XXX_sizecache           int32    `json:"-"`
 }
 
-func (m *DeploymentSpec) Reset()      { *m = DeploymentSpec{} }
-func (*DeploymentSpec) ProtoMessage() {}
+func (m *DeploymentSpec) Reset()         { *m = DeploymentSpec{} }
+func (m *DeploymentSpec) String() string { return proto.CompactTextString(m) }
+func (*DeploymentSpec) ProtoMessage()    {}
 func (*DeploymentSpec) Descriptor() ([]byte, []int) {
 	return fileDescriptor_2747f709ac7c95e7, []int{6}
 }
@@ -513,8 +538,8 @@ func (m *DeploymentSpec) XXX_DiscardUnknown() {
 var xxx_messageInfo_DeploymentSpec proto.InternalMessageInfo
 
 func (m *DeploymentSpec) GetReplicas() int32 {
-	if m != nil {
-		return m.Replicas
+	if m != nil && m.Replicas != nil {
+		return *m.Replicas
 	}
 	return 0
 }
@@ -541,22 +566,22 @@ func (m *DeploymentSpec) GetStrategy() *DeploymentStrategy {
 }
 
 func (m *DeploymentSpec) GetMinReadySeconds() int32 {
-	if m != nil {
-		return m.MinReadySeconds
+	if m != nil && m.MinReadySeconds != nil {
+		return *m.MinReadySeconds
 	}
 	return 0
 }
 
 func (m *DeploymentSpec) GetRevisionHistoryLimit() int32 {
-	if m != nil {
-		return m.RevisionHistoryLimit
+	if m != nil && m.RevisionHistoryLimit != nil {
+		return *m.RevisionHistoryLimit
 	}
 	return 0
 }
 
 func (m *DeploymentSpec) GetPaused() bool {
-	if m != nil {
-		return m.Paused
+	if m != nil && m.Paused != nil {
+		return *m.Paused
 	}
 	return false
 }
@@ -569,8 +594,8 @@ func (m *DeploymentSpec) GetRollbackTo() *RollbackConfig {
 }
 
 func (m *DeploymentSpec) GetProgressDeadlineSeconds() int32 {
-	if m != nil {
-		return m.ProgressDeadlineSeconds
+	if m != nil && m.ProgressDeadlineSeconds != nil {
+		return *m.ProgressDeadlineSeconds
 	}
 	return 0
 }
@@ -579,24 +604,24 @@ func (m *DeploymentSpec) GetProgressDeadlineSeconds() int32 {
 type DeploymentStatus struct {
 	// The generation observed by the deployment controller.
 	// +optional
-	ObservedGeneration int64 `protobuf:"varint,1,opt,name=observedGeneration" json:"observedGeneration"`
+	ObservedGeneration *int64 `protobuf:"varint,1,opt,name=observedGeneration" json:"observedGeneration,omitempty"`
 	// Total number of non-terminated pods targeted by this deployment (their labels match the selector).
 	// +optional
-	Replicas int32 `protobuf:"varint,2,opt,name=replicas" json:"replicas"`
+	Replicas *int32 `protobuf:"varint,2,opt,name=replicas" json:"replicas,omitempty"`
 	// Total number of non-terminated pods targeted by this deployment that have the desired template spec.
 	// +optional
-	UpdatedReplicas int32 `protobuf:"varint,3,opt,name=updatedReplicas" json:"updatedReplicas"`
+	UpdatedReplicas *int32 `protobuf:"varint,3,opt,name=updatedReplicas" json:"updatedReplicas,omitempty"`
 	// Total number of ready pods targeted by this deployment.
 	// +optional
-	ReadyReplicas int32 `protobuf:"varint,7,opt,name=readyReplicas" json:"readyReplicas"`
+	ReadyReplicas *int32 `protobuf:"varint,7,opt,name=readyReplicas" json:"readyReplicas,omitempty"`
 	// Total number of available pods (ready for at least minReadySeconds) targeted by this deployment.
 	// +optional
-	AvailableReplicas int32 `protobuf:"varint,4,opt,name=availableReplicas" json:"availableReplicas"`
+	AvailableReplicas *int32 `protobuf:"varint,4,opt,name=availableReplicas" json:"availableReplicas,omitempty"`
 	// Total number of unavailable pods targeted by this deployment. This is the total number of
 	// pods that are still required for the deployment to have 100% available capacity. They may
 	// either be pods that are running but not yet available or pods that still have not been created.
 	// +optional
-	UnavailableReplicas int32 `protobuf:"varint,5,opt,name=unavailableReplicas" json:"unavailableReplicas"`
+	UnavailableReplicas *int32 `protobuf:"varint,5,opt,name=unavailableReplicas" json:"unavailableReplicas,omitempty"`
 	// Represents the latest available observations of a deployment's current state.
 	// +patchMergeKey=type
 	// +patchStrategy=merge
@@ -605,11 +630,15 @@ type DeploymentStatus struct {
 	// field as a collision avoidance mechanism when it needs to create the name for the
 	// newest ReplicaSet.
 	// +optional
-	CollisionCount int32 `protobuf:"varint,8,opt,name=collisionCount" json:"collisionCount"`
+	CollisionCount       *int32   `protobuf:"varint,8,opt,name=collisionCount" json:"collisionCount,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *DeploymentStatus) Reset()      { *m = DeploymentStatus{} }
-func (*DeploymentStatus) ProtoMessage() {}
+func (m *DeploymentStatus) Reset()         { *m = DeploymentStatus{} }
+func (m *DeploymentStatus) String() string { return proto.CompactTextString(m) }
+func (*DeploymentStatus) ProtoMessage()    {}
 func (*DeploymentStatus) Descriptor() ([]byte, []int) {
 	return fileDescriptor_2747f709ac7c95e7, []int{7}
 }
@@ -641,43 +670,43 @@ func (m *DeploymentStatus) XXX_DiscardUnknown() {
 var xxx_messageInfo_DeploymentStatus proto.InternalMessageInfo
 
 func (m *DeploymentStatus) GetObservedGeneration() int64 {
-	if m != nil {
-		return m.ObservedGeneration
+	if m != nil && m.ObservedGeneration != nil {
+		return *m.ObservedGeneration
 	}
 	return 0
 }
 
 func (m *DeploymentStatus) GetReplicas() int32 {
-	if m != nil {
-		return m.Replicas
+	if m != nil && m.Replicas != nil {
+		return *m.Replicas
 	}
 	return 0
 }
 
 func (m *DeploymentStatus) GetUpdatedReplicas() int32 {
-	if m != nil {
-		return m.UpdatedReplicas
+	if m != nil && m.UpdatedReplicas != nil {
+		return *m.UpdatedReplicas
 	}
 	return 0
 }
 
 func (m *DeploymentStatus) GetReadyReplicas() int32 {
-	if m != nil {
-		return m.ReadyReplicas
+	if m != nil && m.ReadyReplicas != nil {
+		return *m.ReadyReplicas
 	}
 	return 0
 }
 
 func (m *DeploymentStatus) GetAvailableReplicas() int32 {
-	if m != nil {
-		return m.AvailableReplicas
+	if m != nil && m.AvailableReplicas != nil {
+		return *m.AvailableReplicas
 	}
 	return 0
 }
 
 func (m *DeploymentStatus) GetUnavailableReplicas() int32 {
-	if m != nil {
-		return m.UnavailableReplicas
+	if m != nil && m.UnavailableReplicas != nil {
+		return *m.UnavailableReplicas
 	}
 	return 0
 }
@@ -690,8 +719,8 @@ func (m *DeploymentStatus) GetConditions() []*DeploymentCondition {
 }
 
 func (m *DeploymentStatus) GetCollisionCount() int32 {
-	if m != nil {
-		return m.CollisionCount
+	if m != nil && m.CollisionCount != nil {
+		return *m.CollisionCount
 	}
 	return 0
 }
@@ -700,18 +729,22 @@ func (m *DeploymentStatus) GetCollisionCount() int32 {
 type DeploymentStrategy struct {
 	// Type of deployment. Can be "Recreate" or "RollingUpdate". Default is RollingUpdate.
 	// +optional
-	Type string `protobuf:"bytes,1,opt,name=type" json:"type"`
+	Type *string `protobuf:"bytes,1,opt,name=type" json:"type,omitempty"`
 	// Rolling update config params. Present only if DeploymentStrategyType =
 	// RollingUpdate.
 	// ---
 	// TODO: Update this to follow our convention for oneOf, whatever we decide it
 	// to be.
 	// +optional
-	RollingUpdate *RollingUpdateDeployment `protobuf:"bytes,2,opt,name=rollingUpdate" json:"rollingUpdate,omitempty"`
+	RollingUpdate        *RollingUpdateDeployment `protobuf:"bytes,2,opt,name=rollingUpdate" json:"rollingUpdate,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                 `json:"-"`
+	XXX_unrecognized     []byte                   `json:"-"`
+	XXX_sizecache        int32                    `json:"-"`
 }
 
-func (m *DeploymentStrategy) Reset()      { *m = DeploymentStrategy{} }
-func (*DeploymentStrategy) ProtoMessage() {}
+func (m *DeploymentStrategy) Reset()         { *m = DeploymentStrategy{} }
+func (m *DeploymentStrategy) String() string { return proto.CompactTextString(m) }
+func (*DeploymentStrategy) ProtoMessage()    {}
 func (*DeploymentStrategy) Descriptor() ([]byte, []int) {
 	return fileDescriptor_2747f709ac7c95e7, []int{8}
 }
@@ -743,8 +776,8 @@ func (m *DeploymentStrategy) XXX_DiscardUnknown() {
 var xxx_messageInfo_DeploymentStrategy proto.InternalMessageInfo
 
 func (m *DeploymentStrategy) GetType() string {
-	if m != nil {
-		return m.Type
+	if m != nil && m.Type != nil {
+		return *m.Type
 	}
 	return ""
 }
@@ -760,11 +793,15 @@ func (m *DeploymentStrategy) GetRollingUpdate() *RollingUpdateDeployment {
 type RollbackConfig struct {
 	// The revision to rollback to. If set to 0, rollback to the last revision.
 	// +optional
-	Revision int64 `protobuf:"varint,1,opt,name=revision" json:"revision"`
+	Revision             *int64   `protobuf:"varint,1,opt,name=revision" json:"revision,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *RollbackConfig) Reset()      { *m = RollbackConfig{} }
-func (*RollbackConfig) ProtoMessage() {}
+func (m *RollbackConfig) Reset()         { *m = RollbackConfig{} }
+func (m *RollbackConfig) String() string { return proto.CompactTextString(m) }
+func (*RollbackConfig) ProtoMessage()    {}
 func (*RollbackConfig) Descriptor() ([]byte, []int) {
 	return fileDescriptor_2747f709ac7c95e7, []int{9}
 }
@@ -796,8 +833,8 @@ func (m *RollbackConfig) XXX_DiscardUnknown() {
 var xxx_messageInfo_RollbackConfig proto.InternalMessageInfo
 
 func (m *RollbackConfig) GetRevision() int64 {
-	if m != nil {
-		return m.Revision
+	if m != nil && m.Revision != nil {
+		return *m.Revision
 	}
 	return 0
 }
@@ -828,11 +865,15 @@ type RollingUpdateDeployment struct {
 	// new ReplicaSet can be scaled up further, ensuring that total number of pods running
 	// at any time during the update is at most 130% of desired pods.
 	// +optional
-	MaxSurge *intstr.IntOrString `protobuf:"bytes,2,opt,name=maxSurge" json:"maxSurge,omitempty"`
+	MaxSurge             *intstr.IntOrString `protobuf:"bytes,2,opt,name=maxSurge" json:"maxSurge,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}            `json:"-"`
+	XXX_unrecognized     []byte              `json:"-"`
+	XXX_sizecache        int32               `json:"-"`
 }
 
-func (m *RollingUpdateDeployment) Reset()      { *m = RollingUpdateDeployment{} }
-func (*RollingUpdateDeployment) ProtoMessage() {}
+func (m *RollingUpdateDeployment) Reset()         { *m = RollingUpdateDeployment{} }
+func (m *RollingUpdateDeployment) String() string { return proto.CompactTextString(m) }
+func (*RollingUpdateDeployment) ProtoMessage()    {}
 func (*RollingUpdateDeployment) Descriptor() ([]byte, []int) {
 	return fileDescriptor_2747f709ac7c95e7, []int{10}
 }
@@ -881,11 +922,15 @@ func (m *RollingUpdateDeployment) GetMaxSurge() *intstr.IntOrString {
 type RollingUpdateStatefulSetStrategy struct {
 	// Partition indicates the ordinal at which the StatefulSet should be
 	// partitioned.
-	Partition int32 `protobuf:"varint,1,opt,name=partition" json:"partition"`
+	Partition            *int32   `protobuf:"varint,1,opt,name=partition" json:"partition,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *RollingUpdateStatefulSetStrategy) Reset()      { *m = RollingUpdateStatefulSetStrategy{} }
-func (*RollingUpdateStatefulSetStrategy) ProtoMessage() {}
+func (m *RollingUpdateStatefulSetStrategy) Reset()         { *m = RollingUpdateStatefulSetStrategy{} }
+func (m *RollingUpdateStatefulSetStrategy) String() string { return proto.CompactTextString(m) }
+func (*RollingUpdateStatefulSetStrategy) ProtoMessage()    {}
 func (*RollingUpdateStatefulSetStrategy) Descriptor() ([]byte, []int) {
 	return fileDescriptor_2747f709ac7c95e7, []int{11}
 }
@@ -917,8 +962,8 @@ func (m *RollingUpdateStatefulSetStrategy) XXX_DiscardUnknown() {
 var xxx_messageInfo_RollingUpdateStatefulSetStrategy proto.InternalMessageInfo
 
 func (m *RollingUpdateStatefulSetStrategy) GetPartition() int32 {
-	if m != nil {
-		return m.Partition
+	if m != nil && m.Partition != nil {
+		return *m.Partition
 	}
 	return 0
 }
@@ -933,11 +978,15 @@ type Scale struct {
 	Spec *ScaleSpec `protobuf:"bytes,2,opt,name=spec" json:"spec,omitempty"`
 	// current status of the scale. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status. Read-only.
 	// +optional
-	Status *ScaleStatus `protobuf:"bytes,3,opt,name=status" json:"status,omitempty"`
+	Status               *ScaleStatus `protobuf:"bytes,3,opt,name=status" json:"status,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}     `json:"-"`
+	XXX_unrecognized     []byte       `json:"-"`
+	XXX_sizecache        int32        `json:"-"`
 }
 
-func (m *Scale) Reset()      { *m = Scale{} }
-func (*Scale) ProtoMessage() {}
+func (m *Scale) Reset()         { *m = Scale{} }
+func (m *Scale) String() string { return proto.CompactTextString(m) }
+func (*Scale) ProtoMessage()    {}
 func (*Scale) Descriptor() ([]byte, []int) {
 	return fileDescriptor_2747f709ac7c95e7, []int{12}
 }
@@ -993,11 +1042,15 @@ func (m *Scale) GetStatus() *ScaleStatus {
 type ScaleSpec struct {
 	// desired number of instances for the scaled object.
 	// +optional
-	Replicas int32 `protobuf:"varint,1,opt,name=replicas" json:"replicas"`
+	Replicas             *int32   `protobuf:"varint,1,opt,name=replicas" json:"replicas,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *ScaleSpec) Reset()      { *m = ScaleSpec{} }
-func (*ScaleSpec) ProtoMessage() {}
+func (m *ScaleSpec) Reset()         { *m = ScaleSpec{} }
+func (m *ScaleSpec) String() string { return proto.CompactTextString(m) }
+func (*ScaleSpec) ProtoMessage()    {}
 func (*ScaleSpec) Descriptor() ([]byte, []int) {
 	return fileDescriptor_2747f709ac7c95e7, []int{13}
 }
@@ -1029,8 +1082,8 @@ func (m *ScaleSpec) XXX_DiscardUnknown() {
 var xxx_messageInfo_ScaleSpec proto.InternalMessageInfo
 
 func (m *ScaleSpec) GetReplicas() int32 {
-	if m != nil {
-		return m.Replicas
+	if m != nil && m.Replicas != nil {
+		return *m.Replicas
 	}
 	return 0
 }
@@ -1038,7 +1091,7 @@ func (m *ScaleSpec) GetReplicas() int32 {
 // ScaleStatus represents the current status of a scale subresource.
 type ScaleStatus struct {
 	// actual number of observed instances of the scaled object.
-	Replicas int32 `protobuf:"varint,1,opt,name=replicas" json:"replicas"`
+	Replicas *int32 `protobuf:"varint,1,opt,name=replicas" json:"replicas,omitempty"`
 	// label query over pods that should match the replicas count. More info: http://kubernetes.io/docs/user-guide/labels#label-selectors
 	// +optional
 	Selector map[string]string `protobuf:"bytes,2,rep,name=selector" json:"selector,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
@@ -1049,11 +1102,15 @@ type ScaleStatus struct {
 	// field and map-based selector field are populated.
 	// More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors
 	// +optional
-	TargetSelector string `protobuf:"bytes,3,opt,name=targetSelector" json:"targetSelector"`
+	TargetSelector       *string  `protobuf:"bytes,3,opt,name=targetSelector" json:"targetSelector,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *ScaleStatus) Reset()      { *m = ScaleStatus{} }
-func (*ScaleStatus) ProtoMessage() {}
+func (m *ScaleStatus) Reset()         { *m = ScaleStatus{} }
+func (m *ScaleStatus) String() string { return proto.CompactTextString(m) }
+func (*ScaleStatus) ProtoMessage()    {}
 func (*ScaleStatus) Descriptor() ([]byte, []int) {
 	return fileDescriptor_2747f709ac7c95e7, []int{14}
 }
@@ -1085,8 +1142,8 @@ func (m *ScaleStatus) XXX_DiscardUnknown() {
 var xxx_messageInfo_ScaleStatus proto.InternalMessageInfo
 
 func (m *ScaleStatus) GetReplicas() int32 {
-	if m != nil {
-		return m.Replicas
+	if m != nil && m.Replicas != nil {
+		return *m.Replicas
 	}
 	return 0
 }
@@ -1099,8 +1156,8 @@ func (m *ScaleStatus) GetSelector() map[string]string {
 }
 
 func (m *ScaleStatus) GetTargetSelector() string {
-	if m != nil {
-		return m.TargetSelector
+	if m != nil && m.TargetSelector != nil {
+		return *m.TargetSelector
 	}
 	return ""
 }
@@ -1122,11 +1179,15 @@ type StatefulSet struct {
 	// Status is the current status of Pods in this StatefulSet. This data
 	// may be out of date by some window of time.
 	// +optional
-	Status *StatefulSetStatus `protobuf:"bytes,3,opt,name=status" json:"status,omitempty"`
+	Status               *StatefulSetStatus `protobuf:"bytes,3,opt,name=status" json:"status,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}           `json:"-"`
+	XXX_unrecognized     []byte             `json:"-"`
+	XXX_sizecache        int32              `json:"-"`
 }
 
-func (m *StatefulSet) Reset()      { *m = StatefulSet{} }
-func (*StatefulSet) ProtoMessage() {}
+func (m *StatefulSet) Reset()         { *m = StatefulSet{} }
+func (m *StatefulSet) String() string { return proto.CompactTextString(m) }
+func (*StatefulSet) ProtoMessage()    {}
 func (*StatefulSet) Descriptor() ([]byte, []int) {
 	return fileDescriptor_2747f709ac7c95e7, []int{15}
 }
@@ -1181,22 +1242,26 @@ func (m *StatefulSet) GetStatus() *StatefulSetStatus {
 // StatefulSetCondition describes the state of a statefulset at a certain point.
 type StatefulSetCondition struct {
 	// Type of statefulset condition.
-	Type string `protobuf:"bytes,1,opt,name=type" json:"type"`
+	Type *string `protobuf:"bytes,1,opt,name=type" json:"type,omitempty"`
 	// Status of the condition, one of True, False, Unknown.
-	Status string `protobuf:"bytes,2,opt,name=status" json:"status"`
+	Status *string `protobuf:"bytes,2,opt,name=status" json:"status,omitempty"`
 	// Last time the condition transitioned from one status to another.
 	// +optional
 	LastTransitionTime *v1.Time `protobuf:"bytes,3,opt,name=lastTransitionTime" json:"lastTransitionTime,omitempty"`
 	// The reason for the condition's last transition.
 	// +optional
-	Reason string `protobuf:"bytes,4,opt,name=reason" json:"reason"`
+	Reason *string `protobuf:"bytes,4,opt,name=reason" json:"reason,omitempty"`
 	// A human readable message indicating details about the transition.
 	// +optional
-	Message string `protobuf:"bytes,5,opt,name=message" json:"message"`
+	Message              *string  `protobuf:"bytes,5,opt,name=message" json:"message,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *StatefulSetCondition) Reset()      { *m = StatefulSetCondition{} }
-func (*StatefulSetCondition) ProtoMessage() {}
+func (m *StatefulSetCondition) Reset()         { *m = StatefulSetCondition{} }
+func (m *StatefulSetCondition) String() string { return proto.CompactTextString(m) }
+func (*StatefulSetCondition) ProtoMessage()    {}
 func (*StatefulSetCondition) Descriptor() ([]byte, []int) {
 	return fileDescriptor_2747f709ac7c95e7, []int{16}
 }
@@ -1228,15 +1293,15 @@ func (m *StatefulSetCondition) XXX_DiscardUnknown() {
 var xxx_messageInfo_StatefulSetCondition proto.InternalMessageInfo
 
 func (m *StatefulSetCondition) GetType() string {
-	if m != nil {
-		return m.Type
+	if m != nil && m.Type != nil {
+		return *m.Type
 	}
 	return ""
 }
 
 func (m *StatefulSetCondition) GetStatus() string {
-	if m != nil {
-		return m.Status
+	if m != nil && m.Status != nil {
+		return *m.Status
 	}
 	return ""
 }
@@ -1249,15 +1314,15 @@ func (m *StatefulSetCondition) GetLastTransitionTime() *v1.Time {
 }
 
 func (m *StatefulSetCondition) GetReason() string {
-	if m != nil {
-		return m.Reason
+	if m != nil && m.Reason != nil {
+		return *m.Reason
 	}
 	return ""
 }
 
 func (m *StatefulSetCondition) GetMessage() string {
-	if m != nil {
-		return m.Message
+	if m != nil && m.Message != nil {
+		return *m.Message
 	}
 	return ""
 }
@@ -1265,12 +1330,16 @@ func (m *StatefulSetCondition) GetMessage() string {
 // StatefulSetList is a collection of StatefulSets.
 type StatefulSetList struct {
 	// +optional
-	Metadata *v1.ListMeta   `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
-	Items    []*StatefulSet `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	Metadata             *v1.ListMeta   `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
+	Items                []*StatefulSet `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
 }
 
-func (m *StatefulSetList) Reset()      { *m = StatefulSetList{} }
-func (*StatefulSetList) ProtoMessage() {}
+func (m *StatefulSetList) Reset()         { *m = StatefulSetList{} }
+func (m *StatefulSetList) String() string { return proto.CompactTextString(m) }
+func (*StatefulSetList) ProtoMessage()    {}
 func (*StatefulSetList) Descriptor() ([]byte, []int) {
 	return fileDescriptor_2747f709ac7c95e7, []int{17}
 }
@@ -1323,7 +1392,7 @@ type StatefulSetSpec struct {
 	// If unspecified, defaults to 1.
 	// TODO: Consider a rename of this field.
 	// +optional
-	Replicas int32 `protobuf:"varint,1,opt,name=replicas" json:"replicas"`
+	Replicas *int32 `protobuf:"varint,1,opt,name=replicas" json:"replicas,omitempty"`
 	// selector is a label query over pods that should match the replica count.
 	// If empty, defaulted to labels on the pod template.
 	// More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors
@@ -1348,7 +1417,7 @@ type StatefulSetSpec struct {
 	// the network identity of the set. Pods get DNS/hostnames that follow the
 	// pattern: pod-specific-string.serviceName.default.svc.cluster.local
 	// where "pod-specific-string" is managed by the StatefulSet controller.
-	ServiceName string `protobuf:"bytes,5,opt,name=serviceName" json:"serviceName"`
+	ServiceName *string `protobuf:"bytes,5,opt,name=serviceName" json:"serviceName,omitempty"`
 	// podManagementPolicy controls how pods are created during initial scale up,
 	// when replacing pods on nodes, or when scaling down. The default policy is
 	// `OrderedReady`, where pods are created in increasing order (pod-0, then
@@ -1358,7 +1427,7 @@ type StatefulSetSpec struct {
 	// to match the desired scale without waiting, and on scale down will delete
 	// all pods at once.
 	// +optional
-	PodManagementPolicy string `protobuf:"bytes,6,opt,name=podManagementPolicy" json:"podManagementPolicy"`
+	PodManagementPolicy *string `protobuf:"bytes,6,opt,name=podManagementPolicy" json:"podManagementPolicy,omitempty"`
 	// updateStrategy indicates the StatefulSetUpdateStrategy that will be
 	// employed to update Pods in the StatefulSet when a revision is made to
 	// Template.
@@ -1367,11 +1436,15 @@ type StatefulSetSpec struct {
 	// be maintained in the StatefulSet's revision history. The revision history
 	// consists of all revisions not represented by a currently applied
 	// StatefulSetSpec version. The default value is 10.
-	RevisionHistoryLimit int32 `protobuf:"varint,8,opt,name=revisionHistoryLimit" json:"revisionHistoryLimit"`
+	RevisionHistoryLimit *int32   `protobuf:"varint,8,opt,name=revisionHistoryLimit" json:"revisionHistoryLimit,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *StatefulSetSpec) Reset()      { *m = StatefulSetSpec{} }
-func (*StatefulSetSpec) ProtoMessage() {}
+func (m *StatefulSetSpec) Reset()         { *m = StatefulSetSpec{} }
+func (m *StatefulSetSpec) String() string { return proto.CompactTextString(m) }
+func (*StatefulSetSpec) ProtoMessage()    {}
 func (*StatefulSetSpec) Descriptor() ([]byte, []int) {
 	return fileDescriptor_2747f709ac7c95e7, []int{18}
 }
@@ -1403,8 +1476,8 @@ func (m *StatefulSetSpec) XXX_DiscardUnknown() {
 var xxx_messageInfo_StatefulSetSpec proto.InternalMessageInfo
 
 func (m *StatefulSetSpec) GetReplicas() int32 {
-	if m != nil {
-		return m.Replicas
+	if m != nil && m.Replicas != nil {
+		return *m.Replicas
 	}
 	return 0
 }
@@ -1431,15 +1504,15 @@ func (m *StatefulSetSpec) GetVolumeClaimTemplates() []*v11.PersistentVolumeClaim
 }
 
 func (m *StatefulSetSpec) GetServiceName() string {
-	if m != nil {
-		return m.ServiceName
+	if m != nil && m.ServiceName != nil {
+		return *m.ServiceName
 	}
 	return ""
 }
 
 func (m *StatefulSetSpec) GetPodManagementPolicy() string {
-	if m != nil {
-		return m.PodManagementPolicy
+	if m != nil && m.PodManagementPolicy != nil {
+		return *m.PodManagementPolicy
 	}
 	return ""
 }
@@ -1452,8 +1525,8 @@ func (m *StatefulSetSpec) GetUpdateStrategy() *StatefulSetUpdateStrategy {
 }
 
 func (m *StatefulSetSpec) GetRevisionHistoryLimit() int32 {
-	if m != nil {
-		return m.RevisionHistoryLimit
+	if m != nil && m.RevisionHistoryLimit != nil {
+		return *m.RevisionHistoryLimit
 	}
 	return 0
 }
@@ -1463,37 +1536,41 @@ type StatefulSetStatus struct {
 	// observedGeneration is the most recent generation observed for this StatefulSet. It corresponds to the
 	// StatefulSet's generation, which is updated on mutation by the API Server.
 	// +optional
-	ObservedGeneration int64 `protobuf:"varint,1,opt,name=observedGeneration" json:"observedGeneration"`
+	ObservedGeneration *int64 `protobuf:"varint,1,opt,name=observedGeneration" json:"observedGeneration,omitempty"`
 	// replicas is the number of Pods created by the StatefulSet controller.
-	Replicas int32 `protobuf:"varint,2,opt,name=replicas" json:"replicas"`
+	Replicas *int32 `protobuf:"varint,2,opt,name=replicas" json:"replicas,omitempty"`
 	// readyReplicas is the number of Pods created by the StatefulSet controller that have a Ready Condition.
-	ReadyReplicas int32 `protobuf:"varint,3,opt,name=readyReplicas" json:"readyReplicas"`
+	ReadyReplicas *int32 `protobuf:"varint,3,opt,name=readyReplicas" json:"readyReplicas,omitempty"`
 	// currentReplicas is the number of Pods created by the StatefulSet controller from the StatefulSet version
 	// indicated by currentRevision.
-	CurrentReplicas int32 `protobuf:"varint,4,opt,name=currentReplicas" json:"currentReplicas"`
+	CurrentReplicas *int32 `protobuf:"varint,4,opt,name=currentReplicas" json:"currentReplicas,omitempty"`
 	// updatedReplicas is the number of Pods created by the StatefulSet controller from the StatefulSet version
 	// indicated by updateRevision.
-	UpdatedReplicas int32 `protobuf:"varint,5,opt,name=updatedReplicas" json:"updatedReplicas"`
+	UpdatedReplicas *int32 `protobuf:"varint,5,opt,name=updatedReplicas" json:"updatedReplicas,omitempty"`
 	// currentRevision, if not empty, indicates the version of the StatefulSet used to generate Pods in the
 	// sequence [0,currentReplicas).
-	CurrentRevision string `protobuf:"bytes,6,opt,name=currentRevision" json:"currentRevision"`
+	CurrentRevision *string `protobuf:"bytes,6,opt,name=currentRevision" json:"currentRevision,omitempty"`
 	// updateRevision, if not empty, indicates the version of the StatefulSet used to generate Pods in the sequence
 	// [replicas-updatedReplicas,replicas)
-	UpdateRevision string `protobuf:"bytes,7,opt,name=updateRevision" json:"updateRevision"`
+	UpdateRevision *string `protobuf:"bytes,7,opt,name=updateRevision" json:"updateRevision,omitempty"`
 	// collisionCount is the count of hash collisions for the StatefulSet. The StatefulSet controller
 	// uses this field as a collision avoidance mechanism when it needs to create the name for the
 	// newest ControllerRevision.
 	// +optional
-	CollisionCount int32 `protobuf:"varint,9,opt,name=collisionCount" json:"collisionCount"`
+	CollisionCount *int32 `protobuf:"varint,9,opt,name=collisionCount" json:"collisionCount,omitempty"`
 	// Represents the latest available observations of a statefulset's current state.
 	// +optional
 	// +patchMergeKey=type
 	// +patchStrategy=merge
-	Conditions []*StatefulSetCondition `protobuf:"bytes,10,rep,name=conditions" json:"conditions,omitempty"`
+	Conditions           []*StatefulSetCondition `protobuf:"bytes,10,rep,name=conditions" json:"conditions,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                `json:"-"`
+	XXX_unrecognized     []byte                  `json:"-"`
+	XXX_sizecache        int32                   `json:"-"`
 }
 
-func (m *StatefulSetStatus) Reset()      { *m = StatefulSetStatus{} }
-func (*StatefulSetStatus) ProtoMessage() {}
+func (m *StatefulSetStatus) Reset()         { *m = StatefulSetStatus{} }
+func (m *StatefulSetStatus) String() string { return proto.CompactTextString(m) }
+func (*StatefulSetStatus) ProtoMessage()    {}
 func (*StatefulSetStatus) Descriptor() ([]byte, []int) {
 	return fileDescriptor_2747f709ac7c95e7, []int{19}
 }
@@ -1525,57 +1602,57 @@ func (m *StatefulSetStatus) XXX_DiscardUnknown() {
 var xxx_messageInfo_StatefulSetStatus proto.InternalMessageInfo
 
 func (m *StatefulSetStatus) GetObservedGeneration() int64 {
-	if m != nil {
-		return m.ObservedGeneration
+	if m != nil && m.ObservedGeneration != nil {
+		return *m.ObservedGeneration
 	}
 	return 0
 }
 
 func (m *StatefulSetStatus) GetReplicas() int32 {
-	if m != nil {
-		return m.Replicas
+	if m != nil && m.Replicas != nil {
+		return *m.Replicas
 	}
 	return 0
 }
 
 func (m *StatefulSetStatus) GetReadyReplicas() int32 {
-	if m != nil {
-		return m.ReadyReplicas
+	if m != nil && m.ReadyReplicas != nil {
+		return *m.ReadyReplicas
 	}
 	return 0
 }
 
 func (m *StatefulSetStatus) GetCurrentReplicas() int32 {
-	if m != nil {
-		return m.CurrentReplicas
+	if m != nil && m.CurrentReplicas != nil {
+		return *m.CurrentReplicas
 	}
 	return 0
 }
 
 func (m *StatefulSetStatus) GetUpdatedReplicas() int32 {
-	if m != nil {
-		return m.UpdatedReplicas
+	if m != nil && m.UpdatedReplicas != nil {
+		return *m.UpdatedReplicas
 	}
 	return 0
 }
 
 func (m *StatefulSetStatus) GetCurrentRevision() string {
-	if m != nil {
-		return m.CurrentRevision
+	if m != nil && m.CurrentRevision != nil {
+		return *m.CurrentRevision
 	}
 	return ""
 }
 
 func (m *StatefulSetStatus) GetUpdateRevision() string {
-	if m != nil {
-		return m.UpdateRevision
+	if m != nil && m.UpdateRevision != nil {
+		return *m.UpdateRevision
 	}
 	return ""
 }
 
 func (m *StatefulSetStatus) GetCollisionCount() int32 {
-	if m != nil {
-		return m.CollisionCount
+	if m != nil && m.CollisionCount != nil {
+		return *m.CollisionCount
 	}
 	return 0
 }
@@ -1592,13 +1669,17 @@ func (m *StatefulSetStatus) GetConditions() []*StatefulSetCondition {
 // necessary to perform the update for the indicated strategy.
 type StatefulSetUpdateStrategy struct {
 	// Type indicates the type of the StatefulSetUpdateStrategy.
-	Type string `protobuf:"bytes,1,opt,name=type" json:"type"`
+	Type *string `protobuf:"bytes,1,opt,name=type" json:"type,omitempty"`
 	// RollingUpdate is used to communicate parameters when Type is RollingUpdateStatefulSetStrategyType.
-	RollingUpdate *RollingUpdateStatefulSetStrategy `protobuf:"bytes,2,opt,name=rollingUpdate" json:"rollingUpdate,omitempty"`
+	RollingUpdate        *RollingUpdateStatefulSetStrategy `protobuf:"bytes,2,opt,name=rollingUpdate" json:"rollingUpdate,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                          `json:"-"`
+	XXX_unrecognized     []byte                            `json:"-"`
+	XXX_sizecache        int32                             `json:"-"`
 }
 
-func (m *StatefulSetUpdateStrategy) Reset()      { *m = StatefulSetUpdateStrategy{} }
-func (*StatefulSetUpdateStrategy) ProtoMessage() {}
+func (m *StatefulSetUpdateStrategy) Reset()         { *m = StatefulSetUpdateStrategy{} }
+func (m *StatefulSetUpdateStrategy) String() string { return proto.CompactTextString(m) }
+func (*StatefulSetUpdateStrategy) ProtoMessage()    {}
 func (*StatefulSetUpdateStrategy) Descriptor() ([]byte, []int) {
 	return fileDescriptor_2747f709ac7c95e7, []int{20}
 }
@@ -1630,8 +1711,8 @@ func (m *StatefulSetUpdateStrategy) XXX_DiscardUnknown() {
 var xxx_messageInfo_StatefulSetUpdateStrategy proto.InternalMessageInfo
 
 func (m *StatefulSetUpdateStrategy) GetType() string {
-	if m != nil {
-		return m.Type
+	if m != nil && m.Type != nil {
+		return *m.Type
 	}
 	return ""
 }
@@ -1674,1185 +1755,97 @@ func init() {
 }
 
 var fileDescriptor_2747f709ac7c95e7 = []byte{
-	// 1464 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xd4, 0x57, 0xcf, 0x6f, 0x1b, 0xc5,
-	0x17, 0xf7, 0xda, 0x4e, 0xe3, 0xbc, 0xa8, 0xce, 0xb7, 0xd3, 0xaa, 0xf1, 0x37, 0x42, 0x4b, 0xb4,
-	0x54, 0x34, 0x94, 0x76, 0xdd, 0xba, 0x55, 0xd5, 0x96, 0x0a, 0xd4, 0xa6, 0x25, 0x80, 0xd2, 0x1f,
-	0xac, 0x93, 0x0a, 0x55, 0x42, 0x68, 0xb2, 0x9e, 0xba, 0x43, 0xf6, 0x97, 0x76, 0xc6, 0xa6, 0xbe,
-	0x71, 0xe2, 0xcc, 0x09, 0x04, 0x07, 0xae, 0x70, 0xe2, 0x1f, 0xe0, 0x80, 0x38, 0x51, 0x89, 0x4b,
-	0xc5, 0xa9, 0x42, 0x02, 0x51, 0xe7, 0xd2, 0x63, 0x4f, 0x9c, 0xd1, 0xec, 0x2f, 0xcf, 0xae, 0x77,
-	0x93, 0xa5, 0x04, 0x09, 0xae, 0xef, 0xbd, 0xcf, 0xdb, 0x79, 0xf3, 0x3e, 0x6f, 0xde, 0x67, 0xe1,
-	0xf8, 0xf6, 0x05, 0xa6, 0x53, 0xb7, 0x8d, 0x3d, 0xda, 0xc6, 0x9e, 0xc7, 0xda, 0xc3, 0x33, 0x5b,
-	0x84, 0xe3, 0x33, 0xed, 0x3e, 0x71, 0x88, 0x8f, 0x39, 0xe9, 0xe9, 0x9e, 0xef, 0x72, 0x17, 0x2d,
-	0x86, 0x81, 0x3a, 0xf6, 0xa8, 0x2e, 0x02, 0xf5, 0x28, 0x70, 0x49, 0x93, 0x32, 0x98, 0xae, 0x4f,
-	0xda, 0xc3, 0x29, 0xf0, 0xd2, 0xb9, 0x49, 0x8c, 0x8d, 0xcd, 0xfb, 0xd4, 0x21, 0xfe, 0xa8, 0xed,
-	0x6d, 0xf7, 0x85, 0x81, 0xb5, 0x6d, 0xc2, 0x71, 0x1e, 0xaa, 0x5d, 0x84, 0xf2, 0x07, 0x0e, 0xa7,
-	0x36, 0x99, 0x02, 0x9c, 0xdf, 0x0b, 0xc0, 0xcc, 0xfb, 0xc4, 0xc6, 0x53, 0xb8, 0xb3, 0x45, 0xb8,
-	0x01, 0xa7, 0x56, 0x9b, 0x3a, 0x9c, 0x71, 0x3f, 0x0b, 0xd2, 0x7e, 0x54, 0x00, 0xad, 0xba, 0x0e,
-	0xf7, 0x5d, 0xcb, 0x22, 0xbe, 0x41, 0x86, 0x94, 0x51, 0xd7, 0x41, 0xeb, 0xd0, 0x10, 0xf5, 0xf4,
-	0x30, 0xc7, 0x2d, 0x65, 0x59, 0x59, 0x99, 0xef, 0x9c, 0xd6, 0x27, 0x57, 0x97, 0xa4, 0xd7, 0xbd,
-	0xed, 0xbe, 0x30, 0x30, 0x5d, 0x44, 0xeb, 0xc3, 0x33, 0xfa, 0xad, 0xad, 0x0f, 0x89, 0xc9, 0x6f,
-	0x10, 0x8e, 0x8d, 0x24, 0x03, 0xba, 0x02, 0xf5, 0x20, 0x53, 0x35, 0xc8, 0x74, 0xaa, 0x30, 0x53,
-	0x54, 0xa0, 0x6e, 0xe0, 0x8f, 0xae, 0x3f, 0xe0, 0xc4, 0x11, 0x47, 0x31, 0x02, 0x28, 0x5a, 0x86,
-	0x86, 0x1f, 0x1d, 0xae, 0x55, 0x5b, 0x56, 0x56, 0x6a, 0x57, 0xeb, 0x0f, 0x7f, 0x7b, 0xb1, 0x62,
-	0x24, 0x56, 0xed, 0x6b, 0x05, 0x8e, 0x4e, 0x57, 0xb2, 0x4e, 0x19, 0x47, 0xef, 0x4c, 0x55, 0xa3,
-	0x97, 0xab, 0x46, 0xa0, 0xa7, 0x6a, 0x99, 0xa1, 0x9c, 0xd8, 0xac, 0x55, 0x5d, 0xae, 0xad, 0xcc,
-	0x77, 0x5e, 0xd5, 0x0b, 0x18, 0xa5, 0x4f, 0x9f, 0xc5, 0x08, 0x91, 0xda, 0x2f, 0x0a, 0xc0, 0x35,
-	0xe2, 0x59, 0xee, 0xc8, 0x26, 0x0e, 0xdf, 0xe7, 0xbb, 0x7e, 0x0d, 0xea, 0xcc, 0x23, 0x66, 0x74,
-	0xd7, 0xc7, 0x0b, 0x8f, 0x37, 0x39, 0x40, 0xd7, 0x23, 0xa6, 0x11, 0x80, 0xd0, 0x15, 0x38, 0xc0,
-	0x38, 0xe6, 0x03, 0x16, 0xdc, 0xf1, 0x7c, 0xe7, 0x95, 0x32, 0xf0, 0x00, 0x60, 0x44, 0x40, 0xed,
-	0xbb, 0x2a, 0x1c, 0x9e, 0x38, 0x57, 0x5d, 0xa7, 0x47, 0xb9, 0x60, 0x54, 0x0b, 0xea, 0x7c, 0xe4,
-	0x91, 0xa0, 0xc2, 0xb9, 0xa8, 0x79, 0x81, 0x05, 0xbd, 0x90, 0x7c, 0xb4, 0x2a, 0xf9, 0x22, 0x1b,
-	0x32, 0xa0, 0x69, 0x61, 0xc6, 0x37, 0xbd, 0x1e, 0xe6, 0x64, 0x83, 0xda, 0xa4, 0x75, 0x20, 0x38,
-	0xda, 0x89, 0x72, 0x77, 0x24, 0x10, 0x46, 0x26, 0x03, 0xba, 0x0b, 0x48, 0x58, 0x36, 0x7c, 0xec,
-	0xb0, 0xe0, 0x74, 0x41, 0xde, 0xd9, 0xbf, 0x9c, 0x37, 0x27, 0x8b, 0xa8, 0xc6, 0x27, 0x98, 0xb9,
-	0x4e, 0xab, 0x2e, 0x57, 0x13, 0xda, 0x90, 0x0a, 0xb3, 0x36, 0x61, 0x0c, 0xf7, 0x49, 0x6b, 0x46,
-	0x72, 0xc7, 0x46, 0xed, 0x73, 0x05, 0x9a, 0x93, 0xdb, 0xdb, 0x77, 0xf2, 0x5e, 0x4c, 0x93, 0xf7,
-	0xa5, 0x12, 0xed, 0x8d, 0x49, 0xfb, 0x7d, 0x15, 0x90, 0x64, 0x75, 0x2d, 0x6b, 0x0b, 0x9b, 0xdb,
-	0xa2, 0xad, 0x0e, 0xb6, 0x33, 0x6d, 0x15, 0x16, 0xc4, 0x00, 0x0d, 0x82, 0x2b, 0xef, 0x5d, 0x71,
-	0x1c, 0x97, 0x63, 0x71, 0x43, 0xf1, 0x87, 0x57, 0xcb, 0x7c, 0x38, 0xfa, 0x84, 0xbe, 0x39, 0x95,
-	0xe5, 0xba, 0xc3, 0xfd, 0x91, 0x91, 0x93, 0x1e, 0xad, 0x01, 0xf8, 0x11, 0x6e, 0xc3, 0x8d, 0x48,
-	0x5c, 0x3c, 0x03, 0xf1, 0x27, 0x56, 0x5d, 0xe7, 0x1e, 0xed, 0x1b, 0x12, 0x74, 0xe9, 0x5d, 0x58,
-	0x2c, 0xf8, 0x2e, 0x3a, 0x0a, 0xb5, 0x6d, 0x32, 0x4a, 0x55, 0x2c, 0x0c, 0x68, 0x09, 0x66, 0x86,
-	0xd8, 0x1a, 0x90, 0x14, 0x8d, 0x43, 0xd3, 0xa5, 0xea, 0x05, 0x45, 0xfb, 0xaa, 0x2e, 0xf7, 0x56,
-	0x4c, 0x5d, 0xf8, 0xaa, 0x79, 0x16, 0x35, 0x31, 0x0b, 0xf2, 0xcd, 0x4c, 0x5e, 0xb5, 0xd0, 0x8a,
-	0x6e, 0x41, 0x83, 0x11, 0x8b, 0x98, 0xdc, 0xf5, 0xa3, 0x91, 0x3e, 0x5b, 0xb2, 0xfb, 0x78, 0x8b,
-	0x58, 0xdd, 0x08, 0x6a, 0x24, 0x49, 0xd0, 0x1b, 0xd0, 0xe0, 0xc4, 0xf6, 0x2c, 0xcc, 0x49, 0x74,
-	0x3f, 0x29, 0x16, 0x88, 0xdd, 0x27, 0xe0, 0xb7, 0xdd, 0xde, 0x46, 0x14, 0x16, 0xbc, 0x0f, 0x09,
-	0x08, 0xad, 0x41, 0x83, 0x71, 0xb1, 0x42, 0xfa, 0xa3, 0x80, 0xe2, 0xbb, 0xbd, 0x81, 0xf2, 0x2b,
-	0x11, 0x42, 0x8c, 0x04, 0x8c, 0x74, 0x58, 0xb0, 0xa9, 0x63, 0x10, 0xdc, 0x1b, 0x75, 0x89, 0xe9,
-	0x3a, 0x3d, 0x16, 0xcc, 0x44, 0x7c, 0x07, 0x59, 0x27, 0xba, 0x00, 0x47, 0xe2, 0xc7, 0xfe, 0x2d,
-	0xca, 0xb8, 0xeb, 0x8f, 0xd6, 0xa9, 0x4d, 0x79, 0xf0, 0x1e, 0xc4, 0xa0, 0xdc, 0x08, 0x31, 0x93,
-	0x1e, 0x1e, 0x30, 0xd2, 0x0b, 0x66, 0xbc, 0x11, 0xcf, 0x64, 0x68, 0xcb, 0x70, 0xa6, 0xf1, 0xdc,
-	0x9c, 0x41, 0xaf, 0xc3, 0xa2, 0xe7, 0xbb, 0x7d, 0x9f, 0x30, 0x76, 0x8d, 0xe0, 0x9e, 0x45, 0x1d,
-	0x12, 0x17, 0x36, 0x27, 0x9d, 0xb1, 0x28, 0x48, 0xfb, 0xb6, 0x06, 0xff, 0xcb, 0xbe, 0xab, 0xe8,
-	0x1c, 0x20, 0x77, 0x8b, 0x11, 0x7f, 0x48, 0x7a, 0x6b, 0xe1, 0xee, 0x16, 0x2b, 0x50, 0x91, 0x56,
-	0x60, 0x8e, 0x3f, 0x45, 0xac, 0x6a, 0x2e, 0xb1, 0x74, 0x58, 0x88, 0xe6, 0xc7, 0x88, 0x03, 0x6b,
-	0xf2, 0xed, 0x67, 0x9c, 0xe8, 0x04, 0x1c, 0xf4, 0x45, 0x37, 0x92, 0xe8, 0x59, 0x29, 0x3a, 0xed,
-	0x42, 0x1d, 0x38, 0x84, 0x87, 0x98, 0x5a, 0x78, 0xcb, 0x22, 0x49, 0x7c, 0x5d, 0x8a, 0x9f, 0x76,
-	0xa3, 0xf3, 0x70, 0x78, 0xe0, 0x4c, 0xa3, 0x64, 0x46, 0xe4, 0x05, 0xa0, 0x75, 0x00, 0x33, 0x5e,
-	0x32, 0xac, 0x75, 0x20, 0x78, 0x5e, 0x4e, 0x96, 0x20, 0x64, 0xb2, 0x99, 0x0c, 0x09, 0x8f, 0x4e,
-	0x42, 0xd3, 0x74, 0x2d, 0x2b, 0xa0, 0xd0, 0xaa, 0x3b, 0x70, 0x78, 0xc0, 0x87, 0xf8, 0x00, 0x19,
-	0x9f, 0xf6, 0x89, 0x22, 0xbf, 0x89, 0x31, 0xc5, 0x77, 0x59, 0x75, 0x77, 0xe0, 0xa0, 0xe0, 0x0b,
-	0x75, 0xfa, 0xe1, 0xe3, 0x12, 0x8d, 0xf4, 0xe9, 0x5d, 0xd9, 0x96, 0x44, 0x4b, 0x6f, 0x63, 0x3a,
-	0x8d, 0xd6, 0x81, 0x66, 0x9a, 0x97, 0x29, 0xbd, 0xa4, 0xe4, 0xea, 0xa5, 0x1f, 0x14, 0x58, 0x2c,
-	0x48, 0x8f, 0xde, 0x83, 0xa6, 0x8d, 0x1f, 0x6c, 0x4e, 0xae, 0x7b, 0x4f, 0x61, 0x22, 0x34, 0xa6,
-	0x1e, 0x6a, 0x4c, 0xfd, 0x6d, 0x87, 0xdf, 0xf2, 0xbb, 0xdc, 0xa7, 0x4e, 0xdf, 0xc8, 0xe4, 0x09,
-	0xc4, 0x0e, 0x7e, 0xd0, 0x1d, 0xf8, 0xfd, 0xbc, 0xe2, 0xcb, 0xe5, 0x4c, 0x32, 0x68, 0x6f, 0xc2,
-	0x72, 0xaa, 0x04, 0x31, 0x33, 0xe4, 0xde, 0xc0, 0xea, 0x92, 0x49, 0x37, 0x34, 0x98, 0xf3, 0xb0,
-	0xcf, 0x69, 0x32, 0x37, 0x71, 0x37, 0x27, 0x66, 0xed, 0x27, 0x05, 0x66, 0xba, 0x26, 0x8e, 0xce,
-	0xb7, 0x7f, 0x62, 0xec, 0x7c, 0x4a, 0x8c, 0x69, 0x85, 0x6d, 0x0e, 0xbe, 0x2d, 0xe9, 0xb0, 0xcb,
-	0x19, 0x1d, 0x76, 0x6c, 0x0f, 0x64, 0x5a, 0x82, 0x9d, 0x82, 0xb9, 0x24, 0xe1, 0xde, 0x2b, 0x46,
-	0xfb, 0x43, 0x81, 0x79, 0x29, 0x4d, 0x89, 0xa5, 0x74, 0x33, 0xb5, 0x94, 0xc4, 0xc4, 0x75, 0xca,
-	0x1c, 0x50, 0x8f, 0xd7, 0x51, 0xb8, 0xbf, 0x27, 0x3b, 0xe9, 0x24, 0x34, 0x39, 0xf6, 0xfb, 0x84,
-	0xc7, 0x01, 0x41, 0xd9, 0xf1, 0xe8, 0x64, 0x7c, 0x4b, 0x6b, 0x70, 0x30, 0x95, 0xe8, 0xb9, 0x17,
-	0xf2, 0xaf, 0xa2, 0xf0, 0x09, 0x63, 0xf6, 0xb9, 0xf7, 0x97, 0x53, 0xbd, 0x5f, 0x29, 0xbe, 0x20,
-	0x89, 0xb3, 0x13, 0x06, 0x5c, 0xcd, 0x30, 0xe0, 0x44, 0x29, 0x7c, 0x9a, 0x07, 0x4f, 0x15, 0x38,
-	0x22, 0x79, 0xff, 0xbe, 0x16, 0xcf, 0xd7, 0xcd, 0xb5, 0x7f, 0x81, 0x6e, 0xfe, 0x42, 0x81, 0x05,
-	0xa9, 0xd4, 0x7d, 0x17, 0xce, 0x97, 0xd2, 0xc2, 0xf9, 0x58, 0x99, 0x6e, 0xc4, 0xca, 0xf9, 0xcb,
-	0x7a, 0xea, 0x6c, 0xff, 0x59, 0xe1, 0xf7, 0x3e, 0x1c, 0x19, 0xba, 0xd6, 0xc0, 0x26, 0xab, 0x16,
-	0xa6, 0x76, 0x1c, 0x24, 0x16, 0x7b, 0x2d, 0xfb, 0xab, 0x98, 0x24, 0x23, 0x3e, 0xa3, 0x8c, 0x13,
-	0x87, 0xdf, 0x99, 0x20, 0x8d, 0xdc, 0x34, 0xe8, 0x65, 0x98, 0x17, 0x32, 0x86, 0x9a, 0xe4, 0xa6,
-	0xf8, 0xa1, 0x90, 0xdb, 0x2c, 0x3b, 0x84, 0x50, 0xf0, 0xdc, 0xde, 0x0d, 0xec, 0xe0, 0x3e, 0x11,
-	0xcb, 0xea, 0xb6, 0x6b, 0x51, 0x73, 0x14, 0xa8, 0xc0, 0x38, 0x3e, 0x2f, 0x00, 0xdd, 0x85, 0xe6,
-	0x20, 0x5a, 0x12, 0x91, 0x7a, 0x0d, 0x7f, 0xf8, 0x3a, 0x65, 0x7a, 0xb9, 0x99, 0x42, 0x1a, 0x99,
-	0x4c, 0x85, 0xd2, 0xb4, 0xb1, 0x97, 0x34, 0xd5, 0x7e, 0xae, 0xc1, 0xa1, 0xa9, 0x09, 0xfe, 0xc7,
-	0x44, 0xdf, 0x94, 0x88, 0xab, 0x15, 0x8b, 0x38, 0x1d, 0x16, 0xcc, 0x81, 0xef, 0x0b, 0xb5, 0x91,
-	0x27, 0xe1, 0xb2, 0xce, 0x3c, 0x41, 0x39, 0xb3, 0x9b, 0xa0, 0x94, 0xf3, 0x47, 0x42, 0x45, 0xee,
-	0x61, 0xd6, 0x29, 0x96, 0x44, 0x98, 0x22, 0x09, 0x9f, 0x95, 0x97, 0x44, 0xda, 0x97, 0x23, 0xe4,
-	0xe6, 0x8a, 0x85, 0x1c, 0xba, 0x91, 0x12, 0x91, 0x10, 0x10, 0xfa, 0x54, 0x19, 0x5e, 0xe4, 0xaa,
-	0x48, 0xed, 0x33, 0x05, 0xfe, 0x5f, 0x48, 0x9e, 0x5d, 0x5e, 0xdf, 0x0f, 0xf2, 0xe5, 0xe1, 0xc5,
-	0x72, 0xf2, 0x30, 0x47, 0xfc, 0x64, 0x74, 0xe2, 0xd5, 0x73, 0x8f, 0x9e, 0xa8, 0x95, 0xc7, 0x4f,
-	0xd4, 0xca, 0xb3, 0x27, 0xaa, 0xf2, 0xf1, 0x58, 0x55, 0xbe, 0x19, 0xab, 0xca, 0xc3, 0xb1, 0xaa,
-	0x3c, 0x1a, 0xab, 0xca, 0xef, 0x63, 0x55, 0x79, 0x3a, 0x56, 0x2b, 0xcf, 0xc6, 0xaa, 0xf2, 0xe9,
-	0x8e, 0x5a, 0x79, 0xb4, 0xa3, 0x56, 0x1e, 0xef, 0xa8, 0x95, 0x3f, 0x03, 0x00, 0x00, 0xff, 0xff,
-	0x3f, 0x34, 0x05, 0x1e, 0x5e, 0x15, 0x00, 0x00,
+	// 1396 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xd4, 0x57, 0x5d, 0x8f, 0xd3, 0x46,
+	0x17, 0x96, 0xf3, 0xc1, 0x26, 0x67, 0x5f, 0xb2, 0x30, 0xac, 0xd8, 0xbc, 0xab, 0x0a, 0xad, 0x5c,
+	0x04, 0x29, 0x05, 0x07, 0x96, 0x0a, 0xf1, 0x25, 0xb5, 0xb0, 0x20, 0xda, 0x6a, 0xf9, 0xd0, 0x64,
+	0x17, 0x55, 0x48, 0x55, 0x35, 0xeb, 0x0c, 0x61, 0xba, 0xf6, 0xd8, 0x9a, 0x99, 0xa4, 0xe4, 0x0e,
+	0x55, 0xfd, 0x01, 0xbd, 0xab, 0x7a, 0xdb, 0x5e, 0xf4, 0xaa, 0x3f, 0x82, 0xbb, 0x4a, 0xbd, 0xe1,
+	0xba, 0x52, 0xab, 0x8a, 0x5f, 0x52, 0xcd, 0xd8, 0x71, 0x6c, 0xc7, 0x5e, 0x0c, 0x5a, 0xa9, 0xea,
+	0x5d, 0xe6, 0xcc, 0x79, 0x1e, 0xcf, 0xf9, 0x98, 0x39, 0x4f, 0xe0, 0xec, 0xfe, 0x55, 0xe9, 0xb0,
+	0xa0, 0x4f, 0x42, 0xd6, 0x27, 0x61, 0x28, 0xfb, 0x93, 0x4b, 0x7b, 0x54, 0x91, 0x4b, 0xfd, 0x11,
+	0xe5, 0x54, 0x10, 0x45, 0x87, 0x4e, 0x28, 0x02, 0x15, 0xa0, 0xb5, 0xc8, 0xd1, 0x21, 0x21, 0x73,
+	0xb4, 0xa3, 0x13, 0x3b, 0xae, 0xdb, 0x29, 0x06, 0x37, 0x10, 0xb4, 0x3f, 0x59, 0x00, 0xaf, 0x7f,
+	0x34, 0xf7, 0xf1, 0x89, 0xfb, 0x8c, 0x71, 0x2a, 0xa6, 0xfd, 0x70, 0x7f, 0xa4, 0x0d, 0xb2, 0xef,
+	0x53, 0x45, 0x8a, 0x50, 0xfd, 0x32, 0x94, 0x18, 0x73, 0xc5, 0x7c, 0xba, 0x00, 0xb8, 0xf2, 0x26,
+	0x80, 0x74, 0x9f, 0x51, 0x9f, 0x2c, 0xe0, 0x2e, 0x97, 0xe1, 0xc6, 0x8a, 0x79, 0x7d, 0xc6, 0x95,
+	0x54, 0x22, 0x0f, 0xb2, 0x5f, 0x5a, 0x80, 0xb6, 0x02, 0xae, 0x44, 0xe0, 0x79, 0x54, 0x60, 0x3a,
+	0x61, 0x92, 0x05, 0x1c, 0x6d, 0x43, 0x4b, 0xc7, 0x33, 0x24, 0x8a, 0x74, 0xad, 0x0d, 0xab, 0xb7,
+	0xbc, 0x79, 0xd1, 0x99, 0xa7, 0x2e, 0xa1, 0x77, 0xc2, 0xfd, 0x91, 0x36, 0x48, 0x47, 0x7b, 0x3b,
+	0x93, 0x4b, 0xce, 0xc3, 0xbd, 0xaf, 0xa9, 0xab, 0xee, 0x53, 0x45, 0x70, 0xc2, 0x80, 0x6e, 0x41,
+	0xc3, 0x30, 0xd5, 0x0c, 0xd3, 0x85, 0x52, 0xa6, 0x38, 0x40, 0x07, 0x93, 0x6f, 0xee, 0x3e, 0x57,
+	0x94, 0xeb, 0xa3, 0x60, 0x03, 0x45, 0xeb, 0xd0, 0x12, 0xf1, 0xe1, 0xba, 0xf5, 0x0d, 0xab, 0x57,
+	0xc7, 0xc9, 0xda, 0xfe, 0xc5, 0x82, 0x93, 0x8b, 0x31, 0x6c, 0x33, 0xa9, 0xd0, 0xe7, 0x0b, 0x71,
+	0x38, 0xd5, 0xe2, 0xd0, 0xe8, 0x85, 0x28, 0x9a, 0x4c, 0x51, 0x5f, 0x76, 0x6b, 0x1b, 0xf5, 0xde,
+	0xf2, 0xe6, 0x87, 0x4e, 0x49, 0x2f, 0x39, 0x8b, 0x67, 0xc1, 0x11, 0xd2, 0xfe, 0xc3, 0x02, 0xb8,
+	0x43, 0x43, 0x2f, 0x98, 0xfa, 0x94, 0xab, 0x43, 0xce, 0xf2, 0x0d, 0x68, 0xc8, 0x90, 0xba, 0x71,
+	0x96, 0xcf, 0x96, 0x1e, 0x6f, 0x7e, 0x80, 0x41, 0x48, 0x5d, 0x6c, 0x40, 0xe8, 0x16, 0x1c, 0x91,
+	0x8a, 0xa8, 0xb1, 0x34, 0xd9, 0x5d, 0xde, 0xfc, 0xa0, 0x0a, 0xdc, 0x00, 0x70, 0x0c, 0xb4, 0x7f,
+	0xae, 0xc1, 0x89, 0xf9, 0xe6, 0x56, 0xc0, 0x87, 0x4c, 0xe9, 0x5e, 0x42, 0xd0, 0x50, 0xd3, 0x90,
+	0x9a, 0x08, 0xdb, 0xd8, 0xfc, 0x46, 0x27, 0x93, 0xcf, 0xd5, 0x8c, 0x35, 0x5e, 0x21, 0x0c, 0x1d,
+	0x8f, 0x48, 0xb5, 0x1b, 0x0e, 0x89, 0xa2, 0x3b, 0xcc, 0xa7, 0xdd, 0x23, 0xe6, 0x38, 0xe7, 0xaa,
+	0xe5, 0x45, 0x23, 0x70, 0x8e, 0x01, 0x3d, 0x01, 0xa4, 0x2d, 0x3b, 0x82, 0x70, 0x69, 0x4e, 0x64,
+	0x78, 0x97, 0xde, 0x9a, 0xb7, 0x80, 0x45, 0xc7, 0x21, 0x28, 0x91, 0x01, 0xef, 0x36, 0xa2, 0x38,
+	0xa2, 0x15, 0xea, 0xc2, 0x92, 0x4f, 0xa5, 0x24, 0x23, 0xda, 0x6d, 0x9a, 0x8d, 0xd9, 0xd2, 0xfe,
+	0xc1, 0x82, 0xce, 0x3c, 0x4b, 0x87, 0xde, 0xa4, 0xd7, 0xb2, 0x4d, 0xfa, 0x7e, 0x85, 0x32, 0xce,
+	0x9a, 0xf3, 0xd7, 0x1a, 0xa0, 0x94, 0x35, 0xf0, 0xbc, 0x3d, 0xe2, 0xee, 0xeb, 0xf2, 0x71, 0xe2,
+	0x27, 0xe5, 0xd3, 0xbf, 0x91, 0x04, 0x34, 0x36, 0x09, 0x1e, 0xde, 0xe2, 0x3c, 0x50, 0x44, 0xe7,
+	0x63, 0xf6, 0xc9, 0xad, 0x2a, 0x9f, 0x8c, 0xc9, 0x9d, 0xdd, 0x05, 0x96, 0xbb, 0x5c, 0x89, 0x29,
+	0x2e, 0xa0, 0x47, 0xf7, 0x00, 0x44, 0x8c, 0xdb, 0x09, 0xe2, 0x36, 0x2d, 0xef, 0xf2, 0xd9, 0x27,
+	0xb6, 0x02, 0xfe, 0x94, 0x8d, 0x70, 0x0a, 0xba, 0x7e, 0x17, 0xd6, 0x4a, 0xbe, 0x8b, 0x8e, 0x41,
+	0x7d, 0x9f, 0x4e, 0xe3, 0x58, 0xf5, 0x4f, 0xb4, 0x0a, 0xcd, 0x09, 0xf1, 0xc6, 0x34, 0x6e, 0xd4,
+	0x68, 0x71, 0xbd, 0x76, 0xd5, 0xb2, 0x5f, 0x34, 0xd2, 0x95, 0xd4, 0x77, 0x29, 0x7a, 0xa5, 0x42,
+	0x8f, 0xb9, 0x44, 0x1a, 0x8e, 0x26, 0x4e, 0xd6, 0xe8, 0x21, 0xb4, 0x24, 0xf5, 0xa8, 0xab, 0x02,
+	0x11, 0x5f, 0xd1, 0xcb, 0x15, 0xab, 0x4c, 0xf6, 0xa8, 0x37, 0x88, 0xa1, 0x38, 0x21, 0x41, 0x1f,
+	0x43, 0x4b, 0x51, 0x3f, 0xf4, 0x88, 0xa2, 0x71, 0x36, 0x32, 0xd5, 0xd6, 0x53, 0x4c, 0xc3, 0x1f,
+	0x05, 0xc3, 0x9d, 0xd8, 0xcd, 0xdc, 0xf7, 0x04, 0x84, 0xee, 0x41, 0x4b, 0x2a, 0x3d, 0x0c, 0x46,
+	0x53, 0xd3, 0xbe, 0x07, 0xbd, 0x69, 0xe9, 0x5b, 0x1f, 0x41, 0x70, 0x02, 0x46, 0x3d, 0x58, 0xf1,
+	0x19, 0xc7, 0x94, 0x0c, 0xa7, 0x03, 0xea, 0x06, 0x7c, 0x28, 0x4d, 0xd7, 0x37, 0x71, 0xde, 0x8c,
+	0x36, 0x61, 0x75, 0xf6, 0x6c, 0x7f, 0xca, 0xa4, 0x0a, 0xc4, 0x74, 0x9b, 0xf9, 0x4c, 0x99, 0x5b,
+	0xde, 0xc4, 0x85, 0x7b, 0xfa, 0x8e, 0x85, 0x64, 0x2c, 0xe9, 0xd0, 0xdc, 0xd9, 0x16, 0x8e, 0x57,
+	0xb9, 0x7e, 0x68, 0xbd, 0x73, 0x3f, 0xa0, 0xab, 0xb0, 0x16, 0x8a, 0x60, 0x24, 0xa8, 0x94, 0x77,
+	0x28, 0x19, 0x7a, 0x8c, 0xd3, 0x59, 0x18, 0x6d, 0x73, 0xae, 0xb2, 0x6d, 0xfb, 0xbb, 0x3a, 0x1c,
+	0xcb, 0xbf, 0x87, 0xc8, 0x01, 0x14, 0xec, 0x49, 0x2a, 0x26, 0x74, 0x78, 0x2f, 0x9a, 0xb6, 0x7a,
+	0x68, 0x59, 0x66, 0x68, 0x15, 0xec, 0x64, 0x9a, 0xa6, 0x96, 0x6b, 0x9a, 0x1e, 0xac, 0xc4, 0x37,
+	0x01, 0xcf, 0x5c, 0xea, 0x51, 0x66, 0x73, 0x66, 0x74, 0x1a, 0x8e, 0x0a, 0x9d, 0xe9, 0xc4, 0x6f,
+	0xc9, 0xf8, 0x65, 0x8d, 0xe8, 0x3c, 0x1c, 0x27, 0x13, 0xc2, 0x3c, 0xb2, 0xe7, 0xd1, 0xc4, 0xb3,
+	0x61, 0x3c, 0x17, 0x37, 0xd0, 0x45, 0x38, 0x31, 0xe6, 0x8b, 0xfe, 0x51, 0x6d, 0x8b, 0xb6, 0xd0,
+	0x36, 0x80, 0x3b, 0x7b, 0xf8, 0x65, 0xf7, 0x88, 0x79, 0x10, 0xce, 0x57, 0x68, 0xaa, 0x64, 0x5a,
+	0xe0, 0x14, 0x1e, 0x9d, 0x81, 0x8e, 0x1b, 0x78, 0x9e, 0x69, 0x89, 0xad, 0x60, 0xcc, 0x95, 0xa9,
+	0x72, 0x13, 0xe7, 0xac, 0xf6, 0x0b, 0x2b, 0xfd, 0x72, 0xcd, 0x1a, 0xb4, 0x70, 0xf0, 0x3c, 0x86,
+	0xa3, 0xba, 0xf2, 0x8c, 0x8f, 0xa2, 0x27, 0x20, 0xbe, 0x8a, 0x17, 0x0f, 0xec, 0x9b, 0xc4, 0x3b,
+	0xf5, 0x82, 0x65, 0x69, 0xec, 0xf3, 0xd0, 0xc9, 0x76, 0x58, 0x46, 0xb1, 0x58, 0x39, 0xc5, 0xf2,
+	0xd2, 0x82, 0xb5, 0x12, 0x62, 0xf4, 0x05, 0x74, 0x7c, 0xf2, 0x7c, 0x77, 0x9e, 0xdc, 0x37, 0x4a,
+	0x03, 0xad, 0xef, 0x9c, 0x48, 0xdf, 0x39, 0x9f, 0x71, 0xf5, 0x50, 0x0c, 0x94, 0x60, 0x7c, 0x84,
+	0x73, 0x3c, 0x46, 0x6e, 0x90, 0xe7, 0x83, 0xb1, 0x18, 0x15, 0x85, 0x5d, 0x8d, 0x33, 0x61, 0xb0,
+	0x3f, 0x81, 0x8d, 0x4c, 0x08, 0xba, 0xfb, 0xe9, 0xd3, 0xb1, 0x37, 0xa0, 0xf3, 0x0a, 0xbc, 0x07,
+	0xed, 0x90, 0x08, 0xc5, 0x92, 0x1b, 0xd0, 0xc4, 0x73, 0x83, 0xfd, 0xbb, 0x05, 0xcd, 0x81, 0x4b,
+	0xe2, 0x93, 0x1d, 0x9e, 0x10, 0xba, 0x92, 0x11, 0x42, 0x76, 0x69, 0x69, 0xcd, 0xb7, 0x53, 0x1a,
+	0xe8, 0x66, 0x4e, 0x03, 0x9d, 0x7e, 0x03, 0x32, 0x2b, 0x7f, 0xce, 0x42, 0x3b, 0x21, 0x3c, 0x68,
+	0x10, 0xd8, 0x7f, 0x59, 0xb0, 0x9c, 0x22, 0x38, 0x70, 0x68, 0x3c, 0xc8, 0x0c, 0x0d, 0x7d, 0x9b,
+	0x36, 0xab, 0x1c, 0xca, 0x99, 0x8d, 0x8b, 0x68, 0x9a, 0xce, 0x67, 0xc6, 0x19, 0xe8, 0x28, 0x22,
+	0x46, 0x54, 0xcd, 0x1c, 0x4c, 0xa8, 0x6d, 0x9c, 0xb3, 0xae, 0xdf, 0x80, 0xa3, 0x19, 0x8a, 0xb7,
+	0x1a, 0x8c, 0x7f, 0xea, 0x00, 0xe7, 0xdd, 0x70, 0xc8, 0xd5, 0xbd, 0x99, 0xa9, 0x6e, 0xaf, 0x3c,
+	0x1d, 0xa9, 0x7e, 0x9c, 0xd7, 0xf8, 0x76, 0xae, 0xc6, 0xe7, 0x2a, 0xe1, 0xb3, 0x95, 0x7e, 0x65,
+	0xc1, 0x6a, 0x6a, 0xf7, 0xdd, 0x94, 0x6e, 0xb1, 0x2a, 0xad, 0xff, 0x4b, 0xaa, 0xf4, 0x47, 0x0b,
+	0x56, 0x52, 0x21, 0x1d, 0xba, 0x2c, 0xbd, 0x9e, 0x95, 0xa5, 0xa7, 0xab, 0x64, 0x7d, 0xa6, 0x4b,
+	0xbf, 0x6d, 0x64, 0xce, 0xf6, 0x1f, 0x14, 0x5a, 0x5f, 0xc2, 0xea, 0x24, 0xf0, 0xc6, 0x3e, 0xdd,
+	0xf2, 0x08, 0xf3, 0x67, 0x4e, 0x7a, 0xf0, 0xd6, 0xf3, 0x7f, 0xb5, 0x12, 0x32, 0x2a, 0x24, 0x93,
+	0x8a, 0x72, 0xf5, 0x78, 0x8e, 0xc4, 0x85, 0x34, 0x68, 0x03, 0x96, 0xb5, 0xa8, 0x60, 0x2e, 0x7d,
+	0xa0, 0x85, 0x7a, 0x54, 0xda, 0xb4, 0x49, 0x0f, 0xf2, 0x30, 0x18, 0xde, 0x27, 0x9c, 0x8c, 0xa8,
+	0x1e, 0x32, 0x8f, 0x02, 0x8f, 0xb9, 0x53, 0xa3, 0xba, 0xda, 0xb8, 0x68, 0x0b, 0x3d, 0x81, 0xce,
+	0x38, 0x7e, 0xd6, 0x63, 0x85, 0x18, 0xfd, 0x61, 0xda, 0xac, 0x52, 0xb9, 0xdd, 0x0c, 0x12, 0xe7,
+	0x98, 0x4a, 0x45, 0x60, 0xab, 0x5c, 0x04, 0xda, 0x3f, 0xd5, 0xe1, 0xf8, 0xc2, 0x8d, 0x3c, 0x54,
+	0xa9, 0xb5, 0x20, 0xa0, 0xea, 0x45, 0x02, 0xaa, 0x07, 0x2b, 0xee, 0x58, 0x08, 0xad, 0x00, 0xb2,
+	0xf2, 0x29, 0x6f, 0x2e, 0x92, 0x6e, 0xcd, 0x62, 0xe9, 0x96, 0xe6, 0x8c, 0x05, 0x43, 0x54, 0x99,
+	0xbc, 0x59, 0x3f, 0xdf, 0x11, 0x38, 0x71, 0x5c, 0x8a, 0x9e, 0xef, 0xac, 0xb5, 0x40, 0x38, 0xb5,
+	0x8b, 0x84, 0x13, 0xba, 0x9f, 0x91, 0x6b, 0x60, 0xda, 0xf1, 0x42, 0x95, 0x0a, 0x17, 0xea, 0x35,
+	0xfb, 0x7b, 0x0b, 0xfe, 0x5f, 0xda, 0x06, 0x85, 0xaf, 0xe3, 0x57, 0xc5, 0x72, 0xec, 0x5a, 0x35,
+	0x39, 0x56, 0x20, 0x39, 0x72, 0xba, 0xec, 0xf6, 0xff, 0x7e, 0x7b, 0x7d, 0xca, 0x7a, 0xf5, 0xfa,
+	0x94, 0xf5, 0xf7, 0xeb, 0x53, 0xd6, 0x3f, 0x01, 0x00, 0x00, 0xff, 0xff, 0x1b, 0xdb, 0x34, 0x42,
+	0x28, 0x14, 0x00, 0x00,
 }
 
-func (this *ControllerRevision) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*ControllerRevision)
-	if !ok {
-		that2, ok := that.(ControllerRevision)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if !this.Data.Equal(that1.Data) {
-		return false
-	}
-	if this.Revision != that1.Revision {
-		return false
-	}
-	return true
-}
-func (this *ControllerRevisionList) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*ControllerRevisionList)
-	if !ok {
-		that2, ok := that.(ControllerRevisionList)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if len(this.Items) != len(that1.Items) {
-		return false
-	}
-	for i := range this.Items {
-		if !this.Items[i].Equal(that1.Items[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *Deployment) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*Deployment)
-	if !ok {
-		that2, ok := that.(Deployment)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if !this.Spec.Equal(that1.Spec) {
-		return false
-	}
-	if !this.Status.Equal(that1.Status) {
-		return false
-	}
-	return true
-}
-func (this *DeploymentCondition) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*DeploymentCondition)
-	if !ok {
-		that2, ok := that.(DeploymentCondition)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Type != that1.Type {
-		return false
-	}
-	if this.Status != that1.Status {
-		return false
-	}
-	if !this.LastUpdateTime.Equal(that1.LastUpdateTime) {
-		return false
-	}
-	if !this.LastTransitionTime.Equal(that1.LastTransitionTime) {
-		return false
-	}
-	if this.Reason != that1.Reason {
-		return false
-	}
-	if this.Message != that1.Message {
-		return false
-	}
-	return true
-}
-func (this *DeploymentList) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*DeploymentList)
-	if !ok {
-		that2, ok := that.(DeploymentList)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if len(this.Items) != len(that1.Items) {
-		return false
-	}
-	for i := range this.Items {
-		if !this.Items[i].Equal(that1.Items[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *DeploymentRollback) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*DeploymentRollback)
-	if !ok {
-		that2, ok := that.(DeploymentRollback)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Name != that1.Name {
-		return false
-	}
-	if len(this.UpdatedAnnotations) != len(that1.UpdatedAnnotations) {
-		return false
-	}
-	for i := range this.UpdatedAnnotations {
-		if this.UpdatedAnnotations[i] != that1.UpdatedAnnotations[i] {
-			return false
-		}
-	}
-	if !this.RollbackTo.Equal(that1.RollbackTo) {
-		return false
-	}
-	return true
-}
-func (this *DeploymentSpec) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*DeploymentSpec)
-	if !ok {
-		that2, ok := that.(DeploymentSpec)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Replicas != that1.Replicas {
-		return false
-	}
-	if !this.Selector.Equal(that1.Selector) {
-		return false
-	}
-	if !this.Template.Equal(that1.Template) {
-		return false
-	}
-	if !this.Strategy.Equal(that1.Strategy) {
-		return false
-	}
-	if this.MinReadySeconds != that1.MinReadySeconds {
-		return false
-	}
-	if this.RevisionHistoryLimit != that1.RevisionHistoryLimit {
-		return false
-	}
-	if this.Paused != that1.Paused {
-		return false
-	}
-	if !this.RollbackTo.Equal(that1.RollbackTo) {
-		return false
-	}
-	if this.ProgressDeadlineSeconds != that1.ProgressDeadlineSeconds {
-		return false
-	}
-	return true
-}
-func (this *DeploymentStatus) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*DeploymentStatus)
-	if !ok {
-		that2, ok := that.(DeploymentStatus)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.ObservedGeneration != that1.ObservedGeneration {
-		return false
-	}
-	if this.Replicas != that1.Replicas {
-		return false
-	}
-	if this.UpdatedReplicas != that1.UpdatedReplicas {
-		return false
-	}
-	if this.ReadyReplicas != that1.ReadyReplicas {
-		return false
-	}
-	if this.AvailableReplicas != that1.AvailableReplicas {
-		return false
-	}
-	if this.UnavailableReplicas != that1.UnavailableReplicas {
-		return false
-	}
-	if len(this.Conditions) != len(that1.Conditions) {
-		return false
-	}
-	for i := range this.Conditions {
-		if !this.Conditions[i].Equal(that1.Conditions[i]) {
-			return false
-		}
-	}
-	if this.CollisionCount != that1.CollisionCount {
-		return false
-	}
-	return true
-}
-func (this *DeploymentStrategy) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*DeploymentStrategy)
-	if !ok {
-		that2, ok := that.(DeploymentStrategy)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Type != that1.Type {
-		return false
-	}
-	if !this.RollingUpdate.Equal(that1.RollingUpdate) {
-		return false
-	}
-	return true
-}
-func (this *RollbackConfig) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*RollbackConfig)
-	if !ok {
-		that2, ok := that.(RollbackConfig)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Revision != that1.Revision {
-		return false
-	}
-	return true
-}
-func (this *RollingUpdateDeployment) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*RollingUpdateDeployment)
-	if !ok {
-		that2, ok := that.(RollingUpdateDeployment)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.MaxUnavailable.Equal(that1.MaxUnavailable) {
-		return false
-	}
-	if !this.MaxSurge.Equal(that1.MaxSurge) {
-		return false
-	}
-	return true
-}
-func (this *RollingUpdateStatefulSetStrategy) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*RollingUpdateStatefulSetStrategy)
-	if !ok {
-		that2, ok := that.(RollingUpdateStatefulSetStrategy)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Partition != that1.Partition {
-		return false
-	}
-	return true
-}
-func (this *Scale) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*Scale)
-	if !ok {
-		that2, ok := that.(Scale)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if !this.Spec.Equal(that1.Spec) {
-		return false
-	}
-	if !this.Status.Equal(that1.Status) {
-		return false
-	}
-	return true
-}
-func (this *ScaleSpec) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*ScaleSpec)
-	if !ok {
-		that2, ok := that.(ScaleSpec)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Replicas != that1.Replicas {
-		return false
-	}
-	return true
-}
-func (this *ScaleStatus) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*ScaleStatus)
-	if !ok {
-		that2, ok := that.(ScaleStatus)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Replicas != that1.Replicas {
-		return false
-	}
-	if len(this.Selector) != len(that1.Selector) {
-		return false
-	}
-	for i := range this.Selector {
-		if this.Selector[i] != that1.Selector[i] {
-			return false
-		}
-	}
-	if this.TargetSelector != that1.TargetSelector {
-		return false
-	}
-	return true
-}
-func (this *StatefulSet) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*StatefulSet)
-	if !ok {
-		that2, ok := that.(StatefulSet)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if !this.Spec.Equal(that1.Spec) {
-		return false
-	}
-	if !this.Status.Equal(that1.Status) {
-		return false
-	}
-	return true
-}
-func (this *StatefulSetCondition) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*StatefulSetCondition)
-	if !ok {
-		that2, ok := that.(StatefulSetCondition)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Type != that1.Type {
-		return false
-	}
-	if this.Status != that1.Status {
-		return false
-	}
-	if !this.LastTransitionTime.Equal(that1.LastTransitionTime) {
-		return false
-	}
-	if this.Reason != that1.Reason {
-		return false
-	}
-	if this.Message != that1.Message {
-		return false
-	}
-	return true
-}
-func (this *StatefulSetList) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*StatefulSetList)
-	if !ok {
-		that2, ok := that.(StatefulSetList)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if len(this.Items) != len(that1.Items) {
-		return false
-	}
-	for i := range this.Items {
-		if !this.Items[i].Equal(that1.Items[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *StatefulSetSpec) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*StatefulSetSpec)
-	if !ok {
-		that2, ok := that.(StatefulSetSpec)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Replicas != that1.Replicas {
-		return false
-	}
-	if !this.Selector.Equal(that1.Selector) {
-		return false
-	}
-	if !this.Template.Equal(that1.Template) {
-		return false
-	}
-	if len(this.VolumeClaimTemplates) != len(that1.VolumeClaimTemplates) {
-		return false
-	}
-	for i := range this.VolumeClaimTemplates {
-		if !this.VolumeClaimTemplates[i].Equal(that1.VolumeClaimTemplates[i]) {
-			return false
-		}
-	}
-	if this.ServiceName != that1.ServiceName {
-		return false
-	}
-	if this.PodManagementPolicy != that1.PodManagementPolicy {
-		return false
-	}
-	if !this.UpdateStrategy.Equal(that1.UpdateStrategy) {
-		return false
-	}
-	if this.RevisionHistoryLimit != that1.RevisionHistoryLimit {
-		return false
-	}
-	return true
-}
-func (this *StatefulSetStatus) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*StatefulSetStatus)
-	if !ok {
-		that2, ok := that.(StatefulSetStatus)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.ObservedGeneration != that1.ObservedGeneration {
-		return false
-	}
-	if this.Replicas != that1.Replicas {
-		return false
-	}
-	if this.ReadyReplicas != that1.ReadyReplicas {
-		return false
-	}
-	if this.CurrentReplicas != that1.CurrentReplicas {
-		return false
-	}
-	if this.UpdatedReplicas != that1.UpdatedReplicas {
-		return false
-	}
-	if this.CurrentRevision != that1.CurrentRevision {
-		return false
-	}
-	if this.UpdateRevision != that1.UpdateRevision {
-		return false
-	}
-	if this.CollisionCount != that1.CollisionCount {
-		return false
-	}
-	if len(this.Conditions) != len(that1.Conditions) {
-		return false
-	}
-	for i := range this.Conditions {
-		if !this.Conditions[i].Equal(that1.Conditions[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *StatefulSetUpdateStrategy) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*StatefulSetUpdateStrategy)
-	if !ok {
-		that2, ok := that.(StatefulSetUpdateStrategy)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Type != that1.Type {
-		return false
-	}
-	if !this.RollingUpdate.Equal(that1.RollingUpdate) {
-		return false
-	}
-	return true
-}
-func (this *ControllerRevision) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 7)
-	s = append(s, "&k8s_io_api_apps_v1beta1.ControllerRevision{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Data != nil {
-		s = append(s, "Data: "+fmt.Sprintf("%#v", this.Data)+",\n")
-	}
-	s = append(s, "Revision: "+fmt.Sprintf("%#v", this.Revision)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *ControllerRevisionList) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_apps_v1beta1.ControllerRevisionList{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Items != nil {
-		s = append(s, "Items: "+fmt.Sprintf("%#v", this.Items)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *Deployment) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 7)
-	s = append(s, "&k8s_io_api_apps_v1beta1.Deployment{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Spec != nil {
-		s = append(s, "Spec: "+fmt.Sprintf("%#v", this.Spec)+",\n")
-	}
-	if this.Status != nil {
-		s = append(s, "Status: "+fmt.Sprintf("%#v", this.Status)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *DeploymentCondition) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 10)
-	s = append(s, "&k8s_io_api_apps_v1beta1.DeploymentCondition{")
-	s = append(s, "Type: "+fmt.Sprintf("%#v", this.Type)+",\n")
-	s = append(s, "Status: "+fmt.Sprintf("%#v", this.Status)+",\n")
-	if this.LastUpdateTime != nil {
-		s = append(s, "LastUpdateTime: "+fmt.Sprintf("%#v", this.LastUpdateTime)+",\n")
-	}
-	if this.LastTransitionTime != nil {
-		s = append(s, "LastTransitionTime: "+fmt.Sprintf("%#v", this.LastTransitionTime)+",\n")
-	}
-	s = append(s, "Reason: "+fmt.Sprintf("%#v", this.Reason)+",\n")
-	s = append(s, "Message: "+fmt.Sprintf("%#v", this.Message)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *DeploymentList) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_apps_v1beta1.DeploymentList{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Items != nil {
-		s = append(s, "Items: "+fmt.Sprintf("%#v", this.Items)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *DeploymentRollback) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 7)
-	s = append(s, "&k8s_io_api_apps_v1beta1.DeploymentRollback{")
-	s = append(s, "Name: "+fmt.Sprintf("%#v", this.Name)+",\n")
-	keysForUpdatedAnnotations := make([]string, 0, len(this.UpdatedAnnotations))
-	for k, _ := range this.UpdatedAnnotations {
-		keysForUpdatedAnnotations = append(keysForUpdatedAnnotations, k)
-	}
-	github_com_gogo_protobuf_sortkeys.Strings(keysForUpdatedAnnotations)
-	mapStringForUpdatedAnnotations := "map[string]string{"
-	for _, k := range keysForUpdatedAnnotations {
-		mapStringForUpdatedAnnotations += fmt.Sprintf("%#v: %#v,", k, this.UpdatedAnnotations[k])
-	}
-	mapStringForUpdatedAnnotations += "}"
-	if this.UpdatedAnnotations != nil {
-		s = append(s, "UpdatedAnnotations: "+mapStringForUpdatedAnnotations+",\n")
-	}
-	if this.RollbackTo != nil {
-		s = append(s, "RollbackTo: "+fmt.Sprintf("%#v", this.RollbackTo)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *DeploymentSpec) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 13)
-	s = append(s, "&k8s_io_api_apps_v1beta1.DeploymentSpec{")
-	s = append(s, "Replicas: "+fmt.Sprintf("%#v", this.Replicas)+",\n")
-	if this.Selector != nil {
-		s = append(s, "Selector: "+fmt.Sprintf("%#v", this.Selector)+",\n")
-	}
-	if this.Template != nil {
-		s = append(s, "Template: "+fmt.Sprintf("%#v", this.Template)+",\n")
-	}
-	if this.Strategy != nil {
-		s = append(s, "Strategy: "+fmt.Sprintf("%#v", this.Strategy)+",\n")
-	}
-	s = append(s, "MinReadySeconds: "+fmt.Sprintf("%#v", this.MinReadySeconds)+",\n")
-	s = append(s, "RevisionHistoryLimit: "+fmt.Sprintf("%#v", this.RevisionHistoryLimit)+",\n")
-	s = append(s, "Paused: "+fmt.Sprintf("%#v", this.Paused)+",\n")
-	if this.RollbackTo != nil {
-		s = append(s, "RollbackTo: "+fmt.Sprintf("%#v", this.RollbackTo)+",\n")
-	}
-	s = append(s, "ProgressDeadlineSeconds: "+fmt.Sprintf("%#v", this.ProgressDeadlineSeconds)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *DeploymentStatus) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 12)
-	s = append(s, "&k8s_io_api_apps_v1beta1.DeploymentStatus{")
-	s = append(s, "ObservedGeneration: "+fmt.Sprintf("%#v", this.ObservedGeneration)+",\n")
-	s = append(s, "Replicas: "+fmt.Sprintf("%#v", this.Replicas)+",\n")
-	s = append(s, "UpdatedReplicas: "+fmt.Sprintf("%#v", this.UpdatedReplicas)+",\n")
-	s = append(s, "ReadyReplicas: "+fmt.Sprintf("%#v", this.ReadyReplicas)+",\n")
-	s = append(s, "AvailableReplicas: "+fmt.Sprintf("%#v", this.AvailableReplicas)+",\n")
-	s = append(s, "UnavailableReplicas: "+fmt.Sprintf("%#v", this.UnavailableReplicas)+",\n")
-	if this.Conditions != nil {
-		s = append(s, "Conditions: "+fmt.Sprintf("%#v", this.Conditions)+",\n")
-	}
-	s = append(s, "CollisionCount: "+fmt.Sprintf("%#v", this.CollisionCount)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *DeploymentStrategy) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_apps_v1beta1.DeploymentStrategy{")
-	s = append(s, "Type: "+fmt.Sprintf("%#v", this.Type)+",\n")
-	if this.RollingUpdate != nil {
-		s = append(s, "RollingUpdate: "+fmt.Sprintf("%#v", this.RollingUpdate)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *RollbackConfig) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 5)
-	s = append(s, "&k8s_io_api_apps_v1beta1.RollbackConfig{")
-	s = append(s, "Revision: "+fmt.Sprintf("%#v", this.Revision)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *RollingUpdateDeployment) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_apps_v1beta1.RollingUpdateDeployment{")
-	if this.MaxUnavailable != nil {
-		s = append(s, "MaxUnavailable: "+fmt.Sprintf("%#v", this.MaxUnavailable)+",\n")
-	}
-	if this.MaxSurge != nil {
-		s = append(s, "MaxSurge: "+fmt.Sprintf("%#v", this.MaxSurge)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *RollingUpdateStatefulSetStrategy) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 5)
-	s = append(s, "&k8s_io_api_apps_v1beta1.RollingUpdateStatefulSetStrategy{")
-	s = append(s, "Partition: "+fmt.Sprintf("%#v", this.Partition)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *Scale) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 7)
-	s = append(s, "&k8s_io_api_apps_v1beta1.Scale{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Spec != nil {
-		s = append(s, "Spec: "+fmt.Sprintf("%#v", this.Spec)+",\n")
-	}
-	if this.Status != nil {
-		s = append(s, "Status: "+fmt.Sprintf("%#v", this.Status)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *ScaleSpec) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 5)
-	s = append(s, "&k8s_io_api_apps_v1beta1.ScaleSpec{")
-	s = append(s, "Replicas: "+fmt.Sprintf("%#v", this.Replicas)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *ScaleStatus) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 7)
-	s = append(s, "&k8s_io_api_apps_v1beta1.ScaleStatus{")
-	s = append(s, "Replicas: "+fmt.Sprintf("%#v", this.Replicas)+",\n")
-	keysForSelector := make([]string, 0, len(this.Selector))
-	for k, _ := range this.Selector {
-		keysForSelector = append(keysForSelector, k)
-	}
-	github_com_gogo_protobuf_sortkeys.Strings(keysForSelector)
-	mapStringForSelector := "map[string]string{"
-	for _, k := range keysForSelector {
-		mapStringForSelector += fmt.Sprintf("%#v: %#v,", k, this.Selector[k])
-	}
-	mapStringForSelector += "}"
-	if this.Selector != nil {
-		s = append(s, "Selector: "+mapStringForSelector+",\n")
-	}
-	s = append(s, "TargetSelector: "+fmt.Sprintf("%#v", this.TargetSelector)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *StatefulSet) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 7)
-	s = append(s, "&k8s_io_api_apps_v1beta1.StatefulSet{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Spec != nil {
-		s = append(s, "Spec: "+fmt.Sprintf("%#v", this.Spec)+",\n")
-	}
-	if this.Status != nil {
-		s = append(s, "Status: "+fmt.Sprintf("%#v", this.Status)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *StatefulSetCondition) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 9)
-	s = append(s, "&k8s_io_api_apps_v1beta1.StatefulSetCondition{")
-	s = append(s, "Type: "+fmt.Sprintf("%#v", this.Type)+",\n")
-	s = append(s, "Status: "+fmt.Sprintf("%#v", this.Status)+",\n")
-	if this.LastTransitionTime != nil {
-		s = append(s, "LastTransitionTime: "+fmt.Sprintf("%#v", this.LastTransitionTime)+",\n")
-	}
-	s = append(s, "Reason: "+fmt.Sprintf("%#v", this.Reason)+",\n")
-	s = append(s, "Message: "+fmt.Sprintf("%#v", this.Message)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *StatefulSetList) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_apps_v1beta1.StatefulSetList{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Items != nil {
-		s = append(s, "Items: "+fmt.Sprintf("%#v", this.Items)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *StatefulSetSpec) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 12)
-	s = append(s, "&k8s_io_api_apps_v1beta1.StatefulSetSpec{")
-	s = append(s, "Replicas: "+fmt.Sprintf("%#v", this.Replicas)+",\n")
-	if this.Selector != nil {
-		s = append(s, "Selector: "+fmt.Sprintf("%#v", this.Selector)+",\n")
-	}
-	if this.Template != nil {
-		s = append(s, "Template: "+fmt.Sprintf("%#v", this.Template)+",\n")
-	}
-	if this.VolumeClaimTemplates != nil {
-		s = append(s, "VolumeClaimTemplates: "+fmt.Sprintf("%#v", this.VolumeClaimTemplates)+",\n")
-	}
-	s = append(s, "ServiceName: "+fmt.Sprintf("%#v", this.ServiceName)+",\n")
-	s = append(s, "PodManagementPolicy: "+fmt.Sprintf("%#v", this.PodManagementPolicy)+",\n")
-	if this.UpdateStrategy != nil {
-		s = append(s, "UpdateStrategy: "+fmt.Sprintf("%#v", this.UpdateStrategy)+",\n")
-	}
-	s = append(s, "RevisionHistoryLimit: "+fmt.Sprintf("%#v", this.RevisionHistoryLimit)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *StatefulSetStatus) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 13)
-	s = append(s, "&k8s_io_api_apps_v1beta1.StatefulSetStatus{")
-	s = append(s, "ObservedGeneration: "+fmt.Sprintf("%#v", this.ObservedGeneration)+",\n")
-	s = append(s, "Replicas: "+fmt.Sprintf("%#v", this.Replicas)+",\n")
-	s = append(s, "ReadyReplicas: "+fmt.Sprintf("%#v", this.ReadyReplicas)+",\n")
-	s = append(s, "CurrentReplicas: "+fmt.Sprintf("%#v", this.CurrentReplicas)+",\n")
-	s = append(s, "UpdatedReplicas: "+fmt.Sprintf("%#v", this.UpdatedReplicas)+",\n")
-	s = append(s, "CurrentRevision: "+fmt.Sprintf("%#v", this.CurrentRevision)+",\n")
-	s = append(s, "UpdateRevision: "+fmt.Sprintf("%#v", this.UpdateRevision)+",\n")
-	s = append(s, "CollisionCount: "+fmt.Sprintf("%#v", this.CollisionCount)+",\n")
-	if this.Conditions != nil {
-		s = append(s, "Conditions: "+fmt.Sprintf("%#v", this.Conditions)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *StatefulSetUpdateStrategy) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_apps_v1beta1.StatefulSetUpdateStrategy{")
-	s = append(s, "Type: "+fmt.Sprintf("%#v", this.Type)+",\n")
-	if this.RollingUpdate != nil {
-		s = append(s, "RollingUpdate: "+fmt.Sprintf("%#v", this.RollingUpdate)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func valueToGoStringGenerated(v interface{}, typ string) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("func(v %v) *%v { return &v } ( %#v )", typ, typ, pv)
-}
 func (m *ControllerRevision) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -2873,9 +1866,15 @@ func (m *ControllerRevision) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	i = encodeVarintGenerated(dAtA, i, uint64(m.Revision))
-	i--
-	dAtA[i] = 0x18
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Revision != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.Revision))
+		i--
+		dAtA[i] = 0x18
+	}
 	if m.Data != nil {
 		{
 			size, err := m.Data.MarshalToSizedBuffer(dAtA[:i])
@@ -2923,6 +1922,10 @@ func (m *ControllerRevisionList) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Items) > 0 {
 		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -2972,6 +1975,10 @@ func (m *Deployment) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Status != nil {
 		{
 			size, err := m.Status.MarshalToSizedBuffer(dAtA[:i])
@@ -3031,6 +2038,10 @@ func (m *DeploymentCondition) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.LastTransitionTime != nil {
 		{
 			size, err := m.LastTransitionTime.MarshalToSizedBuffer(dAtA[:i])
@@ -3055,26 +2066,34 @@ func (m *DeploymentCondition) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x32
 	}
-	i -= len(m.Message)
-	copy(dAtA[i:], m.Message)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Message)))
-	i--
-	dAtA[i] = 0x2a
-	i -= len(m.Reason)
-	copy(dAtA[i:], m.Reason)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Reason)))
-	i--
-	dAtA[i] = 0x22
-	i -= len(m.Status)
-	copy(dAtA[i:], m.Status)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Status)))
-	i--
-	dAtA[i] = 0x12
-	i -= len(m.Type)
-	copy(dAtA[i:], m.Type)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Type)))
-	i--
-	dAtA[i] = 0xa
+	if m.Message != nil {
+		i -= len(*m.Message)
+		copy(dAtA[i:], *m.Message)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Message)))
+		i--
+		dAtA[i] = 0x2a
+	}
+	if m.Reason != nil {
+		i -= len(*m.Reason)
+		copy(dAtA[i:], *m.Reason)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Reason)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if m.Status != nil {
+		i -= len(*m.Status)
+		copy(dAtA[i:], *m.Status)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Status)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Type != nil {
+		i -= len(*m.Type)
+		copy(dAtA[i:], *m.Type)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Type)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -3098,6 +2117,10 @@ func (m *DeploymentList) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Items) > 0 {
 		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -3147,6 +2170,10 @@ func (m *DeploymentRollback) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.RollbackTo != nil {
 		{
 			size, err := m.RollbackTo.MarshalToSizedBuffer(dAtA[:i])
@@ -3178,11 +2205,13 @@ func (m *DeploymentRollback) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			dAtA[i] = 0x12
 		}
 	}
-	i -= len(m.Name)
-	copy(dAtA[i:], m.Name)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Name)))
-	i--
-	dAtA[i] = 0xa
+	if m.Name != nil {
+		i -= len(*m.Name)
+		copy(dAtA[i:], *m.Name)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Name)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -3206,9 +2235,15 @@ func (m *DeploymentSpec) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	i = encodeVarintGenerated(dAtA, i, uint64(m.ProgressDeadlineSeconds))
-	i--
-	dAtA[i] = 0x48
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.ProgressDeadlineSeconds != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.ProgressDeadlineSeconds))
+		i--
+		dAtA[i] = 0x48
+	}
 	if m.RollbackTo != nil {
 		{
 			size, err := m.RollbackTo.MarshalToSizedBuffer(dAtA[:i])
@@ -3221,20 +2256,26 @@ func (m *DeploymentSpec) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x42
 	}
-	i--
-	if m.Paused {
-		dAtA[i] = 1
-	} else {
-		dAtA[i] = 0
+	if m.Paused != nil {
+		i--
+		if *m.Paused {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x38
 	}
-	i--
-	dAtA[i] = 0x38
-	i = encodeVarintGenerated(dAtA, i, uint64(m.RevisionHistoryLimit))
-	i--
-	dAtA[i] = 0x30
-	i = encodeVarintGenerated(dAtA, i, uint64(m.MinReadySeconds))
-	i--
-	dAtA[i] = 0x28
+	if m.RevisionHistoryLimit != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.RevisionHistoryLimit))
+		i--
+		dAtA[i] = 0x30
+	}
+	if m.MinReadySeconds != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.MinReadySeconds))
+		i--
+		dAtA[i] = 0x28
+	}
 	if m.Strategy != nil {
 		{
 			size, err := m.Strategy.MarshalToSizedBuffer(dAtA[:i])
@@ -3271,9 +2312,11 @@ func (m *DeploymentSpec) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x12
 	}
-	i = encodeVarintGenerated(dAtA, i, uint64(m.Replicas))
-	i--
-	dAtA[i] = 0x8
+	if m.Replicas != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.Replicas))
+		i--
+		dAtA[i] = 0x8
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -3297,12 +2340,20 @@ func (m *DeploymentStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	i = encodeVarintGenerated(dAtA, i, uint64(m.CollisionCount))
-	i--
-	dAtA[i] = 0x40
-	i = encodeVarintGenerated(dAtA, i, uint64(m.ReadyReplicas))
-	i--
-	dAtA[i] = 0x38
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.CollisionCount != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.CollisionCount))
+		i--
+		dAtA[i] = 0x40
+	}
+	if m.ReadyReplicas != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.ReadyReplicas))
+		i--
+		dAtA[i] = 0x38
+	}
 	if len(m.Conditions) > 0 {
 		for iNdEx := len(m.Conditions) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -3317,21 +2368,31 @@ func (m *DeploymentStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			dAtA[i] = 0x32
 		}
 	}
-	i = encodeVarintGenerated(dAtA, i, uint64(m.UnavailableReplicas))
-	i--
-	dAtA[i] = 0x28
-	i = encodeVarintGenerated(dAtA, i, uint64(m.AvailableReplicas))
-	i--
-	dAtA[i] = 0x20
-	i = encodeVarintGenerated(dAtA, i, uint64(m.UpdatedReplicas))
-	i--
-	dAtA[i] = 0x18
-	i = encodeVarintGenerated(dAtA, i, uint64(m.Replicas))
-	i--
-	dAtA[i] = 0x10
-	i = encodeVarintGenerated(dAtA, i, uint64(m.ObservedGeneration))
-	i--
-	dAtA[i] = 0x8
+	if m.UnavailableReplicas != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.UnavailableReplicas))
+		i--
+		dAtA[i] = 0x28
+	}
+	if m.AvailableReplicas != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.AvailableReplicas))
+		i--
+		dAtA[i] = 0x20
+	}
+	if m.UpdatedReplicas != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.UpdatedReplicas))
+		i--
+		dAtA[i] = 0x18
+	}
+	if m.Replicas != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.Replicas))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.ObservedGeneration != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.ObservedGeneration))
+		i--
+		dAtA[i] = 0x8
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -3355,6 +2416,10 @@ func (m *DeploymentStrategy) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.RollingUpdate != nil {
 		{
 			size, err := m.RollingUpdate.MarshalToSizedBuffer(dAtA[:i])
@@ -3367,11 +2432,13 @@ func (m *DeploymentStrategy) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x12
 	}
-	i -= len(m.Type)
-	copy(dAtA[i:], m.Type)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Type)))
-	i--
-	dAtA[i] = 0xa
+	if m.Type != nil {
+		i -= len(*m.Type)
+		copy(dAtA[i:], *m.Type)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Type)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -3395,9 +2462,15 @@ func (m *RollbackConfig) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	i = encodeVarintGenerated(dAtA, i, uint64(m.Revision))
-	i--
-	dAtA[i] = 0x8
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Revision != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.Revision))
+		i--
+		dAtA[i] = 0x8
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -3421,6 +2494,10 @@ func (m *RollingUpdateDeployment) MarshalToSizedBuffer(dAtA []byte) (int, error)
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.MaxSurge != nil {
 		{
 			size, err := m.MaxSurge.MarshalToSizedBuffer(dAtA[:i])
@@ -3468,9 +2545,15 @@ func (m *RollingUpdateStatefulSetStrategy) MarshalToSizedBuffer(dAtA []byte) (in
 	_ = i
 	var l int
 	_ = l
-	i = encodeVarintGenerated(dAtA, i, uint64(m.Partition))
-	i--
-	dAtA[i] = 0x8
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Partition != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.Partition))
+		i--
+		dAtA[i] = 0x8
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -3494,6 +2577,10 @@ func (m *Scale) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Status != nil {
 		{
 			size, err := m.Status.MarshalToSizedBuffer(dAtA[:i])
@@ -3553,9 +2640,15 @@ func (m *ScaleSpec) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	i = encodeVarintGenerated(dAtA, i, uint64(m.Replicas))
-	i--
-	dAtA[i] = 0x8
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Replicas != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.Replicas))
+		i--
+		dAtA[i] = 0x8
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -3579,11 +2672,17 @@ func (m *ScaleStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	i -= len(m.TargetSelector)
-	copy(dAtA[i:], m.TargetSelector)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.TargetSelector)))
-	i--
-	dAtA[i] = 0x1a
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.TargetSelector != nil {
+		i -= len(*m.TargetSelector)
+		copy(dAtA[i:], *m.TargetSelector)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.TargetSelector)))
+		i--
+		dAtA[i] = 0x1a
+	}
 	if len(m.Selector) > 0 {
 		for k := range m.Selector {
 			v := m.Selector[k]
@@ -3603,9 +2702,11 @@ func (m *ScaleStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			dAtA[i] = 0x12
 		}
 	}
-	i = encodeVarintGenerated(dAtA, i, uint64(m.Replicas))
-	i--
-	dAtA[i] = 0x8
+	if m.Replicas != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.Replicas))
+		i--
+		dAtA[i] = 0x8
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -3629,6 +2730,10 @@ func (m *StatefulSet) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Status != nil {
 		{
 			size, err := m.Status.MarshalToSizedBuffer(dAtA[:i])
@@ -3688,16 +2793,24 @@ func (m *StatefulSetCondition) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	i -= len(m.Message)
-	copy(dAtA[i:], m.Message)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Message)))
-	i--
-	dAtA[i] = 0x2a
-	i -= len(m.Reason)
-	copy(dAtA[i:], m.Reason)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Reason)))
-	i--
-	dAtA[i] = 0x22
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Message != nil {
+		i -= len(*m.Message)
+		copy(dAtA[i:], *m.Message)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Message)))
+		i--
+		dAtA[i] = 0x2a
+	}
+	if m.Reason != nil {
+		i -= len(*m.Reason)
+		copy(dAtA[i:], *m.Reason)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Reason)))
+		i--
+		dAtA[i] = 0x22
+	}
 	if m.LastTransitionTime != nil {
 		{
 			size, err := m.LastTransitionTime.MarshalToSizedBuffer(dAtA[:i])
@@ -3710,16 +2823,20 @@ func (m *StatefulSetCondition) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x1a
 	}
-	i -= len(m.Status)
-	copy(dAtA[i:], m.Status)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Status)))
-	i--
-	dAtA[i] = 0x12
-	i -= len(m.Type)
-	copy(dAtA[i:], m.Type)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Type)))
-	i--
-	dAtA[i] = 0xa
+	if m.Status != nil {
+		i -= len(*m.Status)
+		copy(dAtA[i:], *m.Status)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Status)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Type != nil {
+		i -= len(*m.Type)
+		copy(dAtA[i:], *m.Type)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Type)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -3743,6 +2860,10 @@ func (m *StatefulSetList) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Items) > 0 {
 		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -3792,9 +2913,15 @@ func (m *StatefulSetSpec) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	i = encodeVarintGenerated(dAtA, i, uint64(m.RevisionHistoryLimit))
-	i--
-	dAtA[i] = 0x40
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.RevisionHistoryLimit != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.RevisionHistoryLimit))
+		i--
+		dAtA[i] = 0x40
+	}
 	if m.UpdateStrategy != nil {
 		{
 			size, err := m.UpdateStrategy.MarshalToSizedBuffer(dAtA[:i])
@@ -3807,16 +2934,20 @@ func (m *StatefulSetSpec) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x3a
 	}
-	i -= len(m.PodManagementPolicy)
-	copy(dAtA[i:], m.PodManagementPolicy)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.PodManagementPolicy)))
-	i--
-	dAtA[i] = 0x32
-	i -= len(m.ServiceName)
-	copy(dAtA[i:], m.ServiceName)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.ServiceName)))
-	i--
-	dAtA[i] = 0x2a
+	if m.PodManagementPolicy != nil {
+		i -= len(*m.PodManagementPolicy)
+		copy(dAtA[i:], *m.PodManagementPolicy)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.PodManagementPolicy)))
+		i--
+		dAtA[i] = 0x32
+	}
+	if m.ServiceName != nil {
+		i -= len(*m.ServiceName)
+		copy(dAtA[i:], *m.ServiceName)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.ServiceName)))
+		i--
+		dAtA[i] = 0x2a
+	}
 	if len(m.VolumeClaimTemplates) > 0 {
 		for iNdEx := len(m.VolumeClaimTemplates) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -3855,9 +2986,11 @@ func (m *StatefulSetSpec) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x12
 	}
-	i = encodeVarintGenerated(dAtA, i, uint64(m.Replicas))
-	i--
-	dAtA[i] = 0x8
+	if m.Replicas != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.Replicas))
+		i--
+		dAtA[i] = 0x8
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -3881,6 +3014,10 @@ func (m *StatefulSetStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Conditions) > 0 {
 		for iNdEx := len(m.Conditions) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -3895,34 +3032,50 @@ func (m *StatefulSetStatus) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			dAtA[i] = 0x52
 		}
 	}
-	i = encodeVarintGenerated(dAtA, i, uint64(m.CollisionCount))
-	i--
-	dAtA[i] = 0x48
-	i -= len(m.UpdateRevision)
-	copy(dAtA[i:], m.UpdateRevision)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.UpdateRevision)))
-	i--
-	dAtA[i] = 0x3a
-	i -= len(m.CurrentRevision)
-	copy(dAtA[i:], m.CurrentRevision)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.CurrentRevision)))
-	i--
-	dAtA[i] = 0x32
-	i = encodeVarintGenerated(dAtA, i, uint64(m.UpdatedReplicas))
-	i--
-	dAtA[i] = 0x28
-	i = encodeVarintGenerated(dAtA, i, uint64(m.CurrentReplicas))
-	i--
-	dAtA[i] = 0x20
-	i = encodeVarintGenerated(dAtA, i, uint64(m.ReadyReplicas))
-	i--
-	dAtA[i] = 0x18
-	i = encodeVarintGenerated(dAtA, i, uint64(m.Replicas))
-	i--
-	dAtA[i] = 0x10
-	i = encodeVarintGenerated(dAtA, i, uint64(m.ObservedGeneration))
-	i--
-	dAtA[i] = 0x8
+	if m.CollisionCount != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.CollisionCount))
+		i--
+		dAtA[i] = 0x48
+	}
+	if m.UpdateRevision != nil {
+		i -= len(*m.UpdateRevision)
+		copy(dAtA[i:], *m.UpdateRevision)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.UpdateRevision)))
+		i--
+		dAtA[i] = 0x3a
+	}
+	if m.CurrentRevision != nil {
+		i -= len(*m.CurrentRevision)
+		copy(dAtA[i:], *m.CurrentRevision)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.CurrentRevision)))
+		i--
+		dAtA[i] = 0x32
+	}
+	if m.UpdatedReplicas != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.UpdatedReplicas))
+		i--
+		dAtA[i] = 0x28
+	}
+	if m.CurrentReplicas != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.CurrentReplicas))
+		i--
+		dAtA[i] = 0x20
+	}
+	if m.ReadyReplicas != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.ReadyReplicas))
+		i--
+		dAtA[i] = 0x18
+	}
+	if m.Replicas != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.Replicas))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.ObservedGeneration != nil {
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.ObservedGeneration))
+		i--
+		dAtA[i] = 0x8
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -3946,6 +3099,10 @@ func (m *StatefulSetUpdateStrategy) MarshalToSizedBuffer(dAtA []byte) (int, erro
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.RollingUpdate != nil {
 		{
 			size, err := m.RollingUpdate.MarshalToSizedBuffer(dAtA[:i])
@@ -3958,11 +3115,13 @@ func (m *StatefulSetUpdateStrategy) MarshalToSizedBuffer(dAtA []byte) (int, erro
 		i--
 		dAtA[i] = 0x12
 	}
-	i -= len(m.Type)
-	copy(dAtA[i:], m.Type)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Type)))
-	i--
-	dAtA[i] = 0xa
+	if m.Type != nil {
+		i -= len(*m.Type)
+		copy(dAtA[i:], *m.Type)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Type)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -3991,7 +3150,12 @@ func (m *ControllerRevision) Size() (n int) {
 		l = m.Data.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
-	n += 1 + sovGenerated(uint64(m.Revision))
+	if m.Revision != nil {
+		n += 1 + sovGenerated(uint64(*m.Revision))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -4010,6 +3174,9 @@ func (m *ControllerRevisionList) Size() (n int) {
 			l = e.Size()
 			n += 1 + l + sovGenerated(uint64(l))
 		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -4032,6 +3199,9 @@ func (m *Deployment) Size() (n int) {
 		l = m.Status.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -4041,14 +3211,22 @@ func (m *DeploymentCondition) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Type)
-	n += 1 + l + sovGenerated(uint64(l))
-	l = len(m.Status)
-	n += 1 + l + sovGenerated(uint64(l))
-	l = len(m.Reason)
-	n += 1 + l + sovGenerated(uint64(l))
-	l = len(m.Message)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.Type != nil {
+		l = len(*m.Type)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.Status != nil {
+		l = len(*m.Status)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.Reason != nil {
+		l = len(*m.Reason)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.Message != nil {
+		l = len(*m.Message)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if m.LastUpdateTime != nil {
 		l = m.LastUpdateTime.Size()
 		n += 1 + l + sovGenerated(uint64(l))
@@ -4056,6 +3234,9 @@ func (m *DeploymentCondition) Size() (n int) {
 	if m.LastTransitionTime != nil {
 		l = m.LastTransitionTime.Size()
 		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -4076,6 +3257,9 @@ func (m *DeploymentList) Size() (n int) {
 			n += 1 + l + sovGenerated(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -4085,8 +3269,10 @@ func (m *DeploymentRollback) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Name)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.Name != nil {
+		l = len(*m.Name)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if len(m.UpdatedAnnotations) > 0 {
 		for k, v := range m.UpdatedAnnotations {
 			_ = k
@@ -4099,6 +3285,9 @@ func (m *DeploymentRollback) Size() (n int) {
 		l = m.RollbackTo.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -4108,7 +3297,9 @@ func (m *DeploymentSpec) Size() (n int) {
 	}
 	var l int
 	_ = l
-	n += 1 + sovGenerated(uint64(m.Replicas))
+	if m.Replicas != nil {
+		n += 1 + sovGenerated(uint64(*m.Replicas))
+	}
 	if m.Selector != nil {
 		l = m.Selector.Size()
 		n += 1 + l + sovGenerated(uint64(l))
@@ -4121,14 +3312,25 @@ func (m *DeploymentSpec) Size() (n int) {
 		l = m.Strategy.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
-	n += 1 + sovGenerated(uint64(m.MinReadySeconds))
-	n += 1 + sovGenerated(uint64(m.RevisionHistoryLimit))
-	n += 2
+	if m.MinReadySeconds != nil {
+		n += 1 + sovGenerated(uint64(*m.MinReadySeconds))
+	}
+	if m.RevisionHistoryLimit != nil {
+		n += 1 + sovGenerated(uint64(*m.RevisionHistoryLimit))
+	}
+	if m.Paused != nil {
+		n += 2
+	}
 	if m.RollbackTo != nil {
 		l = m.RollbackTo.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
-	n += 1 + sovGenerated(uint64(m.ProgressDeadlineSeconds))
+	if m.ProgressDeadlineSeconds != nil {
+		n += 1 + sovGenerated(uint64(*m.ProgressDeadlineSeconds))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -4138,19 +3340,36 @@ func (m *DeploymentStatus) Size() (n int) {
 	}
 	var l int
 	_ = l
-	n += 1 + sovGenerated(uint64(m.ObservedGeneration))
-	n += 1 + sovGenerated(uint64(m.Replicas))
-	n += 1 + sovGenerated(uint64(m.UpdatedReplicas))
-	n += 1 + sovGenerated(uint64(m.AvailableReplicas))
-	n += 1 + sovGenerated(uint64(m.UnavailableReplicas))
+	if m.ObservedGeneration != nil {
+		n += 1 + sovGenerated(uint64(*m.ObservedGeneration))
+	}
+	if m.Replicas != nil {
+		n += 1 + sovGenerated(uint64(*m.Replicas))
+	}
+	if m.UpdatedReplicas != nil {
+		n += 1 + sovGenerated(uint64(*m.UpdatedReplicas))
+	}
+	if m.AvailableReplicas != nil {
+		n += 1 + sovGenerated(uint64(*m.AvailableReplicas))
+	}
+	if m.UnavailableReplicas != nil {
+		n += 1 + sovGenerated(uint64(*m.UnavailableReplicas))
+	}
 	if len(m.Conditions) > 0 {
 		for _, e := range m.Conditions {
 			l = e.Size()
 			n += 1 + l + sovGenerated(uint64(l))
 		}
 	}
-	n += 1 + sovGenerated(uint64(m.ReadyReplicas))
-	n += 1 + sovGenerated(uint64(m.CollisionCount))
+	if m.ReadyReplicas != nil {
+		n += 1 + sovGenerated(uint64(*m.ReadyReplicas))
+	}
+	if m.CollisionCount != nil {
+		n += 1 + sovGenerated(uint64(*m.CollisionCount))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -4160,11 +3379,16 @@ func (m *DeploymentStrategy) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Type)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.Type != nil {
+		l = len(*m.Type)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if m.RollingUpdate != nil {
 		l = m.RollingUpdate.Size()
 		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -4175,7 +3399,12 @@ func (m *RollbackConfig) Size() (n int) {
 	}
 	var l int
 	_ = l
-	n += 1 + sovGenerated(uint64(m.Revision))
+	if m.Revision != nil {
+		n += 1 + sovGenerated(uint64(*m.Revision))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -4193,6 +3422,9 @@ func (m *RollingUpdateDeployment) Size() (n int) {
 		l = m.MaxSurge.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -4202,7 +3434,12 @@ func (m *RollingUpdateStatefulSetStrategy) Size() (n int) {
 	}
 	var l int
 	_ = l
-	n += 1 + sovGenerated(uint64(m.Partition))
+	if m.Partition != nil {
+		n += 1 + sovGenerated(uint64(*m.Partition))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -4224,6 +3461,9 @@ func (m *Scale) Size() (n int) {
 		l = m.Status.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -4233,7 +3473,12 @@ func (m *ScaleSpec) Size() (n int) {
 	}
 	var l int
 	_ = l
-	n += 1 + sovGenerated(uint64(m.Replicas))
+	if m.Replicas != nil {
+		n += 1 + sovGenerated(uint64(*m.Replicas))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -4243,7 +3488,9 @@ func (m *ScaleStatus) Size() (n int) {
 	}
 	var l int
 	_ = l
-	n += 1 + sovGenerated(uint64(m.Replicas))
+	if m.Replicas != nil {
+		n += 1 + sovGenerated(uint64(*m.Replicas))
+	}
 	if len(m.Selector) > 0 {
 		for k, v := range m.Selector {
 			_ = k
@@ -4252,8 +3499,13 @@ func (m *ScaleStatus) Size() (n int) {
 			n += mapEntrySize + 1 + sovGenerated(uint64(mapEntrySize))
 		}
 	}
-	l = len(m.TargetSelector)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.TargetSelector != nil {
+		l = len(*m.TargetSelector)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -4275,6 +3527,9 @@ func (m *StatefulSet) Size() (n int) {
 		l = m.Status.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -4284,18 +3539,29 @@ func (m *StatefulSetCondition) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Type)
-	n += 1 + l + sovGenerated(uint64(l))
-	l = len(m.Status)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.Type != nil {
+		l = len(*m.Type)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.Status != nil {
+		l = len(*m.Status)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if m.LastTransitionTime != nil {
 		l = m.LastTransitionTime.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
-	l = len(m.Reason)
-	n += 1 + l + sovGenerated(uint64(l))
-	l = len(m.Message)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.Reason != nil {
+		l = len(*m.Reason)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.Message != nil {
+		l = len(*m.Message)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -4315,6 +3581,9 @@ func (m *StatefulSetList) Size() (n int) {
 			n += 1 + l + sovGenerated(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -4324,7 +3593,9 @@ func (m *StatefulSetSpec) Size() (n int) {
 	}
 	var l int
 	_ = l
-	n += 1 + sovGenerated(uint64(m.Replicas))
+	if m.Replicas != nil {
+		n += 1 + sovGenerated(uint64(*m.Replicas))
+	}
 	if m.Selector != nil {
 		l = m.Selector.Size()
 		n += 1 + l + sovGenerated(uint64(l))
@@ -4339,15 +3610,24 @@ func (m *StatefulSetSpec) Size() (n int) {
 			n += 1 + l + sovGenerated(uint64(l))
 		}
 	}
-	l = len(m.ServiceName)
-	n += 1 + l + sovGenerated(uint64(l))
-	l = len(m.PodManagementPolicy)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.ServiceName != nil {
+		l = len(*m.ServiceName)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.PodManagementPolicy != nil {
+		l = len(*m.PodManagementPolicy)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if m.UpdateStrategy != nil {
 		l = m.UpdateStrategy.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
-	n += 1 + sovGenerated(uint64(m.RevisionHistoryLimit))
+	if m.RevisionHistoryLimit != nil {
+		n += 1 + sovGenerated(uint64(*m.RevisionHistoryLimit))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -4357,21 +3637,40 @@ func (m *StatefulSetStatus) Size() (n int) {
 	}
 	var l int
 	_ = l
-	n += 1 + sovGenerated(uint64(m.ObservedGeneration))
-	n += 1 + sovGenerated(uint64(m.Replicas))
-	n += 1 + sovGenerated(uint64(m.ReadyReplicas))
-	n += 1 + sovGenerated(uint64(m.CurrentReplicas))
-	n += 1 + sovGenerated(uint64(m.UpdatedReplicas))
-	l = len(m.CurrentRevision)
-	n += 1 + l + sovGenerated(uint64(l))
-	l = len(m.UpdateRevision)
-	n += 1 + l + sovGenerated(uint64(l))
-	n += 1 + sovGenerated(uint64(m.CollisionCount))
+	if m.ObservedGeneration != nil {
+		n += 1 + sovGenerated(uint64(*m.ObservedGeneration))
+	}
+	if m.Replicas != nil {
+		n += 1 + sovGenerated(uint64(*m.Replicas))
+	}
+	if m.ReadyReplicas != nil {
+		n += 1 + sovGenerated(uint64(*m.ReadyReplicas))
+	}
+	if m.CurrentReplicas != nil {
+		n += 1 + sovGenerated(uint64(*m.CurrentReplicas))
+	}
+	if m.UpdatedReplicas != nil {
+		n += 1 + sovGenerated(uint64(*m.UpdatedReplicas))
+	}
+	if m.CurrentRevision != nil {
+		l = len(*m.CurrentRevision)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.UpdateRevision != nil {
+		l = len(*m.UpdateRevision)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.CollisionCount != nil {
+		n += 1 + sovGenerated(uint64(*m.CollisionCount))
+	}
 	if len(m.Conditions) > 0 {
 		for _, e := range m.Conditions {
 			l = e.Size()
 			n += 1 + l + sovGenerated(uint64(l))
 		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -4382,11 +3681,16 @@ func (m *StatefulSetUpdateStrategy) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Type)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.Type != nil {
+		l = len(*m.Type)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if m.RollingUpdate != nil {
 		l = m.RollingUpdate.Size()
 		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -4396,331 +3700,6 @@ func sovGenerated(x uint64) (n int) {
 }
 func sozGenerated(x uint64) (n int) {
 	return sovGenerated(uint64((x << 1) ^ uint64((int64(x) >> 63))))
-}
-func (this *ControllerRevision) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&ControllerRevision{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ObjectMeta", "v1.ObjectMeta", 1) + `,`,
-		`Data:` + strings.Replace(fmt.Sprintf("%v", this.Data), "RawExtension", "runtime.RawExtension", 1) + `,`,
-		`Revision:` + fmt.Sprintf("%v", this.Revision) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *ControllerRevisionList) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForItems := "[]*ControllerRevision{"
-	for _, f := range this.Items {
-		repeatedStringForItems += strings.Replace(f.String(), "ControllerRevision", "ControllerRevision", 1) + ","
-	}
-	repeatedStringForItems += "}"
-	s := strings.Join([]string{`&ControllerRevisionList{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ListMeta", "v1.ListMeta", 1) + `,`,
-		`Items:` + repeatedStringForItems + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *Deployment) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&Deployment{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ObjectMeta", "v1.ObjectMeta", 1) + `,`,
-		`Spec:` + strings.Replace(this.Spec.String(), "DeploymentSpec", "DeploymentSpec", 1) + `,`,
-		`Status:` + strings.Replace(this.Status.String(), "DeploymentStatus", "DeploymentStatus", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *DeploymentCondition) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&DeploymentCondition{`,
-		`Type:` + fmt.Sprintf("%v", this.Type) + `,`,
-		`Status:` + fmt.Sprintf("%v", this.Status) + `,`,
-		`Reason:` + fmt.Sprintf("%v", this.Reason) + `,`,
-		`Message:` + fmt.Sprintf("%v", this.Message) + `,`,
-		`LastUpdateTime:` + strings.Replace(fmt.Sprintf("%v", this.LastUpdateTime), "Time", "v1.Time", 1) + `,`,
-		`LastTransitionTime:` + strings.Replace(fmt.Sprintf("%v", this.LastTransitionTime), "Time", "v1.Time", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *DeploymentList) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForItems := "[]*Deployment{"
-	for _, f := range this.Items {
-		repeatedStringForItems += strings.Replace(f.String(), "Deployment", "Deployment", 1) + ","
-	}
-	repeatedStringForItems += "}"
-	s := strings.Join([]string{`&DeploymentList{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ListMeta", "v1.ListMeta", 1) + `,`,
-		`Items:` + repeatedStringForItems + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *DeploymentRollback) String() string {
-	if this == nil {
-		return "nil"
-	}
-	keysForUpdatedAnnotations := make([]string, 0, len(this.UpdatedAnnotations))
-	for k, _ := range this.UpdatedAnnotations {
-		keysForUpdatedAnnotations = append(keysForUpdatedAnnotations, k)
-	}
-	github_com_gogo_protobuf_sortkeys.Strings(keysForUpdatedAnnotations)
-	mapStringForUpdatedAnnotations := "map[string]string{"
-	for _, k := range keysForUpdatedAnnotations {
-		mapStringForUpdatedAnnotations += fmt.Sprintf("%v: %v,", k, this.UpdatedAnnotations[k])
-	}
-	mapStringForUpdatedAnnotations += "}"
-	s := strings.Join([]string{`&DeploymentRollback{`,
-		`Name:` + fmt.Sprintf("%v", this.Name) + `,`,
-		`UpdatedAnnotations:` + mapStringForUpdatedAnnotations + `,`,
-		`RollbackTo:` + strings.Replace(this.RollbackTo.String(), "RollbackConfig", "RollbackConfig", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *DeploymentSpec) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&DeploymentSpec{`,
-		`Replicas:` + fmt.Sprintf("%v", this.Replicas) + `,`,
-		`Selector:` + strings.Replace(fmt.Sprintf("%v", this.Selector), "LabelSelector", "v1.LabelSelector", 1) + `,`,
-		`Template:` + strings.Replace(fmt.Sprintf("%v", this.Template), "PodTemplateSpec", "v11.PodTemplateSpec", 1) + `,`,
-		`Strategy:` + strings.Replace(this.Strategy.String(), "DeploymentStrategy", "DeploymentStrategy", 1) + `,`,
-		`MinReadySeconds:` + fmt.Sprintf("%v", this.MinReadySeconds) + `,`,
-		`RevisionHistoryLimit:` + fmt.Sprintf("%v", this.RevisionHistoryLimit) + `,`,
-		`Paused:` + fmt.Sprintf("%v", this.Paused) + `,`,
-		`RollbackTo:` + strings.Replace(this.RollbackTo.String(), "RollbackConfig", "RollbackConfig", 1) + `,`,
-		`ProgressDeadlineSeconds:` + fmt.Sprintf("%v", this.ProgressDeadlineSeconds) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *DeploymentStatus) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForConditions := "[]*DeploymentCondition{"
-	for _, f := range this.Conditions {
-		repeatedStringForConditions += strings.Replace(f.String(), "DeploymentCondition", "DeploymentCondition", 1) + ","
-	}
-	repeatedStringForConditions += "}"
-	s := strings.Join([]string{`&DeploymentStatus{`,
-		`ObservedGeneration:` + fmt.Sprintf("%v", this.ObservedGeneration) + `,`,
-		`Replicas:` + fmt.Sprintf("%v", this.Replicas) + `,`,
-		`UpdatedReplicas:` + fmt.Sprintf("%v", this.UpdatedReplicas) + `,`,
-		`AvailableReplicas:` + fmt.Sprintf("%v", this.AvailableReplicas) + `,`,
-		`UnavailableReplicas:` + fmt.Sprintf("%v", this.UnavailableReplicas) + `,`,
-		`Conditions:` + repeatedStringForConditions + `,`,
-		`ReadyReplicas:` + fmt.Sprintf("%v", this.ReadyReplicas) + `,`,
-		`CollisionCount:` + fmt.Sprintf("%v", this.CollisionCount) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *DeploymentStrategy) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&DeploymentStrategy{`,
-		`Type:` + fmt.Sprintf("%v", this.Type) + `,`,
-		`RollingUpdate:` + strings.Replace(this.RollingUpdate.String(), "RollingUpdateDeployment", "RollingUpdateDeployment", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *RollbackConfig) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&RollbackConfig{`,
-		`Revision:` + fmt.Sprintf("%v", this.Revision) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *RollingUpdateDeployment) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&RollingUpdateDeployment{`,
-		`MaxUnavailable:` + strings.Replace(fmt.Sprintf("%v", this.MaxUnavailable), "IntOrString", "intstr.IntOrString", 1) + `,`,
-		`MaxSurge:` + strings.Replace(fmt.Sprintf("%v", this.MaxSurge), "IntOrString", "intstr.IntOrString", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *RollingUpdateStatefulSetStrategy) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&RollingUpdateStatefulSetStrategy{`,
-		`Partition:` + fmt.Sprintf("%v", this.Partition) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *Scale) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&Scale{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ObjectMeta", "v1.ObjectMeta", 1) + `,`,
-		`Spec:` + strings.Replace(this.Spec.String(), "ScaleSpec", "ScaleSpec", 1) + `,`,
-		`Status:` + strings.Replace(this.Status.String(), "ScaleStatus", "ScaleStatus", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *ScaleSpec) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&ScaleSpec{`,
-		`Replicas:` + fmt.Sprintf("%v", this.Replicas) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *ScaleStatus) String() string {
-	if this == nil {
-		return "nil"
-	}
-	keysForSelector := make([]string, 0, len(this.Selector))
-	for k, _ := range this.Selector {
-		keysForSelector = append(keysForSelector, k)
-	}
-	github_com_gogo_protobuf_sortkeys.Strings(keysForSelector)
-	mapStringForSelector := "map[string]string{"
-	for _, k := range keysForSelector {
-		mapStringForSelector += fmt.Sprintf("%v: %v,", k, this.Selector[k])
-	}
-	mapStringForSelector += "}"
-	s := strings.Join([]string{`&ScaleStatus{`,
-		`Replicas:` + fmt.Sprintf("%v", this.Replicas) + `,`,
-		`Selector:` + mapStringForSelector + `,`,
-		`TargetSelector:` + fmt.Sprintf("%v", this.TargetSelector) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *StatefulSet) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&StatefulSet{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ObjectMeta", "v1.ObjectMeta", 1) + `,`,
-		`Spec:` + strings.Replace(this.Spec.String(), "StatefulSetSpec", "StatefulSetSpec", 1) + `,`,
-		`Status:` + strings.Replace(this.Status.String(), "StatefulSetStatus", "StatefulSetStatus", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *StatefulSetCondition) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&StatefulSetCondition{`,
-		`Type:` + fmt.Sprintf("%v", this.Type) + `,`,
-		`Status:` + fmt.Sprintf("%v", this.Status) + `,`,
-		`LastTransitionTime:` + strings.Replace(fmt.Sprintf("%v", this.LastTransitionTime), "Time", "v1.Time", 1) + `,`,
-		`Reason:` + fmt.Sprintf("%v", this.Reason) + `,`,
-		`Message:` + fmt.Sprintf("%v", this.Message) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *StatefulSetList) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForItems := "[]*StatefulSet{"
-	for _, f := range this.Items {
-		repeatedStringForItems += strings.Replace(f.String(), "StatefulSet", "StatefulSet", 1) + ","
-	}
-	repeatedStringForItems += "}"
-	s := strings.Join([]string{`&StatefulSetList{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ListMeta", "v1.ListMeta", 1) + `,`,
-		`Items:` + repeatedStringForItems + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *StatefulSetSpec) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForVolumeClaimTemplates := "[]*PersistentVolumeClaim{"
-	for _, f := range this.VolumeClaimTemplates {
-		repeatedStringForVolumeClaimTemplates += strings.Replace(fmt.Sprintf("%v", f), "PersistentVolumeClaim", "v11.PersistentVolumeClaim", 1) + ","
-	}
-	repeatedStringForVolumeClaimTemplates += "}"
-	s := strings.Join([]string{`&StatefulSetSpec{`,
-		`Replicas:` + fmt.Sprintf("%v", this.Replicas) + `,`,
-		`Selector:` + strings.Replace(fmt.Sprintf("%v", this.Selector), "LabelSelector", "v1.LabelSelector", 1) + `,`,
-		`Template:` + strings.Replace(fmt.Sprintf("%v", this.Template), "PodTemplateSpec", "v11.PodTemplateSpec", 1) + `,`,
-		`VolumeClaimTemplates:` + repeatedStringForVolumeClaimTemplates + `,`,
-		`ServiceName:` + fmt.Sprintf("%v", this.ServiceName) + `,`,
-		`PodManagementPolicy:` + fmt.Sprintf("%v", this.PodManagementPolicy) + `,`,
-		`UpdateStrategy:` + strings.Replace(this.UpdateStrategy.String(), "StatefulSetUpdateStrategy", "StatefulSetUpdateStrategy", 1) + `,`,
-		`RevisionHistoryLimit:` + fmt.Sprintf("%v", this.RevisionHistoryLimit) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *StatefulSetStatus) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForConditions := "[]*StatefulSetCondition{"
-	for _, f := range this.Conditions {
-		repeatedStringForConditions += strings.Replace(f.String(), "StatefulSetCondition", "StatefulSetCondition", 1) + ","
-	}
-	repeatedStringForConditions += "}"
-	s := strings.Join([]string{`&StatefulSetStatus{`,
-		`ObservedGeneration:` + fmt.Sprintf("%v", this.ObservedGeneration) + `,`,
-		`Replicas:` + fmt.Sprintf("%v", this.Replicas) + `,`,
-		`ReadyReplicas:` + fmt.Sprintf("%v", this.ReadyReplicas) + `,`,
-		`CurrentReplicas:` + fmt.Sprintf("%v", this.CurrentReplicas) + `,`,
-		`UpdatedReplicas:` + fmt.Sprintf("%v", this.UpdatedReplicas) + `,`,
-		`CurrentRevision:` + fmt.Sprintf("%v", this.CurrentRevision) + `,`,
-		`UpdateRevision:` + fmt.Sprintf("%v", this.UpdateRevision) + `,`,
-		`CollisionCount:` + fmt.Sprintf("%v", this.CollisionCount) + `,`,
-		`Conditions:` + repeatedStringForConditions + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *StatefulSetUpdateStrategy) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&StatefulSetUpdateStrategy{`,
-		`Type:` + fmt.Sprintf("%v", this.Type) + `,`,
-		`RollingUpdate:` + strings.Replace(this.RollingUpdate.String(), "RollingUpdateStatefulSetStrategy", "RollingUpdateStatefulSetStrategy", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func valueToStringGenerated(v interface{}) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("*%v", pv)
 }
 func (m *ControllerRevision) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
@@ -4827,7 +3806,7 @@ func (m *ControllerRevision) Unmarshal(dAtA []byte) error {
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Revision", wireType)
 			}
-			m.Revision = 0
+			var v int64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -4837,11 +3816,12 @@ func (m *ControllerRevision) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Revision |= int64(b&0x7F) << shift
+				v |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.Revision = &v
 		default:
 			iNdEx = preIndex
 			skippy, err := skipGenerated(dAtA[iNdEx:])
@@ -4854,6 +3834,7 @@ func (m *ControllerRevision) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4974,6 +3955,7 @@ func (m *ControllerRevisionList) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5132,6 +4114,7 @@ func (m *Deployment) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5200,7 +4183,8 @@ func (m *DeploymentCondition) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Type = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Type = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -5232,7 +4216,8 @@ func (m *DeploymentCondition) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Status = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Status = &s
 			iNdEx = postIndex
 		case 4:
 			if wireType != 2 {
@@ -5264,7 +4249,8 @@ func (m *DeploymentCondition) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Reason = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Reason = &s
 			iNdEx = postIndex
 		case 5:
 			if wireType != 2 {
@@ -5296,7 +4282,8 @@ func (m *DeploymentCondition) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Message = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Message = &s
 			iNdEx = postIndex
 		case 6:
 			if wireType != 2 {
@@ -5382,6 +4369,7 @@ func (m *DeploymentCondition) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5502,6 +4490,7 @@ func (m *DeploymentList) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5570,7 +4559,8 @@ func (m *DeploymentRollback) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Name = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Name = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -5747,6 +4737,7 @@ func (m *DeploymentRollback) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -5789,7 +4780,7 @@ func (m *DeploymentSpec) Unmarshal(dAtA []byte) error {
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Replicas", wireType)
 			}
-			m.Replicas = 0
+			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -5799,11 +4790,12 @@ func (m *DeploymentSpec) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Replicas |= int32(b&0x7F) << shift
+				v |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.Replicas = &v
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Selector", wireType)
@@ -5916,7 +4908,7 @@ func (m *DeploymentSpec) Unmarshal(dAtA []byte) error {
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field MinReadySeconds", wireType)
 			}
-			m.MinReadySeconds = 0
+			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -5926,16 +4918,17 @@ func (m *DeploymentSpec) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.MinReadySeconds |= int32(b&0x7F) << shift
+				v |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.MinReadySeconds = &v
 		case 6:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field RevisionHistoryLimit", wireType)
 			}
-			m.RevisionHistoryLimit = 0
+			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -5945,11 +4938,12 @@ func (m *DeploymentSpec) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.RevisionHistoryLimit |= int32(b&0x7F) << shift
+				v |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.RevisionHistoryLimit = &v
 		case 7:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Paused", wireType)
@@ -5969,7 +4963,8 @@ func (m *DeploymentSpec) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
-			m.Paused = bool(v != 0)
+			b := bool(v != 0)
+			m.Paused = &b
 		case 8:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field RollbackTo", wireType)
@@ -6010,7 +5005,7 @@ func (m *DeploymentSpec) Unmarshal(dAtA []byte) error {
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ProgressDeadlineSeconds", wireType)
 			}
-			m.ProgressDeadlineSeconds = 0
+			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -6020,11 +5015,12 @@ func (m *DeploymentSpec) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.ProgressDeadlineSeconds |= int32(b&0x7F) << shift
+				v |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.ProgressDeadlineSeconds = &v
 		default:
 			iNdEx = preIndex
 			skippy, err := skipGenerated(dAtA[iNdEx:])
@@ -6037,6 +5033,7 @@ func (m *DeploymentSpec) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -6079,7 +5076,7 @@ func (m *DeploymentStatus) Unmarshal(dAtA []byte) error {
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ObservedGeneration", wireType)
 			}
-			m.ObservedGeneration = 0
+			var v int64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -6089,16 +5086,17 @@ func (m *DeploymentStatus) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.ObservedGeneration |= int64(b&0x7F) << shift
+				v |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.ObservedGeneration = &v
 		case 2:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Replicas", wireType)
 			}
-			m.Replicas = 0
+			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -6108,16 +5106,17 @@ func (m *DeploymentStatus) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Replicas |= int32(b&0x7F) << shift
+				v |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.Replicas = &v
 		case 3:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field UpdatedReplicas", wireType)
 			}
-			m.UpdatedReplicas = 0
+			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -6127,16 +5126,17 @@ func (m *DeploymentStatus) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.UpdatedReplicas |= int32(b&0x7F) << shift
+				v |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.UpdatedReplicas = &v
 		case 4:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field AvailableReplicas", wireType)
 			}
-			m.AvailableReplicas = 0
+			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -6146,16 +5146,17 @@ func (m *DeploymentStatus) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.AvailableReplicas |= int32(b&0x7F) << shift
+				v |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.AvailableReplicas = &v
 		case 5:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field UnavailableReplicas", wireType)
 			}
-			m.UnavailableReplicas = 0
+			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -6165,11 +5166,12 @@ func (m *DeploymentStatus) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.UnavailableReplicas |= int32(b&0x7F) << shift
+				v |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.UnavailableReplicas = &v
 		case 6:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Conditions", wireType)
@@ -6208,7 +5210,7 @@ func (m *DeploymentStatus) Unmarshal(dAtA []byte) error {
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ReadyReplicas", wireType)
 			}
-			m.ReadyReplicas = 0
+			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -6218,16 +5220,17 @@ func (m *DeploymentStatus) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.ReadyReplicas |= int32(b&0x7F) << shift
+				v |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.ReadyReplicas = &v
 		case 8:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field CollisionCount", wireType)
 			}
-			m.CollisionCount = 0
+			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -6237,11 +5240,12 @@ func (m *DeploymentStatus) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.CollisionCount |= int32(b&0x7F) << shift
+				v |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.CollisionCount = &v
 		default:
 			iNdEx = preIndex
 			skippy, err := skipGenerated(dAtA[iNdEx:])
@@ -6254,6 +5258,7 @@ func (m *DeploymentStatus) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -6322,7 +5327,8 @@ func (m *DeploymentStrategy) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Type = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Type = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -6372,6 +5378,7 @@ func (m *DeploymentStrategy) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -6414,7 +5421,7 @@ func (m *RollbackConfig) Unmarshal(dAtA []byte) error {
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Revision", wireType)
 			}
-			m.Revision = 0
+			var v int64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -6424,11 +5431,12 @@ func (m *RollbackConfig) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Revision |= int64(b&0x7F) << shift
+				v |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.Revision = &v
 		default:
 			iNdEx = preIndex
 			skippy, err := skipGenerated(dAtA[iNdEx:])
@@ -6441,6 +5449,7 @@ func (m *RollbackConfig) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -6563,6 +5572,7 @@ func (m *RollingUpdateDeployment) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -6605,7 +5615,7 @@ func (m *RollingUpdateStatefulSetStrategy) Unmarshal(dAtA []byte) error {
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Partition", wireType)
 			}
-			m.Partition = 0
+			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -6615,11 +5625,12 @@ func (m *RollingUpdateStatefulSetStrategy) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Partition |= int32(b&0x7F) << shift
+				v |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.Partition = &v
 		default:
 			iNdEx = preIndex
 			skippy, err := skipGenerated(dAtA[iNdEx:])
@@ -6632,6 +5643,7 @@ func (m *RollingUpdateStatefulSetStrategy) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -6790,6 +5802,7 @@ func (m *Scale) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -6832,7 +5845,7 @@ func (m *ScaleSpec) Unmarshal(dAtA []byte) error {
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Replicas", wireType)
 			}
-			m.Replicas = 0
+			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -6842,11 +5855,12 @@ func (m *ScaleSpec) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Replicas |= int32(b&0x7F) << shift
+				v |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.Replicas = &v
 		default:
 			iNdEx = preIndex
 			skippy, err := skipGenerated(dAtA[iNdEx:])
@@ -6859,6 +5873,7 @@ func (m *ScaleSpec) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -6901,7 +5916,7 @@ func (m *ScaleStatus) Unmarshal(dAtA []byte) error {
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Replicas", wireType)
 			}
-			m.Replicas = 0
+			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -6911,11 +5926,12 @@ func (m *ScaleStatus) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Replicas |= int32(b&0x7F) << shift
+				v |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.Replicas = &v
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Selector", wireType)
@@ -7073,7 +6089,8 @@ func (m *ScaleStatus) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.TargetSelector = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.TargetSelector = &s
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -7087,6 +6104,7 @@ func (m *ScaleStatus) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -7245,6 +6263,7 @@ func (m *StatefulSet) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -7313,7 +6332,8 @@ func (m *StatefulSetCondition) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Type = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Type = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -7345,7 +6365,8 @@ func (m *StatefulSetCondition) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Status = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Status = &s
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
@@ -7413,7 +6434,8 @@ func (m *StatefulSetCondition) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Reason = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Reason = &s
 			iNdEx = postIndex
 		case 5:
 			if wireType != 2 {
@@ -7445,7 +6467,8 @@ func (m *StatefulSetCondition) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Message = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Message = &s
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -7459,6 +6482,7 @@ func (m *StatefulSetCondition) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -7579,6 +6603,7 @@ func (m *StatefulSetList) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -7621,7 +6646,7 @@ func (m *StatefulSetSpec) Unmarshal(dAtA []byte) error {
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Replicas", wireType)
 			}
-			m.Replicas = 0
+			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -7631,11 +6656,12 @@ func (m *StatefulSetSpec) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Replicas |= int32(b&0x7F) << shift
+				v |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.Replicas = &v
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Selector", wireType)
@@ -7772,7 +6798,8 @@ func (m *StatefulSetSpec) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.ServiceName = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.ServiceName = &s
 			iNdEx = postIndex
 		case 6:
 			if wireType != 2 {
@@ -7804,7 +6831,8 @@ func (m *StatefulSetSpec) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.PodManagementPolicy = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.PodManagementPolicy = &s
 			iNdEx = postIndex
 		case 7:
 			if wireType != 2 {
@@ -7846,7 +6874,7 @@ func (m *StatefulSetSpec) Unmarshal(dAtA []byte) error {
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field RevisionHistoryLimit", wireType)
 			}
-			m.RevisionHistoryLimit = 0
+			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -7856,11 +6884,12 @@ func (m *StatefulSetSpec) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.RevisionHistoryLimit |= int32(b&0x7F) << shift
+				v |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.RevisionHistoryLimit = &v
 		default:
 			iNdEx = preIndex
 			skippy, err := skipGenerated(dAtA[iNdEx:])
@@ -7873,6 +6902,7 @@ func (m *StatefulSetSpec) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -7915,7 +6945,7 @@ func (m *StatefulSetStatus) Unmarshal(dAtA []byte) error {
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ObservedGeneration", wireType)
 			}
-			m.ObservedGeneration = 0
+			var v int64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -7925,16 +6955,17 @@ func (m *StatefulSetStatus) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.ObservedGeneration |= int64(b&0x7F) << shift
+				v |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.ObservedGeneration = &v
 		case 2:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Replicas", wireType)
 			}
-			m.Replicas = 0
+			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -7944,16 +6975,17 @@ func (m *StatefulSetStatus) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Replicas |= int32(b&0x7F) << shift
+				v |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.Replicas = &v
 		case 3:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ReadyReplicas", wireType)
 			}
-			m.ReadyReplicas = 0
+			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -7963,16 +6995,17 @@ func (m *StatefulSetStatus) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.ReadyReplicas |= int32(b&0x7F) << shift
+				v |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.ReadyReplicas = &v
 		case 4:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field CurrentReplicas", wireType)
 			}
-			m.CurrentReplicas = 0
+			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -7982,16 +7015,17 @@ func (m *StatefulSetStatus) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.CurrentReplicas |= int32(b&0x7F) << shift
+				v |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.CurrentReplicas = &v
 		case 5:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field UpdatedReplicas", wireType)
 			}
-			m.UpdatedReplicas = 0
+			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -8001,11 +7035,12 @@ func (m *StatefulSetStatus) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.UpdatedReplicas |= int32(b&0x7F) << shift
+				v |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.UpdatedReplicas = &v
 		case 6:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field CurrentRevision", wireType)
@@ -8036,7 +7071,8 @@ func (m *StatefulSetStatus) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.CurrentRevision = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.CurrentRevision = &s
 			iNdEx = postIndex
 		case 7:
 			if wireType != 2 {
@@ -8068,13 +7104,14 @@ func (m *StatefulSetStatus) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.UpdateRevision = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.UpdateRevision = &s
 			iNdEx = postIndex
 		case 9:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field CollisionCount", wireType)
 			}
-			m.CollisionCount = 0
+			var v int32
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowGenerated
@@ -8084,11 +7121,12 @@ func (m *StatefulSetStatus) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.CollisionCount |= int32(b&0x7F) << shift
+				v |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.CollisionCount = &v
 		case 10:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Conditions", wireType)
@@ -8135,6 +7173,7 @@ func (m *StatefulSetStatus) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -8203,7 +7242,8 @@ func (m *StatefulSetUpdateStrategy) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Type = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Type = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -8253,6 +7293,7 @@ func (m *StatefulSetUpdateStrategy) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}

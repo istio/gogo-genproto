@@ -10,8 +10,6 @@ import (
 	io "io"
 	math "math"
 	math_bits "math/bits"
-	reflect "reflect"
-	strings "strings"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -89,11 +87,15 @@ type Status struct {
 	Message string `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
 	// A list of messages that carry the error details.  There is a common set of
 	// message types for APIs to use.
-	Details []*types.Any `protobuf:"bytes,3,rep,name=details,proto3" json:"details,omitempty"`
+	Details              []*types.Any `protobuf:"bytes,3,rep,name=details,proto3" json:"details,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}     `json:"-"`
+	XXX_unrecognized     []byte       `json:"-"`
+	XXX_sizecache        int32        `json:"-"`
 }
 
-func (m *Status) Reset()      { *m = Status{} }
-func (*Status) ProtoMessage() {}
+func (m *Status) Reset()         { *m = Status{} }
+func (m *Status) String() string { return proto.CompactTextString(m) }
+func (*Status) ProtoMessage()    {}
 func (*Status) Descriptor() ([]byte, []int) {
 	return fileDescriptor_24d244abaf643bfe, []int{0}
 }
@@ -152,7 +154,7 @@ func init() {
 func init() { proto.RegisterFile("google/rpc/status.proto", fileDescriptor_24d244abaf643bfe) }
 
 var fileDescriptor_24d244abaf643bfe = []byte{
-	// 233 bytes of a gzipped FileDescriptorProto
+	// 190 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x12, 0x4f, 0xcf, 0xcf, 0x4f,
 	0xcf, 0x49, 0xd5, 0x2f, 0x2a, 0x48, 0xd6, 0x2f, 0x2e, 0x49, 0x2c, 0x29, 0x2d, 0xd6, 0x2b, 0x28,
 	0xca, 0x2f, 0xc9, 0x17, 0xe2, 0x82, 0x48, 0xe8, 0x15, 0x15, 0x24, 0x4b, 0x49, 0x42, 0x15, 0x81,
@@ -161,72 +163,12 @@ var fileDescriptor_24d244abaf643bfe = []byte{
 	0xc0, 0x6c, 0x21, 0x09, 0x2e, 0xf6, 0xdc, 0xd4, 0xe2, 0xe2, 0xc4, 0xf4, 0x54, 0x09, 0x26, 0x05,
 	0x46, 0x0d, 0xce, 0x20, 0x18, 0x57, 0x48, 0x8f, 0x8b, 0x3d, 0x25, 0xb5, 0x24, 0x31, 0x33, 0xa7,
 	0x58, 0x82, 0x59, 0x81, 0x59, 0x83, 0xdb, 0x48, 0x44, 0x0f, 0x6a, 0x21, 0xcc, 0x12, 0x3d, 0xc7,
-	0xbc, 0xca, 0x20, 0x98, 0x22, 0xa7, 0xc8, 0x0b, 0x0f, 0xe5, 0x18, 0x6e, 0x3c, 0x94, 0x63, 0xf8,
-	0xf0, 0x50, 0x8e, 0xb1, 0xe1, 0x91, 0x1c, 0xe3, 0x8a, 0x47, 0x72, 0x8c, 0x27, 0x1e, 0xc9, 0x31,
-	0x5e, 0x78, 0x24, 0xc7, 0xf8, 0xe0, 0x91, 0x1c, 0xe3, 0x8b, 0x47, 0x72, 0x0c, 0x1f, 0x1e, 0xc9,
-	0x31, 0x4e, 0x78, 0x2c, 0xc7, 0x70, 0xe1, 0xb1, 0x1c, 0xc3, 0x8d, 0xc7, 0x72, 0x0c, 0x5c, 0x7c,
-	0xc9, 0xf9, 0xb9, 0x7a, 0x08, 0x8f, 0x38, 0x71, 0x43, 0xdc, 0x1a, 0x00, 0xb2, 0x22, 0x80, 0x71,
-	0x11, 0x13, 0x73, 0x50, 0x80, 0x73, 0x12, 0x1b, 0xd8, 0x46, 0x63, 0x40, 0x00, 0x00, 0x00, 0xff,
-	0xff, 0xc7, 0x28, 0xdc, 0x46, 0x0b, 0x01, 0x00, 0x00,
+	0xbc, 0xca, 0x20, 0x98, 0x22, 0x27, 0xc3, 0x13, 0x8f, 0xe4, 0x18, 0x2f, 0x3c, 0x92, 0x63, 0x7c,
+	0xf0, 0x48, 0x8e, 0x91, 0x8b, 0x2f, 0x39, 0x3f, 0x57, 0x0f, 0xe1, 0x40, 0x27, 0x6e, 0x88, 0x1b,
+	0x02, 0x40, 0x5a, 0x03, 0x18, 0x17, 0x31, 0x31, 0x07, 0x05, 0x38, 0x27, 0xb1, 0x81, 0x4d, 0x32,
+	0x06, 0x04, 0x00, 0x00, 0xff, 0xff, 0x20, 0xc5, 0x43, 0xd6, 0xe3, 0x00, 0x00, 0x00,
 }
 
-func (this *Status) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*Status)
-	if !ok {
-		that2, ok := that.(Status)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Code != that1.Code {
-		return false
-	}
-	if this.Message != that1.Message {
-		return false
-	}
-	if len(this.Details) != len(that1.Details) {
-		return false
-	}
-	for i := range this.Details {
-		if !this.Details[i].Equal(that1.Details[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *Status) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 7)
-	s = append(s, "&google_rpc.Status{")
-	s = append(s, "Code: "+fmt.Sprintf("%#v", this.Code)+",\n")
-	s = append(s, "Message: "+fmt.Sprintf("%#v", this.Message)+",\n")
-	if this.Details != nil {
-		s = append(s, "Details: "+fmt.Sprintf("%#v", this.Details)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func valueToGoStringStatus(v interface{}, typ string) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("func(v %v) *%v { return &v } ( %#v )", typ, typ, pv)
-}
 func (m *Status) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -247,6 +189,10 @@ func (m *Status) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Details) > 0 {
 		for iNdEx := len(m.Details) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -306,6 +252,9 @@ func (m *Status) Size() (n int) {
 			n += 1 + l + sovStatus(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -314,31 +263,6 @@ func sovStatus(x uint64) (n int) {
 }
 func sozStatus(x uint64) (n int) {
 	return sovStatus(uint64((x << 1) ^ uint64((int64(x) >> 63))))
-}
-func (this *Status) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForDetails := "[]*Any{"
-	for _, f := range this.Details {
-		repeatedStringForDetails += strings.Replace(fmt.Sprintf("%v", f), "Any", "types.Any", 1) + ","
-	}
-	repeatedStringForDetails += "}"
-	s := strings.Join([]string{`&Status{`,
-		`Code:` + fmt.Sprintf("%v", this.Code) + `,`,
-		`Message:` + fmt.Sprintf("%v", this.Message) + `,`,
-		`Details:` + repeatedStringForDetails + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func valueToStringStatus(v interface{}) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("*%v", pv)
 }
 func (m *Status) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
@@ -466,6 +390,7 @@ func (m *Status) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}

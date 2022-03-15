@@ -37,7 +37,10 @@ type Explain struct {
 	// Repeated evaluations of the same expression generate new ExprStep
 	// instances. The order of such ExprStep instances matches the order of
 	// elements returned by Comprehension.iter_range.
-	ExprSteps []*Explain_ExprStep `protobuf:"bytes,2,rep,name=expr_steps,json=exprSteps,proto3" json:"expr_steps,omitempty"`
+	ExprSteps            []*Explain_ExprStep `protobuf:"bytes,2,rep,name=expr_steps,json=exprSteps,proto3" json:"expr_steps,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}            `json:"-"`
+	XXX_unrecognized     []byte              `json:"-"`
+	XXX_sizecache        int32               `json:"-"`
 }
 
 func (m *Explain) Reset()         { *m = Explain{} }
@@ -92,7 +95,10 @@ type Explain_ExprStep struct {
 	// ID of corresponding Expr node.
 	Id int64 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
 	// Index of the value in the values list.
-	ValueIndex int32 `protobuf:"varint,2,opt,name=value_index,json=valueIndex,proto3" json:"value_index,omitempty"`
+	ValueIndex           int32    `protobuf:"varint,2,opt,name=value_index,json=valueIndex,proto3" json:"value_index,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *Explain_ExprStep) Reset()         { *m = Explain_ExprStep{} }
@@ -152,7 +158,7 @@ func init() {
 }
 
 var fileDescriptor_2df9793dd8748e27 = []byte{
-	// 258 bytes of a gzipped FileDescriptorProto
+	// 245 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x52, 0x4b, 0xcf, 0xcf, 0x4f,
 	0xcf, 0x49, 0xd5, 0x4f, 0x2c, 0xc8, 0xd4, 0x4f, 0xad, 0x28, 0x28, 0xd2, 0x2f, 0x33, 0x4c, 0xcc,
 	0x29, 0xc8, 0x48, 0x34, 0x04, 0xf1, 0x72, 0x12, 0x33, 0xf3, 0xf4, 0x0a, 0x8a, 0xf2, 0x4b, 0xf2,
@@ -165,11 +171,10 @@ var fileDescriptor_2df9793dd8748e27 = []byte{
 	0x03, 0x26, 0x2c, 0xc4, 0xc7, 0xc5, 0x94, 0x99, 0x22, 0xc1, 0xa8, 0xc0, 0xa8, 0xc1, 0x1c, 0xc4,
 	0x94, 0x99, 0x22, 0x24, 0xcf, 0xc5, 0x0d, 0xb6, 0x30, 0x3e, 0x33, 0x2f, 0x25, 0xb5, 0x42, 0x82,
 	0x49, 0x81, 0x51, 0x83, 0x35, 0x88, 0x0b, 0x2c, 0xe4, 0x09, 0x12, 0xb1, 0x62, 0x92, 0x60, 0x74,
-	0xf2, 0x3c, 0xf1, 0x48, 0x8e, 0xf1, 0xc2, 0x23, 0x39, 0xc6, 0x07, 0x8f, 0xe4, 0x18, 0x27, 0x3c,
-	0x96, 0x63, 0xb8, 0xf0, 0x58, 0x8e, 0xe1, 0xc6, 0x63, 0x39, 0x06, 0x2e, 0x99, 0xe4, 0xfc, 0x5c,
-	0x9c, 0x8e, 0x72, 0xe2, 0x81, 0xba, 0x2a, 0x00, 0x14, 0x2c, 0x01, 0x8c, 0x3f, 0x18, 0x19, 0x93,
-	0xd8, 0xc0, 0x41, 0x64, 0x0c, 0x08, 0x00, 0x00, 0xff, 0xff, 0x02, 0xe0, 0xd3, 0x69, 0x8c, 0x01,
-	0x00, 0x00,
+	0xb2, 0x3d, 0xf1, 0x48, 0x8e, 0xf1, 0xc2, 0x23, 0x39, 0xc6, 0x07, 0x8f, 0xe4, 0x18, 0xb9, 0x64,
+	0x92, 0xf3, 0x73, 0x71, 0x3a, 0xc4, 0x89, 0x07, 0xea, 0x92, 0x00, 0x50, 0x50, 0x04, 0x30, 0xfe,
+	0x60, 0x64, 0x4c, 0x62, 0x03, 0x07, 0x8b, 0x31, 0x20, 0x00, 0x00, 0xff, 0xff, 0xd0, 0x1b, 0x7a,
+	0x08, 0x80, 0x01, 0x00, 0x00,
 }
 
 func (m *Explain) Marshal() (dAtA []byte, err error) {
@@ -192,6 +197,10 @@ func (m *Explain) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.ExprSteps) > 0 {
 		for iNdEx := len(m.ExprSteps) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -243,6 +252,10 @@ func (m *Explain_ExprStep) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.ValueIndex != 0 {
 		i = encodeVarintExplain(dAtA, i, uint64(m.ValueIndex))
 		i--
@@ -285,6 +298,9 @@ func (m *Explain) Size() (n int) {
 			n += 1 + l + sovExplain(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -299,6 +315,9 @@ func (m *Explain_ExprStep) Size() (n int) {
 	}
 	if m.ValueIndex != 0 {
 		n += 1 + sovExplain(uint64(m.ValueIndex))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -418,6 +437,7 @@ func (m *Explain) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -506,6 +526,7 @@ func (m *Explain_ExprStep) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}

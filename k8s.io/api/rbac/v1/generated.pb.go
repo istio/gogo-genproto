@@ -12,8 +12,6 @@ import (
 	_ "istio.io/gogo-genproto/k8s.io/apimachinery/pkg/runtime/schema"
 	math "math"
 	math_bits "math/bits"
-	reflect "reflect"
-	strings "strings"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -33,10 +31,14 @@ type AggregationRule struct {
 	// If any of the selectors match, then the ClusterRole's permissions will be added
 	// +optional
 	ClusterRoleSelectors []*v1.LabelSelector `protobuf:"bytes,1,rep,name=clusterRoleSelectors" json:"clusterRoleSelectors,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}            `json:"-"`
+	XXX_unrecognized     []byte              `json:"-"`
+	XXX_sizecache        int32               `json:"-"`
 }
 
-func (m *AggregationRule) Reset()      { *m = AggregationRule{} }
-func (*AggregationRule) ProtoMessage() {}
+func (m *AggregationRule) Reset()         { *m = AggregationRule{} }
+func (m *AggregationRule) String() string { return proto.CompactTextString(m) }
+func (*AggregationRule) ProtoMessage()    {}
 func (*AggregationRule) Descriptor() ([]byte, []int) {
 	return fileDescriptor_c8ba2e7dd472de66, []int{0}
 }
@@ -86,11 +88,15 @@ type ClusterRole struct {
 	// If AggregationRule is set, then the Rules are controller managed and direct changes to Rules will be
 	// stomped by the controller.
 	// +optional
-	AggregationRule *AggregationRule `protobuf:"bytes,3,opt,name=aggregationRule" json:"aggregationRule,omitempty"`
+	AggregationRule      *AggregationRule `protobuf:"bytes,3,opt,name=aggregationRule" json:"aggregationRule,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}         `json:"-"`
+	XXX_unrecognized     []byte           `json:"-"`
+	XXX_sizecache        int32            `json:"-"`
 }
 
-func (m *ClusterRole) Reset()      { *m = ClusterRole{} }
-func (*ClusterRole) ProtoMessage() {}
+func (m *ClusterRole) Reset()         { *m = ClusterRole{} }
+func (m *ClusterRole) String() string { return proto.CompactTextString(m) }
+func (*ClusterRole) ProtoMessage()    {}
 func (*ClusterRole) Descriptor() ([]byte, []int) {
 	return fileDescriptor_c8ba2e7dd472de66, []int{1}
 }
@@ -153,11 +159,15 @@ type ClusterRoleBinding struct {
 	Subjects []*Subject `protobuf:"bytes,2,rep,name=subjects" json:"subjects,omitempty"`
 	// RoleRef can only reference a ClusterRole in the global namespace.
 	// If the RoleRef cannot be resolved, the Authorizer must return an error.
-	RoleRef *RoleRef `protobuf:"bytes,3,opt,name=roleRef" json:"roleRef,omitempty"`
+	RoleRef              *RoleRef `protobuf:"bytes,3,opt,name=roleRef" json:"roleRef,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *ClusterRoleBinding) Reset()      { *m = ClusterRoleBinding{} }
-func (*ClusterRoleBinding) ProtoMessage() {}
+func (m *ClusterRoleBinding) Reset()         { *m = ClusterRoleBinding{} }
+func (m *ClusterRoleBinding) String() string { return proto.CompactTextString(m) }
+func (*ClusterRoleBinding) ProtoMessage()    {}
 func (*ClusterRoleBinding) Descriptor() ([]byte, []int) {
 	return fileDescriptor_c8ba2e7dd472de66, []int{2}
 }
@@ -215,11 +225,15 @@ type ClusterRoleBindingList struct {
 	// +optional
 	Metadata *v1.ListMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// Items is a list of ClusterRoleBindings
-	Items []*ClusterRoleBinding `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	Items                []*ClusterRoleBinding `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}              `json:"-"`
+	XXX_unrecognized     []byte                `json:"-"`
+	XXX_sizecache        int32                 `json:"-"`
 }
 
-func (m *ClusterRoleBindingList) Reset()      { *m = ClusterRoleBindingList{} }
-func (*ClusterRoleBindingList) ProtoMessage() {}
+func (m *ClusterRoleBindingList) Reset()         { *m = ClusterRoleBindingList{} }
+func (m *ClusterRoleBindingList) String() string { return proto.CompactTextString(m) }
+func (*ClusterRoleBindingList) ProtoMessage()    {}
 func (*ClusterRoleBindingList) Descriptor() ([]byte, []int) {
 	return fileDescriptor_c8ba2e7dd472de66, []int{3}
 }
@@ -270,11 +284,15 @@ type ClusterRoleList struct {
 	// +optional
 	Metadata *v1.ListMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// Items is a list of ClusterRoles
-	Items []*ClusterRole `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	Items                []*ClusterRole `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
 }
 
-func (m *ClusterRoleList) Reset()      { *m = ClusterRoleList{} }
-func (*ClusterRoleList) ProtoMessage() {}
+func (m *ClusterRoleList) Reset()         { *m = ClusterRoleList{} }
+func (m *ClusterRoleList) String() string { return proto.CompactTextString(m) }
+func (*ClusterRoleList) ProtoMessage()    {}
 func (*ClusterRoleList) Descriptor() ([]byte, []int) {
 	return fileDescriptor_c8ba2e7dd472de66, []int{4}
 }
@@ -338,11 +356,15 @@ type PolicyRule struct {
 	// Since non-resource URLs are not namespaced, this field is only applicable for ClusterRoles referenced from a ClusterRoleBinding.
 	// Rules can either apply to API resources (such as "pods" or "secrets") or non-resource URL paths (such as "/api"),  but not both.
 	// +optional
-	NonResourceURLs []string `protobuf:"bytes,5,rep,name=nonResourceURLs" json:"nonResourceURLs,omitempty"`
+	NonResourceURLs      []string `protobuf:"bytes,5,rep,name=nonResourceURLs" json:"nonResourceURLs,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *PolicyRule) Reset()      { *m = PolicyRule{} }
-func (*PolicyRule) ProtoMessage() {}
+func (m *PolicyRule) Reset()         { *m = PolicyRule{} }
+func (m *PolicyRule) String() string { return proto.CompactTextString(m) }
+func (*PolicyRule) ProtoMessage()    {}
 func (*PolicyRule) Descriptor() ([]byte, []int) {
 	return fileDescriptor_c8ba2e7dd472de66, []int{5}
 }
@@ -415,11 +437,15 @@ type Role struct {
 	Metadata *v1.ObjectMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// Rules holds all the PolicyRules for this Role
 	// +optional
-	Rules []*PolicyRule `protobuf:"bytes,2,rep,name=rules" json:"rules,omitempty"`
+	Rules                []*PolicyRule `protobuf:"bytes,2,rep,name=rules" json:"rules,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
+	XXX_unrecognized     []byte        `json:"-"`
+	XXX_sizecache        int32         `json:"-"`
 }
 
-func (m *Role) Reset()      { *m = Role{} }
-func (*Role) ProtoMessage() {}
+func (m *Role) Reset()         { *m = Role{} }
+func (m *Role) String() string { return proto.CompactTextString(m) }
+func (*Role) ProtoMessage()    {}
 func (*Role) Descriptor() ([]byte, []int) {
 	return fileDescriptor_c8ba2e7dd472de66, []int{6}
 }
@@ -476,11 +502,15 @@ type RoleBinding struct {
 	Subjects []*Subject `protobuf:"bytes,2,rep,name=subjects" json:"subjects,omitempty"`
 	// RoleRef can reference a Role in the current namespace or a ClusterRole in the global namespace.
 	// If the RoleRef cannot be resolved, the Authorizer must return an error.
-	RoleRef *RoleRef `protobuf:"bytes,3,opt,name=roleRef" json:"roleRef,omitempty"`
+	RoleRef              *RoleRef `protobuf:"bytes,3,opt,name=roleRef" json:"roleRef,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *RoleBinding) Reset()      { *m = RoleBinding{} }
-func (*RoleBinding) ProtoMessage() {}
+func (m *RoleBinding) Reset()         { *m = RoleBinding{} }
+func (m *RoleBinding) String() string { return proto.CompactTextString(m) }
+func (*RoleBinding) ProtoMessage()    {}
 func (*RoleBinding) Descriptor() ([]byte, []int) {
 	return fileDescriptor_c8ba2e7dd472de66, []int{7}
 }
@@ -538,11 +568,15 @@ type RoleBindingList struct {
 	// +optional
 	Metadata *v1.ListMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// Items is a list of RoleBindings
-	Items []*RoleBinding `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	Items                []*RoleBinding `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
 }
 
-func (m *RoleBindingList) Reset()      { *m = RoleBindingList{} }
-func (*RoleBindingList) ProtoMessage() {}
+func (m *RoleBindingList) Reset()         { *m = RoleBindingList{} }
+func (m *RoleBindingList) String() string { return proto.CompactTextString(m) }
+func (*RoleBindingList) ProtoMessage()    {}
 func (*RoleBindingList) Descriptor() ([]byte, []int) {
 	return fileDescriptor_c8ba2e7dd472de66, []int{8}
 }
@@ -593,11 +627,15 @@ type RoleList struct {
 	// +optional
 	Metadata *v1.ListMeta `protobuf:"bytes,1,opt,name=metadata" json:"metadata,omitempty"`
 	// Items is a list of Roles
-	Items []*Role `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	Items                []*Role  `protobuf:"bytes,2,rep,name=items" json:"items,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *RoleList) Reset()      { *m = RoleList{} }
-func (*RoleList) ProtoMessage() {}
+func (m *RoleList) Reset()         { *m = RoleList{} }
+func (m *RoleList) String() string { return proto.CompactTextString(m) }
+func (*RoleList) ProtoMessage()    {}
 func (*RoleList) Descriptor() ([]byte, []int) {
 	return fileDescriptor_c8ba2e7dd472de66, []int{9}
 }
@@ -645,15 +683,19 @@ func (m *RoleList) GetItems() []*Role {
 // RoleRef contains information that points to the role being used
 type RoleRef struct {
 	// APIGroup is the group for the resource being referenced
-	ApiGroup string `protobuf:"bytes,1,opt,name=apiGroup" json:"apiGroup"`
+	ApiGroup *string `protobuf:"bytes,1,opt,name=apiGroup" json:"apiGroup,omitempty"`
 	// Kind is the type of resource being referenced
-	Kind string `protobuf:"bytes,2,opt,name=kind" json:"kind"`
+	Kind *string `protobuf:"bytes,2,opt,name=kind" json:"kind,omitempty"`
 	// Name is the name of resource being referenced
-	Name string `protobuf:"bytes,3,opt,name=name" json:"name"`
+	Name                 *string  `protobuf:"bytes,3,opt,name=name" json:"name,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *RoleRef) Reset()      { *m = RoleRef{} }
-func (*RoleRef) ProtoMessage() {}
+func (m *RoleRef) Reset()         { *m = RoleRef{} }
+func (m *RoleRef) String() string { return proto.CompactTextString(m) }
+func (*RoleRef) ProtoMessage()    {}
 func (*RoleRef) Descriptor() ([]byte, []int) {
 	return fileDescriptor_c8ba2e7dd472de66, []int{10}
 }
@@ -685,22 +727,22 @@ func (m *RoleRef) XXX_DiscardUnknown() {
 var xxx_messageInfo_RoleRef proto.InternalMessageInfo
 
 func (m *RoleRef) GetApiGroup() string {
-	if m != nil {
-		return m.ApiGroup
+	if m != nil && m.ApiGroup != nil {
+		return *m.ApiGroup
 	}
 	return ""
 }
 
 func (m *RoleRef) GetKind() string {
-	if m != nil {
-		return m.Kind
+	if m != nil && m.Kind != nil {
+		return *m.Kind
 	}
 	return ""
 }
 
 func (m *RoleRef) GetName() string {
-	if m != nil {
-		return m.Name
+	if m != nil && m.Name != nil {
+		return *m.Name
 	}
 	return ""
 }
@@ -710,22 +752,26 @@ func (m *RoleRef) GetName() string {
 type Subject struct {
 	// Kind of object being referenced. Values defined by this API group are "User", "Group", and "ServiceAccount".
 	// If the Authorizer does not recognized the kind value, the Authorizer should report an error.
-	Kind string `protobuf:"bytes,1,opt,name=kind" json:"kind"`
+	Kind *string `protobuf:"bytes,1,opt,name=kind" json:"kind,omitempty"`
 	// APIGroup holds the API group of the referenced subject.
 	// Defaults to "" for ServiceAccount subjects.
 	// Defaults to "rbac.authorization.k8s.io" for User and Group subjects.
 	// +optional
-	ApiGroup string `protobuf:"bytes,2,opt,name=apiGroup" json:"apiGroup"`
+	ApiGroup *string `protobuf:"bytes,2,opt,name=apiGroup" json:"apiGroup,omitempty"`
 	// Name of the object being referenced.
-	Name string `protobuf:"bytes,3,opt,name=name" json:"name"`
+	Name *string `protobuf:"bytes,3,opt,name=name" json:"name,omitempty"`
 	// Namespace of the referenced object.  If the object kind is non-namespace, such as "User" or "Group", and this value is not empty
 	// the Authorizer should report an error.
 	// +optional
-	Namespace string `protobuf:"bytes,4,opt,name=namespace" json:"namespace"`
+	Namespace            *string  `protobuf:"bytes,4,opt,name=namespace" json:"namespace,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *Subject) Reset()      { *m = Subject{} }
-func (*Subject) ProtoMessage() {}
+func (m *Subject) Reset()         { *m = Subject{} }
+func (m *Subject) String() string { return proto.CompactTextString(m) }
+func (*Subject) ProtoMessage()    {}
 func (*Subject) Descriptor() ([]byte, []int) {
 	return fileDescriptor_c8ba2e7dd472de66, []int{11}
 }
@@ -757,29 +803,29 @@ func (m *Subject) XXX_DiscardUnknown() {
 var xxx_messageInfo_Subject proto.InternalMessageInfo
 
 func (m *Subject) GetKind() string {
-	if m != nil {
-		return m.Kind
+	if m != nil && m.Kind != nil {
+		return *m.Kind
 	}
 	return ""
 }
 
 func (m *Subject) GetApiGroup() string {
-	if m != nil {
-		return m.ApiGroup
+	if m != nil && m.ApiGroup != nil {
+		return *m.ApiGroup
 	}
 	return ""
 }
 
 func (m *Subject) GetName() string {
-	if m != nil {
-		return m.Name
+	if m != nil && m.Name != nil {
+		return *m.Name
 	}
 	return ""
 }
 
 func (m *Subject) GetNamespace() string {
-	if m != nil {
-		return m.Namespace
+	if m != nil && m.Namespace != nil {
+		return *m.Namespace
 	}
 	return ""
 }
@@ -804,667 +850,47 @@ func init() {
 }
 
 var fileDescriptor_c8ba2e7dd472de66 = []byte{
-	// 657 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xdc, 0x54, 0xbf, 0x6b, 0x14, 0x4b,
-	0x1c, 0xbf, 0x49, 0xee, 0xc8, 0xdd, 0xf7, 0x78, 0x1c, 0x0c, 0xe1, 0xb1, 0xe4, 0x3d, 0x26, 0x61,
-	0xdf, 0x43, 0x52, 0xcd, 0x9a, 0x98, 0xa8, 0x85, 0x8d, 0xb1, 0x10, 0xe4, 0xa2, 0x32, 0xc1, 0x5a,
-	0xe6, 0xf6, 0xc6, 0xcd, 0x78, 0xfb, 0x8b, 0x99, 0xdd, 0x83, 0x58, 0x09, 0x82, 0x85, 0x95, 0x85,
-	0x7f, 0x81, 0x95, 0x95, 0x7f, 0x47, 0xc0, 0x26, 0x58, 0xa5, 0x92, 0x64, 0xd3, 0x58, 0xe6, 0x4f,
-	0x90, 0xdd, 0xbd, 0xdd, 0xfb, 0xb5, 0x21, 0x29, 0x12, 0x10, 0xab, 0x63, 0x3f, 0x3f, 0x66, 0x3e,
-	0x9f, 0x99, 0xf9, 0x1e, 0x98, 0x83, 0xfb, 0x9a, 0xca, 0xc0, 0xe2, 0xa1, 0xb4, 0x54, 0x8f, 0xdb,
-	0xd6, 0x70, 0xc3, 0x72, 0x84, 0x2f, 0x14, 0x8f, 0x44, 0x9f, 0x86, 0x2a, 0x88, 0x02, 0x8c, 0x73,
-	0x0d, 0xe5, 0xa1, 0xa4, 0xa9, 0x86, 0x0e, 0x37, 0x56, 0xb6, 0xc6, 0x3e, 0x8f, 0xdb, 0xfb, 0xd2,
-	0x17, 0xea, 0xc0, 0x0a, 0x07, 0x4e, 0x0a, 0x68, 0xcb, 0x13, 0x11, 0xaf, 0x58, 0x69, 0xc5, 0xba,
-	0xc8, 0xa5, 0x62, 0x3f, 0x92, 0x9e, 0x98, 0x33, 0xdc, 0xbd, 0xcc, 0xa0, 0xed, 0x7d, 0xe1, 0xf1,
-	0x59, 0x9f, 0xf9, 0x06, 0x3a, 0x0f, 0x1d, 0x47, 0x09, 0x87, 0x47, 0x32, 0xf0, 0x59, 0xec, 0x0a,
-	0xec, 0xc0, 0xb2, 0xed, 0xc6, 0x3a, 0x12, 0x8a, 0x05, 0xae, 0xd8, 0x13, 0xae, 0xb0, 0xa3, 0x40,
-	0x69, 0x03, 0xad, 0x2d, 0xae, 0xb7, 0x37, 0xef, 0xd0, 0x71, 0xc9, 0x72, 0x27, 0x1a, 0x0e, 0x9c,
-	0x14, 0xd0, 0x34, 0x2d, 0x44, 0x87, 0x1b, 0xb4, 0xcb, 0x7b, 0xc2, 0x2d, 0xbc, 0xac, 0x72, 0x41,
-	0xf3, 0x04, 0x41, 0xfb, 0xd1, 0x98, 0xc0, 0x5d, 0x68, 0xa6, 0xf6, 0x3e, 0x8f, 0xb8, 0x81, 0xd6,
-	0xd0, 0x7a, 0x7b, 0xf3, 0xf6, 0xd5, 0x36, 0x7b, 0xd6, 0x7b, 0x2d, 0xec, 0x68, 0x57, 0x44, 0x9c,
-	0x95, 0x2b, 0xe0, 0x2d, 0x68, 0xa8, 0xd8, 0x15, 0xda, 0x58, 0xc8, 0x72, 0x13, 0x3a, 0x7f, 0x39,
-	0xf4, 0x79, 0xe0, 0x4a, 0xfb, 0x20, 0x6d, 0xcd, 0x72, 0x31, 0xde, 0x85, 0x0e, 0x9f, 0x3e, 0x0f,
-	0x63, 0x31, 0x8b, 0xf2, 0x5f, 0x95, 0x7f, 0xe6, 0xe8, 0xd8, 0xac, 0xd7, 0xfc, 0x8e, 0x00, 0x4f,
-	0x54, 0xdc, 0x91, 0x7e, 0x5f, 0xfa, 0xce, 0x35, 0x37, 0xbd, 0x07, 0x4d, 0x1d, 0x67, 0x44, 0x51,
-	0xf6, 0x9f, 0xaa, 0xb0, 0x7b, 0xb9, 0x86, 0x95, 0x62, 0xbc, 0x0d, 0x4b, 0x2a, 0x70, 0x05, 0x13,
-	0xaf, 0x46, 0x25, 0x2b, 0x7d, 0x2c, 0x97, 0xb0, 0x42, 0x6b, 0x7e, 0x46, 0xf0, 0xf7, 0x7c, 0xa9,
-	0xae, 0xd4, 0x11, 0x7e, 0x32, 0x57, 0x8c, 0x5e, 0xf1, 0xbd, 0x48, 0x3d, 0x5b, 0xeb, 0x01, 0x34,
-	0x64, 0x24, 0xbc, 0xa2, 0xd3, 0xad, 0xaa, 0x6c, 0xf3, 0x31, 0x58, 0x6e, 0x32, 0x3f, 0x21, 0xe8,
-	0x4c, 0xb0, 0xd7, 0x9e, 0x6e, 0x7b, 0x3a, 0xdd, 0xea, 0x25, 0xe9, 0x8a, 0x58, 0x5f, 0x11, 0xc0,
-	0xf8, 0xd5, 0xe1, 0x65, 0x68, 0x0c, 0x85, 0xea, 0xe5, 0xc3, 0xd5, 0x62, 0xf9, 0x07, 0xfe, 0x17,
-	0x5a, 0x3c, 0x94, 0x8f, 0x55, 0x10, 0x87, 0xf9, 0xfa, 0x2d, 0x36, 0x06, 0x52, 0x56, 0x09, 0x1d,
-	0xc4, 0xca, 0x16, 0xda, 0x58, 0xcc, 0xd9, 0x12, 0xc0, 0xff, 0xc3, 0x5f, 0xc5, 0xc7, 0x53, 0xee,
-	0x09, 0x6d, 0xd4, 0x33, 0xc5, 0x34, 0x88, 0xd7, 0xa1, 0xe3, 0x07, 0x3e, 0x1b, 0x61, 0x2f, 0x58,
-	0x57, 0x1b, 0x8d, 0x4c, 0x37, 0x0b, 0x9b, 0x1f, 0x10, 0xd4, 0x7f, 0x97, 0xe9, 0x34, 0xbf, 0x21,
-	0x68, 0xff, 0x39, 0x73, 0x94, 0x3e, 0xd1, 0x9b, 0x1c, 0xa0, 0xab, 0x3c, 0xd1, 0x8a, 0xc9, 0x79,
-	0x8f, 0xa0, 0x79, 0x23, 0x23, 0x43, 0xa7, 0xf3, 0x18, 0x17, 0x1e, 0xd2, 0x28, 0xc8, 0x4b, 0x58,
-	0x1a, 0x9d, 0x19, 0x5e, 0x83, 0x66, 0x31, 0x00, 0x59, 0x8c, 0xd6, 0x4e, 0xfd, 0xf0, 0xc7, 0x6a,
-	0x8d, 0x95, 0x28, 0x36, 0xa0, 0x3e, 0x90, 0x7e, 0xdf, 0x58, 0x98, 0x60, 0x33, 0x24, 0x65, 0x7c,
-	0xee, 0xe5, 0xff, 0xe3, 0x25, 0x93, 0x22, 0xe6, 0x3b, 0x04, 0x4b, 0xa3, 0xdb, 0x2c, 0xfd, 0x68,
-	0xce, 0x3f, 0xb9, 0xf7, 0xc2, 0x45, 0x7b, 0x57, 0xef, 0x80, 0x4d, 0x68, 0xa5, 0xbf, 0x3a, 0xe4,
-	0xb6, 0x30, 0xea, 0x13, 0xf4, 0x18, 0xde, 0xd9, 0x3a, 0x3a, 0x25, 0xb5, 0xe3, 0x53, 0x52, 0x3b,
-	0x3f, 0x25, 0xe8, 0x6d, 0x42, 0xd0, 0x97, 0x84, 0xa0, 0xc3, 0x84, 0xa0, 0xa3, 0x84, 0xa0, 0x93,
-	0x84, 0xa0, 0x9f, 0x09, 0xa9, 0x9d, 0x27, 0x04, 0x7d, 0x3c, 0x23, 0xb5, 0xa3, 0x33, 0x52, 0x3b,
-	0x3e, 0x23, 0xb5, 0x5f, 0x01, 0x00, 0x00, 0xff, 0xff, 0x52, 0x07, 0x72, 0xea, 0x90, 0x08, 0x00,
-	0x00,
+	// 602 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xdc, 0x54, 0x4d, 0x6e, 0xd3, 0x40,
+	0x14, 0xd6, 0xb4, 0x89, 0x9a, 0xbc, 0x80, 0x22, 0x8d, 0x2a, 0x64, 0x15, 0x14, 0x2a, 0x83, 0x50,
+	0x57, 0x63, 0x5a, 0x5a, 0x60, 0xc1, 0x86, 0xb2, 0x40, 0x42, 0x29, 0xa0, 0xa9, 0x38, 0xc0, 0xc4,
+	0x79, 0xb8, 0x43, 0xfc, 0xa7, 0x99, 0x71, 0xa4, 0x72, 0x00, 0x16, 0xac, 0x39, 0x01, 0x07, 0xe0,
+	0x1c, 0x48, 0x6c, 0x10, 0x27, 0xa8, 0x7a, 0x12, 0x64, 0x3b, 0xb6, 0x13, 0xdb, 0x55, 0xbb, 0x68,
+	0x25, 0xc4, 0x2a, 0x9e, 0xef, 0x7d, 0xdf, 0x9b, 0xef, 0x9b, 0x99, 0x17, 0xb0, 0x67, 0xcf, 0x35,
+	0x93, 0x91, 0x23, 0x62, 0xe9, 0xa8, 0x89, 0x70, 0x9d, 0xf9, 0xae, 0xe3, 0x61, 0x88, 0x4a, 0x18,
+	0x9c, 0xb2, 0x58, 0x45, 0x26, 0xa2, 0x34, 0xe7, 0x30, 0x11, 0x4b, 0x96, 0x72, 0xd8, 0x7c, 0x77,
+	0x6b, 0xbf, 0xd2, 0x05, 0xc2, 0x3d, 0x91, 0x21, 0xaa, 0x53, 0x27, 0x9e, 0x79, 0x29, 0xa0, 0x9d,
+	0x00, 0x8d, 0x68, 0xe9, 0xb4, 0xe5, 0x5c, 0xa4, 0x52, 0x49, 0x68, 0x64, 0x80, 0x0d, 0xc1, 0xd3,
+	0xcb, 0x04, 0xda, 0x3d, 0xc1, 0x40, 0xd4, 0x75, 0xf6, 0x67, 0x18, 0xbe, 0xf4, 0x3c, 0x85, 0x9e,
+	0x30, 0x32, 0x0a, 0x79, 0xe2, 0x23, 0xf5, 0x60, 0xd3, 0xf5, 0x13, 0x6d, 0x50, 0xf1, 0xc8, 0xc7,
+	0x63, 0xf4, 0xd1, 0x35, 0x91, 0xd2, 0x16, 0xd9, 0x5e, 0xdf, 0x19, 0xec, 0x3d, 0x61, 0x55, 0xc8,
+	0x72, 0x27, 0x16, 0xcf, 0xbc, 0x14, 0xd0, 0x2c, 0x0d, 0xc4, 0xe6, 0xbb, 0x6c, 0x2c, 0x26, 0xe8,
+	0x17, 0x5a, 0xde, 0xda, 0xd0, 0x3e, 0x23, 0x30, 0x78, 0x55, 0x15, 0xe8, 0x18, 0x7a, 0xa9, 0x7c,
+	0x2a, 0x8c, 0xb0, 0xc8, 0x36, 0xd9, 0x19, 0xec, 0x3d, 0xbe, 0xda, 0x66, 0xef, 0x26, 0x9f, 0xd0,
+	0x35, 0x47, 0x68, 0x04, 0x2f, 0x3b, 0xd0, 0x7d, 0xe8, 0xaa, 0xc4, 0x47, 0x6d, 0xad, 0x65, 0xbe,
+	0x47, 0xac, 0x79, 0x39, 0xec, 0x7d, 0xe4, 0x4b, 0xf7, 0x34, 0x4d, 0xcd, 0x73, 0x32, 0x3d, 0x82,
+	0xa1, 0x58, 0x3d, 0x0f, 0x6b, 0x3d, 0xb3, 0xf2, 0xa0, 0x4d, 0x5f, 0x3b, 0x3a, 0x5e, 0xd7, 0xda,
+	0x7f, 0x08, 0xd0, 0xa5, 0x88, 0x87, 0x32, 0x9c, 0xca, 0xd0, 0xbb, 0xe6, 0xa4, 0xcf, 0xa0, 0xa7,
+	0x93, 0xac, 0x50, 0x84, 0xbd, 0xdb, 0x66, 0xf6, 0x38, 0xe7, 0xf0, 0x92, 0x4c, 0x0f, 0x60, 0x43,
+	0x45, 0x3e, 0x72, 0xfc, 0xb8, 0x08, 0xd9, 0xaa, 0xe3, 0x39, 0x85, 0x17, 0x5c, 0xfb, 0x3b, 0x81,
+	0x3b, 0xcd, 0x50, 0x63, 0xa9, 0x0d, 0x7d, 0xd3, 0x08, 0xc6, 0xae, 0xf8, 0x5e, 0xa4, 0xae, 0xc7,
+	0x7a, 0x01, 0x5d, 0x69, 0x30, 0x28, 0x32, 0x3d, 0x6a, 0xf3, 0xd6, 0xb4, 0xc1, 0x73, 0x91, 0xfd,
+	0x8d, 0xc0, 0x70, 0xa9, 0x7a, 0xed, 0xee, 0x0e, 0x56, 0xdd, 0xdd, 0xbf, 0xc4, 0x5d, 0x61, 0xeb,
+	0x07, 0x01, 0xa8, 0x5e, 0x1d, 0xdd, 0x84, 0xee, 0x1c, 0xd5, 0x24, 0x1f, 0xae, 0x3e, 0xcf, 0x17,
+	0xf4, 0x1e, 0xf4, 0x45, 0x2c, 0x5f, 0xab, 0x28, 0x89, 0xf3, 0xfe, 0x7d, 0x5e, 0x01, 0x69, 0x55,
+	0xa1, 0x8e, 0x12, 0xe5, 0xa2, 0xb6, 0xd6, 0xf3, 0x6a, 0x09, 0xd0, 0x87, 0x70, 0xbb, 0x58, 0xbc,
+	0x15, 0x01, 0x6a, 0xab, 0x93, 0x31, 0x56, 0x41, 0xba, 0x03, 0xc3, 0x30, 0x0a, 0xf9, 0x02, 0xfb,
+	0xc0, 0xc7, 0xda, 0xea, 0x66, 0xbc, 0x3a, 0x6c, 0x7f, 0x25, 0xd0, 0xf9, 0x57, 0xa6, 0xd3, 0xfe,
+	0x45, 0x60, 0xf0, 0xff, 0xcc, 0x51, 0xfa, 0x44, 0x6f, 0x72, 0x80, 0xae, 0xf2, 0x44, 0x5b, 0x26,
+	0xe7, 0x0b, 0x81, 0xde, 0x8d, 0x8c, 0x0c, 0x5b, 0xf5, 0x63, 0x5d, 0x78, 0x48, 0x0b, 0x23, 0x47,
+	0xb0, 0xb1, 0x38, 0x33, 0xba, 0x05, 0xbd, 0x62, 0x00, 0x32, 0x1b, 0x7d, 0x5e, 0xae, 0x29, 0x85,
+	0xce, 0x4c, 0x86, 0x53, 0x6b, 0x2d, 0xc3, 0xb3, 0xef, 0x14, 0x0b, 0x45, 0x90, 0xff, 0x77, 0xf7,
+	0x79, 0xf6, 0x6d, 0xcf, 0x60, 0x63, 0x71, 0x75, 0xa5, 0x84, 0x2c, 0x49, 0x96, 0xb7, 0x58, 0x6b,
+	0x6e, 0x51, 0x6f, 0x97, 0x8e, 0x61, 0xfa, 0xab, 0x63, 0xe1, 0xa2, 0xd5, 0xc9, 0x0a, 0x15, 0x70,
+	0x78, 0xeb, 0xe7, 0xf9, 0x88, 0xfc, 0x3e, 0x1f, 0x91, 0xb3, 0xf3, 0x11, 0xf9, 0x1b, 0x00, 0x00,
+	0xff, 0xff, 0x15, 0x43, 0xf0, 0x46, 0x3d, 0x08, 0x00, 0x00,
 }
 
-func (this *AggregationRule) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*AggregationRule)
-	if !ok {
-		that2, ok := that.(AggregationRule)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if len(this.ClusterRoleSelectors) != len(that1.ClusterRoleSelectors) {
-		return false
-	}
-	for i := range this.ClusterRoleSelectors {
-		if !this.ClusterRoleSelectors[i].Equal(that1.ClusterRoleSelectors[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *ClusterRole) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*ClusterRole)
-	if !ok {
-		that2, ok := that.(ClusterRole)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if len(this.Rules) != len(that1.Rules) {
-		return false
-	}
-	for i := range this.Rules {
-		if !this.Rules[i].Equal(that1.Rules[i]) {
-			return false
-		}
-	}
-	if !this.AggregationRule.Equal(that1.AggregationRule) {
-		return false
-	}
-	return true
-}
-func (this *ClusterRoleBinding) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*ClusterRoleBinding)
-	if !ok {
-		that2, ok := that.(ClusterRoleBinding)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if len(this.Subjects) != len(that1.Subjects) {
-		return false
-	}
-	for i := range this.Subjects {
-		if !this.Subjects[i].Equal(that1.Subjects[i]) {
-			return false
-		}
-	}
-	if !this.RoleRef.Equal(that1.RoleRef) {
-		return false
-	}
-	return true
-}
-func (this *ClusterRoleBindingList) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*ClusterRoleBindingList)
-	if !ok {
-		that2, ok := that.(ClusterRoleBindingList)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if len(this.Items) != len(that1.Items) {
-		return false
-	}
-	for i := range this.Items {
-		if !this.Items[i].Equal(that1.Items[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *ClusterRoleList) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*ClusterRoleList)
-	if !ok {
-		that2, ok := that.(ClusterRoleList)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if len(this.Items) != len(that1.Items) {
-		return false
-	}
-	for i := range this.Items {
-		if !this.Items[i].Equal(that1.Items[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *PolicyRule) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*PolicyRule)
-	if !ok {
-		that2, ok := that.(PolicyRule)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if len(this.Verbs) != len(that1.Verbs) {
-		return false
-	}
-	for i := range this.Verbs {
-		if this.Verbs[i] != that1.Verbs[i] {
-			return false
-		}
-	}
-	if len(this.ApiGroups) != len(that1.ApiGroups) {
-		return false
-	}
-	for i := range this.ApiGroups {
-		if this.ApiGroups[i] != that1.ApiGroups[i] {
-			return false
-		}
-	}
-	if len(this.Resources) != len(that1.Resources) {
-		return false
-	}
-	for i := range this.Resources {
-		if this.Resources[i] != that1.Resources[i] {
-			return false
-		}
-	}
-	if len(this.ResourceNames) != len(that1.ResourceNames) {
-		return false
-	}
-	for i := range this.ResourceNames {
-		if this.ResourceNames[i] != that1.ResourceNames[i] {
-			return false
-		}
-	}
-	if len(this.NonResourceURLs) != len(that1.NonResourceURLs) {
-		return false
-	}
-	for i := range this.NonResourceURLs {
-		if this.NonResourceURLs[i] != that1.NonResourceURLs[i] {
-			return false
-		}
-	}
-	return true
-}
-func (this *Role) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*Role)
-	if !ok {
-		that2, ok := that.(Role)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if len(this.Rules) != len(that1.Rules) {
-		return false
-	}
-	for i := range this.Rules {
-		if !this.Rules[i].Equal(that1.Rules[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *RoleBinding) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*RoleBinding)
-	if !ok {
-		that2, ok := that.(RoleBinding)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if len(this.Subjects) != len(that1.Subjects) {
-		return false
-	}
-	for i := range this.Subjects {
-		if !this.Subjects[i].Equal(that1.Subjects[i]) {
-			return false
-		}
-	}
-	if !this.RoleRef.Equal(that1.RoleRef) {
-		return false
-	}
-	return true
-}
-func (this *RoleBindingList) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*RoleBindingList)
-	if !ok {
-		that2, ok := that.(RoleBindingList)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if len(this.Items) != len(that1.Items) {
-		return false
-	}
-	for i := range this.Items {
-		if !this.Items[i].Equal(that1.Items[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *RoleList) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*RoleList)
-	if !ok {
-		that2, ok := that.(RoleList)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Metadata.Equal(that1.Metadata) {
-		return false
-	}
-	if len(this.Items) != len(that1.Items) {
-		return false
-	}
-	for i := range this.Items {
-		if !this.Items[i].Equal(that1.Items[i]) {
-			return false
-		}
-	}
-	return true
-}
-func (this *RoleRef) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*RoleRef)
-	if !ok {
-		that2, ok := that.(RoleRef)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.ApiGroup != that1.ApiGroup {
-		return false
-	}
-	if this.Kind != that1.Kind {
-		return false
-	}
-	if this.Name != that1.Name {
-		return false
-	}
-	return true
-}
-func (this *Subject) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*Subject)
-	if !ok {
-		that2, ok := that.(Subject)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Kind != that1.Kind {
-		return false
-	}
-	if this.ApiGroup != that1.ApiGroup {
-		return false
-	}
-	if this.Name != that1.Name {
-		return false
-	}
-	if this.Namespace != that1.Namespace {
-		return false
-	}
-	return true
-}
-func (this *AggregationRule) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 5)
-	s = append(s, "&k8s_io_api_rbac_v1.AggregationRule{")
-	if this.ClusterRoleSelectors != nil {
-		s = append(s, "ClusterRoleSelectors: "+fmt.Sprintf("%#v", this.ClusterRoleSelectors)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *ClusterRole) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 7)
-	s = append(s, "&k8s_io_api_rbac_v1.ClusterRole{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Rules != nil {
-		s = append(s, "Rules: "+fmt.Sprintf("%#v", this.Rules)+",\n")
-	}
-	if this.AggregationRule != nil {
-		s = append(s, "AggregationRule: "+fmt.Sprintf("%#v", this.AggregationRule)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *ClusterRoleBinding) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 7)
-	s = append(s, "&k8s_io_api_rbac_v1.ClusterRoleBinding{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Subjects != nil {
-		s = append(s, "Subjects: "+fmt.Sprintf("%#v", this.Subjects)+",\n")
-	}
-	if this.RoleRef != nil {
-		s = append(s, "RoleRef: "+fmt.Sprintf("%#v", this.RoleRef)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *ClusterRoleBindingList) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_rbac_v1.ClusterRoleBindingList{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Items != nil {
-		s = append(s, "Items: "+fmt.Sprintf("%#v", this.Items)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *ClusterRoleList) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_rbac_v1.ClusterRoleList{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Items != nil {
-		s = append(s, "Items: "+fmt.Sprintf("%#v", this.Items)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *PolicyRule) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 9)
-	s = append(s, "&k8s_io_api_rbac_v1.PolicyRule{")
-	if this.Verbs != nil {
-		s = append(s, "Verbs: "+fmt.Sprintf("%#v", this.Verbs)+",\n")
-	}
-	if this.ApiGroups != nil {
-		s = append(s, "ApiGroups: "+fmt.Sprintf("%#v", this.ApiGroups)+",\n")
-	}
-	if this.Resources != nil {
-		s = append(s, "Resources: "+fmt.Sprintf("%#v", this.Resources)+",\n")
-	}
-	if this.ResourceNames != nil {
-		s = append(s, "ResourceNames: "+fmt.Sprintf("%#v", this.ResourceNames)+",\n")
-	}
-	if this.NonResourceURLs != nil {
-		s = append(s, "NonResourceURLs: "+fmt.Sprintf("%#v", this.NonResourceURLs)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *Role) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_rbac_v1.Role{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Rules != nil {
-		s = append(s, "Rules: "+fmt.Sprintf("%#v", this.Rules)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *RoleBinding) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 7)
-	s = append(s, "&k8s_io_api_rbac_v1.RoleBinding{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Subjects != nil {
-		s = append(s, "Subjects: "+fmt.Sprintf("%#v", this.Subjects)+",\n")
-	}
-	if this.RoleRef != nil {
-		s = append(s, "RoleRef: "+fmt.Sprintf("%#v", this.RoleRef)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *RoleBindingList) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_rbac_v1.RoleBindingList{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Items != nil {
-		s = append(s, "Items: "+fmt.Sprintf("%#v", this.Items)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *RoleList) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_rbac_v1.RoleList{")
-	if this.Metadata != nil {
-		s = append(s, "Metadata: "+fmt.Sprintf("%#v", this.Metadata)+",\n")
-	}
-	if this.Items != nil {
-		s = append(s, "Items: "+fmt.Sprintf("%#v", this.Items)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *RoleRef) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 7)
-	s = append(s, "&k8s_io_api_rbac_v1.RoleRef{")
-	s = append(s, "ApiGroup: "+fmt.Sprintf("%#v", this.ApiGroup)+",\n")
-	s = append(s, "Kind: "+fmt.Sprintf("%#v", this.Kind)+",\n")
-	s = append(s, "Name: "+fmt.Sprintf("%#v", this.Name)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *Subject) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 8)
-	s = append(s, "&k8s_io_api_rbac_v1.Subject{")
-	s = append(s, "Kind: "+fmt.Sprintf("%#v", this.Kind)+",\n")
-	s = append(s, "ApiGroup: "+fmt.Sprintf("%#v", this.ApiGroup)+",\n")
-	s = append(s, "Name: "+fmt.Sprintf("%#v", this.Name)+",\n")
-	s = append(s, "Namespace: "+fmt.Sprintf("%#v", this.Namespace)+",\n")
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func valueToGoStringGenerated(v interface{}, typ string) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("func(v %v) *%v { return &v } ( %#v )", typ, typ, pv)
-}
 func (m *AggregationRule) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -1485,6 +911,10 @@ func (m *AggregationRule) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.ClusterRoleSelectors) > 0 {
 		for iNdEx := len(m.ClusterRoleSelectors) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -1522,6 +952,10 @@ func (m *ClusterRole) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.AggregationRule != nil {
 		{
 			size, err := m.AggregationRule.MarshalToSizedBuffer(dAtA[:i])
@@ -1583,6 +1017,10 @@ func (m *ClusterRoleBinding) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.RoleRef != nil {
 		{
 			size, err := m.RoleRef.MarshalToSizedBuffer(dAtA[:i])
@@ -1644,6 +1082,10 @@ func (m *ClusterRoleBindingList) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Items) > 0 {
 		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -1693,6 +1135,10 @@ func (m *ClusterRoleList) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Items) > 0 {
 		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -1742,6 +1188,10 @@ func (m *PolicyRule) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.NonResourceURLs) > 0 {
 		for iNdEx := len(m.NonResourceURLs) - 1; iNdEx >= 0; iNdEx-- {
 			i -= len(m.NonResourceURLs[iNdEx])
@@ -1810,6 +1260,10 @@ func (m *Role) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Rules) > 0 {
 		for iNdEx := len(m.Rules) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -1859,6 +1313,10 @@ func (m *RoleBinding) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.RoleRef != nil {
 		{
 			size, err := m.RoleRef.MarshalToSizedBuffer(dAtA[:i])
@@ -1920,6 +1378,10 @@ func (m *RoleBindingList) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Items) > 0 {
 		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -1969,6 +1431,10 @@ func (m *RoleList) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.Items) > 0 {
 		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -2018,21 +1484,31 @@ func (m *RoleRef) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	i -= len(m.Name)
-	copy(dAtA[i:], m.Name)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Name)))
-	i--
-	dAtA[i] = 0x1a
-	i -= len(m.Kind)
-	copy(dAtA[i:], m.Kind)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Kind)))
-	i--
-	dAtA[i] = 0x12
-	i -= len(m.ApiGroup)
-	copy(dAtA[i:], m.ApiGroup)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.ApiGroup)))
-	i--
-	dAtA[i] = 0xa
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Name != nil {
+		i -= len(*m.Name)
+		copy(dAtA[i:], *m.Name)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Name)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if m.Kind != nil {
+		i -= len(*m.Kind)
+		copy(dAtA[i:], *m.Kind)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Kind)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.ApiGroup != nil {
+		i -= len(*m.ApiGroup)
+		copy(dAtA[i:], *m.ApiGroup)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.ApiGroup)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -2056,26 +1532,38 @@ func (m *Subject) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	i -= len(m.Namespace)
-	copy(dAtA[i:], m.Namespace)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Namespace)))
-	i--
-	dAtA[i] = 0x22
-	i -= len(m.Name)
-	copy(dAtA[i:], m.Name)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Name)))
-	i--
-	dAtA[i] = 0x1a
-	i -= len(m.ApiGroup)
-	copy(dAtA[i:], m.ApiGroup)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.ApiGroup)))
-	i--
-	dAtA[i] = 0x12
-	i -= len(m.Kind)
-	copy(dAtA[i:], m.Kind)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Kind)))
-	i--
-	dAtA[i] = 0xa
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Namespace != nil {
+		i -= len(*m.Namespace)
+		copy(dAtA[i:], *m.Namespace)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Namespace)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if m.Name != nil {
+		i -= len(*m.Name)
+		copy(dAtA[i:], *m.Name)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Name)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if m.ApiGroup != nil {
+		i -= len(*m.ApiGroup)
+		copy(dAtA[i:], *m.ApiGroup)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.ApiGroup)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Kind != nil {
+		i -= len(*m.Kind)
+		copy(dAtA[i:], *m.Kind)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Kind)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -2102,6 +1590,9 @@ func (m *AggregationRule) Size() (n int) {
 			n += 1 + l + sovGenerated(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -2124,6 +1615,9 @@ func (m *ClusterRole) Size() (n int) {
 	if m.AggregationRule != nil {
 		l = m.AggregationRule.Size()
 		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -2148,6 +1642,9 @@ func (m *ClusterRoleBinding) Size() (n int) {
 		l = m.RoleRef.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -2167,6 +1664,9 @@ func (m *ClusterRoleBindingList) Size() (n int) {
 			n += 1 + l + sovGenerated(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -2185,6 +1685,9 @@ func (m *ClusterRoleList) Size() (n int) {
 			l = e.Size()
 			n += 1 + l + sovGenerated(uint64(l))
 		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -2225,6 +1728,9 @@ func (m *PolicyRule) Size() (n int) {
 			n += 1 + l + sovGenerated(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -2243,6 +1749,9 @@ func (m *Role) Size() (n int) {
 			l = e.Size()
 			n += 1 + l + sovGenerated(uint64(l))
 		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -2267,6 +1776,9 @@ func (m *RoleBinding) Size() (n int) {
 		l = m.RoleRef.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -2285,6 +1797,9 @@ func (m *RoleBindingList) Size() (n int) {
 			l = e.Size()
 			n += 1 + l + sovGenerated(uint64(l))
 		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -2305,6 +1820,9 @@ func (m *RoleList) Size() (n int) {
 			n += 1 + l + sovGenerated(uint64(l))
 		}
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -2314,12 +1832,21 @@ func (m *RoleRef) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.ApiGroup)
-	n += 1 + l + sovGenerated(uint64(l))
-	l = len(m.Kind)
-	n += 1 + l + sovGenerated(uint64(l))
-	l = len(m.Name)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.ApiGroup != nil {
+		l = len(*m.ApiGroup)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.Kind != nil {
+		l = len(*m.Kind)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.Name != nil {
+		l = len(*m.Name)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -2329,14 +1856,25 @@ func (m *Subject) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Kind)
-	n += 1 + l + sovGenerated(uint64(l))
-	l = len(m.ApiGroup)
-	n += 1 + l + sovGenerated(uint64(l))
-	l = len(m.Name)
-	n += 1 + l + sovGenerated(uint64(l))
-	l = len(m.Namespace)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.Kind != nil {
+		l = len(*m.Kind)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.ApiGroup != nil {
+		l = len(*m.ApiGroup)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.Name != nil {
+		l = len(*m.Name)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.Namespace != nil {
+		l = len(*m.Namespace)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -2345,199 +1883,6 @@ func sovGenerated(x uint64) (n int) {
 }
 func sozGenerated(x uint64) (n int) {
 	return sovGenerated(uint64((x << 1) ^ uint64((int64(x) >> 63))))
-}
-func (this *AggregationRule) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForClusterRoleSelectors := "[]*LabelSelector{"
-	for _, f := range this.ClusterRoleSelectors {
-		repeatedStringForClusterRoleSelectors += strings.Replace(fmt.Sprintf("%v", f), "LabelSelector", "v1.LabelSelector", 1) + ","
-	}
-	repeatedStringForClusterRoleSelectors += "}"
-	s := strings.Join([]string{`&AggregationRule{`,
-		`ClusterRoleSelectors:` + repeatedStringForClusterRoleSelectors + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *ClusterRole) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForRules := "[]*PolicyRule{"
-	for _, f := range this.Rules {
-		repeatedStringForRules += strings.Replace(f.String(), "PolicyRule", "PolicyRule", 1) + ","
-	}
-	repeatedStringForRules += "}"
-	s := strings.Join([]string{`&ClusterRole{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ObjectMeta", "v1.ObjectMeta", 1) + `,`,
-		`Rules:` + repeatedStringForRules + `,`,
-		`AggregationRule:` + strings.Replace(this.AggregationRule.String(), "AggregationRule", "AggregationRule", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *ClusterRoleBinding) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForSubjects := "[]*Subject{"
-	for _, f := range this.Subjects {
-		repeatedStringForSubjects += strings.Replace(f.String(), "Subject", "Subject", 1) + ","
-	}
-	repeatedStringForSubjects += "}"
-	s := strings.Join([]string{`&ClusterRoleBinding{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ObjectMeta", "v1.ObjectMeta", 1) + `,`,
-		`Subjects:` + repeatedStringForSubjects + `,`,
-		`RoleRef:` + strings.Replace(this.RoleRef.String(), "RoleRef", "RoleRef", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *ClusterRoleBindingList) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForItems := "[]*ClusterRoleBinding{"
-	for _, f := range this.Items {
-		repeatedStringForItems += strings.Replace(f.String(), "ClusterRoleBinding", "ClusterRoleBinding", 1) + ","
-	}
-	repeatedStringForItems += "}"
-	s := strings.Join([]string{`&ClusterRoleBindingList{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ListMeta", "v1.ListMeta", 1) + `,`,
-		`Items:` + repeatedStringForItems + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *ClusterRoleList) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForItems := "[]*ClusterRole{"
-	for _, f := range this.Items {
-		repeatedStringForItems += strings.Replace(f.String(), "ClusterRole", "ClusterRole", 1) + ","
-	}
-	repeatedStringForItems += "}"
-	s := strings.Join([]string{`&ClusterRoleList{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ListMeta", "v1.ListMeta", 1) + `,`,
-		`Items:` + repeatedStringForItems + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *PolicyRule) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&PolicyRule{`,
-		`Verbs:` + fmt.Sprintf("%v", this.Verbs) + `,`,
-		`ApiGroups:` + fmt.Sprintf("%v", this.ApiGroups) + `,`,
-		`Resources:` + fmt.Sprintf("%v", this.Resources) + `,`,
-		`ResourceNames:` + fmt.Sprintf("%v", this.ResourceNames) + `,`,
-		`NonResourceURLs:` + fmt.Sprintf("%v", this.NonResourceURLs) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *Role) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForRules := "[]*PolicyRule{"
-	for _, f := range this.Rules {
-		repeatedStringForRules += strings.Replace(f.String(), "PolicyRule", "PolicyRule", 1) + ","
-	}
-	repeatedStringForRules += "}"
-	s := strings.Join([]string{`&Role{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ObjectMeta", "v1.ObjectMeta", 1) + `,`,
-		`Rules:` + repeatedStringForRules + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *RoleBinding) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForSubjects := "[]*Subject{"
-	for _, f := range this.Subjects {
-		repeatedStringForSubjects += strings.Replace(f.String(), "Subject", "Subject", 1) + ","
-	}
-	repeatedStringForSubjects += "}"
-	s := strings.Join([]string{`&RoleBinding{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ObjectMeta", "v1.ObjectMeta", 1) + `,`,
-		`Subjects:` + repeatedStringForSubjects + `,`,
-		`RoleRef:` + strings.Replace(this.RoleRef.String(), "RoleRef", "RoleRef", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *RoleBindingList) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForItems := "[]*RoleBinding{"
-	for _, f := range this.Items {
-		repeatedStringForItems += strings.Replace(f.String(), "RoleBinding", "RoleBinding", 1) + ","
-	}
-	repeatedStringForItems += "}"
-	s := strings.Join([]string{`&RoleBindingList{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ListMeta", "v1.ListMeta", 1) + `,`,
-		`Items:` + repeatedStringForItems + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *RoleList) String() string {
-	if this == nil {
-		return "nil"
-	}
-	repeatedStringForItems := "[]*Role{"
-	for _, f := range this.Items {
-		repeatedStringForItems += strings.Replace(f.String(), "Role", "Role", 1) + ","
-	}
-	repeatedStringForItems += "}"
-	s := strings.Join([]string{`&RoleList{`,
-		`Metadata:` + strings.Replace(fmt.Sprintf("%v", this.Metadata), "ListMeta", "v1.ListMeta", 1) + `,`,
-		`Items:` + repeatedStringForItems + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *RoleRef) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&RoleRef{`,
-		`ApiGroup:` + fmt.Sprintf("%v", this.ApiGroup) + `,`,
-		`Kind:` + fmt.Sprintf("%v", this.Kind) + `,`,
-		`Name:` + fmt.Sprintf("%v", this.Name) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *Subject) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&Subject{`,
-		`Kind:` + fmt.Sprintf("%v", this.Kind) + `,`,
-		`ApiGroup:` + fmt.Sprintf("%v", this.ApiGroup) + `,`,
-		`Name:` + fmt.Sprintf("%v", this.Name) + `,`,
-		`Namespace:` + fmt.Sprintf("%v", this.Namespace) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func valueToStringGenerated(v interface{}) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("*%v", pv)
 }
 func (m *AggregationRule) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
@@ -2614,6 +1959,7 @@ func (m *AggregationRule) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -2770,6 +2116,7 @@ func (m *ClusterRole) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -2926,6 +2273,7 @@ func (m *ClusterRoleBinding) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3046,6 +2394,7 @@ func (m *ClusterRoleBindingList) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3166,6 +2515,7 @@ func (m *ClusterRoleList) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3376,6 +2726,7 @@ func (m *PolicyRule) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3496,6 +2847,7 @@ func (m *Role) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3652,6 +3004,7 @@ func (m *RoleBinding) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3772,6 +3125,7 @@ func (m *RoleBindingList) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3892,6 +3246,7 @@ func (m *RoleList) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -3960,7 +3315,8 @@ func (m *RoleRef) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.ApiGroup = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.ApiGroup = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -3992,7 +3348,8 @@ func (m *RoleRef) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Kind = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Kind = &s
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
@@ -4024,7 +3381,8 @@ func (m *RoleRef) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Name = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Name = &s
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -4038,6 +3396,7 @@ func (m *RoleRef) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -4106,7 +3465,8 @@ func (m *Subject) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Kind = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Kind = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -4138,7 +3498,8 @@ func (m *Subject) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.ApiGroup = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.ApiGroup = &s
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
@@ -4170,7 +3531,8 @@ func (m *Subject) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Name = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Name = &s
 			iNdEx = postIndex
 		case 4:
 			if wireType != 2 {
@@ -4202,7 +3564,8 @@ func (m *Subject) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Namespace = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Namespace = &s
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -4216,6 +3579,7 @@ func (m *Subject) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}

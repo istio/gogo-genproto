@@ -4,10 +4,8 @@
 package k8s_io_api_admission_v1beta1
 
 import (
-	bytes "bytes"
 	fmt "fmt"
 	proto "github.com/gogo/protobuf/proto"
-	github_com_gogo_protobuf_sortkeys "github.com/gogo/protobuf/sortkeys"
 	io "io"
 	v11 "istio.io/gogo-genproto/k8s.io/api/authentication/v1"
 	v1 "istio.io/gogo-genproto/k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -15,8 +13,6 @@ import (
 	_ "istio.io/gogo-genproto/k8s.io/apimachinery/pkg/runtime/schema"
 	math "math"
 	math_bits "math/bits"
-	reflect "reflect"
-	strings "strings"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -36,14 +32,14 @@ type AdmissionRequest struct {
 	// otherwise identical (parallel requests, requests when earlier requests did not modify etc)
 	// The UID is meant to track the round trip (request/response) between the KAS and the WebHook, not the user request.
 	// It is suitable for correlating log entries between the webhook and apiserver, for either auditing or debugging.
-	Uid string `protobuf:"bytes,1,opt,name=uid" json:"uid"`
+	Uid *string `protobuf:"bytes,1,opt,name=uid" json:"uid,omitempty"`
 	// Kind is the fully-qualified type of object being submitted (for example, v1.Pod or autoscaling.v1.Scale)
 	Kind *v1.GroupVersionKind `protobuf:"bytes,2,opt,name=kind" json:"kind,omitempty"`
 	// Resource is the fully-qualified resource being requested (for example, v1.pods)
 	Resource *v1.GroupVersionResource `protobuf:"bytes,3,opt,name=resource" json:"resource,omitempty"`
 	// SubResource is the subresource being requested, if any (for example, "status" or "scale")
 	// +optional
-	SubResource string `protobuf:"bytes,4,opt,name=subResource" json:"subResource"`
+	SubResource *string `protobuf:"bytes,4,opt,name=subResource" json:"subResource,omitempty"`
 	// RequestKind is the fully-qualified type of the original API request (for example, v1.Pod or autoscaling.v1.Scale).
 	// If this is specified and differs from the value in "kind", an equivalent match and conversion was performed.
 	//
@@ -72,17 +68,17 @@ type AdmissionRequest struct {
 	// If this is specified and differs from the value in "subResource", an equivalent match and conversion was performed.
 	// See documentation for the "matchPolicy" field in the webhook configuration type.
 	// +optional
-	RequestSubResource string `protobuf:"bytes,15,opt,name=requestSubResource" json:"requestSubResource"`
+	RequestSubResource *string `protobuf:"bytes,15,opt,name=requestSubResource" json:"requestSubResource,omitempty"`
 	// Name is the name of the object as presented in the request.  On a CREATE operation, the client may omit name and
 	// rely on the server to generate the name.  If that is the case, this field will contain an empty string.
 	// +optional
-	Name string `protobuf:"bytes,5,opt,name=name" json:"name"`
+	Name *string `protobuf:"bytes,5,opt,name=name" json:"name,omitempty"`
 	// Namespace is the namespace associated with the request (if any).
 	// +optional
-	Namespace string `protobuf:"bytes,6,opt,name=namespace" json:"namespace"`
+	Namespace *string `protobuf:"bytes,6,opt,name=namespace" json:"namespace,omitempty"`
 	// Operation is the operation being performed. This may be different than the operation
 	// requested. e.g. a patch can result in either a CREATE or UPDATE Operation.
-	Operation string `protobuf:"bytes,7,opt,name=operation" json:"operation"`
+	Operation *string `protobuf:"bytes,7,opt,name=operation" json:"operation,omitempty"`
 	// UserInfo is information about the requesting user
 	UserInfo *v11.UserInfo `protobuf:"bytes,8,opt,name=userInfo" json:"userInfo,omitempty"`
 	// Object is the object from the incoming request.
@@ -94,18 +90,22 @@ type AdmissionRequest struct {
 	// DryRun indicates that modifications will definitely not be persisted for this request.
 	// Defaults to false.
 	// +optional
-	DryRun bool `protobuf:"varint,11,opt,name=dryRun" json:"dryRun"`
+	DryRun *bool `protobuf:"varint,11,opt,name=dryRun" json:"dryRun,omitempty"`
 	// Options is the operation option structure of the operation being performed.
 	// e.g. `meta.k8s.io/v1.DeleteOptions` or `meta.k8s.io/v1.CreateOptions`. This may be
 	// different than the options the caller provided. e.g. for a patch request the performed
 	// Operation might be a CREATE, in which case the Options will a
 	// `meta.k8s.io/v1.CreateOptions` even though the caller provided `meta.k8s.io/v1.PatchOptions`.
 	// +optional
-	Options *runtime.RawExtension `protobuf:"bytes,12,opt,name=options" json:"options,omitempty"`
+	Options              *runtime.RawExtension `protobuf:"bytes,12,opt,name=options" json:"options,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}              `json:"-"`
+	XXX_unrecognized     []byte                `json:"-"`
+	XXX_sizecache        int32                 `json:"-"`
 }
 
-func (m *AdmissionRequest) Reset()      { *m = AdmissionRequest{} }
-func (*AdmissionRequest) ProtoMessage() {}
+func (m *AdmissionRequest) Reset()         { *m = AdmissionRequest{} }
+func (m *AdmissionRequest) String() string { return proto.CompactTextString(m) }
+func (*AdmissionRequest) ProtoMessage()    {}
 func (*AdmissionRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_d8f147b43c61e73e, []int{0}
 }
@@ -137,8 +137,8 @@ func (m *AdmissionRequest) XXX_DiscardUnknown() {
 var xxx_messageInfo_AdmissionRequest proto.InternalMessageInfo
 
 func (m *AdmissionRequest) GetUid() string {
-	if m != nil {
-		return m.Uid
+	if m != nil && m.Uid != nil {
+		return *m.Uid
 	}
 	return ""
 }
@@ -158,8 +158,8 @@ func (m *AdmissionRequest) GetResource() *v1.GroupVersionResource {
 }
 
 func (m *AdmissionRequest) GetSubResource() string {
-	if m != nil {
-		return m.SubResource
+	if m != nil && m.SubResource != nil {
+		return *m.SubResource
 	}
 	return ""
 }
@@ -179,29 +179,29 @@ func (m *AdmissionRequest) GetRequestResource() *v1.GroupVersionResource {
 }
 
 func (m *AdmissionRequest) GetRequestSubResource() string {
-	if m != nil {
-		return m.RequestSubResource
+	if m != nil && m.RequestSubResource != nil {
+		return *m.RequestSubResource
 	}
 	return ""
 }
 
 func (m *AdmissionRequest) GetName() string {
-	if m != nil {
-		return m.Name
+	if m != nil && m.Name != nil {
+		return *m.Name
 	}
 	return ""
 }
 
 func (m *AdmissionRequest) GetNamespace() string {
-	if m != nil {
-		return m.Namespace
+	if m != nil && m.Namespace != nil {
+		return *m.Namespace
 	}
 	return ""
 }
 
 func (m *AdmissionRequest) GetOperation() string {
-	if m != nil {
-		return m.Operation
+	if m != nil && m.Operation != nil {
+		return *m.Operation
 	}
 	return ""
 }
@@ -228,8 +228,8 @@ func (m *AdmissionRequest) GetOldObject() *runtime.RawExtension {
 }
 
 func (m *AdmissionRequest) GetDryRun() bool {
-	if m != nil {
-		return m.DryRun
+	if m != nil && m.DryRun != nil {
+		return *m.DryRun
 	}
 	return false
 }
@@ -245,29 +245,33 @@ func (m *AdmissionRequest) GetOptions() *runtime.RawExtension {
 type AdmissionResponse struct {
 	// UID is an identifier for the individual request/response.
 	// This should be copied over from the corresponding AdmissionRequest.
-	Uid string `protobuf:"bytes,1,opt,name=uid" json:"uid"`
+	Uid *string `protobuf:"bytes,1,opt,name=uid" json:"uid,omitempty"`
 	// Allowed indicates whether or not the admission request was permitted.
-	Allowed bool `protobuf:"varint,2,opt,name=allowed" json:"allowed"`
+	Allowed *bool `protobuf:"varint,2,opt,name=allowed" json:"allowed,omitempty"`
 	// Result contains extra details into why an admission request was denied.
 	// This field IS NOT consulted in any way if "Allowed" is "true".
 	// +optional
 	Status *v1.Status `protobuf:"bytes,3,opt,name=status" json:"status,omitempty"`
 	// The patch body. Currently we only support "JSONPatch" which implements RFC 6902.
 	// +optional
-	Patch []byte `protobuf:"bytes,4,opt,name=patch" json:"patch"`
+	Patch []byte `protobuf:"bytes,4,opt,name=patch" json:"patch,omitempty"`
 	// The type of Patch. Currently we only allow "JSONPatch".
 	// +optional
-	PatchType string `protobuf:"bytes,5,opt,name=patchType" json:"patchType"`
+	PatchType *string `protobuf:"bytes,5,opt,name=patchType" json:"patchType,omitempty"`
 	// AuditAnnotations is an unstructured key value map set by remote admission controller (e.g. error=image-blacklisted).
 	// MutatingAdmissionWebhook and ValidatingAdmissionWebhook admission controller will prefix the keys with
 	// admission webhook name (e.g. imagepolicy.example.com/error=image-blacklisted). AuditAnnotations will be provided by
 	// the admission webhook to add additional context to the audit log for this request.
 	// +optional
-	AuditAnnotations map[string]string `protobuf:"bytes,6,rep,name=auditAnnotations" json:"auditAnnotations,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	AuditAnnotations     map[string]string `protobuf:"bytes,6,rep,name=auditAnnotations" json:"auditAnnotations,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
+	XXX_unrecognized     []byte            `json:"-"`
+	XXX_sizecache        int32             `json:"-"`
 }
 
-func (m *AdmissionResponse) Reset()      { *m = AdmissionResponse{} }
-func (*AdmissionResponse) ProtoMessage() {}
+func (m *AdmissionResponse) Reset()         { *m = AdmissionResponse{} }
+func (m *AdmissionResponse) String() string { return proto.CompactTextString(m) }
+func (*AdmissionResponse) ProtoMessage()    {}
 func (*AdmissionResponse) Descriptor() ([]byte, []int) {
 	return fileDescriptor_d8f147b43c61e73e, []int{1}
 }
@@ -299,15 +303,15 @@ func (m *AdmissionResponse) XXX_DiscardUnknown() {
 var xxx_messageInfo_AdmissionResponse proto.InternalMessageInfo
 
 func (m *AdmissionResponse) GetUid() string {
-	if m != nil {
-		return m.Uid
+	if m != nil && m.Uid != nil {
+		return *m.Uid
 	}
 	return ""
 }
 
 func (m *AdmissionResponse) GetAllowed() bool {
-	if m != nil {
-		return m.Allowed
+	if m != nil && m.Allowed != nil {
+		return *m.Allowed
 	}
 	return false
 }
@@ -327,8 +331,8 @@ func (m *AdmissionResponse) GetPatch() []byte {
 }
 
 func (m *AdmissionResponse) GetPatchType() string {
-	if m != nil {
-		return m.PatchType
+	if m != nil && m.PatchType != nil {
+		return *m.PatchType
 	}
 	return ""
 }
@@ -347,11 +351,15 @@ type AdmissionReview struct {
 	Request *AdmissionRequest `protobuf:"bytes,1,opt,name=request" json:"request,omitempty"`
 	// Response describes the attributes for the admission response.
 	// +optional
-	Response *AdmissionResponse `protobuf:"bytes,2,opt,name=response" json:"response,omitempty"`
+	Response             *AdmissionResponse `protobuf:"bytes,2,opt,name=response" json:"response,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}           `json:"-"`
+	XXX_unrecognized     []byte             `json:"-"`
+	XXX_sizecache        int32              `json:"-"`
 }
 
-func (m *AdmissionReview) Reset()      { *m = AdmissionReview{} }
-func (*AdmissionReview) ProtoMessage() {}
+func (m *AdmissionReview) Reset()         { *m = AdmissionReview{} }
+func (m *AdmissionReview) String() string { return proto.CompactTextString(m) }
+func (*AdmissionReview) ProtoMessage()    {}
 func (*AdmissionReview) Descriptor() ([]byte, []int) {
 	return fileDescriptor_d8f147b43c61e73e, []int{2}
 }
@@ -408,282 +416,50 @@ func init() {
 }
 
 var fileDescriptor_d8f147b43c61e73e = []byte{
-	// 700 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x54, 0xcd, 0x4e, 0x1b, 0x3d,
-	0x14, 0xcd, 0x90, 0x90, 0x1f, 0x87, 0xef, 0x83, 0x5a, 0x6a, 0x35, 0x8a, 0x90, 0x1b, 0x65, 0x81,
-	0xb2, 0xa0, 0x1e, 0x81, 0x10, 0x42, 0xec, 0x40, 0x8d, 0x68, 0xcb, 0x02, 0x69, 0x68, 0x51, 0xb7,
-	0x26, 0xe3, 0x12, 0x37, 0x89, 0x3d, 0x8c, 0x3d, 0xa1, 0xd9, 0xf5, 0x05, 0x2a, 0x75, 0xd3, 0x77,
-	0xe0, 0x51, 0x58, 0xb2, 0x64, 0x55, 0x95, 0xb0, 0xe9, 0x92, 0x47, 0xa8, 0x3c, 0xe3, 0x99, 0x4c,
-	0x02, 0xb4, 0xfc, 0xac, 0x92, 0x39, 0xf7, 0x9e, 0x63, 0x9f, 0xab, 0x7b, 0x0c, 0x96, 0xbb, 0x1b,
-	0x12, 0x33, 0xe1, 0x10, 0x9f, 0x39, 0xc4, 0xeb, 0x33, 0x29, 0x99, 0xe0, 0xce, 0x60, 0xe5, 0x90,
-	0x2a, 0xb2, 0xe2, 0x1c, 0x51, 0x4e, 0x03, 0xa2, 0xa8, 0x87, 0xfd, 0x40, 0x28, 0x01, 0x17, 0xe3,
-	0x6e, 0x4c, 0x7c, 0x86, 0xd3, 0x6e, 0x6c, 0xba, 0x6b, 0x13, 0x5a, 0xa1, 0xea, 0x50, 0xae, 0x58,
-	0x9b, 0xa8, 0x58, 0x70, 0x5a, 0xab, 0xb6, 0x36, 0xee, 0xee, 0x93, 0x76, 0x87, 0x71, 0x1a, 0x0c,
-	0x1d, 0xbf, 0x7b, 0xa4, 0x01, 0xe9, 0xf4, 0xa9, 0x22, 0xb7, 0xb1, 0x9c, 0xbb, 0x58, 0x41, 0xc8,
-	0x15, 0xeb, 0xd3, 0x1b, 0x84, 0xf5, 0x7f, 0x11, 0x64, 0xbb, 0x43, 0xfb, 0x64, 0x9a, 0xd7, 0xf8,
-	0x56, 0x02, 0x0b, 0x5b, 0x89, 0x45, 0x97, 0x1e, 0x87, 0x54, 0x2a, 0xf8, 0x02, 0xe4, 0x43, 0xe6,
-	0xd9, 0x56, 0xdd, 0x6a, 0x56, 0xb6, 0x0b, 0x67, 0x3f, 0x5f, 0xe6, 0x5c, 0x0d, 0xc0, 0x77, 0xa0,
-	0xd0, 0x65, 0xdc, 0xb3, 0x67, 0xea, 0x56, 0xb3, 0xba, 0xba, 0x8e, 0xc7, 0x63, 0x4a, 0xcf, 0xc4,
-	0x7e, 0xf7, 0x48, 0x03, 0x12, 0x6b, 0x6b, 0x78, 0xb0, 0x82, 0x77, 0x02, 0x11, 0xfa, 0x07, 0x34,
-	0xd0, 0x07, 0xec, 0x32, 0xee, 0xb9, 0x91, 0x06, 0x3c, 0x00, 0xe5, 0x80, 0x4a, 0x11, 0x06, 0x6d,
-	0x6a, 0xe7, 0x23, 0xbd, 0xcd, 0x87, 0xeb, 0xb9, 0x46, 0xc1, 0x4d, 0xb5, 0xe0, 0x12, 0xa8, 0xca,
-	0xf0, 0x30, 0x29, 0xd8, 0x85, 0x8c, 0x87, 0x6c, 0x01, 0x7e, 0x04, 0xd5, 0x20, 0xb6, 0xab, 0x2f,
-	0x65, 0xff, 0xf7, 0x24, 0x4b, 0x59, 0x29, 0xe8, 0x81, 0x79, 0xf3, 0x99, 0xde, 0xe2, 0xff, 0x27,
-	0x1b, 0x9c, 0x96, 0x84, 0x6b, 0x00, 0x1a, 0x68, 0x3f, 0x63, 0x77, 0x3e, 0x63, 0xf7, 0x96, 0x3a,
-	0xb4, 0x41, 0x81, 0x93, 0x3e, 0xb5, 0x67, 0x33, 0x7d, 0x11, 0x02, 0x1b, 0xa0, 0xa2, 0x7f, 0xa5,
-	0x4f, 0xda, 0xd4, 0x2e, 0x66, 0xca, 0x63, 0x58, 0xf7, 0x08, 0x5f, 0xaf, 0x0f, 0x13, 0xdc, 0x2e,
-	0x65, 0x7b, 0x52, 0x18, 0x6e, 0x83, 0x72, 0x28, 0x69, 0xf0, 0x96, 0x7f, 0x12, 0x76, 0x39, 0xb2,
-	0xbd, 0x84, 0xb3, 0x71, 0x9a, 0x08, 0x8c, 0xb6, 0xfb, 0xc1, 0x74, 0xbb, 0x29, 0x0f, 0xb6, 0x40,
-	0x51, 0x1c, 0x7e, 0xa6, 0x6d, 0x65, 0x57, 0x22, 0x85, 0x57, 0x77, 0x0e, 0xce, 0x6c, 0x37, 0x76,
-	0xc9, 0x49, 0xeb, 0x8b, 0xa2, 0x3c, 0x9a, 0x99, 0x21, 0xc3, 0x5d, 0x50, 0x11, 0x3d, 0x6f, 0x2f,
-	0x56, 0x02, 0x8f, 0x51, 0x1a, 0xf3, 0xe1, 0x22, 0x28, 0x7a, 0xc1, 0xd0, 0x0d, 0xb9, 0x5d, 0xad,
-	0x5b, 0xcd, 0xb2, 0x31, 0x6e, 0x30, 0xb8, 0x03, 0x4a, 0xc2, 0xd7, 0x8e, 0xa4, 0x3d, 0xf7, 0x98,
-	0x83, 0x12, 0x76, 0xe3, 0x47, 0x1e, 0x3c, 0xcb, 0xe4, 0x51, 0xfa, 0x82, 0x4b, 0x7a, 0x67, 0x20,
-	0x11, 0x28, 0x91, 0x5e, 0x4f, 0x9c, 0xd0, 0x38, 0x93, 0xc9, 0xad, 0x12, 0x10, 0xbe, 0x06, 0x45,
-	0xa9, 0x88, 0x0a, 0xa5, 0x89, 0xd8, 0xf2, 0xfd, 0x36, 0x70, 0x3f, 0xe2, 0xb8, 0x86, 0x0b, 0x6b,
-	0x60, 0xd6, 0x27, 0xaa, 0xdd, 0x89, 0xc2, 0x34, 0x67, 0xce, 0x88, 0x21, 0xbd, 0x12, 0xd1, 0x9f,
-	0xf7, 0x43, 0x7f, 0x72, 0xab, 0xc6, 0x30, 0x3c, 0x06, 0x0b, 0x24, 0xf4, 0x98, 0xda, 0xe2, 0x5c,
-	0x28, 0x12, 0x4f, 0xa9, 0x58, 0xcf, 0x37, 0xab, 0xab, 0x2d, 0xfc, 0xb7, 0x97, 0x16, 0xdf, 0x18,
-	0x04, 0xde, 0x9a, 0xd2, 0x69, 0x71, 0x15, 0x0c, 0xdd, 0x1b, 0xf2, 0xb5, 0x3d, 0xf0, 0xfc, 0xd6,
-	0x56, 0x3d, 0xc9, 0x2e, 0x1d, 0x4e, 0x4e, 0xb2, 0x4b, 0x87, 0xda, 0xe3, 0x80, 0xf4, 0x42, 0x1a,
-	0xcd, 0x31, 0xa9, 0xc4, 0xd0, 0xe6, 0xcc, 0x86, 0xd5, 0x38, 0xb5, 0xc0, 0x7c, 0xe6, 0x3a, 0x03,
-	0x46, 0x4f, 0xe0, 0x1b, 0x50, 0x32, 0x11, 0x8b, 0xf4, 0xaa, 0xab, 0xf8, 0xde, 0x76, 0xe2, 0x2c,
-	0x27, 0x74, 0xb8, 0x1b, 0x3d, 0x86, 0x91, 0x45, 0xf3, 0xb8, 0x3a, 0x0f, 0x9c, 0x8c, 0x9b, 0x0a,
-	0x6c, 0xaf, 0x9d, 0x5f, 0xa2, 0xdc, 0xc5, 0x25, 0xca, 0x5d, 0x5f, 0x22, 0xeb, 0xeb, 0x08, 0x59,
-	0xa7, 0x23, 0x64, 0x9d, 0x8d, 0x90, 0x75, 0x3e, 0x42, 0xd6, 0xaf, 0x11, 0xb2, 0x7e, 0x8f, 0x50,
-	0xee, 0x7a, 0x84, 0xac, 0xef, 0x57, 0x28, 0x77, 0x7e, 0x85, 0x72, 0x17, 0x57, 0x28, 0xf7, 0x27,
-	0x00, 0x00, 0xff, 0xff, 0x0f, 0x9b, 0x4d, 0xca, 0x22, 0x07, 0x00, 0x00,
+	// 641 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x54, 0xcb, 0x6e, 0x13, 0x31,
+	0x14, 0xd5, 0xf4, 0x91, 0xc7, 0x4d, 0xa1, 0xc5, 0x02, 0x64, 0x55, 0x55, 0x15, 0x75, 0x81, 0xb2,
+	0x28, 0x1e, 0xb5, 0x42, 0x55, 0xd5, 0x5d, 0x0b, 0x51, 0x81, 0x2e, 0x90, 0x5c, 0xa8, 0xd8, 0xba,
+	0x99, 0x4b, 0x63, 0x92, 0xd8, 0xd3, 0xb1, 0x27, 0x25, 0x7f, 0xc4, 0xa7, 0xb0, 0xe4, 0x13, 0x50,
+	0xf9, 0x02, 0xfe, 0x00, 0xd9, 0xf3, 0x48, 0x9a, 0xa6, 0xd0, 0xc7, 0x6a, 0x7c, 0x1f, 0xe7, 0xd8,
+	0xe7, 0x8e, 0x8f, 0x61, 0xb3, 0xb7, 0x6b, 0x98, 0xd4, 0xa1, 0x88, 0x65, 0x28, 0xa2, 0x81, 0x34,
+	0x46, 0x6a, 0x15, 0x0e, 0xb7, 0x4e, 0xd1, 0x8a, 0xad, 0xf0, 0x0c, 0x15, 0x26, 0xc2, 0x62, 0xc4,
+	0xe2, 0x44, 0x5b, 0x4d, 0xd6, 0xb2, 0x6e, 0x26, 0x62, 0xc9, 0xca, 0x6e, 0x96, 0x77, 0xaf, 0x5e,
+	0xe1, 0x4a, 0x6d, 0x17, 0x95, 0x95, 0x1d, 0x61, 0x33, 0xc2, 0x69, 0xae, 0xd5, 0x57, 0xe3, 0xee,
+	0x81, 0xe8, 0x74, 0xa5, 0xc2, 0x64, 0x14, 0xc6, 0xbd, 0x33, 0x97, 0x30, 0xe1, 0x00, 0xad, 0x98,
+	0x85, 0x0a, 0x6f, 0x42, 0x25, 0xa9, 0xb2, 0x72, 0x80, 0xd7, 0x00, 0x3b, 0xff, 0x03, 0x98, 0x4e,
+	0x17, 0x07, 0x62, 0x1a, 0xb7, 0xf1, 0xbb, 0x02, 0x2b, 0xfb, 0x85, 0x44, 0x8e, 0xe7, 0x29, 0x1a,
+	0x4b, 0x56, 0x60, 0x3e, 0x95, 0x11, 0x0d, 0x9a, 0x41, 0xab, 0xce, 0xdd, 0x92, 0xbc, 0x87, 0x85,
+	0x9e, 0x54, 0x11, 0x9d, 0x6b, 0x06, 0xad, 0xc6, 0xf6, 0x0e, 0x1b, 0x0f, 0xa8, 0xdc, 0x8d, 0xc5,
+	0xbd, 0x33, 0x97, 0x30, 0xcc, 0x89, 0x62, 0xc3, 0x2d, 0x76, 0x98, 0xe8, 0x34, 0x3e, 0xc1, 0xc4,
+	0x51, 0x1f, 0x49, 0x15, 0x71, 0xcf, 0x41, 0x4e, 0xa0, 0x96, 0xa0, 0xd1, 0x69, 0xd2, 0x41, 0x3a,
+	0xef, 0xf9, 0xf6, 0xee, 0xce, 0xc7, 0x73, 0x06, 0x5e, 0x72, 0x91, 0x26, 0x34, 0x4c, 0x7a, 0x5a,
+	0x14, 0xe8, 0x82, 0x3f, 0xfd, 0x64, 0x8a, 0x7c, 0x86, 0x46, 0x92, 0x49, 0x74, 0xc7, 0xa1, 0x8f,
+	0x1e, 0x24, 0x66, 0x92, 0x8a, 0x44, 0xb0, 0x9c, 0x87, 0xe5, 0xfe, 0x8f, 0x1f, 0x2c, 0x6d, 0x9a,
+	0x92, 0x30, 0x20, 0x79, 0xea, 0x78, 0x42, 0xe8, 0xb2, 0x17, 0x3a, 0xa3, 0x42, 0x08, 0x2c, 0x28,
+	0x31, 0x40, 0xba, 0xe8, 0x3b, 0xfc, 0x9a, 0xac, 0x41, 0xdd, 0x7d, 0x4d, 0x2c, 0x3a, 0x48, 0x2b,
+	0xbe, 0x30, 0x4e, 0xb8, 0xaa, 0x8e, 0xdd, 0x05, 0x91, 0x5a, 0xd1, 0x6a, 0x56, 0x2d, 0x13, 0xe4,
+	0x00, 0x6a, 0xa9, 0xc1, 0xe4, 0x9d, 0xfa, 0xa2, 0x69, 0xcd, 0xcb, 0x7b, 0xc1, 0x26, 0xad, 0x72,
+	0xc5, 0x0c, 0x4e, 0xd6, 0xa7, 0xbc, 0x9b, 0x97, 0x38, 0xd2, 0x86, 0x8a, 0x3e, 0xfd, 0x8a, 0x1d,
+	0x4b, 0xeb, 0x9e, 0xe1, 0xe5, 0x8d, 0x03, 0xca, 0x6f, 0x2e, 0xe3, 0xe2, 0xa2, 0xfd, 0xcd, 0xa2,
+	0xf2, 0xb3, 0xc9, 0xc1, 0xe4, 0x08, 0xea, 0xba, 0x1f, 0x7d, 0xc8, 0x98, 0xe0, 0x3e, 0x4c, 0x63,
+	0x3c, 0x79, 0x0e, 0x95, 0x28, 0x19, 0xf1, 0x54, 0xd1, 0x46, 0x33, 0x68, 0xd5, 0x78, 0x1e, 0x91,
+	0x43, 0xa8, 0xea, 0xd8, 0x69, 0x31, 0x74, 0xe9, 0x3e, 0x5b, 0x14, 0xe8, 0x8d, 0x3f, 0x73, 0xf0,
+	0x64, 0xc2, 0x65, 0x26, 0xd6, 0xca, 0xe0, 0x0c, 0x9b, 0x51, 0xa8, 0x8a, 0x7e, 0x5f, 0x5f, 0x60,
+	0xe6, 0xb4, 0x1a, 0x2f, 0x42, 0xf2, 0x06, 0x2a, 0xc6, 0x0a, 0x9b, 0x9a, 0xdc, 0x32, 0x9b, 0xb7,
+	0xbb, 0x57, 0xc7, 0x1e, 0xc3, 0x73, 0x2c, 0x79, 0x0a, 0x8b, 0xb1, 0xb0, 0x9d, 0xae, 0x37, 0xc7,
+	0x12, 0xcf, 0x02, 0xf7, 0xd3, 0xfd, 0xe2, 0xe3, 0x28, 0x2e, 0xee, 0xca, 0x38, 0x41, 0xce, 0x61,
+	0x45, 0xa4, 0x91, 0xb4, 0xfb, 0x4a, 0x69, 0x2b, 0xb2, 0x69, 0x54, 0x9a, 0xf3, 0xad, 0xc6, 0x76,
+	0x9b, 0xfd, 0xeb, 0x9d, 0x64, 0xd7, 0x04, 0xb3, 0xfd, 0x29, 0x9e, 0xb6, 0xb2, 0xc9, 0x88, 0x5f,
+	0xa3, 0x5f, 0x7d, 0x0d, 0xcf, 0x66, 0xb6, 0xba, 0x89, 0xf5, 0x70, 0x54, 0x4c, 0xac, 0x87, 0x23,
+	0xa7, 0x68, 0x28, 0xfa, 0x29, 0xfa, 0x79, 0xd5, 0x79, 0x16, 0xec, 0xcd, 0xed, 0x06, 0x1b, 0xdf,
+	0x03, 0x58, 0x9e, 0x38, 0xc2, 0x50, 0xe2, 0x05, 0x79, 0x0b, 0xd5, 0xdc, 0x26, 0x9e, 0xa3, 0xb1,
+	0xcd, 0x6e, 0x2d, 0x21, 0x73, 0x62, 0x01, 0x27, 0x47, 0xfe, 0x11, 0xf3, 0xb2, 0xf2, 0x47, 0x31,
+	0xbc, 0xe3, 0x34, 0x78, 0x49, 0x70, 0xb0, 0xf4, 0xe3, 0x72, 0x3d, 0xf8, 0x79, 0xb9, 0x1e, 0xfc,
+	0xba, 0x5c, 0x0f, 0xfe, 0x06, 0x00, 0x00, 0xff, 0xff, 0x35, 0xaf, 0xe3, 0xe1, 0xac, 0x06, 0x00,
+	0x00,
 }
 
-func (this *AdmissionRequest) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*AdmissionRequest)
-	if !ok {
-		that2, ok := that.(AdmissionRequest)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Uid != that1.Uid {
-		return false
-	}
-	if !this.Kind.Equal(that1.Kind) {
-		return false
-	}
-	if !this.Resource.Equal(that1.Resource) {
-		return false
-	}
-	if this.SubResource != that1.SubResource {
-		return false
-	}
-	if !this.RequestKind.Equal(that1.RequestKind) {
-		return false
-	}
-	if !this.RequestResource.Equal(that1.RequestResource) {
-		return false
-	}
-	if this.RequestSubResource != that1.RequestSubResource {
-		return false
-	}
-	if this.Name != that1.Name {
-		return false
-	}
-	if this.Namespace != that1.Namespace {
-		return false
-	}
-	if this.Operation != that1.Operation {
-		return false
-	}
-	if !this.UserInfo.Equal(that1.UserInfo) {
-		return false
-	}
-	if !this.Object.Equal(that1.Object) {
-		return false
-	}
-	if !this.OldObject.Equal(that1.OldObject) {
-		return false
-	}
-	if this.DryRun != that1.DryRun {
-		return false
-	}
-	if !this.Options.Equal(that1.Options) {
-		return false
-	}
-	return true
-}
-func (this *AdmissionResponse) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*AdmissionResponse)
-	if !ok {
-		that2, ok := that.(AdmissionResponse)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if this.Uid != that1.Uid {
-		return false
-	}
-	if this.Allowed != that1.Allowed {
-		return false
-	}
-	if !this.Status.Equal(that1.Status) {
-		return false
-	}
-	if !bytes.Equal(this.Patch, that1.Patch) {
-		return false
-	}
-	if this.PatchType != that1.PatchType {
-		return false
-	}
-	if len(this.AuditAnnotations) != len(that1.AuditAnnotations) {
-		return false
-	}
-	for i := range this.AuditAnnotations {
-		if this.AuditAnnotations[i] != that1.AuditAnnotations[i] {
-			return false
-		}
-	}
-	return true
-}
-func (this *AdmissionReview) Equal(that interface{}) bool {
-	if that == nil {
-		return this == nil
-	}
-
-	that1, ok := that.(*AdmissionReview)
-	if !ok {
-		that2, ok := that.(AdmissionReview)
-		if ok {
-			that1 = &that2
-		} else {
-			return false
-		}
-	}
-	if that1 == nil {
-		return this == nil
-	} else if this == nil {
-		return false
-	}
-	if !this.Request.Equal(that1.Request) {
-		return false
-	}
-	if !this.Response.Equal(that1.Response) {
-		return false
-	}
-	return true
-}
-func (this *AdmissionRequest) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 19)
-	s = append(s, "&k8s_io_api_admission_v1beta1.AdmissionRequest{")
-	s = append(s, "Uid: "+fmt.Sprintf("%#v", this.Uid)+",\n")
-	if this.Kind != nil {
-		s = append(s, "Kind: "+fmt.Sprintf("%#v", this.Kind)+",\n")
-	}
-	if this.Resource != nil {
-		s = append(s, "Resource: "+fmt.Sprintf("%#v", this.Resource)+",\n")
-	}
-	s = append(s, "SubResource: "+fmt.Sprintf("%#v", this.SubResource)+",\n")
-	if this.RequestKind != nil {
-		s = append(s, "RequestKind: "+fmt.Sprintf("%#v", this.RequestKind)+",\n")
-	}
-	if this.RequestResource != nil {
-		s = append(s, "RequestResource: "+fmt.Sprintf("%#v", this.RequestResource)+",\n")
-	}
-	s = append(s, "RequestSubResource: "+fmt.Sprintf("%#v", this.RequestSubResource)+",\n")
-	s = append(s, "Name: "+fmt.Sprintf("%#v", this.Name)+",\n")
-	s = append(s, "Namespace: "+fmt.Sprintf("%#v", this.Namespace)+",\n")
-	s = append(s, "Operation: "+fmt.Sprintf("%#v", this.Operation)+",\n")
-	if this.UserInfo != nil {
-		s = append(s, "UserInfo: "+fmt.Sprintf("%#v", this.UserInfo)+",\n")
-	}
-	if this.Object != nil {
-		s = append(s, "Object: "+fmt.Sprintf("%#v", this.Object)+",\n")
-	}
-	if this.OldObject != nil {
-		s = append(s, "OldObject: "+fmt.Sprintf("%#v", this.OldObject)+",\n")
-	}
-	s = append(s, "DryRun: "+fmt.Sprintf("%#v", this.DryRun)+",\n")
-	if this.Options != nil {
-		s = append(s, "Options: "+fmt.Sprintf("%#v", this.Options)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *AdmissionResponse) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 10)
-	s = append(s, "&k8s_io_api_admission_v1beta1.AdmissionResponse{")
-	s = append(s, "Uid: "+fmt.Sprintf("%#v", this.Uid)+",\n")
-	s = append(s, "Allowed: "+fmt.Sprintf("%#v", this.Allowed)+",\n")
-	if this.Status != nil {
-		s = append(s, "Status: "+fmt.Sprintf("%#v", this.Status)+",\n")
-	}
-	s = append(s, "Patch: "+fmt.Sprintf("%#v", this.Patch)+",\n")
-	s = append(s, "PatchType: "+fmt.Sprintf("%#v", this.PatchType)+",\n")
-	keysForAuditAnnotations := make([]string, 0, len(this.AuditAnnotations))
-	for k, _ := range this.AuditAnnotations {
-		keysForAuditAnnotations = append(keysForAuditAnnotations, k)
-	}
-	github_com_gogo_protobuf_sortkeys.Strings(keysForAuditAnnotations)
-	mapStringForAuditAnnotations := "map[string]string{"
-	for _, k := range keysForAuditAnnotations {
-		mapStringForAuditAnnotations += fmt.Sprintf("%#v: %#v,", k, this.AuditAnnotations[k])
-	}
-	mapStringForAuditAnnotations += "}"
-	if this.AuditAnnotations != nil {
-		s = append(s, "AuditAnnotations: "+mapStringForAuditAnnotations+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func (this *AdmissionReview) GoString() string {
-	if this == nil {
-		return "nil"
-	}
-	s := make([]string, 0, 6)
-	s = append(s, "&k8s_io_api_admission_v1beta1.AdmissionReview{")
-	if this.Request != nil {
-		s = append(s, "Request: "+fmt.Sprintf("%#v", this.Request)+",\n")
-	}
-	if this.Response != nil {
-		s = append(s, "Response: "+fmt.Sprintf("%#v", this.Response)+",\n")
-	}
-	s = append(s, "}")
-	return strings.Join(s, "")
-}
-func valueToGoStringGenerated(v interface{}, typ string) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("func(v %v) *%v { return &v } ( %#v )", typ, typ, pv)
-}
 func (m *AdmissionRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -704,11 +480,17 @@ func (m *AdmissionRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	i -= len(m.RequestSubResource)
-	copy(dAtA[i:], m.RequestSubResource)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.RequestSubResource)))
-	i--
-	dAtA[i] = 0x7a
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.RequestSubResource != nil {
+		i -= len(*m.RequestSubResource)
+		copy(dAtA[i:], *m.RequestSubResource)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.RequestSubResource)))
+		i--
+		dAtA[i] = 0x7a
+	}
 	if m.RequestResource != nil {
 		{
 			size, err := m.RequestResource.MarshalToSizedBuffer(dAtA[:i])
@@ -745,14 +527,16 @@ func (m *AdmissionRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x62
 	}
-	i--
-	if m.DryRun {
-		dAtA[i] = 1
-	} else {
-		dAtA[i] = 0
+	if m.DryRun != nil {
+		i--
+		if *m.DryRun {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x58
 	}
-	i--
-	dAtA[i] = 0x58
 	if m.OldObject != nil {
 		{
 			size, err := m.OldObject.MarshalToSizedBuffer(dAtA[:i])
@@ -789,26 +573,34 @@ func (m *AdmissionRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x42
 	}
-	i -= len(m.Operation)
-	copy(dAtA[i:], m.Operation)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Operation)))
-	i--
-	dAtA[i] = 0x3a
-	i -= len(m.Namespace)
-	copy(dAtA[i:], m.Namespace)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Namespace)))
-	i--
-	dAtA[i] = 0x32
-	i -= len(m.Name)
-	copy(dAtA[i:], m.Name)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Name)))
-	i--
-	dAtA[i] = 0x2a
-	i -= len(m.SubResource)
-	copy(dAtA[i:], m.SubResource)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.SubResource)))
-	i--
-	dAtA[i] = 0x22
+	if m.Operation != nil {
+		i -= len(*m.Operation)
+		copy(dAtA[i:], *m.Operation)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Operation)))
+		i--
+		dAtA[i] = 0x3a
+	}
+	if m.Namespace != nil {
+		i -= len(*m.Namespace)
+		copy(dAtA[i:], *m.Namespace)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Namespace)))
+		i--
+		dAtA[i] = 0x32
+	}
+	if m.Name != nil {
+		i -= len(*m.Name)
+		copy(dAtA[i:], *m.Name)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Name)))
+		i--
+		dAtA[i] = 0x2a
+	}
+	if m.SubResource != nil {
+		i -= len(*m.SubResource)
+		copy(dAtA[i:], *m.SubResource)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.SubResource)))
+		i--
+		dAtA[i] = 0x22
+	}
 	if m.Resource != nil {
 		{
 			size, err := m.Resource.MarshalToSizedBuffer(dAtA[:i])
@@ -833,11 +625,13 @@ func (m *AdmissionRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x12
 	}
-	i -= len(m.Uid)
-	copy(dAtA[i:], m.Uid)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Uid)))
-	i--
-	dAtA[i] = 0xa
+	if m.Uid != nil {
+		i -= len(*m.Uid)
+		copy(dAtA[i:], *m.Uid)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Uid)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -861,6 +655,10 @@ func (m *AdmissionResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if len(m.AuditAnnotations) > 0 {
 		for k := range m.AuditAnnotations {
 			v := m.AuditAnnotations[k]
@@ -880,11 +678,13 @@ func (m *AdmissionResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			dAtA[i] = 0x32
 		}
 	}
-	i -= len(m.PatchType)
-	copy(dAtA[i:], m.PatchType)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.PatchType)))
-	i--
-	dAtA[i] = 0x2a
+	if m.PatchType != nil {
+		i -= len(*m.PatchType)
+		copy(dAtA[i:], *m.PatchType)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.PatchType)))
+		i--
+		dAtA[i] = 0x2a
+	}
 	if m.Patch != nil {
 		i -= len(m.Patch)
 		copy(dAtA[i:], m.Patch)
@@ -904,19 +704,23 @@ func (m *AdmissionResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x1a
 	}
-	i--
-	if m.Allowed {
-		dAtA[i] = 1
-	} else {
-		dAtA[i] = 0
+	if m.Allowed != nil {
+		i--
+		if *m.Allowed {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x10
 	}
-	i--
-	dAtA[i] = 0x10
-	i -= len(m.Uid)
-	copy(dAtA[i:], m.Uid)
-	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Uid)))
-	i--
-	dAtA[i] = 0xa
+	if m.Uid != nil {
+		i -= len(*m.Uid)
+		copy(dAtA[i:], *m.Uid)
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Uid)))
+		i--
+		dAtA[i] = 0xa
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -940,6 +744,10 @@ func (m *AdmissionReview) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
 	if m.Response != nil {
 		{
 			size, err := m.Response.MarshalToSizedBuffer(dAtA[:i])
@@ -984,8 +792,10 @@ func (m *AdmissionRequest) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Uid)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.Uid != nil {
+		l = len(*m.Uid)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if m.Kind != nil {
 		l = m.Kind.Size()
 		n += 1 + l + sovGenerated(uint64(l))
@@ -994,14 +804,22 @@ func (m *AdmissionRequest) Size() (n int) {
 		l = m.Resource.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
-	l = len(m.SubResource)
-	n += 1 + l + sovGenerated(uint64(l))
-	l = len(m.Name)
-	n += 1 + l + sovGenerated(uint64(l))
-	l = len(m.Namespace)
-	n += 1 + l + sovGenerated(uint64(l))
-	l = len(m.Operation)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.SubResource != nil {
+		l = len(*m.SubResource)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.Name != nil {
+		l = len(*m.Name)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.Namespace != nil {
+		l = len(*m.Namespace)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.Operation != nil {
+		l = len(*m.Operation)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if m.UserInfo != nil {
 		l = m.UserInfo.Size()
 		n += 1 + l + sovGenerated(uint64(l))
@@ -1014,7 +832,9 @@ func (m *AdmissionRequest) Size() (n int) {
 		l = m.OldObject.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
-	n += 2
+	if m.DryRun != nil {
+		n += 2
+	}
 	if m.Options != nil {
 		l = m.Options.Size()
 		n += 1 + l + sovGenerated(uint64(l))
@@ -1027,8 +847,13 @@ func (m *AdmissionRequest) Size() (n int) {
 		l = m.RequestResource.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
-	l = len(m.RequestSubResource)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.RequestSubResource != nil {
+		l = len(*m.RequestSubResource)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -1038,9 +863,13 @@ func (m *AdmissionResponse) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.Uid)
-	n += 1 + l + sovGenerated(uint64(l))
-	n += 2
+	if m.Uid != nil {
+		l = len(*m.Uid)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.Allowed != nil {
+		n += 2
+	}
 	if m.Status != nil {
 		l = m.Status.Size()
 		n += 1 + l + sovGenerated(uint64(l))
@@ -1049,8 +878,10 @@ func (m *AdmissionResponse) Size() (n int) {
 		l = len(m.Patch)
 		n += 1 + l + sovGenerated(uint64(l))
 	}
-	l = len(m.PatchType)
-	n += 1 + l + sovGenerated(uint64(l))
+	if m.PatchType != nil {
+		l = len(*m.PatchType)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	if len(m.AuditAnnotations) > 0 {
 		for k, v := range m.AuditAnnotations {
 			_ = k
@@ -1058,6 +889,9 @@ func (m *AdmissionResponse) Size() (n int) {
 			mapEntrySize := 1 + len(k) + sovGenerated(uint64(len(k))) + 1 + len(v) + sovGenerated(uint64(len(v)))
 			n += mapEntrySize + 1 + sovGenerated(uint64(mapEntrySize))
 		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
 	}
 	return n
 }
@@ -1076,6 +910,9 @@ func (m *AdmissionReview) Size() (n int) {
 		l = m.Response.Size()
 		n += 1 + l + sovGenerated(uint64(l))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
 	return n
 }
 
@@ -1084,74 +921,6 @@ func sovGenerated(x uint64) (n int) {
 }
 func sozGenerated(x uint64) (n int) {
 	return sovGenerated(uint64((x << 1) ^ uint64((int64(x) >> 63))))
-}
-func (this *AdmissionRequest) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&AdmissionRequest{`,
-		`Uid:` + fmt.Sprintf("%v", this.Uid) + `,`,
-		`Kind:` + strings.Replace(fmt.Sprintf("%v", this.Kind), "GroupVersionKind", "v1.GroupVersionKind", 1) + `,`,
-		`Resource:` + strings.Replace(fmt.Sprintf("%v", this.Resource), "GroupVersionResource", "v1.GroupVersionResource", 1) + `,`,
-		`SubResource:` + fmt.Sprintf("%v", this.SubResource) + `,`,
-		`Name:` + fmt.Sprintf("%v", this.Name) + `,`,
-		`Namespace:` + fmt.Sprintf("%v", this.Namespace) + `,`,
-		`Operation:` + fmt.Sprintf("%v", this.Operation) + `,`,
-		`UserInfo:` + strings.Replace(fmt.Sprintf("%v", this.UserInfo), "UserInfo", "v11.UserInfo", 1) + `,`,
-		`Object:` + strings.Replace(fmt.Sprintf("%v", this.Object), "RawExtension", "runtime.RawExtension", 1) + `,`,
-		`OldObject:` + strings.Replace(fmt.Sprintf("%v", this.OldObject), "RawExtension", "runtime.RawExtension", 1) + `,`,
-		`DryRun:` + fmt.Sprintf("%v", this.DryRun) + `,`,
-		`Options:` + strings.Replace(fmt.Sprintf("%v", this.Options), "RawExtension", "runtime.RawExtension", 1) + `,`,
-		`RequestKind:` + strings.Replace(fmt.Sprintf("%v", this.RequestKind), "GroupVersionKind", "v1.GroupVersionKind", 1) + `,`,
-		`RequestResource:` + strings.Replace(fmt.Sprintf("%v", this.RequestResource), "GroupVersionResource", "v1.GroupVersionResource", 1) + `,`,
-		`RequestSubResource:` + fmt.Sprintf("%v", this.RequestSubResource) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *AdmissionResponse) String() string {
-	if this == nil {
-		return "nil"
-	}
-	keysForAuditAnnotations := make([]string, 0, len(this.AuditAnnotations))
-	for k, _ := range this.AuditAnnotations {
-		keysForAuditAnnotations = append(keysForAuditAnnotations, k)
-	}
-	github_com_gogo_protobuf_sortkeys.Strings(keysForAuditAnnotations)
-	mapStringForAuditAnnotations := "map[string]string{"
-	for _, k := range keysForAuditAnnotations {
-		mapStringForAuditAnnotations += fmt.Sprintf("%v: %v,", k, this.AuditAnnotations[k])
-	}
-	mapStringForAuditAnnotations += "}"
-	s := strings.Join([]string{`&AdmissionResponse{`,
-		`Uid:` + fmt.Sprintf("%v", this.Uid) + `,`,
-		`Allowed:` + fmt.Sprintf("%v", this.Allowed) + `,`,
-		`Status:` + strings.Replace(fmt.Sprintf("%v", this.Status), "Status", "v1.Status", 1) + `,`,
-		`Patch:` + fmt.Sprintf("%v", this.Patch) + `,`,
-		`PatchType:` + fmt.Sprintf("%v", this.PatchType) + `,`,
-		`AuditAnnotations:` + mapStringForAuditAnnotations + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func (this *AdmissionReview) String() string {
-	if this == nil {
-		return "nil"
-	}
-	s := strings.Join([]string{`&AdmissionReview{`,
-		`Request:` + strings.Replace(this.Request.String(), "AdmissionRequest", "AdmissionRequest", 1) + `,`,
-		`Response:` + strings.Replace(this.Response.String(), "AdmissionResponse", "AdmissionResponse", 1) + `,`,
-		`}`,
-	}, "")
-	return s
-}
-func valueToStringGenerated(v interface{}) string {
-	rv := reflect.ValueOf(v)
-	if rv.IsNil() {
-		return "nil"
-	}
-	pv := reflect.Indirect(rv).Interface()
-	return fmt.Sprintf("*%v", pv)
 }
 func (m *AdmissionRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
@@ -1212,7 +981,8 @@ func (m *AdmissionRequest) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Uid = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Uid = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -1316,7 +1086,8 @@ func (m *AdmissionRequest) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.SubResource = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.SubResource = &s
 			iNdEx = postIndex
 		case 5:
 			if wireType != 2 {
@@ -1348,7 +1119,8 @@ func (m *AdmissionRequest) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Name = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Name = &s
 			iNdEx = postIndex
 		case 6:
 			if wireType != 2 {
@@ -1380,7 +1152,8 @@ func (m *AdmissionRequest) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Namespace = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Namespace = &s
 			iNdEx = postIndex
 		case 7:
 			if wireType != 2 {
@@ -1412,7 +1185,8 @@ func (m *AdmissionRequest) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Operation = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Operation = &s
 			iNdEx = postIndex
 		case 8:
 			if wireType != 2 {
@@ -1541,7 +1315,8 @@ func (m *AdmissionRequest) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
-			m.DryRun = bool(v != 0)
+			b := bool(v != 0)
+			m.DryRun = &b
 		case 12:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Options", wireType)
@@ -1680,7 +1455,8 @@ func (m *AdmissionRequest) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.RequestSubResource = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.RequestSubResource = &s
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -1694,6 +1470,7 @@ func (m *AdmissionRequest) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -1762,7 +1539,8 @@ func (m *AdmissionResponse) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Uid = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.Uid = &s
 			iNdEx = postIndex
 		case 2:
 			if wireType != 0 {
@@ -1783,7 +1561,8 @@ func (m *AdmissionResponse) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
-			m.Allowed = bool(v != 0)
+			b := bool(v != 0)
+			m.Allowed = &b
 		case 3:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
@@ -1884,7 +1663,8 @@ func (m *AdmissionResponse) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.PatchType = string(dAtA[iNdEx:postIndex])
+			s := string(dAtA[iNdEx:postIndex])
+			m.PatchType = &s
 			iNdEx = postIndex
 		case 6:
 			if wireType != 2 {
@@ -2025,6 +1805,7 @@ func (m *AdmissionResponse) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
@@ -2147,6 +1928,7 @@ func (m *AdmissionReview) Unmarshal(dAtA []byte) error {
 			if (iNdEx + skippy) > l {
 				return io.ErrUnexpectedEOF
 			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
 	}
